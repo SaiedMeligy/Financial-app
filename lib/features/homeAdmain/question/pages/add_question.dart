@@ -1,12 +1,15 @@
-import 'package:experts_app/core/config/constants.dart';
-import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/core/widget/check_box_question.dart';
-import 'package:experts_app/core/widget/drop_down_button.dart';
-import 'package:experts_app/core/widget/radio_button.dart';
-import 'package:experts_app/core/widget/tab_item_widget.dart';
+import 'dart:ffi';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
+import 'package:experts_app/core/config/constants.dart';
 import '../../../../core/widget/custom_text_field.dart';
+import 'package:experts_app/core/widget/radio_button.dart';
+import 'package:experts_app/domain/entities/AdviceMode.dart';
+import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/core/widget/tab_item_widget.dart';
+import 'package:experts_app/domain/entities/pointerModel.dart';
+import 'package:experts_app/core/widget/drop_down_button.dart';
+import 'package:experts_app/core/widget/check_box_question.dart';
 
 class AddQuestion extends StatefulWidget {
   const AddQuestion({super.key});
@@ -21,15 +24,33 @@ class _AddQuestionState extends State<AddQuestion> {
   var formKey = GlobalKey<FormState>();
   List<TextEditingController> answerControllers = [];
   bool _showTextField = false;
+
+  List<Pointers> pointers1 = [];
+  List<Pointers> pointers2 = [];
+  List<Pointers> pointers3 = [];
+  List<Advices> advices = [];
+
   List<bool> _checkBoxValues = [];
-  //List<TextEditingController> _checkBoxControllers = [];
-  //List<String> _selectedOptions = [];
+  List<int> _answerTypes = [];
+
+  List<List<int>> selectedPointers1 = [];
+  List<List<int>> selectedPointers2 = [];
+  List<List<int>> selectedPointers3 = [];
+  List<List<int>> selectedAdvices = [];
+
+  late int _selecetdAixs;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPointers();
+    fetchAdvices();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
+    return ListView(children: [
+      Container(
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -60,9 +81,16 @@ class _AddQuestionState extends State<AddQuestion> {
                       ),
                       RadioWidget(
                         titleRadio: "اختر المحور",
-                        item1: "المحور الاول",
-                        item2: "المحور التاني",
-                        item3: "المحور التالت",
+                        items: const [
+                          MapEntry("المحور الاول", 1),
+                          MapEntry("المحور التاني", 2),
+                          MapEntry("المحور الثالث", 3)
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            _selecetdAixs = value!;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -126,8 +154,7 @@ class _AddQuestionState extends State<AddQuestion> {
                         children: [
                           SizedBox(
                             width: Constants.mediaQuery.width * 0.2,
-                            child:
-                            CustomTextField(
+                            child: CustomTextField(
                               controller: answerControllers[index],
                               hint: "ادخل الاجابة",
                               onValidate: (value) {
@@ -136,18 +163,23 @@ class _AddQuestionState extends State<AddQuestion> {
                                 }
                                 return null;
                               },
-                            ).setOnlyPadding(context,enableMediaQuery: false, 0, 5, 0, 0),
+                            ).setOnlyPadding(
+                                context, enableMediaQuery: false, 0, 5, 0, 0),
                           ),
-                          const SizedBox(width: 10,),
-                          DropDownButton(
-                            titleRadio: Text("نوع الأجابة",style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.black,
-                            ),
-                            ),
-                            items: [
-                              "اختيار واحد",
-                              "متعدد الأختيارات",
-                              "حقل نص",
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          RadioWidget(
+                            onChanged: (value) {
+                              setState(() {
+                                _answerTypes[index] = value!;
+                              });
+                            },
+                            titleRadio: "نوع الأجابة",
+                            items: const [
+                              MapEntry("اختيار واحد", 1),
+                              MapEntry("متعدد الأختيارات", 2),
+                              MapEntry("حقل نص", 3)
                             ],
                           ),
                           DropDownButton(
@@ -185,7 +217,15 @@ class _AddQuestionState extends State<AddQuestion> {
                                                           color: Colors.black),
                                                 ),
                                               ),
-                                              CheckBoxQuestion(),
+                                              CheckBoxQuestion(
+                                                items: advices,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    selectedAdvices[index] =
+                                                        value!;
+                                                  });
+                                                },
+                                              ),
                                             ],
                                           )),
                                       actions: [
@@ -219,11 +259,14 @@ class _AddQuestionState extends State<AddQuestion> {
                                   },
                                 );
                               },
-                              child: Text("التوصيات",style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.black,
+                              child: Text(
+                                "التوصيات",
+                                style: Constants.theme.textTheme.bodyMedium
+                                    ?.copyWith(
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
-                          ),
-                      ),
                           ),
                           DropDownButton(
                             titleRadio: GestureDetector(
@@ -236,19 +279,17 @@ class _AddQuestionState extends State<AddQuestion> {
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                          BorderRadius.circular(10),
+                                              BorderRadius.circular(10),
                                           border: Border.all(
-                                            color: Constants
-                                                .theme.primaryColor,
+                                            color: Constants.theme.primaryColor,
                                             width: 2.5,
                                           ),
                                         ),
                                         child: Text(
                                           "اختر من المؤشرات",
-                                          style: Constants.theme
-                                              .textTheme.titleLarge
-                                              ?.copyWith(
-                                              color: Colors.black),
+                                          style: Constants
+                                              .theme.textTheme.titleLarge
+                                              ?.copyWith(color: Colors.black),
                                         ),
                                       ),
                                       content: SizedBox(
@@ -257,12 +298,30 @@ class _AddQuestionState extends State<AddQuestion> {
                                         width:
                                             Constants.mediaQuery.width * 0.45,
                                         child: TabItemWidget(
-                                          item3: "السيناريو التالت",
-                                          item2: "السيناريو التاني",
                                           item1: "السيناريو الاول",
-                                          firstWidget: CheckBoxQuestion(),
-                                          secondWidget: CheckBoxQuestion(),
-                                          thirdWidget: CheckBoxQuestion(),
+                                          item2: "السيناريو التاني",
+                                          item3: "السيناريو التالت",
+                                          firstWidget: CheckBoxQuestion(
+                                            items: pointers1,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                selectedPointers1[index] =
+                                                    value!;
+                                              });
+                                            },
+                                          ),
+                                          secondWidget: CheckBoxQuestion(
+                                            items: pointers2,
+                                            onChanged: (value) {
+                                              selectedPointers2[index] = value!;
+                                            },
+                                          ),
+                                          thirdWidget: CheckBoxQuestion(
+                                            items: pointers3,
+                                            onChanged: (value) {
+                                              selectedPointers3[index] = value!;
+                                            },
+                                          ),
                                         ),
                                       ),
                                       actions: [
@@ -296,10 +355,12 @@ class _AddQuestionState extends State<AddQuestion> {
                                   },
                                 );
                               },
-                              child: Text("المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.black,)
+                              child: Text("المؤاشرات",
+                                  style: Constants.theme.textTheme.bodyMedium
+                                      ?.copyWith(
+                                    color: Colors.black,
+                                  )),
                             ),
-                          ),
                           ),
                           Row(
                             children: [
@@ -341,72 +402,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     ),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Map<String, dynamic> requestData = {
-                          "axis_id": 2,
-                          "title": "الحالة الأجتماعية",
-                          "question_options": [
-                            {
-                              "type": 0,
-                              "required": 0,
-                              "title": "متزوج ؟",
-                              "advices": [1, 3],
-                              "pointers": [1]
-                            },
-                            {
-                              "type": 0,
-                              "required": 0,
-                              "title": "لديك أبناء ؟",
-                              "advices": [1, 3],
-                              "pointers": [1]
-                            },
-                            {
-                              "type": 0,
-                              "required": 0,
-                              "title": "لديك منزل ؟",
-                              "advices": [1, 3],
-                              "pointers": [1]
-                            }
-                          ]
-                        };
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: AlertDialog(
-                                  title: Text(
-                                    "تم اضافة السؤال",
-                                    style: Constants.theme.textTheme.bodyMedium
-                                        ?.copyWith(color: Colors.black),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                              color: Constants.theme.primaryColor,
-                                              width: 2.5,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            "اغلاق",
-                                            style: Constants
-                                                .theme.textTheme.bodyMedium
-                                                ?.copyWith(color: Colors.black),
-                                          ).setHorizontalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              20)),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            });
+                        storeQuestion(context);
+                      
                       }
                     },
                   ),
@@ -416,8 +413,68 @@ class _AddQuestionState extends State<AddQuestion> {
               .setHorizontalPadding(context, enableMediaQuery: false, 10),
         ),
       ),
-    ]
-    );
+    ]);
+  }
+
+  void storeQuestion(BuildContext context) {
+     Map<String, dynamic> requestData = {
+      "axis_id": _selecetdAixs,
+      "title": titleController.text,
+      "question_options": [
+        for (int i = 0; i < answerControllers.length; i++)
+          {
+            "type": _answerTypes[i],
+            "required": _checkBoxValues[i],
+            "title": answerControllers[i].text,
+            "advices": selectedAdvices[i],
+            "pointers": selectedPointers1[i] +
+                selectedPointers2[i] +
+                selectedPointers3[i]
+          }
+      ]
+    };
+    
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: AlertDialog(
+              title: Text(
+                "تم اضافة السؤال",
+                style: Constants.theme.textTheme.bodyMedium
+                    ?.copyWith(color: Colors.black),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(10),
+                        border: Border.all(
+                          color:
+                              Constants.theme.primaryColor,
+                          width: 2.5,
+                        ),
+                      ),
+                      child: Text(
+                        "اغلاق",
+                        style: Constants
+                            .theme.textTheme.bodyMedium
+                            ?.copyWith(color: Colors.black),
+                      ).setHorizontalPadding(
+                          context,
+                          enableMediaQuery: false,
+                          20)),
+                ),
+              ],
+            ),
+          );
+        });
+                          
   }
 
   void _toggleTextField() {
@@ -440,4 +497,61 @@ class _AddQuestionState extends State<AddQuestion> {
     answerControllers.forEach((controller) => controller.dispose());
     super.dispose();
   }
+
+  Future<void> fetchPointers() async {
+    final dio = Dio();
+    try {
+      final response =await dio.get('/api/pointer');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data["pointers"];
+        List<Pointers> pointers = [];
+        List<Pointers> pointers1Temp = [];
+        List<Pointers> pointers2Temp = [];
+        List<Pointers> pointers3Temp = [];
+
+        pointers = data.map((json) => Pointers.fromJson(json)).toList();
+        pointers.forEach(
+          (pointer) {
+            if (pointer.senarioId == 1) {
+              pointers1Temp.add(pointer);
+            } else if (pointer.senarioId == 2) {
+              pointers2Temp.add(pointer);
+            } else if (pointer.senarioId == 3) {
+              pointers3Temp.add(pointer);
+            }
+          },
+        );
+        setState(() {
+          pointers1 = pointers1Temp;
+          pointers2 = pointers2Temp;
+          pointers3 = pointers3Temp;
+        });
+      } else {
+        print('Failed to load users. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+
+  Future<void> fetchAdvices() async {
+    final dio = Dio();
+    try {
+      final response =await dio.get('/api/advice');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data["advices"];
+        List<Advices> advicesdata = [];
+
+        advicesdata = data.map((json) => Advices.fromJson(json)).toList();
+        setState(() {
+          advices = advicesdata; 
+        });
+      } else {
+        print('Failed to load users. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+
 }

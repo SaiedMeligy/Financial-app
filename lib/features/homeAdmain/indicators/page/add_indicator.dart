@@ -1,8 +1,8 @@
-import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/config/constants.dart';
-import '../../../../core/widget/custom_text_field.dart';
 import '../../../../core/widget/radio_button.dart';
+import '../../../../core/widget/custom_text_field.dart';
+import 'package:experts_app/core/extensions/padding_ext.dart';
 class AddIndicator extends StatefulWidget {
   const AddIndicator({super.key});
 
@@ -40,7 +40,17 @@ class _AddIndicatorState extends State<AddIndicator> {
                       textAlign: TextAlign.start,
                     ),
                     const SizedBox(width: 10,),
-                    RadioWidget(titleRadio: "اختر السيناريو",item1: "السيناريو الاول",item2: "السيناريو التاني",item3: "السيناريو التالت",),
+                    RadioWidget(
+                      titleRadio: "اختر السيناريو",
+                      items: const[
+                        MapEntry("السيناريو الاول",1),
+                        MapEntry("السيناريو التاني",2),
+                        MapEntry("السيناريو التالت",3)
+                      ],
+                      onChanged: (value){
+
+                      }
+                    ),
                   ],
                 ),
                 const SizedBox(height: 15,),

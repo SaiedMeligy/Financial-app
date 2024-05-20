@@ -1,27 +1,33 @@
-import 'package:experts_app/core/config/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:experts_app/core/config/constants.dart';
 
 class RadioWidget extends StatefulWidget {
   final String titleRadio;
-  final String? item1;
-  final String? item2;
-  final String? item3;
+  final List<MapEntry> items;
+  
+  final ValueChanged<int?> onChanged;
 
-  RadioWidget({Key? key, required this.titleRadio, this.item1, this.item2, this.item3}) : super(key: key);
+  RadioWidget({
+    Key? key,
+    required this.titleRadio,
+    required this.items,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   State<RadioWidget> createState() => _RadioWidgetState();
 }
 
 class _RadioWidgetState extends State<RadioWidget> {
-  String? selectedValue;
+  int? selectedValue;
   bool isDropdownOpen = false;
 
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.item1;
+    selectedValue = widget.items.first.value;
   }
+
   void toggleDropdown() {
     setState(() {
       isDropdownOpen = !isDropdownOpen;
@@ -45,47 +51,56 @@ class _RadioWidgetState extends State<RadioWidget> {
               ),
             ),
             child: SizedBox(
-              width: Constants.mediaQuery.width*0.12,
-              child: DropdownButton<String>(
+              width: Constants.mediaQuery.width * 0.12,
+              child: DropdownButton<int>(
                 value: selectedValue,
-                onChanged: (newValue) {
+
+                items: widget.items.map((item) {
+                  return DropdownMenuItem<int>(
+                    value: item.value,
+                    child: Text(item.key),
+                  );
+                }).toList(),
+                onChanged: (int? newValue) {
                   setState(() {
                     selectedValue = newValue;
                   });
+                  widget.onChanged(newValue);
                 },
-                items: [
-                  if (widget.item1 != null)
-                    DropdownMenuItem(
-                      value: widget.item1,
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.item1!,
-                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  if (widget.item2 != null)
-                    DropdownMenuItem(
-                      value: widget.item2,
-                      child: Text(
-                        widget.item2!,
-                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  if (widget.item3 != null)
-                    DropdownMenuItem(
-                      value: widget.item3,
-                      child: Text(
-                        widget.item3!,
-                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                ],
+                //  [
+
+                //   if (widget.item1 != null)
+                //     DropdownMenuItem(
+                //       value: widget.item1,
+                //       alignment: Alignment.center,
+                //       child: Text(
+                //         widget.item1!,
+                //         style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                //           color: Colors.black,
+                //         ),
+                //       ),
+                //     ),
+                //   if (widget.item2 != null)
+                //     DropdownMenuItem(
+                //       value: widget.item2,
+                //       child: Text(
+                //         widget.item2!,
+                //         style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                //           color: Colors.black,
+                //         ),
+                //       ),
+                //     ),
+                //   if (widget.item3 != null)
+                //     DropdownMenuItem(
+                //       value: widget.item3,
+                //       child: Text(
+                //         widget.item3!,
+                //         style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                //           color: Colors.black,
+                //         ),
+                //       ),
+                //     ),
+                // ]
               ),
             ),
           ),
@@ -93,6 +108,4 @@ class _RadioWidgetState extends State<RadioWidget> {
       ],
     );
   }
-
-
 }
