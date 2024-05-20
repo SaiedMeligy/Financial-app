@@ -4,11 +4,13 @@ import 'package:experts_app/core/config/constants.dart';
 
 class CheckBoxQuestion extends StatefulWidget {
   final List<dynamic> items;
+  final List<int> previous;
   final ValueChanged<List<int>?> onChanged;
 
   const CheckBoxQuestion({
     super.key,
     required this.items,
+    required this.previous,
     required this.onChanged,
   });
 
@@ -24,19 +26,18 @@ class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
   void initState() {
     super.initState();
     checked = List.generate(widget.items.length, (index) => false);
-  }
-
-  @override
-  void didUpdateWidget(CheckBoxQuestion oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.items != widget.items) {
-      checked = List.generate(widget.items.length, (index) => false);
-      selected.clear();
+    for(int index = 0 ; index < widget.items.length; index++) {
+      if (widget.previous.contains(widget.items[index].id)) {
+        checked[index] = true;
+      }
     }
+    selected = widget.previous;   
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.previous);
+    print(checked);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SizedBox(
@@ -47,7 +48,7 @@ class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
           itemBuilder: (context, index) {
             return CheckboxListTile(
               title: Text(widget.items[index].text),
-              value: checked[index],
+              value:checked[index],
               selected: checked[index],
               onChanged: (bool? value) {
                 setState(() {
