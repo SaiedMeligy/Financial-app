@@ -4,7 +4,6 @@ import 'package:experts_app/core/config/constants.dart';
 class RadioWidget extends StatefulWidget {
   final String titleRadio;
   final List<MapEntry> items;
-  
   final ValueChanged<int?> onChanged;
 
   RadioWidget({
