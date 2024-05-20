@@ -1,7 +1,7 @@
-import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:experts_app/core/config/constants.dart';
+import '../../../../core/config/cash_helper.dart';
 import '../../../../core/widget/custom_text_field.dart';
 import 'package:experts_app/core/widget/radio_button.dart';
 import 'package:experts_app/domain/entities/AdviceMode.dart';
@@ -501,7 +501,16 @@ class _AddQuestionState extends State<AddQuestion> {
   Future<void> fetchPointers() async {
     final dio = Dio();
     try {
-      final response =await dio.get('/api/pointer');
+      final response =await dio.get(
+
+        '${Constants.baseUrl}/api/pointer',
+          options: Options(
+              headers: {
+                "api-password": Constants.apiPassword,
+                "token": CacheHelper.getData(key: "token")
+              }
+          ),
+      );
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data["pointers"];
         List<Pointers> pointers = [];
@@ -537,11 +546,18 @@ class _AddQuestionState extends State<AddQuestion> {
   Future<void> fetchAdvices() async {
     final dio = Dio();
     try {
-      final response =await dio.get('/api/advice');
+      final response =await dio.get(
+        '${Constants.baseUrl}/api/advice',
+        options: Options(
+            headers: {
+              "api-password": Constants.apiPassword,
+              "token": CacheHelper.getData(key: "token")
+            }
+        ),);
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data["advices"];
+        print(data);
         List<Advices> advicesdata = [];
-
         advicesdata = data.map((json) => Advices.fromJson(json)).toList();
         setState(() {
           advices = advicesdata; 
