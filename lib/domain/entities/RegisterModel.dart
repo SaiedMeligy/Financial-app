@@ -92,13 +92,13 @@ class RegisterDataRequest {
   final String email;
   final String password;
   final String phoneNumber;
-  final String rule;
+   String? rule;
 
   RegisterDataRequest({
     required this.name,
     required this.email,
     required this.password,
     required this.phoneNumber,
-    required this.rule,
+     this.rule,
   });
 }

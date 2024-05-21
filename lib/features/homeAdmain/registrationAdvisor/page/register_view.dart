@@ -155,33 +155,6 @@ class _RegisterViewState extends State<RegisterView> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 30),
-                          FadeInRight(
-                            delay: const Duration(microseconds: 900),
-                            child: Text(
-                              "rule",
-                              style: Constants.theme.textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.black),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          FadeInRight(
-                            delay: const Duration(microseconds: 1000),
-                            child: CustomTextField(
-                              controller: ruleController,
-                              hint: "enter your rule",
-                              isPassword: true,
-                              maxLines: 1,
-                              onValidate: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return "Please enter your rule";
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -196,7 +169,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       name: nameController.text,
                                       email: emailController.text,
                                       password: passwordController.text,
-                                      phoneNumber: phoneController.text, rule:ruleController.text);
+                                      phoneNumber: phoneController.text, rule:"0");
                                   if (formKey.currentState!.validate()) {
                                     registerCubit
                                         .registerUser(data)
