@@ -1,14 +1,14 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/config/constants.dart';
-import '../../../../core/widget/border_rounded_button.dart';
-import '../../../../core/widget/custom_text_field.dart';
-import '../../../../domain/entities/RegisterModel.dart';
 import '../manager/cubit.dart';
 import '../manager/states.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/config/constants.dart';
+import '../../../../core/widget/custom_text_field.dart';
+import '../../../../domain/entities/RegisterModel.dart';
+import '../../../../core/widget/border_rounded_button.dart';
+
 
 
 
@@ -158,6 +158,9 @@ class _RegisterViewState extends State<RegisterView> {
                           const SizedBox(
                             height: 30,
                           ),
+                          const SizedBox(height: 30),
+                          
+
                           FadeInRight(
                             delay: const Duration(microseconds: 1100),
                             child: BorderRoundedButton(
@@ -170,6 +173,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       email: emailController.text,
                                       password: passwordController.text,
                                       phoneNumber: phoneController.text, rule:"0");
+
                                   if (formKey.currentState!.validate()) {
                                     registerCubit
                                         .registerUser(data)

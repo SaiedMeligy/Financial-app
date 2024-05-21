@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:experts_app/core/config/constants.dart';
 import '../../../../core/config/cash_helper.dart';
+import 'package:experts_app/core/config/constants.dart';
 import '../../../../core/widget/custom_text_field.dart';
 import 'package:experts_app/core/widget/radio_button.dart';
 import 'package:experts_app/domain/entities/AdviceMode.dart';
@@ -218,6 +218,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                                 ),
                                               ),
                                               CheckBoxQuestion(
+                                                previous: selectedAdvices[index],
                                                 items: advices,
                                                 onChanged: (value) {
                                                   setState(() {
@@ -303,6 +304,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                           item3: "السيناريو التالت",
                                           firstWidget: CheckBoxQuestion(
                                             items: pointers1,
+                                            previous: selectedPointers1[index],
                                             onChanged: (value) {
                                               setState(() {
                                                 selectedPointers1[index] =
@@ -311,12 +313,14 @@ class _AddQuestionState extends State<AddQuestion> {
                                             },
                                           ),
                                           secondWidget: CheckBoxQuestion(
+                                            previous: selectedPointers2[index],
                                             items: pointers2,
                                             onChanged: (value) {
                                               selectedPointers2[index] = value!;
                                             },
                                           ),
                                           thirdWidget: CheckBoxQuestion(
+                                            previous: selectedPointers3[index],
                                             items: pointers3,
                                             onChanged: (value) {
                                               selectedPointers3[index] = value!;
@@ -403,7 +407,6 @@ class _AddQuestionState extends State<AddQuestion> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         storeQuestion(context);
-                      
                       }
                     },
                   ),
@@ -417,7 +420,7 @@ class _AddQuestionState extends State<AddQuestion> {
   }
 
   void storeQuestion(BuildContext context) {
-     Map<String, dynamic> requestData = {
+    Map<String, dynamic> requestData = {
       "axis_id": _selecetdAixs,
       "title": titleController.text,
       "question_options": [
@@ -433,7 +436,7 @@ class _AddQuestionState extends State<AddQuestion> {
           }
       ]
     };
-    
+
     showDialog(
         context: context,
         builder: (context) {
@@ -452,29 +455,23 @@ class _AddQuestionState extends State<AddQuestion> {
                   },
                   child: Container(
                       decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color:
-                              Constants.theme.primaryColor,
+                          color: Constants.theme.primaryColor,
                           width: 2.5,
                         ),
                       ),
                       child: Text(
                         "اغلاق",
-                        style: Constants
-                            .theme.textTheme.bodyMedium
+                        style: Constants.theme.textTheme.bodyMedium
                             ?.copyWith(color: Colors.black),
                       ).setHorizontalPadding(
-                          context,
-                          enableMediaQuery: false,
-                          20)),
+                          context, enableMediaQuery: false, 20)),
                 ),
               ],
             ),
           );
         });
-                          
   }
 
   void _toggleTextField() {
@@ -487,6 +484,10 @@ class _AddQuestionState extends State<AddQuestion> {
     setState(() {
       answerControllers.add(TextEditingController());
       _checkBoxValues.add(false);
+      selectedPointers1.add([]);
+      selectedPointers2.add([]);
+      selectedPointers3.add([]);
+      selectedAdvices.add([]);
     });
   }
 
@@ -501,15 +502,12 @@ class _AddQuestionState extends State<AddQuestion> {
   Future<void> fetchPointers() async {
     final dio = Dio();
     try {
-      final response =await dio.get(
-
+      final response = await dio.get(
         '${Constants.baseUrl}/api/pointer',
-          options: Options(
-              headers: {
-                "api-password": Constants.apiPassword,
-                "token": CacheHelper.getData(key: "token")
-              }
-          ),
+        options: Options(headers: {
+          "api-password": Constants.apiPassword,
+          "token": CacheHelper.getData(key: "token")
+        }),
       );
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data["pointers"];
@@ -546,21 +544,20 @@ class _AddQuestionState extends State<AddQuestion> {
   Future<void> fetchAdvices() async {
     final dio = Dio();
     try {
-      final response =await dio.get(
+      final response = await dio.get(
         '${Constants.baseUrl}/api/advice',
-        options: Options(
-            headers: {
-              "api-password": Constants.apiPassword,
-              "token": CacheHelper.getData(key: "token")
-            }
-        ),);
+        options: Options(headers: {
+          "api-password": Constants.apiPassword,
+          "token": CacheHelper.getData(key: "token")
+        }),
+      );
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data["advices"];
         print(data);
         List<Advices> advicesdata = [];
         advicesdata = data.map((json) => Advices.fromJson(json)).toList();
         setState(() {
-          advices = advicesdata; 
+          advices = advicesdata;
         });
       } else {
         print('Failed to load users. Status code: ${response.statusCode}');
@@ -569,5 +566,4 @@ class _AddQuestionState extends State<AddQuestion> {
       print('Error occurred: $e');
     }
   }
-
 }
