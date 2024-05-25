@@ -21,6 +21,8 @@ class ViewQuestion extends StatefulWidget {
 
 class _ViewQuestionState extends State<ViewQuestion> {
   var questionViewCubit =QuestionViewCubit();
+  Set<int> displayedAxisIds = {};
+
 
   @override
   void initState() {
@@ -39,6 +41,11 @@ class _ViewQuestionState extends State<ViewQuestion> {
             child: ListView.builder(
               itemCount: question.length,
               itemBuilder: (context, index) {
+                bool isAxisDisplayed = displayedAxisIds.contains(question[index].axis!.id);
+
+                if (!isAxisDisplayed) {
+                  displayedAxisIds.add(question[index].axis!.id!);
+                }
                 return
                   Container(
                     decoration: BoxDecoration(
@@ -58,85 +65,89 @@ class _ViewQuestionState extends State<ViewQuestion> {
                         // if(!axis.contains(question[index].axis?.id))
                         //
                         //   axis.add(question[index].axis!.id!)
-                        //
-                        // Container(
-                        //   width: double.infinity,
-                        //   child: CustomPaint(
-                        //     foregroundPainter: LinePainter(
-                        //       text: question[index].title.toString() ,
-                        //     ),
-                        //     child: Container(
-                        //       width: Constants.mediaQuery.width*0.2,
-                        //       height: question[index].questionOptions!.length > 2 ? question[index].questionOptions!.length * 100 : 200 ,
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(10),
-                        //         border: Border.all(
-                        //           color: Constants.theme.primaryColor,
-                        //           width: 2.5,
-                        //         )
-                        //       ),
-                        //       child: Column(
-                        //         mainAxisAlignment: MainAxisAlignment.start,
-                        //         crossAxisAlignment: CrossAxisAlignment.start,
-                        //         children: [
-                        //           for(int i = 0 ; i < question[index].questionOptions!.length ; i++)...[
-                        //             Container(
-                        //               width: Constants.mediaQuery.width * 0.4 ,
-                        //               height: Constants.mediaQuery.height * 0.1 ,
-                        //               margin: EdgeInsets.all(8),
-                        //               decoration: BoxDecoration(
-                        //                 color: Constants.theme.primaryColor,
-                        //                 borderRadius: BorderRadius.circular(10),
-                        //                 border: Border.all(
-                        //                   color: Constants.theme.primaryColor,
-                        //                   width: 2.5,
-                        //                 )
-                        //               ),
-                        //               child: Row(
-                        //                 crossAxisAlignment: CrossAxisAlignment.center,
-                        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //                 children: [
-                        //                   Text(
-                        //                     question[index].questionOptions![i].title.toString() ,
-                        //                     style: Constants.theme.textTheme.bodyMedium
-                        //                   ),
-                        //
-                        //                   /// ==
-                        //                   if(question[index].questionOptions![i].type == 0)
-                        //                     Radio<int>(
-                        //                       value: 1 ,
-                        //                       groupValue: 1 ,
-                        //                       onChanged: (value) {
-                        //                         setState(() {
-                        //                           // _selectedValue = value;
-                        //                         });
-                        //                       },
-                        //                     ),
-                        //                   if(question[index].questionOptions![i].type == 1)
-                        //                     Checkbox(value: true , onChanged: (value){}),
-                        //
-                        //                   if(question[index].questionOptions![i].type == 2)
-                        //                     Container(
-                        //                       width: Constants.mediaQuery.width * 0.2 ,
-                        //                       height: Constants.mediaQuery.height * 0.2 ,
-                        //                       decoration: BoxDecoration(
-                        //                         color: Constants.theme.primaryColor
-                        //                       ),
-                        //                       child:
-                        //                       const QuestionTextField(hint: "ادخل النص",
-                        //                       maxLines: 3,)
-                        //                     )
-                        //
-                        //                 ],
-                        //               ),
-                        //             )
-                        //           ]
-                        //         ],
-                        //       ),
-                        //       // color: Colors.amberAccent,
-                        //     )
-                        //   ),
-                        // ),
+                        if(!isAxisDisplayed)
+                        Text(question[index].axis!.name.toString(),style: TextStyle(
+                          color: Colors.black
+                        )),
+
+                        Container(
+                          width: double.infinity,
+                          child: CustomPaint(
+                            foregroundPainter: LinePainter(
+                              text: question[index].title.toString() ,
+                            ),
+                            child: Container(
+                              width: Constants.mediaQuery.width*0.2,
+                              height: question[index].questionOptions!.length > 2 ? question[index].questionOptions!.length * 100 : 200 ,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Constants.theme.primaryColor,
+                                  width: 2.5,
+                                )
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  for(int i = 0 ; i < question[index].questionOptions!.length ; i++)...[
+                                    Container(
+                                      width: Constants.mediaQuery.width * 0.4 ,
+                                      height: Constants.mediaQuery.height * 0.1 ,
+                                      margin: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: Constants.theme.primaryColor,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: Constants.theme.primaryColor,
+                                          width: 2.5,
+                                        )
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            question[index].questionOptions![i].title.toString() ,
+                                            style: Constants.theme.textTheme.bodyMedium
+                                          ),
+
+                                          /// ==
+                                          if(question[index].questionOptions![i].type == 0)
+                                            Radio<int>(
+                                              value: 1 ,
+                                              groupValue: 1 ,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  // _selectedValue = value;
+                                                });
+                                              },
+                                            ),
+                                          if(question[index].questionOptions![i].type == 1)
+                                            Checkbox(value: true , onChanged: (value){}),
+
+                                          if(question[index].questionOptions![i].type == 2)
+                                            Container(
+                                              width: Constants.mediaQuery.width * 0.2 ,
+                                              height: Constants.mediaQuery.height * 0.2 ,
+                                              decoration: BoxDecoration(
+                                                color: Constants.theme.primaryColor
+                                              ),
+                                              child:
+                                              const QuestionTextField(hint: "ادخل النص",
+                                              maxLines: 3,)
+                                            )
+
+                                        ],
+                                      ),
+                                    )
+                                  ]
+                                ],
+                              ),
+                              // color: Colors.amberAccent,
+                            )
+                          ),
+                        ),
                       ],
                     ).setVerticalPadding(context,enableMediaQuery: false ,10).setHorizontalPadding(context,enableMediaQuery: false, 10),
                   ).setHorizontalPadding(context,enableMediaQuery: false,10).setVerticalPadding(context,enableMediaQuery: false, 10);
