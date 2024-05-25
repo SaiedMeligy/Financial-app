@@ -2,13 +2,16 @@
 
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/domain/entities/QuestionView.dart';
+import 'package:experts_app/features/homeAdvisor/add_user/page/add_user_view.dart';
 import 'package:experts_app/features/homeAdvisor/home/page/home_advisor_view.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/page/session_data_view.dart';
+import 'package:experts_app/features/homeAdvisor/viewQuestion/page/view_question.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/config/constants.dart';
 import '../../domain/entities/side_bar_model.dart';
-import '../homeAdmain/logout/page/logout_view.dart';
+import '../homeAdmin/logout/page/logout_view.dart';
 import 'cases/page/cases_view.dart';
 
 class AdvisorLayoutView extends StatefulWidget {
@@ -26,16 +29,22 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
     List<SideBarModel> titles = [
       SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home)),
       SideBarModel(title: "حالاتك", icon: Icon(Icons.list)),
+      SideBarModel(title: "بدء جلسة", icon: Icon(Icons.timer)),
       SideBarModel(title: "مواعيد الجلسات", icon: Icon(Icons.access_time_rounded)),
       SideBarModel(title: "اضافة جلسة", icon: Icon(Icons.add)),
       SideBarModel(title: "حجز المواعيد", icon: Icon(Icons.list)),
+      SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add)),
     ];
     List<Widget> bodies = [
       HomeAdvisorView(),
       CasesView(),
+      ViewQuestion(),
+      // Center(child: Text("بدء جلسة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       SessionDate(),
       Center(child: Text("تعديل المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       Center(child: Text("تعديل المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
+      AddUserView(),
+      // Center(child: Text("اضافة حالة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
     ];
 
     return Scaffold(

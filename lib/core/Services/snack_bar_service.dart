@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../config/constants.dart';
+
 class SnackBarService {
   static void showSuccessMessage(String msg) {
     BotToast.showCustomNotification(
@@ -119,16 +121,13 @@ class SnackBarService {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Success",
+                       Text(
+                        "تمت العملية بنجاح",
                         textAlign: TextAlign.start,
                         maxLines: 3,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
+                        style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                          color: Colors.black
+                        )
                       ),
                       Text(
                         msg,
@@ -152,7 +151,7 @@ class SnackBarService {
                   child: IconButton(
                     onPressed: cancelFunc,
                     icon: const Text(
-                      "close",
+                      "اغلاق",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black54),
                     ),
@@ -216,16 +215,14 @@ class SnackBarService {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Error",
+                       Text(
+                        "خطأ",
                         textAlign: TextAlign.start,
                         maxLines: 3,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
+                        style:
+                       Constants.theme.textTheme.bodyMedium?.copyWith(
+                         color: Colors.black
+                       )
                       ),
                       Text(
                         msg,
@@ -249,7 +246,7 @@ class SnackBarService {
                   child: IconButton(
                     onPressed: cancelFunc,
                     icon: const Text(
-                      "close",
+                      "اغلاق",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black54),
                     ),
@@ -286,15 +283,13 @@ class SnackBarService {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Error",
+                       Text(
+                        "خطأ",
                         textAlign: TextAlign.start,
                         maxLines: 3,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                        style:
+                        Constants.theme.textTheme.bodyMedium?.copyWith(
+                          color: Colors.black
                         ),
                       ),
                       Text(
@@ -319,7 +314,7 @@ class SnackBarService {
                   child: IconButton(
                     onPressed: cancelFunc,
                     icon: const Text(
-                      "close",
+                      "اغلاق",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black54),
                     ),

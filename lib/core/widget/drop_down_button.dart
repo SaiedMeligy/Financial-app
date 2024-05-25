@@ -23,53 +23,51 @@ class _DropDownButtonState extends State<DropDownButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          GestureDetector(
-            onTap: toggleDropdown,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: Constants.theme.primaryColor,
-                  width: 2.5,
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        GestureDetector(
+          onTap: toggleDropdown,
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Constants.theme.primaryColor,
+                width: 2.5,
               ),
-              child: SizedBox(
-                width: Constants.mediaQuery.width * 0.1,
-                child: Row(
-                  children: [
-                    widget.titleRadio,
-                    SizedBox(width: 10),
-                    Icon(Icons.arrow_drop_down),
-                  ],
-                )
-              ),
+            ),
+            child: SizedBox(
+              width: Constants.mediaQuery.width * 0.09,
+              child: Row(
+                children: [
+                  widget.titleRadio,
+                  SizedBox(width: 10),
+                  Icon(Icons.arrow_drop_down),
+                ],
+              )
             ),
           ),
-          if (isDropdownOpen && widget.items != null)
-            Column(
-              children: widget.items!.map((item) {
-                return CheckboxListTile(
-                  title: Text(item),
-                  value: selectedValues.contains(item),
-                  onChanged: (value) {
-                    setState(() {
-                      if (value!) {
-                        selectedValues.add(item);
-                      } else {
-                        selectedValues.remove(item);
-                      }
-                    });
-                  },
-                );
-              }).toList(),
-            ),
-        ],
-      ),
+        ),
+        if (isDropdownOpen && widget.items != null)
+          Column(
+            children: widget.items!.map((item) {
+              return CheckboxListTile(
+                title: Text(item),
+                value: selectedValues.contains(item),
+                onChanged: (value) {
+                  setState(() {
+                    if (value!) {
+                      selectedValues.add(item);
+                    } else {
+                      selectedValues.remove(item);
+                    }
+                  });
+                },
+              );
+            }).toList(),
+          ),
+      ],
     );
   }
 }

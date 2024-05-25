@@ -1,7 +1,7 @@
 import 'package:experts_app/features/homeAdvisor/advisor_layout_view.dart';
 import 'package:flutter/material.dart';
 
-import '../../features/homeAdmain/home_admin_view.dart';
+import '../../features/homeAdmin/home_admin_view.dart';
 import '../../features/initialPage/initial_page.dart';
 import '../../features/login/page/log_view.dart';
 

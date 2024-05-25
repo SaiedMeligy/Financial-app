@@ -5,12 +5,14 @@ class RadioWidget extends StatefulWidget {
   final String titleRadio;
   final List<MapEntry> items;
   final ValueChanged<int?> onChanged;
+  final String? errorMessage;
 
   RadioWidget({
     Key? key,
     required this.titleRadio,
     required this.items,
     required this.onChanged,
+    this.errorMessage,
   }) : super(key: key);
 
   @override
@@ -57,7 +59,9 @@ class _RadioWidgetState extends State<RadioWidget> {
                 items: widget.items.map((item) {
                   return DropdownMenuItem<int>(
                     value: item.value,
-                    child: Text(item.key),
+                    child: Text(item.key,style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black
+                    ),),
                   );
                 }).toList(),
                 onChanged: (int? newValue) {
@@ -66,6 +70,7 @@ class _RadioWidgetState extends State<RadioWidget> {
                   });
                   widget.onChanged(newValue);
                 },
+
                 //  [
 
                 //   if (widget.item1 != null)
@@ -104,6 +109,14 @@ class _RadioWidgetState extends State<RadioWidget> {
             ),
           ),
         ),
+        if (widget.errorMessage != null && selectedValue == widget.items.first.value)
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              widget.errorMessage!,
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
       ],
     );
   }
