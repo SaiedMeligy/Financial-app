@@ -17,13 +17,14 @@ class ViewQuestion extends StatefulWidget {
 }
 
 class _ViewQuestionState extends State<ViewQuestion> {
-  var questionViewCubit =QuestionViewCubit();
-
+  var questionViewCubit = QuestionViewCubit();
 
   @override
   void initState() {
     questionViewCubit.getAllQuestion();
   }
+
+  List<Map<String, dynamic>> answers = [];
 
   Widget build(BuildContext context) {
     return BlocBuilder<QuestionViewCubit, QuestionViewStates>(
@@ -33,32 +34,35 @@ class _ViewQuestionState extends State<ViewQuestion> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SuccessQuestionViewState) {
           var question = state.question;
+          question.forEach((q) {
+            q.questionOptions?.forEach(
+              (option) {
+                answers.add({option.id.toString(): ""});
+              },
+            );
+          });
           List<int> axisDisplay = [];
-          question.forEach(
-            (q) {
-              // for(int i=0;i<q.questionOptions!.length;i++) {
-                if (!axisDisplay.contains(q.axisId)) {
-                  axisDisplay.add(q.axisId!);
-                } else {
-                  axisDisplay.add(0);
-                }
-
-              }
-          );
+          question.forEach((q) {
+            // for(int i=0;i<q.questionOptions!.length;i++) {
+            if (!axisDisplay.contains(q.axisId)) {
+              axisDisplay.add(q.axisId!);
+            } else {
+              axisDisplay.add(0);
+            }
+          });
           print(axisDisplay);
           return Directionality(
             textDirection: TextDirection.rtl,
             child: ListView.builder(
-              itemCount: question.length,
-              itemBuilder: (context, index) {
+                itemCount: question.length,
+                itemBuilder: (context, index) {
                   return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-
                     ),
                     child: Column(
                       children: [
-                        if (axisDisplay[index] != 0  )
+                        if (axisDisplay[index] != 0)
                           Text(
                             question[index].axis!.name.toString(),
                             style: TextStyle(color: Colors.black),
@@ -132,7 +136,7 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                                 groupValue: question[index].id,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    // _selectedValue = value;
+                                                    // answers[i][question[index].questionOptions![i]]=value;
                                                   });
                                                 },
                                               ),
@@ -142,7 +146,9 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                                 1)
                                               Checkbox(
                                                   value: true,
-                                                  onChanged: (value) {}),
+                                                  onChanged: (value) {
+                                                    // answers[i][question[index].questionOptions![i]]=value;
+                                                  }),
 
                                             if (question[index]
                                                     .questionOptions![i]
@@ -192,8 +198,6 @@ class _ViewQuestionState extends State<ViewQuestion> {
     );
   }
 }
-
-
 
 class LinePainter extends CustomPainter {
   final String text;
