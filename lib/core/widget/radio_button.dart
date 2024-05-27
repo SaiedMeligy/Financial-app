@@ -71,40 +71,6 @@ class _RadioWidgetState extends State<RadioWidget> {
                   widget.onChanged(newValue);
                 },
 
-                //  [
-
-                //   if (widget.item1 != null)
-                //     DropdownMenuItem(
-                //       value: widget.item1,
-                //       alignment: Alignment.center,
-                //       child: Text(
-                //         widget.item1!,
-                //         style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                //           color: Colors.black,
-                //         ),
-                //       ),
-                //     ),
-                //   if (widget.item2 != null)
-                //     DropdownMenuItem(
-                //       value: widget.item2,
-                //       child: Text(
-                //         widget.item2!,
-                //         style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                //           color: Colors.black,
-                //         ),
-                //       ),
-                //     ),
-                //   if (widget.item3 != null)
-                //     DropdownMenuItem(
-                //       value: widget.item3,
-                //       child: Text(
-                //         widget.item3!,
-                //         style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                //           color: Colors.black,
-                //         ),
-                //       ),
-                //     ),
-                // ]
               ),
             ),
           ),

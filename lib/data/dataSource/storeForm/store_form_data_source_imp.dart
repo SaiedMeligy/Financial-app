@@ -3,18 +3,18 @@ import 'package:dio/src/response.dart';
 
 import '../../../core/config/cash_helper.dart';
 import '../../../core/config/constants.dart';
-import 'add_question_data_source.dart';
+import 'store_form_data_source.dart';
 
-class AddQuestionDataSourceImp implements AddQuestionDataSource{
+class StoreFormDataSourceImp implements StoreFormDataSource{
   final Dio  dio;
-  AddQuestionDataSourceImp(this.dio);
+  StoreFormDataSourceImp(this.dio);
 
   @override
-  Future<Response> addQuestion(Map<String, dynamic> requestData) async{
+  Future<Response> store(Map<String, dynamic> storeData) async{
     try {
       return await dio.post(
-        '/api/question',
-        data: requestData,
+        '/api/advicor/form',
+        data: storeData,
         options: Options(
             headers: {
               "api-password": Constants.apiPassword,

@@ -3,4 +3,5 @@ class PageRouteName{
   static const String login = "/login";
   static const String homeAdmin = "/homeAdmin";
   static const String homeAdvisor = "/homeAdvisor";
+  static const String quetionView = "/questionView";
 }

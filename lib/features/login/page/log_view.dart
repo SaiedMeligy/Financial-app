@@ -22,11 +22,11 @@ class _LogViewState extends State<LogView> {
   final formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  var loginCubit =HomeCubit();
+  var loginCubit =LoginHomeCubit();
 
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<HomeCubit,HomeStates>(
+    return  BlocBuilder<LoginHomeCubit,HomeStates>(
       bloc: loginCubit,
       builder: (context, state) {
         return Scaffold(
@@ -155,6 +155,7 @@ class _LogViewState extends State<LogView> {
                                           print("Done");
                                           EasyLoading.dismiss();
                                           SnackBarService.showSuccessMessage("logged in Successfuly");
+                                          
                                           // Navigator.of(context).pushNamedAndRemoveUntil(PageRouteName.home,
                                           //   (route) => false
                                           //);

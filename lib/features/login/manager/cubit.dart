@@ -11,8 +11,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../core/Services/snack_bar_service.dart';
 import '../../../data/dataSource/login/login_data_source.dart';
 
- class HomeCubit extends Cubit<HomeStates>{
-    HomeCubit() : super(LoginLoadingState());
+ class LoginHomeCubit extends Cubit<HomeStates>{
+    LoginHomeCubit() : super(LoginLoadingState());
   late LoginUseCase loginUseCase;
   late LoginRepository loginRepository;
   late LoginDataSource loginDataSource;

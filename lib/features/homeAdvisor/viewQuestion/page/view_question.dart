@@ -1,10 +1,13 @@
+import 'package:experts_app/core/widget/border_rounded_button.dart';
+import 'package:experts_app/domain/entities/ConsultationViewModel.dart';
+import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/constants.dart';
 import '../../../../core/widget/custom_text_field.dart';
 import '../../../../core/widget/Question_text_field.dart';
-import 'package:experts_app/core/widget/radio_button.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
@@ -17,11 +20,15 @@ class ViewQuestion extends StatefulWidget {
 }
 
 class _ViewQuestionState extends State<ViewQuestion> {
-  var questionViewCubit =QuestionViewCubit();
-
+  var questionViewCubit = QuestionViewCubit();
+  List<ConsultationServices> menuItem = [];
+  List<bool> _checkBoxValues = [];
+  List<Map<dynamic, dynamic>> answers = [];
 
   @override
   void initState() {
+    super.initState();
+
     questionViewCubit.getAllQuestion();
   }
 
@@ -34,155 +41,274 @@ class _ViewQuestionState extends State<ViewQuestion> {
         } else if (state is SuccessQuestionViewState) {
           var question = state.question;
           List<int> axisDisplay = [];
-          question.forEach(
-            (q) {
-              // for(int i=0;i<q.questionOptions!.length;i++) {
-                if (!axisDisplay.contains(q.axisId)) {
-                  axisDisplay.add(q.axisId!);
-                } else {
-                  axisDisplay.add(0);
-                }
+          question.forEach((q) {
+            if (!axisDisplay.contains(q.axisId)) {
+              axisDisplay.add(q.axisId!);
+            } else {
+              axisDisplay.add(0);
+            }
+          });
 
+          Map<dynamic, dynamic> answer = {};
+          for( int index = 0 ;  index < question.length ; index++) {
+            for (int i = 0; i < question[index].questionOptions!.length; i++) {
+              if (question[index].questionOptions![i].type == 1) {
+                answer.addAll({
+                  "RADIO_BUTTON": -1,
+                });
               }
-          );
-          print(axisDisplay);
+              else if (question[index].questionOptions![i].type == 2) {
+                answer.addAll({
+                  question[index].questionOptions![i].id : false,
+                });
+              } else {
+                answer.addAll({
+                  question[index].questionOptions![i].id: TextEditingController(text: ""),
+                });
+              }
+            }
+            answers.add(answer);
+          }
+
           return Directionality(
             textDirection: TextDirection.rtl,
-            child: ListView.builder(
-              itemCount: question.length,
-              itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-
-                    ),
-                    child: Column(
-                      children: [
-                        if (axisDisplay[index] != 0  )
-                          Text(
-                            question[index].axis!.name.toString(),
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        Container(
-                          width: double.infinity,
-                          child: CustomPaint(
-                              foregroundPainter: LinePainter(
-                                text: question[index].title.toString(),
-                              ),
-                              child: Container(
-                                width: Constants.mediaQuery.width * 0.2,
-                                height:
-                                    question[index].questionOptions!.length > 2
-                                        ? question[index]
-                                                .questionOptions!
-                                                .length *
-                                            100
-                                        : 200,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Constants.theme.primaryColor,
-                                      width: 2.5,
-                                    )),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    for (int i = 0;
-                                        i <
-                                            question[index]
-                                                .questionOptions!
-                                                .length;
-                                        i++) ...[
-                                      Container(
-                                        width: Constants.mediaQuery.width * 0.4,
-                                        height:
-                                            Constants.mediaQuery.height * 0.1,
-                                        margin: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                            color: Constants.theme.primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                              color:
-                                                  Constants.theme.primaryColor,
-                                              width: 2.5,
-                                            )),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                                question[index]
-                                                    .questionOptions![i]
-                                                    .title
-                                                    .toString(),
-                                                style: Constants.theme.textTheme
-                                                    .bodyMedium),
-
-                                            /// ==
-                                            if (question[index]
-                                                    .questionOptions![i]
-                                                    .type ==
-                                                0)
-                                              Radio<int>(
-                                                value: 0,
-                                                groupValue: question[index].id,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    // _selectedValue = value;
-                                                  });
-                                                },
-                                              ),
-                                            if (question[index]
-                                                    .questionOptions![i]
-                                                    .type ==
-                                                1)
-                                              Checkbox(
-                                                  value: true,
-                                                  onChanged: (value) {}),
-
-                                            if (question[index]
-                                                    .questionOptions![i]
-                                                    .type ==
-                                                2)
-                                              Container(
-                                                  width: Constants
-                                                          .mediaQuery.width *
-                                                      0.2,
-                                                  height: Constants
-                                                          .mediaQuery.height *
-                                                      0.2,
-                                                  decoration: BoxDecoration(
-                                                      color: Constants
-                                                          .theme.primaryColor),
-                                                  child:
-                                                      const QuestionTextField(
-                                                    hint: "ادخل النص",
-                                                    maxLines: 3,
-                                                  ))
-                                          ],
-                                        ),
-                                      )
-                                    ]
-                                  ],
-                                ),
-                                // color: Colors.amberAccent,
-                              )),
-                        ),
-                      ],
-                    )
-                        .setVerticalPadding(
-                            context, enableMediaQuery: false, 10)
-                        .setHorizontalPadding(
-                            context, enableMediaQuery: false, 10),
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: true,
+                backgroundColor: Colors.black87,
+              ),
+              body: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/background.jpg',),
+                    fit: BoxFit.cover,
+                    opacity: 0.5
                   )
-                      .setHorizontalPadding(
-                          context, enableMediaQuery: false, 10)
-                      .setVerticalPadding(context, enableMediaQuery: false, 10);
-                }),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      height: double.maxFinite,
+                      width: Constants.mediaQuery.width*0.2,
+                      color: Colors.black,
+                      child: Column(
+                        children: [
+                          Text("اسم الحالة",style: Constants.theme.textTheme.bodyMedium,),
+                          Text("اسم الاستشاري",style: Constants.theme.textTheme.bodyMedium,),
+                          Text("الرقم القومي",style: Constants.theme.textTheme.bodyMedium,),
+                          Text(
+                            "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",style: Constants.theme.textTheme.bodyMedium,),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: double.maxFinite,
+                                child: ListView.builder(
+                                    itemCount: question.length + 1,
+                                    itemBuilder: (context, index) {
+
+                                      return Column(
+                                        children: [
+                                          if (question.length != index) ...[
+                                            if (axisDisplay[index] != 0)
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    question[index].axis!.name.toString(),
+                                                    style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 5,),
+                                                  Container(
+                                                    height: 3,
+                                                    width:140,
+                                                    color: Colors.black54,
+                                                  )
+                                                ],
+                                              ),
+                                            SizedBox(height:10),
+                                            Container(
+                                              width: double.infinity,
+                                              child: CustomPaint(
+                                                  foregroundPainter: LinePainter(
+                                                    text: question[index].title.toString(),
+                                                  ),
+                                                  child: Container(
+                                                    width: Constants.mediaQuery.width * 0.2,
+                                                    height: question[index].questionOptions!.length > 2
+                                                        ? question[index].questionOptions!.length * 100
+                                                        : 200,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        border: Border.all(
+                                                          color: Colors.black87,
+                                                          width: 2.5,
+                                                        )),
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        for (int i = 0; i < question[index].questionOptions!.length; i++) ...[
+                                                          Container(
+                                                            width: Constants.mediaQuery.width * 0.4,
+                                                            height: Constants.mediaQuery.height * 0.1,
+                                                            margin: EdgeInsets.all(8),
+                                                            decoration: BoxDecoration(
+                                                                color: Colors.white54,
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                border:question[index].questionOptions![i].type != 3
+                                                                    ? Border.all(
+                                                                  color: Colors.black87,
+                                                                  width: 2.5,
+                                                                )
+                                                                    : null,
+                                                            ),
+                                                            child: Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                    question[index].questionOptions![i].title.toString(),
+                                                                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                                      color: Colors.black,
+                                                                    )),
+                                                                if (question[index].questionOptions![i].type == 1)
+                                                                  Radio<int>(
+                                                                    value: question[index].questionOptions![i].id!,
+                                                                    groupValue: answers[index]["RADIO_BUTTON"] as int?,
+                                                                    onChanged: (value) {
+                                                                      answers[index]["RADIO_BUTTON"] = value!;
+                                                                      print("//////////////"+answers.toString());
+
+                                                                      setState(() {});
+                                                                    },
+                                                                  ),
+                                                                if (question[index].questionOptions![i].type == 2)
+                                                                  Checkbox(
+                                                                      value: answers[index][question[index].questionOptions![i].id],
+                                                                      onChanged: (value) {
+                                                                        answers[index][question[index].questionOptions![i].id] = value!;
+                                                                        setState(() {});
+                                                                      }),
+                                                                if (question[index].questionOptions![i].type == 3)
+                                                                  Container(
+                                                                      width: Constants.mediaQuery.width * 0.2,
+                                                                      height: Constants.mediaQuery.height * 0.2,
+                                                                      decoration: BoxDecoration(
+                                                                      ),
+                                                                      child: QuestionTextField(
+                                                                        hint: "ادخل النص",
+                                                                        maxLines: 3,
+                                                                        controller: answers[index][question[index].questionOptions![i].id] as TextEditingController,
+                                                                      )
+                                                                  ).setVerticalPadding(context,enableMediaQuery: false ,5)
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ]
+                                                      ],
+                                                    ),
+                                                  )),
+                                            ),
+
+                                          ]
+                                          else ...[
+                                            Text(
+                                              "ملاحظات الاستشاري",
+                                              style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            CustomTextField(
+                                              maxLines: 4,
+                                              hint: "ملاحظات الاستشاري",
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      " هل يحتاج الي جلسة اخري",
+                                                      style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                          color: Colors.black),
+                                                    ),
+                                                    Checkbox(
+                                                      value: true,
+                                                      onChanged: (value) {},
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "الخدمة الاستشارية",
+                                                      style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10,),
+                                                    DropDown(),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            BorderRoundedButton(
+                                              title: "التالي",
+                                              onPressed: (){
+                                              //   Map<String,dynamic> storeDate =
+                                              //   {
+                                              //     "advicor_id": 1,
+                                              //     "pationt_id": 1,
+                                              //     "need_other_session": 1,
+                                              //     "consultation_service_id": 1,
+                                              //     "comments": "لا يوجد تعليقات",
+                                              //     "date": "2024-05-14",
+                                              //     "answers": [
+                                              //         for(){
+                                              //             {
+                                              //                 "question_option_id": 16,
+                                              //                 "pationt_answer": "0"
+                                              //             }
+                                              //         }
+                                              //     ]
+                                              // };
+                                              //
+                                              //
+                                              //   questionViewCubit.getStoreForm(storeDate);
+
+                                                answers.forEach((value){
+                                                  print(value);
+                                                });
+                                              },
+                                            ).setHorizontalPadding(
+                                                context,
+                                                enableMediaQuery: false,
+                                                10),
+
+
+                                          ]
+                                        ],
+                                      )
+                                          .setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(
+                                          context, enableMediaQuery: false, 10);
+
+                                    }),
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         } else if (state is ErrorQuestionViewState) {
           return Center(child: Text(state.errorMessage));
@@ -191,33 +317,38 @@ class _ViewQuestionState extends State<ViewQuestion> {
       },
     );
   }
+  bool checkValue(){
+    bool result = true ;
+    answers.forEach((element) {
+      if(element.isEmpty){
+        result = false ;
+      }
+    });
+    return result ;
+  }
+
 }
-
-
 
 class LinePainter extends CustomPainter {
   final String text;
-  LinePainter({required this.text});
+  final double padding; // Add padding property
+
+  LinePainter({required this.text, this.padding = 15}); // Default padding is 10.0
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = Constants.theme.primaryColor
+      ..color = Colors.black87
       ..strokeWidth = 15;
 
     var path = Path();
 
-    // Rectangle
-    path.moveTo(0, 0);
-    path.lineTo(size.width * 0.30, 0);
-    path.lineTo(size.width * 0.30, size.height);
-    path.lineTo(0, size.height);
-    path.close();
+    double margin = padding; // Use padding for margin
 
-    // Triangle on the right side of the rectangle
-    path.moveTo(size.width * 0.30, 10); // Triangle's top point
-    path.lineTo(size.width - 650, 50); // Triangle's right point
-    path.lineTo(size.width * 0.30, 90); // Triangle's bottom point
+    path.moveTo(margin, margin);
+    path.lineTo(size.width * 0.30 - margin, margin);
+    path.lineTo(size.width * 0.30 - margin, size.height - margin);
+    path.lineTo(margin, size.height - margin);
     path.close();
 
     canvas.drawPath(path, paint);
@@ -233,12 +364,11 @@ class LinePainter extends CustomPainter {
 
     textPainter.layout(
       minWidth: 0,
-      maxWidth: size.width * 0.30,
+      maxWidth: size.width * 0.30 - 2 * margin, // Subtract padding from maxWidth
     );
 
-    // Position the text at the center of the rectangle
     var offset = Offset(
-      (size.width * 0.30 - textPainter.width) / 2,
+      margin + (size.width * 0.30 - 2 * margin - textPainter.width) / 2, // Adjust x position based on padding
       (size.height - textPainter.height) / 2,
     );
 
@@ -250,3 +380,4 @@ class LinePainter extends CustomPainter {
     return true;
   }
 }
+
