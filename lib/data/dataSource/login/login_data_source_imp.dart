@@ -17,7 +17,7 @@ class LoginDataSourceImp implements LoginDataSource {
         },
         options: Options(
             headers: {
-              "api-password": Constants.apiPassword
+              "api-password": Constants.apiPassword,
             }
         ),
       );

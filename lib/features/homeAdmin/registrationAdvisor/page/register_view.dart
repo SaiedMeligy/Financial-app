@@ -179,6 +179,12 @@ class _RegisterViewState extends State<RegisterView> {
                                         .registerUser(data)
                                         .then((value) {
                                       if (value) {
+                                        nameController.clear();
+                                        phoneController.clear();
+                                        emailController.clear();
+                                        passwordController.clear();
+                                        // ruleController.clear();
+
 
                                         if(kDebugMode){
                                           print("Done register");

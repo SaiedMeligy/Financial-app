@@ -21,8 +21,10 @@ class Routes{
           case '/homeAdvisor':
             return MaterialPageRoute(builder: (context) => const AdvisorLayoutView(),settings: settings);
 
-            case '/questionView':
-              return MaterialPageRoute(builder: (context) =>  ViewQuestion(),settings: settings);
+            // case '/questionView':
+            //   return MaterialPageRoute(builder: (context) =>  ViewQuestion(
+            //
+            //   ),settings: settings);
 
 
       default:

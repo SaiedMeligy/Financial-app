@@ -8,25 +8,27 @@ import '../../../../domain/entities/ConsultationViewModel.dart';
 import '../../../homeAdmin/Consulting service/All Consultation/manager/states.dart';
 
 class DropDown extends StatefulWidget {
-  const DropDown({super.key});
-
+  ValueChanged onChange;
+  DropDown({super.key,required this.onChange});
   @override
-  State<DropDown> createState() => _DropDownState();
+  State<DropDown> createState() => _DropDownState(onChange: onChange);
 }
 
 class _DropDownState extends State<DropDown> {
   var allConsultationCubit = AllConsultationCubit();
-  String? selectedValue; // Added to store the selected value
-
+  ConsultationServices? selectedValue; // Added to store the selected value
+  ValueChanged onChange;
+  _DropDownState({required this.onChange});
   @override
   void initState() {
     super.initState();
     allConsultationCubit.getAllConsultations(); // Fetch consultations on init
   }
 
-  void handleDropdownValueChanged(String? newValue) {
+  void handleDropdownValueChanged(ConsultationServices? newValue) {
     setState(() {
       selectedValue = newValue;
+      return onChange(newValue!.id);
     });
   }
 
@@ -40,7 +42,7 @@ class _DropDownState extends State<DropDown> {
         }
         else if (state is SuccessAllConsultations) {
           var consultations = state.consultationServices;
-          var consultationNames = consultations.map((c) => c.name).toList();
+          // var consultationNames = consultations.map((c) => c.name).toList();
           return Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -48,13 +50,13 @@ class _DropDownState extends State<DropDown> {
                 width: 1,
               )
             ),
-            child: DropdownButton<String>(
+            child: DropdownButton<ConsultationServices>(
               value: selectedValue,
               onChanged: handleDropdownValueChanged,
-              items: consultationNames.map((dynamic value) {
-                return DropdownMenuItem<String>(
+              items: consultations.map((dynamic value) {
+                return DropdownMenuItem<ConsultationServices>(
                   value: value,
-                  child: Text(value,style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                  child: Text(value.name,style: Constants.theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.black
                   ),),
                 );

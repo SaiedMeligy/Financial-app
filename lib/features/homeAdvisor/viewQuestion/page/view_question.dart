@@ -1,3 +1,4 @@
+import 'package:experts_app/core/config/cash_helper.dart';
 import 'package:experts_app/core/widget/border_rounded_button.dart';
 import 'package:experts_app/domain/entities/ConsultationViewModel.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
@@ -13,8 +14,9 @@ import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
 
 class ViewQuestion extends StatefulWidget {
-  ViewQuestion({super.key});
+  ViewQuestion({super.key , required this.pationt_data});
   List<int> axis = [];
+  dynamic pationt_data;
   @override
   State<ViewQuestion> createState() => _ViewQuestionState();
 }
@@ -24,7 +26,8 @@ class _ViewQuestionState extends State<ViewQuestion> {
   List<ConsultationServices> menuItem = [];
   List<bool> _checkBoxValues = [];
   List<Map<dynamic, dynamic>> answers = [];
-
+  int needOtherSession=0 ;
+  late int selected_consultation_service;
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,8 @@ class _ViewQuestionState extends State<ViewQuestion> {
   }
 
   Widget build(BuildContext context) {
+    print(widget.pationt_data);
+
     return BlocBuilder<QuestionViewCubit, QuestionViewStates>(
       bloc: questionViewCubit,
       builder: (context, state) {
@@ -187,7 +192,9 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                                                       answers[index]["RADIO_BUTTON"] = value!;
                                                                       print("//////////////"+answers.toString());
 
-                                                                      setState(() {});
+                                                                      setState(() {
+
+                                                                      });
                                                                     },
                                                                   ),
                                                                 if (question[index].questionOptions![i].type == 2)
@@ -195,7 +202,9 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                                                       value: answers[index][question[index].questionOptions![i].id],
                                                                       onChanged: (value) {
                                                                         answers[index][question[index].questionOptions![i].id] = value!;
-                                                                        setState(() {});
+                                                                        setState(() {
+
+                                                                        });
                                                                       }),
                                                                 if (question[index].questionOptions![i].type == 3)
                                                                   Container(
@@ -241,8 +250,14 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                                           color: Colors.black),
                                                     ),
                                                     Checkbox(
-                                                      value: true,
-                                                      onChanged: (value) {},
+                                                      value: (needOtherSession==1),
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          needOtherSession = (value!)?1:0;
+                                                        });
+
+
+                                                      },
                                                     ),
                                                   ],
                                                 ),
@@ -255,7 +270,13 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                                       ),
                                                     ),
                                                     SizedBox(width: 10,),
-                                                    DropDown(),
+                                                    DropDown(
+                                                      onChange: (value){
+                                                        setState(() {
+                                                          selected_consultation_service = value;
+                                                        });
+                                                      },
+                                                    ),
                                                   ],
                                                 ),
                                               ],
@@ -265,28 +286,25 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                               onPressed: (){
                                               //   Map<String,dynamic> storeDate =
                                               //   {
-                                              //     "advicor_id": 1,
-                                              //     "pationt_id": 1,
-                                              //     "need_other_session": 1,
-                                              //     "consultation_service_id": 1,
+                                              //     "advicor_id": CacheHelper.getData(key: 'id'),
+                                              //     "pationt_id": widget.pationt_data['pationt']['id'],
+                                              //     "need_other_session": needOtherSession,
+                                              //     "consultation_service_id": selected_consultation_service,
                                               //     "comments": "لا يوجد تعليقات",
                                               //     "date": "2024-05-14",
                                               //     "answers": [
-                                              //         for(){
+                                              //         for(int i=0;i<answers.length;i++){
                                               //             {
-                                              //                 "question_option_id": 16,
-                                              //                 "pationt_answer": "0"
+                                              //                 "question_option_id": answers[i].entries.first.key,
+                                              //                 "pationt_answer": answers[i].entries.first.value
                                               //             }
                                               //         }
                                               //     ]
                                               // };
-                                              //
-                                              //
-                                              //   questionViewCubit.getStoreForm(storeDate);
+                                                
+                                                print("+++++++++++++++${answers}");
 
-                                                answers.forEach((value){
-                                                  print(value);
-                                                });
+                                                // questionViewCubit.getStoreForm(storeDate);
                                               },
                                             ).setHorizontalPadding(
                                                 context,
