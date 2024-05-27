@@ -526,7 +526,8 @@ class _AddQuestionState extends State<AddQuestion> {
           builder: (context) {
             return Directionality(
               textDirection: TextDirection.rtl,
-              child: AlertDialog(
+              child:
+              AlertDialog(
                 title: Text(
                   "تم اضافة السؤال",
                   style: Constants.theme.textTheme.bodyMedium

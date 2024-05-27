@@ -1,9 +1,11 @@
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/domain/entities/side_bar_model.dart';
+import 'package:experts_app/features/homeAdmin/pointerReport/page/pointer_report_view.dart';
 import 'package:experts_app/features/homeAdmin/pointers/page/addPointer/add_indicator.dart';
 import 'package:experts_app/features/homeAdmin/pointers/page/all%20Pointers/page/edit_indicator.dart';
 import 'package:experts_app/features/homeAdmin/registrationAdvisor/page/register_view.dart';
+import 'package:experts_app/features/homeAdmin/pointerReport/widget/LineChart.dart';
 import 'package:experts_app/features/homeAdmin/staticScreen/page/static_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +52,8 @@ class _HomeAdminViewState extends State<HomeAdminView> {
       StaticScreen(),
       Center(child: Text("اضافة حالة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       Center(child: Text("الحالات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
-      Center(child: Text("تقارير المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
+      // Center(child: Text("تقارير المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
+      PointerReportView(),
       AddQuestion(),
       AddIndicator(),
       EditIndicator(),

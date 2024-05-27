@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
 
-import '../../domain/entities/AdviceMode.dart';
 import '../../domain/entities/pointerModel.dart';
 import '../../domain/repository/pointer/AllPointers/all_pointers_repository.dart';
 import '../dataSource/Pointers/AllPointers/all_advices_data_source.dart';

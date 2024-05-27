@@ -14,7 +14,7 @@ class AllConsultationDataSourceImp implements AllConsultationDataSource{
   @override
   Future<Response> getAllConsultation(ConsultationModel consultationViewModel) async{
     return await dio.get(
-        "/api/ConsultationServices",
+        "/api/advicor/ConsultationServices",
         options: Options(
             headers: {
               "api-password": Constants.apiPassword,

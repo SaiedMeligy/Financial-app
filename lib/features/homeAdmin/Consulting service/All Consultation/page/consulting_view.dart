@@ -28,7 +28,7 @@ class _ConsultingViewState extends State<ConsultingView> {
   @override
   Widget build(BuildContext context) {
     return
-      BlocBuilder<AllConsultationCubit, AllConsultationStates>(
+     BlocBuilder<AllConsultationCubit, AllConsultationStates>(
       bloc: allConsultationCubit,
       builder: (context, state) {
         if (state is LoadingAllConsultations) {

@@ -76,7 +76,7 @@ class _QuestionTextFieldState extends State<QuestionTextField> {
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
-      style:Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white,fontWeight: FontWeight.w400,
+      style:Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.w400,
 
       ),
       // autovalidateMode: AutovalidateMode.disabled,
@@ -114,14 +114,14 @@ class _QuestionTextFieldState extends State<QuestionTextField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Colors.black,
             width: 2.5,),
         ),
 
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Colors.black,
             width: 2.5,
           ),
         ),

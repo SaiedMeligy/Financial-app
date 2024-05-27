@@ -6,6 +6,7 @@ import 'package:experts_app/domain/entities/QuestionView.dart';
 import 'package:experts_app/features/homeAdvisor/add_user/page/add_user_view.dart';
 import 'package:experts_app/features/homeAdvisor/home/page/home_advisor_view.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/page/session_data_view.dart';
+import 'package:experts_app/features/homeAdvisor/viewQuestion/page/patient_nationalId.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/page/view_question.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
     List<Widget> bodies = [
       HomeAdvisorView(),
       CasesView(),
-      ViewQuestion(),
+      PatientNationalId(),
+      // ViewQuestion(),
       // Center(child: Text("بدء جلسة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       SessionDate(),
       Center(child: Text("تعديل المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
