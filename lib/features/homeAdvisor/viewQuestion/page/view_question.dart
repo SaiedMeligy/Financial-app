@@ -98,8 +98,8 @@ class _ViewQuestionState extends State<ViewQuestion> {
                       color: Colors.black,
                       child: Column(
                         children: [
-                          Text("اسم الحالة",style: Constants.theme.textTheme.bodyMedium,),
-                          Text("اسم الاستشاري",style: Constants.theme.textTheme.bodyMedium,),
+                          Text(widget.pationt_data['pationt']['name'],style: Constants.theme.textTheme.bodyMedium,),
+                          Text(CacheHelper.getData(key: 'name'),style: Constants.theme.textTheme.bodyMedium,),
                           Text("الرقم القومي",style: Constants.theme.textTheme.bodyMedium,),
                           Text(
                             "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",style: Constants.theme.textTheme.bodyMedium,),
