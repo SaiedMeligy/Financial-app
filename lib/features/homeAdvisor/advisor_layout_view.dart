@@ -2,18 +2,16 @@
 
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/domain/entities/QuestionView.dart';
 import 'package:experts_app/features/homeAdvisor/add_user/page/add_user_view.dart';
 import 'package:experts_app/features/homeAdvisor/home/page/home_advisor_view.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/page/session_data_view.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/page/patient_nationalId.dart';
-import 'package:experts_app/features/homeAdvisor/viewQuestion/page/view_question.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/config/constants.dart';
 import '../../domain/entities/side_bar_model.dart';
 import '../homeAdmin/logout/page/logout_view.dart';
-import 'cases/page/cases_view.dart';
+import 'allPatients/page/all_patient_view.dart';
 
 class AdvisorLayoutView extends StatefulWidget {
   const AdvisorLayoutView({super.key});
@@ -38,7 +36,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
     ];
     List<Widget> bodies = [
       HomeAdvisorView(),
-      CasesView(),
+      AllPatientView(),
       PatientNationalId(),
       // ViewQuestion(),
       // Center(child: Text("بدء جلسة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),

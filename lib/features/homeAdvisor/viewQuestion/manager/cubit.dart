@@ -4,26 +4,36 @@ import 'package:experts_app/data/dataSource/questionView/question_view_data_sour
 import 'package:experts_app/data/repository_imp/question_view_repository_imp.dart';
 import 'package:experts_app/domain/useCase/quesionView/question_view_use_case.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
-import 'package:experts_app/features/login/manager/cubit.dart';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/Services/web_services.dart';
+import '../../../../data/dataSource/Form/storeForm/store_form_data_source.dart';
+import '../../../../data/dataSource/Form/storeForm/store_form_data_source_imp.dart';
+import '../../../../data/dataSource/Form/updateForm/update_form_data_source.dart';
+import '../../../../data/dataSource/Form/updateForm/update_form_data_source_imp.dart';
 import '../../../../data/dataSource/patientNationalId/patient_nationalId_data_source.dart';
 import '../../../../data/dataSource/patientNationalId/patient_nationalId_data_source_imp.dart';
 import '../../../../data/dataSource/questionView/question_view_data_source.dart';
-import '../../../../data/dataSource/storeForm/store_form_data_source.dart';
-import '../../../../data/dataSource/storeForm/store_form_data_source_imp.dart';
 import '../../../../data/repository_imp/patient_nationalId_repository_imp.dart';
 import '../../../../data/repository_imp/store_form_repository_imp.dart';
+import '../../../../data/repository_imp/update_form_repository_imp.dart';
 import '../../../../domain/entities/QuestionView.dart';
+import '../../../../domain/repository/FormRepository/storeForm/store_form_repository.dart';
+import '../../../../domain/repository/FormRepository/updateForm/update_form_repository.dart';
 import '../../../../domain/repository/patientNationalIdRepository/patient_nationalId_repository.dart';
 import '../../../../domain/repository/questionView/view_question_repository.dart';
-import '../../../../domain/repository/storeForm/store_form_repository.dart';
+import '../../../../domain/useCase/Form/storeForm/store_form_use_case.dart';
+import '../../../../domain/useCase/Form/updateForm/update_form_use_case.dart';
 import '../../../../domain/useCase/patientNationalId/patient_nationalId_use_case.dart';
-import '../../../../domain/useCase/storeForm/store_form_use_case.dart';
+class QuestionViewCubit extends Cubit<QuestionViewStates> {
+  QuestionViewCubit() : super(LoadingQuestionViewState()) {
+    date = DateFormat('yyyy-MM-dd').format(selectedDate);
+  }
 
-class QuestionViewCubit extends Cubit<QuestionViewStates>{
-  QuestionViewCubit() : super(LoadingQuestionViewState());
   bool isLoading = true;
+  DateTime selectedDate = DateTime.now();
+  late String date;
 
   late QuestionViewUseCase questionViewUseCase;
   late QuestionViewRepository questionViewRepository;
@@ -32,7 +42,7 @@ class QuestionViewCubit extends Cubit<QuestionViewStates>{
   Future<void> getAllQuestion() async {
     WebServices service = WebServices();
     questionViewDataSource = QuestionViewDataSourceImp(service.freeDio);
-    questionViewRepository = QuestionViewRepositoryImp( questionViewDataSource);
+    questionViewRepository = QuestionViewRepositoryImp(questionViewDataSource);
     questionViewUseCase = QuestionViewUseCase(questionViewRepository);
     emit(LoadingQuestionViewState());
     try {
@@ -42,7 +52,7 @@ class QuestionViewCubit extends Cubit<QuestionViewStates>{
 
       final data = QuestionView.fromJson(result.data);
       emit(SuccessQuestionViewState(data.questions!));
-        } catch (error) {
+    } catch (error) {
       emit(ErrorQuestionViewState(error.toString()));
     }
   }
@@ -54,31 +64,42 @@ class QuestionViewCubit extends Cubit<QuestionViewStates>{
   Future<Response> getPatientNationalId(String nationalId) async {
     WebServices service = WebServices();
     patientNationalIdDataSource = PatientNationalIdDataSourceImp(service.freeDio);
-    patientNationalIdRepository = PatientNationalIdRepositoryImp( patientNationalIdDataSource);
+    patientNationalIdRepository = PatientNationalIdRepositoryImp(patientNationalIdDataSource);
     patientNationalIdUseCase = PatientNationalIdUseCase(patientNationalIdRepository);
     emit(LoadingQuestionViewState());
 
-       return await patientNationalIdUseCase.execute(nationalId);
-
-   }
-
-
+    return await patientNationalIdUseCase.execute(nationalId);
+  }
 
   late StoreFormUseCase storeFormUseCase;
   late StoreFormRepository storeFormRepository;
   late StoreFormDataSource storeFormDataSource;
 
-    Future<Response> getStoreForm(Map<String,dynamic> storeData) async {
+  Future<Response> getStoreForm(Map<String, dynamic> storeData) async {
     WebServices service = WebServices();
     storeFormDataSource = StoreFormDataSourceImp(service.freeDio);
-    storeFormRepository = StoreFormRepositoryImp( storeFormDataSource);
+    storeFormRepository = StoreFormRepositoryImp(storeFormDataSource);
     storeFormUseCase = StoreFormUseCase(storeFormRepository);
     emit(LoadingQuestionViewState());
 
     return await storeFormUseCase.execute(storeData);
-
   }
 
 
 
+
+
+  Future<DateTime?> selectTaskDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      selectedDate = picked;
+      emit(QuestionViewDateSelected(selectedDate));
+    }
+    return picked;
+  }
 }

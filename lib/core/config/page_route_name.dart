@@ -4,4 +4,5 @@ class PageRouteName{
   static const String homeAdmin = "/homeAdmin";
   static const String homeAdvisor = "/homeAdvisor";
   static const String quetionView = "/questionView";
+  static const String patientDetailView = "/patientDetailsView";
 }

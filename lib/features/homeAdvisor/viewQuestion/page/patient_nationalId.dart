@@ -8,7 +8,7 @@ import 'package:experts_app/core/widget/custom_text_field.dart';
 import 'package:experts_app/domain/entities/QuestionView.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
-import 'package:experts_app/features/homeAdvisor/viewQuestion/page/view_question.dart';
+import 'package:experts_app/features/homeAdvisor/viewQuestion/page/store_form.dart';
 import 'package:experts_app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +66,7 @@ class _PatientNationalIdState extends State<PatientNationalId> {
                         patientNationalIdCubit.getPatientNationalId(nationalId.text).then((value) {
                           if (value.data!= null) {
                             // Navigator.pushNamed(context, PageRouteName.quetionView);
-                            Navigator.push(context, MaterialPageRoute(builder:(context) =>  ViewQuestion(pationt_data: value.data)));
+                            Navigator.push(context, MaterialPageRoute(builder:(context) =>  StoreForm(pationt_data: value.data)));
                           } else {
                             SnackBarService.showErrorMessage( "الرقم القومي غير موجود");
                           }

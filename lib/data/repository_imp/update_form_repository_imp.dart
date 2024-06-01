@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import '../../core/Failure/server_failure.dart';
-import '../../domain/repository/FormRepository/storeForm/store_form_repository.dart';
-import '../dataSource/Form/storeForm/store_form_data_source.dart';
+import '../../domain/repository/FormRepository/updateForm/update_form_repository.dart';
+import '../dataSource/Form/updateForm/update_form_data_source.dart';
 
-class StoreFormRepositoryImp implements StoreFormRepository {
-  final StoreFormDataSource dataSource;
-  StoreFormRepositoryImp(this.dataSource);
+class UpdateFormRepositoryImp implements UpdateFormRepository {
+  final UpdateFormDataSource dataSource;
+  UpdateFormRepositoryImp(this.dataSource);
 
   @override
-  Future<Response> store(Map<String, dynamic> storeRequest) async {
+  Future<Response> update(Map<String, dynamic> updateRequest) async {
     try {
-      print('Store Request: $storeRequest');
-      final response = await dataSource.store(storeRequest);
+      print('Update Request: $updateRequest');
+      final response = await dataSource.update(updateRequest);
       print('Response Status: ${response.statusCode}');
       print('Response Data: ${response.data}');
       if (response.statusCode == 200) {

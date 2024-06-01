@@ -33,7 +33,8 @@ class _EditAdviceViewState extends State<EditAdviceView> {
         builder: (context, state) {
           if (state is LoadingAllAdvices) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is SuccessAllAdvices) {
+          }
+          else if (state is SuccessAllAdvices) {
             return TableWidget<Advices>(
                 label1: "التوصية",
                 label2: "التعديل",
