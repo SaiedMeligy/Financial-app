@@ -1,3 +1,4 @@
+import '../widget/date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/constants.dart';
@@ -11,7 +12,6 @@ import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
 
-import '../widget/date_time.dart';
 
 class StoreForm extends StatefulWidget {
   StoreForm({super.key, required this.pationt_data});
@@ -166,8 +166,44 @@ class _StoreFormState extends State<StoreForm> {
                               child: Container(
                                 height: double.maxFinite,
                                 child: ListView.builder(
-                                    itemCount: question.length + 1,
+                                    itemCount: question.length,
                                     itemBuilder: (context, index) {
+                                      List<Radio<int>> radiobtnsWidgets= [];
+                                      question[index].questionOptions?.
+                                      forEach((element) {
+                                        if(element.type == 1){
+                                          radiobtnsWidgets.add(
+                                            Radio<int>(
+                                                                    value: element.id!,
+                                                                    groupValue: radiosBtn[question[index].id],
+                                                                    onChanged: (value) {
+                                                                      answers[element.id!] = 1; //46 => 0
+                                                                        question[index].questionOptions?.forEach((o) {
+                                                                          if(o.type==1){
+                                                                            if(o.id!= element.id){
+                                                                              answers[o.id] = 0;
+                                                                            }
+                                                                          }
+                                                                        },);
+                                                                      radiosBtn[question[index].id] = value!;
+                                                                      
+                                                                       print("----//--------//----//-------->$value");
+                                                                      // print(answers[question[index].questionOptions![i].id]);
+                                                                    //  if(answers[question[index].id!] == 0){
+                                                                       
+                                                                    //  }
+                                                                    //  else{
+                                                                    //     answers[element.id!] =  0;
+                                                                    //     radiosBtn[question[index].id] = 0;
+                                                                    //   // answers[question[index].id!] = 0;
+                                                                    //  }
+                                                                     print(answers[element.id!]);
+                                                                      setState(() {},);
+                                                                    },
+                                                                  ),
+                                          );
+                                        }
+                                      },);
                                       return Column(
                                         children: [
                                           if (question.length != index) ...[
@@ -233,26 +269,8 @@ class _StoreFormState extends State<StoreForm> {
                                                                   ),
                                                                 ),
                                                                 if (question[index].questionOptions![i].type == 1)
-                                                                  Radio<int>(
-                                                                    value: question[index].questionOptions![i].id!,
-                                                                    groupValue: radiosBtn[question[index].id],
-                                                                    onChanged: (value) {
-                                                                       print("----//--------//----//-------->$value");
-                                                                      // print(answers[question[index].questionOptions![i].id]);
-                                                                     if(answers[question[index].id!]==0){
-                                                                       answers[question[index].questionOptions![i].id!] = 1;
-                                                                      radiosBtn[question[index].id] = value!;
-                                                                      // answers[question[index].id!] = value;
-                                                                     }
-                                                                     else{
-                                                                        answers[question[index].questionOptions![i].id!] =  0;
-                                                                      radiosBtn[question[index].id] = 0;
-                                                                      // answers[question[index].id!] = 0;
-                                                                     }
-                                                                     print(answers[question[index].questionOptions![i].id!]);
-                                                                      setState(() {},);
-                                                                    },
-                                                                  ),
+                                                                  radiobtnsWidgets.firstWhere((element) => element.value==question[index].questionOptions![i].id,),
+                                                                  
                                                                 if (question[index].questionOptions![i].type == 2)
                                                                   Checkbox(
                                                                       // value: answers[index][question[index].questionOptions![i].id],
@@ -281,6 +299,7 @@ class _StoreFormState extends State<StoreForm> {
                                                     ),
                                                   )),
                                             ),
+                                          
                                           ] else ...[
                                             Text(
                                               "ملاحظات الاستشاري",
