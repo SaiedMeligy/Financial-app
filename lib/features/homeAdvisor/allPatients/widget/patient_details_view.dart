@@ -30,61 +30,6 @@
     @override
     void initState() {
       super.initState();
-
-      // Initialize the animation controllers and animations
-      // _controller1 = AnimationController(
-      //   duration: const Duration(seconds: 10),
-      //   vsync: this,
-      // );
-      // _animation1 = Tween<Offset>(
-      //   begin: Offset(-4.0, 0.0),
-      //   end: Offset(4, 0.0),
-      // ).animate(_controller1);
-      // _controller2 = AnimationController(
-      //   duration: const Duration(seconds: 10),
-      //   vsync: this,
-      // );
-      // _animation2 = Tween<Offset>(
-      //   begin: Offset(-4.0, 0.0),
-      //   end: Offset(4.0, 0.0),
-      // ).animate(_controller2);
-      // _controller3 = AnimationController(
-      //   duration: const Duration(seconds: 10),
-      //   vsync: this,
-      // );
-      // _animation3 = Tween<Offset>(
-      //   begin: Offset(-3.0, 0.0),
-      //   end: Offset(4.0, 0.0),
-      // ).animate(_controller3);
-      // _controller1.addStatusListener((status) {
-      //   if (status == AnimationStatus.completed) {
-      //     _controller1.reset();
-      //     _controller2.forward();
-      //     setState(() {
-      //       _currentAnimation = 2;
-      //     });
-      //   }
-      // });
-      // _controller2.addStatusListener((status) {
-      //   if (status == AnimationStatus.completed) {
-      //     _controller2.reset();
-      //     _controller3.forward();
-      //     setState(() {
-      //       _currentAnimation = 3;
-      //     });
-      //   }
-      // });
-      // _controller3.addStatusListener((status) {
-      //   if (status == AnimationStatus.completed) {
-      //     _controller3.reset();
-      //     _controller1.forward();
-      //     setState(() {
-      //       _currentAnimation = 1;
-      //     });
-      //   }
-      // });
-      // _controller1.forward();
-      // Initialize the PatientFormViewCubit
       _patientFormViewCubit = PatientFormViewCubit();
       _patientFormViewCubit.getPatientFormView(widget.pationt_data.id);
     }
@@ -187,11 +132,8 @@
                                     child: IconButton(
                                         icon: Icon(Icons.print,color: Colors.black),
                                         onPressed: () {
-
                                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                                             return UpdateForm(pationt_data: widget.pationt_data);
-
-
                                           },));
                                         }
                                     ),

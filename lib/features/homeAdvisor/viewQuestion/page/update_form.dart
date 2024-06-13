@@ -1,3 +1,4 @@
+import '../../../../domain/entities/QuestionView.dart';
 import '../widget/date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,20 +17,23 @@ class UpdateForm extends StatefulWidget {
   UpdateForm({required this.pationt_data});
 
   @override
-  _UpdateFormState createState() => _UpdateFormState();
+  _UpdateFormState createState() => _UpdateFormState(this.pationt_data);
 }
 
 class _UpdateFormState extends State<UpdateForm> {
+  final dynamic pationt_data;
+  _UpdateFormState(this.pationt_data);
+
   late PatientFormViewCubit _patientFormViewCubit;
   Map<int, TextEditingController> textControllers = {};
-  late Map<dynamic, dynamic> selectedAnswers = {}; // To store the selected answers for radio buttons
-  Map<int, String?> answers = {}; // To store the selected answers for radio buttons
+  Map<int, String> selectedAnswers = {}; // To store the selected answers for radio buttons
+  Map<int, bool> checkboxValues = {}; // To store the checkbox values
 
   @override
   void initState() {
     super.initState();
     _patientFormViewCubit = PatientFormViewCubit();
-    _patientFormViewCubit.getPatientFormView(widget.pationt_data.id);
+    _patientFormViewCubit.getPatientFormView(pationt_data.id);
   }
 
   @override
@@ -47,8 +51,11 @@ class _UpdateFormState extends State<UpdateForm> {
         if (option["type"] == 3 && option["answer"] != null) {
           textControllers[int.parse(option["id"].toString())] = TextEditingController(text: option["answer"]);
         }
-        if (option["type"] == 1) {
-          selectedAnswers[int.parse(option["id"].toString())] = option["answer"];
+        if (option["type"] == 1 && option["answer"] == "1") {
+          selectedAnswers[int.parse(answer["id"].toString())] = option["id"].toString();
+        }
+        if (option["type"] == 2) {
+          checkboxValues[int.parse(option["id"].toString())] = option["answer"] == "1";
         }
       }
     }
@@ -65,8 +72,6 @@ class _UpdateFormState extends State<UpdateForm> {
           return Center(child: Text(state.errorMessage));
         } else if (state is SuccessPatientFormViewState) {
           var formData = state.response.data["form"];
-          var patient = state.response.data["form"]["pationt"];
-          var advicor = state.response.data["form"]["advicor"];
           var answers = state.response.data["form"]["answers"];
           var consultation = formData["consultationService"];
 
@@ -185,24 +190,6 @@ class _UpdateFormState extends State<UpdateForm> {
                                                   ),
                                                 ),
                                               ),
-                                              // Expanded(
-                                              //   child: Radio<String>(
-                                              //     value: selectedAnswers[int.parse(option["id"].toString())],
-                                              //     groupValue: answers["id"].toString(),
-                                              //     onChanged: (value) {
-                                              //       setState(() {
-                                              //         selectedAnswers[int.parse(answer["id"].toString())] = value;
-                                              //         for (var opt in answer["question_options"]) {
-                                              //           if (opt["id"].toString() == value) {
-                                              //             opt["answer"] = "1";
-                                              //           } else {
-                                              //             opt["answer"] = "0";
-                                              //           }
-                                              //         }
-                                              //       });
-                                              //     },
-                                              //   ),
-                                              // ),
                                               Expanded(
                                                 child: Radio<String>(
                                                   value: option["id"].toString(),
@@ -211,10 +198,8 @@ class _UpdateFormState extends State<UpdateForm> {
                                                     setState(() {
                                                       selectedAnswers[int.parse(answer["id"].toString())] = value!;
                                                       for (var opt in answer["question_options"]) {
-                                                        if (opt["id"].toString() == value) {
-                                                          opt["answer"] = "1";
-                                                        } else {
-                                                          opt["answer"] = "0";
+                                                        if (opt["type"] == 1) {
+                                                          opt["answer"] = opt["id"].toString() == value ? "1" : "0";
                                                         }
                                                       }
                                                     });
@@ -223,7 +208,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                               ),
                                             ],
                                           );
-                                        } else {
+                                        } else if (option["type"] == 2) {
                                           return Row(
                                             children: [
                                               Expanded(
@@ -236,10 +221,11 @@ class _UpdateFormState extends State<UpdateForm> {
                                               ),
                                               Expanded(
                                                 child: Checkbox(
-                                                  value: isAnswered,
+                                                  value: checkboxValues[int.parse(option["id"].toString())] ?? false,
                                                   onChanged: (value) {
                                                     setState(() {
-                                                      option["answer"] = value! ? "1" : "0";
+                                                      checkboxValues[int.parse(option["id"].toString())] = value!;
+                                                      option["answer"] = value ? "1" : "0";
                                                     });
                                                   },
                                                 ),
@@ -247,6 +233,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                             ],
                                           );
                                         }
+                                        return Container();
                                       }).toList(),
                                     ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                   ),

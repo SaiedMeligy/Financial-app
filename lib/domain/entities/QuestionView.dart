@@ -55,7 +55,8 @@ class Questions {
       this.createdAt, 
       this.updatedAt, 
       this.axis, 
-      this.questionOptions,});
+      this.questionOptions,
+  });
 
   Questions.fromJson(dynamic json) {
     id = json['id'];
