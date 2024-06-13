@@ -5,15 +5,16 @@ import 'package:experts_app/features/homeAdmin/pointerReport/page/pointer_report
 import 'package:experts_app/features/homeAdmin/pointers/page/addPointer/add_indicator.dart';
 import 'package:experts_app/features/homeAdmin/pointers/page/all%20Pointers/page/edit_indicator.dart';
 import 'package:experts_app/features/homeAdmin/registrationAdvisor/page/register_view.dart';
-import 'package:experts_app/features/homeAdmin/pointerReport/widget/LineChart.dart';
 import 'package:experts_app/features/homeAdmin/staticScreen/page/static_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/config/constants.dart';
 import 'Advices/page/All Advices/page/advice_view.dart';
-import 'Advices/page/addAdvice/recommend_view.dart';
+import 'Advices/page/addAdvice/add_advice.dart';
 import 'Consulting service/All Consultation/page/consulting_view.dart';
 import 'Consulting service/Consultation Store/page/add_consulting.dart';
+import 'addSession/page/add_session_view.dart';
+import 'adviceReport/page/advice_report_view.dart';
 import 'logout/page/logout_view.dart';
 import 'question/pages/add_question.dart';
 
@@ -34,6 +35,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
       SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add)),
       SideBarModel(title: "الحالات", icon: Icon(Icons.list)),
       SideBarModel(title: "تقارير المؤاشرات", icon: Icon(Icons.list)),
+      SideBarModel(title: "تقارير التوصيات", icon: Icon(Icons.list)),
       SideBarModel(title: "اضافة الأسئلة", icon: Icon(Icons.add)),
       SideBarModel(title: "اضافة المؤاشرات", icon: Icon(Icons.add)),
       SideBarModel(title: "المؤاشرات", icon: Icon(Icons.list)),
@@ -54,13 +56,15 @@ class _HomeAdminViewState extends State<HomeAdminView> {
       Center(child: Text("الحالات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       // Center(child: Text("تقارير المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       PointerReportView(),
+      AdviceReportView(),
       AddQuestion(),
       AddIndicator(),
       EditIndicator(),
       AddRecommend(),
       EditAdviceView(),
       Center(child: Text("اضافة الحالات من مصدر خارجي",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
-      Center(child: Text("حجز جلسات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),),
+      AddSessionView(),
+      // Center(child: Text("حجز جلسات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),),
       Center(child: Text("الجلسات المحجوزة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),),
       Center(child: Text("تسجيل استشاري",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),),
       AddConsulting(),

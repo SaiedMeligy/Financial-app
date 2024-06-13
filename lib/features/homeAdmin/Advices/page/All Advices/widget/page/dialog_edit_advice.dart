@@ -42,7 +42,7 @@ class _DialogEditAdviceState extends State<DialogEditAdvice> {
       bloc: updateAdviceCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.edit),
+          icon: Icon(Icons.edit,color: Colors.white70,),
           onPressed: () {
             showDialog(
               context: context,

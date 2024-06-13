@@ -5,7 +5,7 @@ import 'package:experts_app/domain/repository/PointerReport/pointer_report_repos
 class PointerReportUseCase{
   final PointerReportRepository pointerReportRepository;
   PointerReportUseCase( this.pointerReportRepository);
-  Future<Response> execute(PointerReportModel pointer,int id)async{
+  Future<Response> execute(Report pointer,int id)async{
     return await pointerReportRepository.getPointerReport(pointer,id);
   }
 }

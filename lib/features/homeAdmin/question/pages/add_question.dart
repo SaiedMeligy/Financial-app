@@ -58,435 +58,366 @@ class _AddQuestionState extends State<AddQuestion> {
     return BlocBuilder<AddQuestionCubit, AddQuestionStates>(
       bloc: addQuestionCubit,
       builder: (context, state) {
-        return ListView(children: [
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+        return Container(
+          height: double.maxFinite,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/background.jpg"),
+                      fit: BoxFit.cover,
+                      opacity: 1.0
+                  )
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Form(
-                key: formKey,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .start, // Align children to the end (bottom) of the column
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      FadeInRight(
-                        delay: Duration(microseconds: 100),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              " سؤال جديد",
-                              style: Constants.theme.textTheme.titleLarge
-                                  ?.copyWith(color: Colors.black),
-                              textAlign: TextAlign.start,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            RadioWidget(
-                              titleRadio: "اختر المحور",
-                              items: const [
-                                MapEntry("اختر المحور", 0),
-                                MapEntry("المحور الاول", 1),
-                                MapEntry("المحور التاني", 2),
-                                MapEntry("المحور الثالث", 3)
-                              ],
-                              onChanged: (value) {
-                                setState(() {
-                                  _selecetdAixs = value!;
-                                });
-                                // if (value == 0) {
-                                // SnackBarService.showErrorMessage("من فضلك اختر المحور");
-                                //
-                                // }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      FadeInRight(
-                        delay: Duration(microseconds: 500),
-                        child: SizedBox(
-                          width: Constants.mediaQuery.width * 0.3,
-                          child: CustomTextField(
-                            controller: titleController,
-                            hint: "ادخل عنوان سؤالك",
-                            onValidate: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "من فضلك أدخل السؤال";
-                              }
-                              return null;
-                            },
+          child: ListView(children: [
+            Container(
+              decoration: const BoxDecoration(
+                // color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment
+                          .start, // Align children to the end (bottom) of the column
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        FadeInRight(
+                          delay: Duration(microseconds: 100),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                " سؤال جديد",
+                                style: Constants.theme.textTheme.titleLarge
+                                    ?.copyWith(color: Colors.black),
+                                textAlign: TextAlign.start,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              RadioWidget(
+                                titleRadio: "اختر المحور",
+                                items: const [
+                                  MapEntry("اختر المحور", 0),
+                                  MapEntry("المحور الاول", 1),
+                                  MapEntry("المحور التاني", 2),
+                                  MapEntry("المحور الثالث", 3)
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selecetdAixs = value!;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      FadeInRight(
-                        delay: Duration(microseconds: 900),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Constants.theme.primaryColor
-                                      .withOpacity(0.5)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    "اضافة اجابة",
-                                    style: Constants.theme.textTheme.titleLarge
-                                        ?.copyWith(color: Colors.black),
-                                  ),
-                                  const Icon(
-                                    Icons.add,
-                                    size: 30,
-                                    color: Colors.black,
-                                  ),
-                                ],
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _addAnswer();
-                                });
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        FadeInRight(
+                          delay: Duration(microseconds: 500),
+                          child: SizedBox(
+                            width: Constants.mediaQuery.width * 0.3,
+                            child: CustomTextField(
+                              fillColor: Colors.grey,
+                              controller: titleController,
+                              hint: "ادخل عنوان سؤالك",
+                              onValidate: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "من فضلك أدخل السؤال";
+                                }
+                                return null;
                               },
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Column(
-                        children:
-                            List.generate(answerControllers.length, (index) {
-                          return FadeInRight(
-                            delay: Duration(microseconds: 1300),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: Constants.mediaQuery.width * 0.2,
-                                  child: CustomTextField(
-                                    controller: answerControllers[index],
-                                    hint: "ادخل الاجابة",
-                                    onValidate: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return "من فضلك أدخل الاجابة";
-                                      }
-                                      return null;
-                                    },
-                                  ).setOnlyPadding(
-                                      context,
-                                      enableMediaQuery: false,
-                                      0,
-                                      5,
-                                      0,
-                                      0),
-                                ),
-
-                                RadioWidget(
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _answerTypes[index] = value!;
-                                    });
-                                  },
-                                  titleRadio: "نوع الأجابة",
-                                  items: const [
-                                    MapEntry("اختيار واحد", 1),
-                                    MapEntry("متعدد الأختيارات", 2),
-                                    MapEntry("حقل نص", 3)
+                        const SizedBox(height: 10,),
+                        FadeInRight(
+                          delay: const Duration(microseconds: 900),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Constants.theme.primaryColor.withOpacity(0.8)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      "اضافة اجابة",
+                                      style: Constants.theme.textTheme.bodyLarge
+                                    ),
+                                    const Icon(Icons.add, size: 30, color: Colors.white,
+                                    ),
                                   ],
                                 ),
+                                onPressed: () {
+                                  setState(() {
+                                    _addAnswer();
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 25,),
+                        Column(
+                          children: List.generate(answerControllers.length, (index) {
+                            return FadeInRight(
+                              delay: const Duration(microseconds: 1300),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: Constants.mediaQuery.width * 0.2,
+                                    child: CustomTextField(
+                                      controller: answerControllers[index],
+                                      hint: "ادخل الاجابة",
+                                      onValidate: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return "من فضلك أدخل الاجابة";
+                                        }
+                                        return null;
+                                      },
+                                    ).setOnlyPadding(context, enableMediaQuery: false, 0, 5, 0, 0),
+                                  ),
 
-                                DropDownButton(
-                                  titleRadio: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: SizedBox(
-                                                height: Constants
-                                                        .mediaQuery.height *
-                                                    0.6,
-                                                width:
-                                                    Constants.mediaQuery.width *
-                                                        0.45,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .stretch,
-                                                  children: [
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
+                                  RadioWidget(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _answerTypes[index] = value!;
+                                      });
+                                    },
+                                    titleRadio: "نوع الأجابة",
+                                    items: const [
+                                      MapEntry("اختيار واحد", 1),
+                                      MapEntry("متعدد الأختيارات", 2),
+                                      MapEntry("حقل نص", 3)
+                                    ],
+                                  ),
+
+                                  DropDownButton(
+                                    titleRadio: GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor: Colors.black,
+                                              content: SizedBox(height: Constants.mediaQuery.height * 0.6,
+                                                  width: Constants.mediaQuery.width * 0.45,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                    children: [
+                                                      Container(
+                                                        alignment: Alignment.center,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          border: Border.all(color: Constants.theme.primaryColor, width: 2.5,
+                                                          ),
+                                                        ),
+                                                        child: Text(
+                                                          "اختر من التوصيات",
+                                                          style: Constants.theme.textTheme.titleLarge
+                                                        ),
+                                                      ),
+                                                      CheckBoxQuestion(
+                                                        previous: selectedAdvices[index],
+                                                        items: advices,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            selectedAdvices[index] = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
+                                                  )),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        border: Border.all(color: Constants.theme.primaryColor, width: 2.5,),
+                                                      ),
+                                                      child: Text(
+                                                        "موافق", style: Constants.theme.textTheme.bodyMedium
+                                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20)),
+                                                ),],);},
+                                        );
+                                      },
+                                      child: Text(
+                                        "التوصيات", style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  DropDownButton(
+                                    titleRadio: GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor: Colors.black,
+                                              title: Container(
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Constants
+                                                        .theme.primaryColor,
+                                                    width: 2.5,
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  "اختر من المؤشرات", style: Constants.theme.textTheme.titleLarge
+                                                ),
+                                              ),
+                                              content: SizedBox(height: Constants.mediaQuery.height * 0.6,
+                                                width: Constants.mediaQuery.width * 0.45,
+                                                child: TabItemWidget(
+                                                  item1: "السيناريو الاول",
+                                                  item2: "السيناريو التاني",
+                                                  item3: "السيناريو التالت",
+                                                  firstWidget: CheckBoxQuestion(
+                                                    items: pointers1,
+                                                    previous: selectedPointers1[index],
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        selectedPointers1[index] =
+                                                            value!;
+                                                      });
+                                                    },
+                                                  ),
+                                                  secondWidget: CheckBoxQuestion(
+                                                    previous: selectedPointers2[index],
+                                                    items: pointers2,
+                                                    onChanged: (value) {selectedPointers2[index] = value!;
+                                                    },
+                                                  ),
+                                                  thirdWidget: CheckBoxQuestion(
+                                                    previous: selectedPointers3[index],
+                                                    items: pointers3,
+                                                    onChanged: (value) {
+                                                      selectedPointers3[index] =
+                                                          value!;
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                10),
                                                         border: Border.all(
-                                                          color: Constants.theme
-                                                              .primaryColor,
+                                                          color: Constants
+                                                              .theme.primaryColor,
                                                           width: 2.5,
                                                         ),
                                                       ),
                                                       child: Text(
-                                                        "اختر من التوصيات",
-                                                        style: Constants
-                                                            .theme
-                                                            .textTheme
-                                                            .titleLarge
-                                                            ?.copyWith(
-                                                                color: Colors
-                                                                    .black),
-                                                      ),
-                                                    ),
-                                                    CheckBoxQuestion(
-                                                      previous: selectedAdvices[
-                                                          index],
-                                                      items: advices,
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          selectedAdvices[
-                                                              index] = value!;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ],
-                                                )),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                        color: Constants
-                                                            .theme.primaryColor,
-                                                        width: 2.5,
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "موافق",
-                                                      style: Constants.theme
-                                                          .textTheme.bodyMedium
-                                                          ?.copyWith(
-                                                              color:
-                                                                  Colors.black),
-                                                    ).setHorizontalPadding(
-                                                        context,
-                                                        enableMediaQuery: false,
-                                                        20)),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Text(
-                                      "التوصيات",
-                                      style: Constants
-                                          .theme.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: Colors.black,
-                                      ),
+                                                        "موافق",
+                                                        style: Constants.theme
+                                                            .textTheme.bodyMedium
+                                                      ).setHorizontalPadding(
+                                                          context,
+                                                          enableMediaQuery: false,
+                                                          20)),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Text("المؤاشرات",
+                                          style: Constants
+                                              .theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: Colors.white,
+                                          )),
                                     ),
                                   ),
-                                ),
-                                DropDownButton(
-                                  titleRadio: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: Container(
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                  color: Constants
-                                                      .theme.primaryColor,
-                                                  width: 2.5,
-                                                ),
-                                              ),
-                                              child: Text(
-                                                "اختر من المؤشرات",
-                                                style: Constants
-                                                    .theme.textTheme.titleLarge
-                                                    ?.copyWith(
-                                                        color: Colors.black),
-                                              ),
-                                            ),
-                                            content: SizedBox(
-                                              height:
-                                                  Constants.mediaQuery.height *
-                                                      0.6,
-                                              width:
-                                                  Constants.mediaQuery.width *
-                                                      0.45,
-                                              child: TabItemWidget(
-                                                item1: "السيناريو الاول",
-                                                item2: "السيناريو التاني",
-                                                item3: "السيناريو التالت",
-                                                firstWidget: CheckBoxQuestion(
-                                                  items: pointers1,
-                                                  previous:
-                                                      selectedPointers1[index],
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      selectedPointers1[index] =
-                                                          value!;
-                                                    });
-                                                  },
-                                                ),
-                                                secondWidget: CheckBoxQuestion(
-                                                  previous:
-                                                      selectedPointers2[index],
-                                                  items: pointers2,
-                                                  onChanged: (value) {
-                                                    selectedPointers2[index] =
-                                                        value!;
-                                                  },
-                                                ),
-                                                thirdWidget: CheckBoxQuestion(
-                                                  previous:
-                                                      selectedPointers3[index],
-                                                  items: pointers3,
-                                                  onChanged: (value) {
-                                                    selectedPointers3[index] =
-                                                        value!;
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                        color: Constants
-                                                            .theme.primaryColor,
-                                                        width: 2.5,
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "موافق",
-                                                      style: Constants.theme
-                                                          .textTheme.bodyMedium
-                                                          ?.copyWith(
-                                                              color:
-                                                                  Colors.black),
-                                                    ).setHorizontalPadding(
-                                                        context,
-                                                        enableMediaQuery: false,
-                                                        20)),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Text("المؤاشرات",
+                                  Row(
+                                    children: [
+                                      Text(
+                                        " سؤال اجباري",
                                         style: Constants
                                             .theme.textTheme.bodyMedium
-                                            ?.copyWith(
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      " سؤال اجباري",
-                                      style: Constants
-                                          .theme.textTheme.bodyMedium
-                                          ?.copyWith(color: Colors.black),
-                                    ),
-                                    Checkbox(
-                                      value: _checkBoxValues.length > index
-                                          ? _checkBoxValues[index]
-                                          : false,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          if (_checkBoxValues.length > index) {
-                                            _checkBoxValues[index] = value!;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      FadeInRight(
-                        delay: Duration(microseconds: 1700),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Constants.theme.primaryColor.withOpacity(0.5),
-                          ),
-                          child: Text(
-                            "اضافة السؤال",
-                            style: Constants.theme.textTheme.titleLarge
-                                ?.copyWith(color: Colors.black),
-                          ),
-                          onPressed: () {
-                            if (_selecetdAixs == 0) {
-                              SnackBarService.showErrorMessage(
-                                  "من فضلك اختر المحور");
-                            } else if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
-                              if (_isFormValid()) {
-                                storeQuestion(context);
-                              } else {
-                                _showValidationError();
-                              }
-                              setState(() {});
-                            }
-                          },
+                                      ),
+                                      Checkbox(
+                                        value: _checkBoxValues.length > index
+                                            ? _checkBoxValues[index]
+                                            : false,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            if (_checkBoxValues.length > index) {
+                                              _checkBoxValues[index] = value!;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          }).toList(),
                         ),
-                      ),
-                    ]),
-              )
-                  .setVerticalPadding(enableMediaQuery: false, context, 20)
-                  .setHorizontalPadding(context, enableMediaQuery: false, 10),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        FadeInRight(
+                          delay: Duration(microseconds: 1700),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Constants.theme.primaryColor
+                                    .withOpacity(0.8)),
+                            child: Text(
+                              "اضافة السؤال",
+                              style: Constants.theme.textTheme.bodyLarge
+                                  ?.copyWith(color: Colors.white,),
+                            ),
+                            onPressed: () {
+                              if (_selecetdAixs == 0) {
+                                SnackBarService.showErrorMessage(
+                                    "من فضلك اختر المحور");
+                              } else if (formKey.currentState!.validate()) {
+                                formKey.currentState!.save();
+                                if (_isFormValid()) {
+                                  storeQuestion(context);
+                                } else {
+                                  _showValidationError();
+                                }
+                                setState(() {});
+                              }
+                            },
+                          ),
+                        ),
+                      ]),
+                )
+                    .setVerticalPadding(enableMediaQuery: false, context, 20)
+                    .setHorizontalPadding(context, enableMediaQuery: false, 10),
+              ),
             ),
-          ),
-        ]);
+          ]),
+        );
       },
     );
   }
@@ -654,3 +585,7 @@ class _AddQuestionState extends State<AddQuestion> {
     }
   }
 }
+
+
+
+

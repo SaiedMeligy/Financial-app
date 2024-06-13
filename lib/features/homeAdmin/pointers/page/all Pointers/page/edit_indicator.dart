@@ -1,3 +1,5 @@
+import 'package:experts_app/core/config/constants.dart';
+import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/core/widget/tab_item_widget.dart';
@@ -33,98 +35,80 @@ class _EditIndicatorState extends State<EditIndicator> {
         if (state is LoadingAllPointers) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SuccessAllPointers) {
-          return TabItemWidget(
-            item1: "السيناريو الاول",
-            item2: "السيناريو التاني",
-            item3: "السيناريو التالت",
-            firstWidget: TableWidget<Pointers>(
-              label1: 'المؤشر',
-              label2: 'التعديل',
-              label3: 'الحذف',
-              items: state.pointers1,
-              itemNameBuilder: (item) => item.text ?? "No name",
-              itemEditWidgetBuilder: (item) =>
-              //     IconButton(
-              //   icon: Icon(Icons.edit),
-              //   onPressed: () {
-              //     // handle edit action
-              //   },
-              // ),
-              DialogEditPointer(
-                allPointerCubit: allPointerCubit,
-                pointerServices:item,
-              ),
-              itemDeleteWidgetBuilder: (item) =>
-                  DialogDeletePointer(
-                    allPointerCubit: allPointerCubit,
-                    pointerServices:item,
-                  )
-
-              //     IconButton(
-              //   icon: Icon(Icons.delete),
-              //   onPressed: () {
-              //     // handle delete action
-              //   },
-              // ),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("المؤشرات",style: Constants.theme.textTheme.titleLarge,),
+              centerTitle: true,
+              backgroundColor: Colors.black87,
+              automaticallyImplyLeading: false,
             ),
-            secondWidget: TableWidget<Pointers>(
-              label1: 'المؤشر',
-              label2: 'التعديل',
-              label3: 'الحذف',
-              items: state.pointers2,
-              itemNameBuilder: (item) => item.text ?? "",
-              itemEditWidgetBuilder: (item) =>
+            body: Container(
+                  height: double.maxFinite,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/background.jpg"),
+                          fit: BoxFit.cover,
+                      ),
+                  ),
+
+              child: TabItemWidget(
+                item1: "السيناريو الاول",
+                item2: "السيناريو التاني",
+                item3: "السيناريو التالت",
+                firstWidget:
+                TableWidget<Pointers>(
+                  label1: 'المؤشر',
+                  label2: 'التعديل',
+                  label3: 'الحذف',
+                  items: state.pointers1,
+                  itemNameBuilder: (item) => item.text ?? "No name",
+                  itemEditWidgetBuilder: (item) =>
                   DialogEditPointer(
                     allPointerCubit: allPointerCubit,
                     pointerServices:item,
                   ),
+                  itemDeleteWidgetBuilder: (item) =>
+                      DialogDeletePointer(
+                        allPointerCubit: allPointerCubit,
+                        pointerServices:item,
+                      )
 
-              //     IconButton(
-              //   icon: Icon(Icons.edit),
-              //   onPressed: () {
-              //     // handle edit action
-              //   },
-              // ),
-              itemDeleteWidgetBuilder: (item) =>
-                  DialogDeletePointer(
+                ).setVerticalPadding(context,enableMediaQuery: false,30),
+                secondWidget: TableWidget<Pointers>(
+                  label1: 'المؤشر',
+                  label2: 'التعديل',
+                  label3: 'الحذف',
+                  items: state.pointers2,
+                  itemNameBuilder: (item) => item.text ?? "",
+                  itemEditWidgetBuilder: (item) =>
+                      DialogEditPointer(
+                        allPointerCubit: allPointerCubit,
+                        pointerServices:item,
+                      ),
+                  itemDeleteWidgetBuilder: (item) =>
+                      DialogDeletePointer(
+                        allPointerCubit: allPointerCubit,
+                        pointerServices:item,
+                      )
+                ).setVerticalPadding(context,enableMediaQuery: false,30),
+                thirdWidget: TableWidget<Pointers>(
+                  label1: 'المؤشر',
+                  label2: 'التعديل',
+                  label3: 'الحذف',
+                  items: state.pointers3,
+                  itemNameBuilder: (item) => item.text ?? "",
+                  itemEditWidgetBuilder: (item) =>
+                  DialogEditPointer(
                     allPointerCubit: allPointerCubit,
                     pointerServices:item,
-                  )
-              //     IconButton(
-              //   icon: Icon(Icons.delete),
-              //   onPressed: () {
-              //     // handle delete action
-              //   },
-              // ),
-            ),
-            thirdWidget: TableWidget<Pointers>(
-              label1: 'المؤشر',
-              label2: 'التعديل',
-              label3: 'الحذف',
-              items: state.pointers3,
-              itemNameBuilder: (item) => item.text ?? "",
-              itemEditWidgetBuilder: (item) =>
-              //     IconButton(
-              //   icon: Icon(Icons.edit),
-              //   onPressed: () {
-              //     // handle edit action
-              //   },
-              // ),
-              DialogEditPointer(
-                allPointerCubit: allPointerCubit,
-                pointerServices:item,
+                  ),
+                  itemDeleteWidgetBuilder: (item) =>
+                      DialogDeletePointer(
+                        allPointerCubit: allPointerCubit,
+                        pointerServices:item,
+                      )
+                ).setVerticalPadding(context,enableMediaQuery: false,30),
               ),
-              itemDeleteWidgetBuilder: (item) =>
-                  DialogDeletePointer(
-                    allPointerCubit: allPointerCubit,
-                    pointerServices:item,
-                  )
-              //     IconButton(
-              //   icon: Icon(Icons.delete),
-              //   onPressed: () {
-              //     // handle delete action
-              //   },
-              // ),
             ),
           );
         } else if (state is ErrorAllPointers) {

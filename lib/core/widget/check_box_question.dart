@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:experts_app/core/config/constants.dart';
 
 class CheckBoxQuestion extends StatefulWidget {
@@ -25,19 +24,17 @@ class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
   @override
   void initState() {
     super.initState();
-    checked = List.generate(widget.items.length, (index) => false);
-    for(int index = 0 ; index < widget.items.length; index++) {
+    checked = List<bool>.filled(widget.items.length, false);
+    for (int index = 0; index < widget.items.length; index++) {
       if (widget.previous.contains(widget.items[index].id)) {
         checked[index] = true;
+        selected.add(widget.items[index].id);
       }
     }
-    selected = widget.previous;   
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.previous);
-    print(checked);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SizedBox(
@@ -47,8 +44,9 @@ class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
           itemCount: widget.items.length,
           itemBuilder: (context, index) {
             return CheckboxListTile(
-              title: Text(widget.items[index].text),
-              value:checked[index],
+              checkColor: Colors.white,
+              title: Text(widget.items[index].text,style: Constants.theme.textTheme.bodyMedium,),
+              value: checked[index],
               selected: checked[index],
               onChanged: (bool? value) {
                 setState(() {

@@ -42,7 +42,7 @@ class _DialogDeletePointerState extends State<DialogDeletePointer> {
       bloc: updatePointerCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.delete),
+          icon: Icon(Icons.delete,color: Colors.grey.shade200,),
           onPressed: () {
             showDialog(
               context: context,
@@ -51,7 +51,7 @@ class _DialogDeletePointerState extends State<DialogDeletePointer> {
                   title: Text("حذف المؤشر",style:Constants.theme.textTheme.titleLarge?.copyWith(
                     color: Colors.black
                   ),),
-                  content: Text("هل أنت متأكد أنك تريد حذف هذه المؤشر ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                  content: Text("هل أنت متأكد أنك تريد حذف هذا المؤشر ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
                       color: Colors.black
                   ),),
                   actions: [

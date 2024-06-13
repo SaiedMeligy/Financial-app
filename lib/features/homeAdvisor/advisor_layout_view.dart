@@ -6,6 +6,7 @@ import 'package:experts_app/features/homeAdvisor/add_user/page/add_user_view.dar
 import 'package:experts_app/features/homeAdvisor/home/page/home_advisor_view.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/page/session_data_view.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/page/patient_nationalId.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/config/constants.dart';
@@ -30,21 +31,16 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
       SideBarModel(title: "حالاتك", icon: Icon(Icons.list)),
       SideBarModel(title: "بدء جلسة", icon: Icon(Icons.timer)),
       SideBarModel(title: "مواعيد الجلسات", icon: Icon(Icons.access_time_rounded)),
-      SideBarModel(title: "اضافة جلسة", icon: Icon(Icons.add)),
-      SideBarModel(title: "حجز المواعيد", icon: Icon(Icons.list)),
+       SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete)),
       SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add)),
     ];
     List<Widget> bodies = [
       HomeAdvisorView(),
       AllPatientView(),
       PatientNationalId(),
-      // ViewQuestion(),
-      // Center(child: Text("بدء جلسة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       SessionDate(),
-      Center(child: Text("تعديل المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
-      Center(child: Text("تعديل المؤاشرات",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
+      Container(),
       AddUserView(),
-      // Center(child: Text("اضافة حالة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
     ];
 
     return Scaffold(

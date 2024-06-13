@@ -1,3 +1,4 @@
+import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/table_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,22 +35,32 @@ class _ConsultingViewState extends State<ConsultingView> {
         if (state is LoadingAllConsultations) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SuccessAllConsultations) {
-          return TableWidget<ConsultationServices>(
-            label1: "الخدمة الاستشارية",
-            label2: "التعديل",
-            label3: "الحذف",
-            items: state.consultationServices,
-            itemNameBuilder: (item) => item.name ?? 'No Name',
-            itemEditWidgetBuilder: (item) => DialogEdit(
-              consultationServices: item,
-              allConsultationCubit: allConsultationCubit,
+          return Container(
+            height: double.maxFinite,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/background.jpg"),
+                fit: BoxFit.cover,
+              ),
             ),
-            itemDeleteWidgetBuilder: (item){
-              if (item == null) {
-            return const Text("Invalid Item");
-          }
-                return DialogDelete(allConsultationCubit: allConsultationCubit,
-                consultationServices: item,);}
+
+            child: TableWidget<ConsultationServices>(
+              label1: "الخدمة الاستشارية",
+              label2: "التعديل",
+              label3: "الحذف",
+              items: state.consultationServices,
+              itemNameBuilder: (item) => item.name ?? 'No Name',
+              itemEditWidgetBuilder: (item) => DialogEdit(
+                consultationServices: item,
+                allConsultationCubit: allConsultationCubit,
+              ),
+              itemDeleteWidgetBuilder: (item){
+                if (item == null) {
+              return const Text("Invalid Item");
+            }
+                  return DialogDelete(allConsultationCubit: allConsultationCubit,
+                  consultationServices: item,);}
+            ).setVerticalPadding(context,enableMediaQuery: false,20),
           );
         } else if (state is ErrorAllConsultations) {
           return Center(child: Text(state.errorMessage));

@@ -34,109 +34,214 @@ class PatientWidgetView<T> extends StatefulWidget {
 class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
+    return
+      ResponsiveBuilder(
       builder: (context, sizingInformation) {
         return ListView(
           children: [
-            DataTable(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              border: TableBorder.all(
-                color: Colors.blue, // replace with Constants.theme.primaryColor if necessary
-                width: 2,
-              ),
-              columnSpacing: 20,
-              columns: [
-                DataColumn(
-                  label: Expanded(
-                    child: SizedBox(
-                      width: Constants.mediaQuery.width*0.45,
-                      child: Text(
-                        widget.label1,
-                        textAlign: TextAlign.center,
-                        style: Constants.theme.textTheme.titleLarge?.copyWith(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
+            Table(
+              columnWidths: {
+                0 : FlexColumnWidth(4) ,
+                1 : FlexColumnWidth(1) ,
+                2 : FlexColumnWidth(1) ,
+              },
+              children: [
+                TableRow(
+                  decoration: BoxDecoration(
+                    color: Colors.black ,
                   ),
-                ),
-                DataColumn(
-                  label: Expanded(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.001,
-                      child: Text(
-                        widget.label2,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Expanded(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.001,
-                      child: Text(
-                        widget.label3,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              rows: List<DataRow>.generate(
-                widget.items.length,
-                    (index) => DataRow(
-                  cells: [
-                    DataCell(
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PatientDetailsView(pationt_data: widget.items[index]),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
+                  children: [
+                    TableCell(
+                      child: Container(
+                        height: 50,
+                        child: Center(
                           child: Text(
-                            widget.itemNameBuilder(widget.items[index]),
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.black,
+                            widget.label1,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontSize: 20,
+                              color: Colors.white,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    DataCell(
-                      Container(
-                        alignment: Alignment.center,
-                        child: widget.itemEditWidgetBuilder(widget.items[index]),
+                    TableCell(
+                      child: Container(
+                        height: 50 ,
+                        child: Center(
+                          child: Text(
+                            widget.label2,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    DataCell(
-                      Container(
-                        alignment: Alignment.center,
-                        child: widget.itemDeleteWidgetBuilder != null
-                            ? widget.itemDeleteWidgetBuilder!(widget.items[index])
-                            : Container(),
+                    TableCell(
+                      child: Container(
+                        height: 50,
+                        child: Center(
+                          child: Text(
+                            widget.label3,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ],
+                  ]
                 ),
-              ),
-            ).setVerticalPadding(context, enableMediaQuery: false, 20).setHorizontalPadding(context, enableMediaQuery: false, 30),
+                for(int index = 0; index < widget.items.length ; index++)...[
+                  TableRow(
+                    decoration: BoxDecoration(
+                      color: Colors.black38 ,
+                    ),
+                    children: [
+                      TableCell(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PatientDetailsView(pationt_data: widget.items[index]),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Center(
+                              child: Text(
+                                widget.itemNameBuilder(widget.items[index]),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: widget.itemEditWidgetBuilder(widget.items[index]),
+                        ),
+                      ),
+                      TableCell(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: widget.itemDeleteWidgetBuilder != null
+                              ? widget.itemDeleteWidgetBuilder!(widget.items[index])
+                            : Container(),
+                        ),
+                      ),
+                    ]
+                  ),
+                ]
+              ],
+            ),
+            // DataTable(
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.all(Radius.circular(10)),
+            //     color: Colors.black
+            //   ),
+            //   columnSpacing: 20,
+            //   columns: [
+            //     DataColumn(
+            //       label: Expanded(
+            //         child: SizedBox(
+            //           width: Constants.mediaQuery.width*0.45,
+            //           child: Text(
+            //             widget.label1,
+            //             textAlign: TextAlign.center,
+            //             style: Constants.theme.textTheme.titleLarge?.copyWith(
+            //               color: Colors.white,
+            //               fontSize: 20,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     DataColumn(
+            //       label: Expanded(
+            //         child: SizedBox(
+            //           width: MediaQuery.of(context).size.width * 0.001,
+            //           child: Text(
+            //             widget.label2,
+            //             textAlign: TextAlign.center,
+            //             style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            //               color: Colors.white,
+            //               fontSize: 20,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     DataColumn(
+            //       label: Expanded(
+            //         child: SizedBox(
+            //           width: MediaQuery.of(context).size.width * 0.001,
+            //           child: Text(
+            //             widget.label3,
+            //             textAlign: TextAlign.center,
+            //             style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            //               fontSize: 20,
+            //               color: Colors.white,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            //   rows: List<DataRow>.generate( widget.items.length, (index) =>
+            //     DataRow(
+            //       color: MaterialStateProperty.all(Colors.black26) ,
+            //       cells: [
+            //         DataCell(
+            //           GestureDetector(
+            //             onTap: () {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                   builder: (context) => PatientDetailsView(pationt_data: widget.items[index]),
+            //                 ),
+            //               );
+            //             },
+            //             child: Container(
+            //               alignment: Alignment.center,
+            //               child: Text(
+            //                 widget.itemNameBuilder(widget.items[index]),
+            //                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            //                   color: Colors.white,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         DataCell(
+            //           Container(
+            //             alignment: Alignment.center,
+            //             child: widget.itemEditWidgetBuilder(widget.items[index]),
+            //           ),
+            //         ),
+            //         DataCell(
+            //           Container(
+            //             alignment: Alignment.center,
+            //             child: widget.itemDeleteWidgetBuilder != null
+            //                 ? widget.itemDeleteWidgetBuilder!(widget.items[index])
+            //                 : Container(),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ).setVerticalPadding(context, enableMediaQuery: false, 20).setHorizontalPadding(context, enableMediaQuery: false, 30),
           ],
         );
       },

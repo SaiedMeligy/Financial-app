@@ -42,7 +42,7 @@ class _DialogDeleteAdviceState extends State<DialogDeleteAdvice> {
       bloc: updateAdviceCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.delete),
+          icon: Icon(Icons.delete,color: Colors.white70,),
           onPressed: () {
             showDialog(
               context: context,

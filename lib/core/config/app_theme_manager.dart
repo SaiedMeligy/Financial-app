@@ -17,15 +17,15 @@ class AppThemeManager{
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         fontFamily: "Cairo",
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.bold,
         color: Colors.white,
         fontSize: 24,
       ),
       bodyLarge: TextStyle(
         fontFamily: "Cairo",
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.bold,
         color: Colors.white,
-        fontSize: 20,
+        fontSize: 22,
       ),
       bodyMedium: TextStyle(
         fontFamily: "Cairo",

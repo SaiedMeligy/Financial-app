@@ -13,20 +13,18 @@ import '../../../../homeAdvisor/viewQuestion/manager/states.dart';
 
 class LineChartCubit extends Cubit<LineChartStates>{
   LineChartCubit() : super(LoadingLineChartState());
-  late PointerReportUseCase addQuestionUseCase;
-  late PointerReportRepository addQuestionRepository;
+  late PointerReportUseCase pointerUseCase;
+  late PointerReportRepository pointerRepository;
   late PointerReportDataSource dataSource;
 
-  Future<void> getPointerReport(PointerReportModel pointer,int id) async {
+  Future<void> getPointerReport(Report pointer,int id) async {
     WebServices service = WebServices();
     dataSource = PointerReportDataSourceImp(service.freeDio);
-    addQuestionRepository = PointerReportRepositoryImp(dataSource);
-    addQuestionUseCase = PointerReportUseCase(addQuestionRepository);
+    pointerRepository = PointerReportRepositoryImp(dataSource);
+    pointerUseCase = PointerReportUseCase(pointerRepository);
     try {
-      final result = await addQuestionUseCase.execute(pointer, id);
+      final result = await pointerUseCase.execute(pointer, id);
       final data = PointerReportModel.fromJson(result.data);
-
-
       emit(SuccessLineChartState(data.report!));
     }
     catch (e) {

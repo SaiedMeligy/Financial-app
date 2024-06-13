@@ -27,20 +27,22 @@ class _AddIndicatorState extends State<AddIndicator> {
         bloc: addPointerCubit,
         builder: (context, state) {
           return Container(
+
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
+                image: DecorationImage(
+                    image: AssetImage("assets/images/background.jpg"),
+                    fit: BoxFit.cover,
+                    opacity: 1.0
+                )
+
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Form(
                 key: formKey,
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .start, // Align children to the end (bottom) of the column
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Row(
@@ -95,8 +97,8 @@ class _AddIndicatorState extends State<AddIndicator> {
                                 Constants.theme.primaryColor.withOpacity(0.5)),
                         child: Text(
                           "اضافة المؤشر",
-                          style: Constants.theme.textTheme.titleLarge
-                              ?.copyWith(color: Colors.black),
+                          style: Constants.theme.textTheme.bodyLarge
+
                         ),
                         onPressed: () async {
                           if (selectedScenarioId == 0) {

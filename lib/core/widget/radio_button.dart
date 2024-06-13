@@ -45,6 +45,7 @@ class _RadioWidgetState extends State<RadioWidget> {
           child: Container(
             padding: EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
+              color: Colors.grey,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: Constants.theme.primaryColor,
@@ -55,12 +56,13 @@ class _RadioWidgetState extends State<RadioWidget> {
               width: Constants.mediaQuery.width * 0.12,
               child: DropdownButton<int>(
                 value: selectedValue,
-
+                dropdownColor: Constants.theme.primaryColor.withOpacity(0.9),
+                icon: Icon(Icons.arrow_drop_down,color: Colors.black,),
                 items: widget.items.map((item) {
                   return DropdownMenuItem<int>(
                     value: item.value,
                     child: Text(item.key,style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.black
+                      color: Colors.white
                     ),),
                   );
                 }).toList(),

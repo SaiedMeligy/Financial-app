@@ -4,5 +4,5 @@ import '../../../domain/entities/PointerReportModel.dart';
 
 abstract class PointerReportDataSource{
 
-  Future<Response> getPointerReport(PointerReportModel pointer,int id);
+  Future<Response> getPointerReport(Report pointer,int id);
 }

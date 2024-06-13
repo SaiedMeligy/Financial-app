@@ -35,8 +35,14 @@ class _AddUserViewState extends State<AddUserView> {
       bloc: registerPatientCubit,
       builder: (context, state) {
         return Scaffold(
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/background.jpg"),
+                  fit: BoxFit.cover,
+                  opacity: 0.8
+                )
+              ),
               child: Center(
                 child: SingleChildScrollView(
                   child: Form(
@@ -47,7 +53,8 @@ class _AddUserViewState extends State<AddUserView> {
                       children: [
                         Text("اضافة حالة", style: Constants.theme.textTheme
                             .titleLarge?.copyWith(
-                            color: Colors.black
+                            color: Colors.black,
+                          fontSize: 27
                         ),),
                         SizedBox(
                           height: 10,
@@ -56,7 +63,7 @@ class _AddUserViewState extends State<AddUserView> {
                           delay: const Duration(microseconds: 200),
                           child: Text(
                             "الاسم كامل",
-                            style: Constants.theme.textTheme.bodyMedium
+                            style: Constants.theme.textTheme.bodyLarge
                                 ?.copyWith(color: Colors.black),
                           ),
                         ),
@@ -85,7 +92,7 @@ class _AddUserViewState extends State<AddUserView> {
                           delay: const Duration(microseconds: 200),
                           child: Text(
                             "الرقم القومي",
-                            style: Constants.theme.textTheme.bodyMedium
+                            style: Constants.theme.textTheme.bodyLarge
                                 ?.copyWith(color: Colors.black),
                           ),
                         ),
@@ -114,7 +121,7 @@ class _AddUserViewState extends State<AddUserView> {
                           delay: const Duration(microseconds: 400),
                           child: Text(
                             "رقم التلفون",
-                            style: Constants.theme.textTheme.bodyMedium
+                            style: Constants.theme.textTheme.bodyLarge
                                 ?.copyWith(color: Colors.black),
                           ),
                         ),
@@ -143,7 +150,7 @@ class _AddUserViewState extends State<AddUserView> {
                           delay: const Duration(microseconds: 700),
                           child: Text(
                             "عنوان البريد الإلكتروني",
-                            style: Constants.theme.textTheme.bodyMedium
+                            style: Constants.theme.textTheme.bodyLarge
                                 ?.copyWith(color: Colors.black),
                           ),
                         ),
@@ -170,7 +177,7 @@ class _AddUserViewState extends State<AddUserView> {
                           delay: const Duration(microseconds: 900),
                           child: Text(
                             "كلمة السر",
-                            style: Constants.theme.textTheme.bodyMedium
+                            style: Constants.theme.textTheme.bodyLarge
                                 ?.copyWith(color: Colors.black),
                           ),
                         ),
@@ -203,7 +210,7 @@ class _AddUserViewState extends State<AddUserView> {
                         FadeInRight(
                           delay: const Duration(microseconds: 1100),
                           child: BorderRoundedButton(
-                              title: "اضافة استشاري",
+                              title: "اضافة حالة",
                               fontSize: 18,
                               color: Constants.theme.primaryColor,
                               onPressed: () {
@@ -211,41 +218,14 @@ class _AddUserViewState extends State<AddUserView> {
                                     name: nameController.text,
                                     email: emailController.text,
                                     password: passwordController.text,
-                                    phoneNumber: phoneController.text, nationalId: nationalController.text, );
+                                    phoneNumber: phoneController.text,
+                                  nationalId: nationalController.text, );
 
                                 if (formKey.currentState!.validate()) {
                                   registerPatientCubit
                                       .registerUser(data)
                                       .then((value) {
                                     if (value) {
-                                      // AlertDialog(
-                                      //   title: Text(
-                                      //     "تم اضافة الحالة",
-                                      //     style: Constants.theme.textTheme.bodyMedium
-                                      //         ?.copyWith(color: Colors.black),
-                                      //   ),
-                                      //   actions: [
-                                      //     TextButton(
-                                      //       onPressed: () {
-                                      //         Navigator.of(context).pop();
-                                      //       },
-                                      //       child: Container(
-                                      //           decoration: BoxDecoration(
-                                      //             borderRadius: BorderRadius.circular(10),
-                                      //             border: Border.all(
-                                      //               color: Constants.theme.primaryColor,
-                                      //               width: 2.5,
-                                      //             ),
-                                      //           ),
-                                      //           child: Text(
-                                      //             "اغلاق",
-                                      //             style: Constants.theme.textTheme.bodyMedium
-                                      //                 ?.copyWith(color: Colors.black),
-                                      //           ).setHorizontalPadding(
-                                      //               context, enableMediaQuery: false, 20)),
-                                      //     ),
-                                      //   ],
-                                      // );
                                       nameController.clear();
                                       emailController.clear();
                                       passwordController.clear();
@@ -263,7 +243,7 @@ class _AddUserViewState extends State<AddUserView> {
                               }),
                         ),
                       ],
-                    ),
+                    ).setHorizontalPadding(context,enableMediaQuery: false, 50).setVerticalPadding(context,enableMediaQuery: false, 20),
                   ),
                 ),
               ),

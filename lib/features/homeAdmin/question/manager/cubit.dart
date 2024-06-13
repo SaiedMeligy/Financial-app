@@ -27,66 +27,8 @@ class AddQuestionCubit extends Cubit<AddQuestionStates>{
     emit(SuccessAddQuestionState(result));
     return result;
   }
-  // static AddQuestionCubit get(context) => BlocProvider.of(context);
-  //
-  // List<Pointers> pointers1 = [];
-  // List<Pointers> pointers2 = [];
-  // List<Pointers> pointers3 = [];
-  // List<Advices> advices = [];
-  //
-  // Future<void> fetchPointers() async {
-  //   emit(LoadingAddQuestionState());
-  //   final dio = Dio();
-  //   try {
-  //     final response = await dio.get(
-  //       '${Constants.baseUrl}/api/pointer',
-  //       options: Options(headers: {
-  //         "api-password": Constants.apiPassword,
-  //         "token": CacheHelper.getData(key: "token")
-  //       }),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> data = response.data["pointers"];
-  //       List<Pointers> pointers = data.map((json) => Pointers.fromJson(json)).toList();
-  //
-  //       pointers1 = pointers.where((pointer) => pointer.senarioId == 1).toList();
-  //       pointers2 = pointers.where((pointer) => pointer.senarioId == 2).toList();
-  //       pointers3 = pointers.where((pointer) => pointer.senarioId == 3).toList();
-  //
-  //       emit(AddQuestionLoadedState());
-  //     } else {
-  //       emit(ErrorAddQuestionState('Failed to load pointers. Status code: ${response.statusCode}'));
-  //     }
-  //   } catch (e) {
-  //     emit(ErrorAddQuestionState('Error occurred: $e'));
-  //   }
-  // }
-  //
-  // Future<void> fetchAdvices() async {
-  //   emit(LoadingAddQuestionState());
-  //   final dio = Dio();
-  //   try {
-  //     final response = await dio.get(
-  //       '${Constants.baseUrl}/api/advice',
-  //       options: Options(headers: {
-  //         "api-password": Constants.apiPassword,
-  //         "token": CacheHelper.getData(key: "token")
-  //       }),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> data = response.data["advices"];
-  //       advices = data.map((json) => Advices.fromJson(json)).toList();
-  //       emit(AddQuestionLoadedState());
-  //     } else {
-  //       emit(ErrorAddQuestionState('Failed to load advices. Status code: ${response.statusCode}'));
-  //     }
-  //   } catch (e) {
-  //     emit(ErrorAddQuestionState('Error occurred: $e'));
-  //   }
-  // }
 
-  // void addQuestion(Map<String, dynamic> requestData) {
-  //   // Handle adding question logic here
-  //   emit(SuccessAddQuestionState());
-  // }
+
+
 }
+

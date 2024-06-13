@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../config/constants.dart';
-
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
   final bool? isPassword;
   final String? hint;
   final bool? enabled;
+  final bool? readOnly;
   final int? maxLines, minLines, maxLength;
   final String? obscuringCharacter, value;
   final String? Function(String?)? onValidate;
@@ -21,6 +20,8 @@ class CustomTextField extends StatefulWidget {
   final TextInputAction? action;
   final FocusNode? focusNode;
   final Color? hintColor;
+  final Color? fillColor;
+
 
   const CustomTextField({
     super.key,
@@ -28,6 +29,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword,
     this.hint,
     this.enabled,
+    this.readOnly=false,
     this.obscuringCharacter,
     this.value,
     this.onValidate,
@@ -47,6 +49,7 @@ class CustomTextField extends StatefulWidget {
     this.action,
     this.focusNode,
     this.hintColor = Colors.white,
+    this.fillColor = Colors.transparent,
   });
 
   @override
@@ -76,15 +79,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
-      style:Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.w400,
-
+      readOnly: widget.readOnly!,
+      style: Constants.theme.textTheme.bodyMedium?.copyWith(
+        color: Colors.white,
+        fontWeight: FontWeight.w400,
       ),
-      // autovalidateMode: AutovalidateMode.disabled,
       textInputAction: widget.action ?? TextInputAction.done,
       focusNode: widget.focusNode,
       decoration: InputDecoration(
+        fillColor: widget.fillColor,
+        filled: true,
         suffixIcon: widget.isPassword ?? false
-
             ? InkWell(
           onTap: () {
             setState(() {
@@ -95,16 +100,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText ? Icons.visibility : Icons.visibility_off,
             color: widget.hintColor,
           ),
-
         )
             : widget.suffixWidget,
         prefixIcon: widget.prefixIcon,
         hintText: widget.hint,
-        hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
+        hintStyle: Constants.theme.textTheme.bodySmall?.copyWith(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 12
+        ),
         counterText: "",
         border: OutlineInputBorder(),
-        // suffix: isPass widget.suffixWidget,
-        // contentPadding: const EdgeInsets.only(top: 5,left: 5, right: 5),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey.shade200,
@@ -112,21 +118,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: BorderSide(
-    color: theme.primaryColor,
-    width: 2.5,),
-        ),
-
-        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: theme.primaryColor,
+            color: Colors.black,
             width: 2.5,
           ),
         ),
-
-        errorStyle: const TextStyle(color: Colors.deepOrangeAccent, fontWeight: FontWeight.w400),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: 2.5,
+          ),
+        ),
+        errorStyle: const TextStyle(
+          color: Colors.deepOrangeAccent,
+          fontWeight: FontWeight.w400,
+        ),
         errorMaxLines: 6,
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

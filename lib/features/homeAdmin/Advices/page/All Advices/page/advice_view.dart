@@ -1,3 +1,5 @@
+import 'package:experts_app/core/config/constants.dart';
+import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/table_widget.dart';
 import 'package:experts_app/domain/entities/AdviceMode.dart';
 import 'package:experts_app/features/homeAdmin/Advices/page/All%20Advices/widget/page/dialog_delete_pointer.dart';
@@ -35,28 +37,45 @@ class _EditAdviceViewState extends State<EditAdviceView> {
             return const Center(child: CircularProgressIndicator());
           }
           else if (state is SuccessAllAdvices) {
-            return TableWidget<Advices>(
-                label1: "التوصية",
-                label2: "التعديل",
-                label3: "الحذف",
-                items: state.adviceServices,
-                itemNameBuilder: (item) => item.text ?? 'No Name',
-                itemEditWidgetBuilder: (item) =>
-                    DialogEditAdvice(
-                      allAdviceCubit: allAdviceCubit,
-                        advicesServices:item,
-
+            return Scaffold(
+              appBar: AppBar(
+                title:  Text("التوصيات",style: Constants.theme.textTheme.titleLarge,),
+                centerTitle: true,
+                backgroundColor: Colors.black87,
+                automaticallyImplyLeading: false,
+              ),
+              body: Container(
+                height: double.maxFinite,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/background.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                itemDeleteWidgetBuilder: (item){
-                  if (item == null) {
-                    return const Text("Invalid Item");
-                  }
-                  return
-                    DialogDeleteAdvice(
-                      allAdviceCubit: allAdviceCubit,
-                      advicesServices:item,
-                    );
-                }
+                child: TableWidget<Advices>(
+                    label1: "التوصية",
+                    label2: "التعديل",
+                    label3: "الحذف",
+                    items: state.adviceServices,
+                    itemNameBuilder: (item) => item.text ?? 'No Name',
+                    itemEditWidgetBuilder: (item) =>
+                        DialogEditAdvice(
+                          allAdviceCubit: allAdviceCubit,
+                            advicesServices:item,
+
+                    ),
+                    itemDeleteWidgetBuilder: (item){
+                      if (item == null) {
+                        return const Text("Invalid Item");
+                      }
+                      return
+                        DialogDeleteAdvice(
+                          allAdviceCubit: allAdviceCubit,
+                          advicesServices:item,
+                        );
+                    }
+                ).setVerticalPadding(context,enableMediaQuery:false, 30),
+              ),
             );
           } else if (state is ErrorAllAdvices) {
             return Center(child: Text(state.errorMessage));

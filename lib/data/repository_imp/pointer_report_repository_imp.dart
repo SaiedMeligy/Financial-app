@@ -10,7 +10,7 @@ class PointerReportRepositoryImp implements PointerReportRepository{
   final PointerReportDataSource dataSource;
   PointerReportRepositoryImp(this.dataSource);
   @override
-  Future<Response> getPointerReport(PointerReportModel pointer,int id) async {
+  Future<Response> getPointerReport(Report pointer,int id) async {
     try {
       final response = await dataSource.getPointerReport(pointer,id);
       if (response.statusCode == 200) {

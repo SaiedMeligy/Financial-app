@@ -10,7 +10,7 @@ class AdviceReportRepositoryImp implements AdviceReportRepository{
   final AdviceReportDataSource dataSource;
   AdviceReportRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAdviceReport(AdviceReportModel advice) async {
+  Future<Response> getAdviceReport(ReportAdvice advice) async {
     try {
       final response = await dataSource.getAdviceReport(advice);
       if (response.statusCode == 200) {

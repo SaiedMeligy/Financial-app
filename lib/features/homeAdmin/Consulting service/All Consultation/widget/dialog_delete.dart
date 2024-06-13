@@ -44,7 +44,7 @@ class _DialogDeleteState extends State<DialogDelete> {
       bloc: updateConsultationCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.delete),
+          icon: Icon(Icons.delete,color: Colors.white70,),
           onPressed: () {
             showDialog(
               context: context,

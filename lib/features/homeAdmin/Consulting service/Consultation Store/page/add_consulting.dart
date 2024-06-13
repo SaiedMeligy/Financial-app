@@ -26,11 +26,11 @@ class _AddConsultingState extends State<AddConsulting> {
       bloc: consultationCubit,
       builder: (context, state) {
         return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+          height: double.maxFinite,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.jpg"),
+              fit: BoxFit.cover,
             ),
           ),
           child: Padding(

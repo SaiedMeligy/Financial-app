@@ -10,7 +10,7 @@ class PointerReportDataSourceImp implements PointerReportDataSource{
   PointerReportDataSourceImp(this.dio);
 
   @override
-  Future<Response> getPointerReport(PointerReportModel pointer,int id) async{
+  Future<Response> getPointerReport(Report pointer,int id) async{
     return await dio.get(
       "/api/reports/pointer-report",
       options: Options(
@@ -20,7 +20,7 @@ class PointerReportDataSourceImp implements PointerReportDataSource{
         },
       ),
       queryParameters: {
-        "id": id,
+        "senario_id": id,
       },
     );
   }

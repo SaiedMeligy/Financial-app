@@ -29,11 +29,12 @@ class _AddRecommendState extends State<AddRecommend> {
       builder: (context, state) {
         return
           Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+            height: double.maxFinite,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/background.jpg"),
+                fit: BoxFit.cover,
+
               ),
             ),
             child: Padding(
@@ -50,7 +51,7 @@ class _AddRecommendState extends State<AddRecommend> {
                         children: [
                           Text("اضافة توصية", style: Constants.theme.textTheme
                               .titleLarge?.copyWith(
-                              color: Colors.black
+                              color: Colors.white
                           ),
                             textAlign: TextAlign.start,
                           ),
@@ -80,9 +81,7 @@ class _AddRecommendState extends State<AddRecommend> {
                                 .withOpacity(0.5)
                         ),
                         child: Text("اضافة التوصية", style: Constants.theme
-                            .textTheme.titleLarge?.copyWith(
-                            color: Colors.black
-                        ),),
+                            .textTheme.bodyLarge),
                         onPressed: () {
                           if (formKey.currentState!.validate())
                           {
@@ -147,7 +146,7 @@ class _AddRecommendState extends State<AddRecommend> {
                   .setVerticalPadding(enableMediaQuery: false, context, 20)
                   .setHorizontalPadding(context, enableMediaQuery: false, 10),
 
-            ),
+            ).setVerticalPadding(context, enableMediaQuery: false, 30),
           );
       }
     );

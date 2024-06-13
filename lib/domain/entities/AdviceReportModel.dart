@@ -8,31 +8,31 @@ class AdviceReportModel {
       this.status, 
       this.errNum, 
       this.message, 
-      this.report,});
+      this.advice,});
 
   AdviceReportModel.fromJson(dynamic json) {
     status = json['status'];
     errNum = json['errNum'];
     message = json['message'];
     if (json['report'] != null) {
-      report = [];
+      advice = [];
       json['report'].forEach((v) {
-        report?.add(Report.fromJson(v));
+        advice?.add(ReportAdvice.fromJson(v));
       });
     }
   }
   bool? status;
   int? errNum;
   String? message;
-  List<Report>? report;
+  List<ReportAdvice>? advice;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = status;
     map['errNum'] = errNum;
     map['message'] = message;
-    if (report != null) {
-      map['report'] = report?.map((v) => v.toJson()).toList();
+    if (advice != null) {
+      map['advice'] = advice?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -43,13 +43,13 @@ class AdviceReportModel {
 /// count : 0
 /// total_pationts : 4
 
-class Report {
-  Report({
+class ReportAdvice {
+  ReportAdvice({
       this.advice, 
       this.count, 
       this.totalPationts,});
 
-  Report.fromJson(dynamic json) {
+  ReportAdvice.fromJson(dynamic json) {
     advice = json['advice'] != null ? Advice.fromJson(json['advice']) : null;
     count = json['count'];
     totalPationts = json['total_pationts'];

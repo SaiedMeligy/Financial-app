@@ -40,7 +40,7 @@ class _DialogEditPointerState extends State<DialogEditPointer> {
       bloc: updatePointerCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.edit),
+          icon: Icon(Icons.edit,color: Colors.grey.shade200,),
           onPressed: () {
             showDialog(
               context: context,

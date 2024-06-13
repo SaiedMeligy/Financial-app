@@ -45,7 +45,7 @@ class _DialogEditState extends State<DialogEdit> {
       bloc: updateConsultationCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.edit),
+          icon: Icon(Icons.edit,color: Colors.white70,),
           onPressed: () {
             showDialog(
               context: context,

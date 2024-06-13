@@ -41,7 +41,7 @@ class _DialogDeletePatientState extends State<DialogDeletePatient> {
       bloc: updatePatientCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.delete),
+          icon: Icon(Icons.delete,color: Colors.white,),
           onPressed: () {
             showDialog(
               context: context,

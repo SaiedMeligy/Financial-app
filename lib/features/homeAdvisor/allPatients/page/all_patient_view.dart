@@ -38,39 +38,47 @@ class _AllPatientViewState extends State<AllPatientView> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SuccessAllPatient) {
           var patients = state.patients;
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                const CustomTextField(
-                  hint: "البحث",
-                  icon: Icons.search,
-                ),
-                const SizedBox(height: 10),
-              Expanded(
-                child: PatientWidgetView<Pationts>(
-                          label1: "اسم الحالة",
-                          label2: "التعديل",
-                          label3: "الحذف",
-                          items: patients,
-                          itemNameBuilder: (item) => item.name ?? 'No Name',
-                        itemEditWidgetBuilder: (item) =>
-                        //
-                       DialogEditPatient(allPatientCubit: allPatientCubit,
-                         patient: item,
-                       ),
-                        itemDeleteWidgetBuilder: (item){
-                        if (item == null) {
-                        return const Text("Invalid Item");
-                        }
-                         return
-                          DialogDeletePatient(allPatientCubit: allPatientCubit,
-                        patient: item,);
+          return Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/background.jpg"),
+                fit: BoxFit.cover,
+              )
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  const CustomTextField(
+                    hint: "البحث",
+                    icon: Icons.search,
+                  ),
+                  const SizedBox(height: 10),
+                Expanded(
+                  child: PatientWidgetView<Pationts>(
+                            label1: "اسم الحالة",
+                            label2: "التعديل",
+                            label3: "الحذف",
+                            items: patients,
+                            itemNameBuilder: (item) => item.name ?? 'No Name',
+                          itemEditWidgetBuilder: (item) =>
+                          //
+                         DialogEditPatient(allPatientCubit: allPatientCubit,
+                           patient: item,
+                         ),
+                          itemDeleteWidgetBuilder: (item){
+                          if (item == null) {
+                          return const Text("Invalid Item");
                           }
-                
-                        ),
+                           return
+                            DialogDeletePatient(allPatientCubit: allPatientCubit,
+                          patient: item,);
+                            }
+
+                          ),
+                ),
+                ],
               ),
-              ],
             ),
           );
         } else if (state is ErrorAllPatient) {

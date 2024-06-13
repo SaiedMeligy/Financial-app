@@ -48,8 +48,11 @@ class _TabItemWidgetState extends State<TabItemWidget> {
             titleSpacing: 0.0,
             bottom: TabBar(
               labelStyle: Constants.theme.textTheme.titleLarge?.copyWith(
-                color: Colors.black
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
+              unselectedLabelStyle:Constants.theme.textTheme.bodyLarge,
+              unselectedLabelColor: Colors.white,
               tabs: myTabs, // use the tabs we defined earlier
             ),
           ),

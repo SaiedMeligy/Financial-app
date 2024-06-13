@@ -4,5 +4,5 @@ import '../../../domain/entities/AdviceReportModel.dart';
 
 abstract class AdviceReportDataSource{
 
-  Future<Response> getAdviceReport(AdviceReportModel advice);
+  Future<Response> getAdviceReport(ReportAdvice advice);
 }

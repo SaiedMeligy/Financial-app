@@ -46,7 +46,7 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
       bloc: updatePatientCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.edit),
+          icon: Icon(Icons.edit,color: Colors.white,),
           onPressed: () {
             showDialog(
               context: context,

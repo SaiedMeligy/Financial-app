@@ -33,10 +33,16 @@ class _RegisterViewState extends State<RegisterView> {
         bloc: registerCubit,
         builder: (context, state) {
           return Scaffold(
-
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Center(
+              body: Container(
+                height: double.maxFinite,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/background.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SingleChildScrollView(
                     child: Form(
                       key: formKey,
@@ -54,8 +60,7 @@ class _RegisterViewState extends State<RegisterView> {
                             delay: const Duration(microseconds: 200),
                             child: Text(
                               "الاسم كامل",
-                              style: Constants.theme.textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.black),
+                              style: Constants.theme.textTheme.bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -82,7 +87,6 @@ class _RegisterViewState extends State<RegisterView> {
                             child: Text(
                               "رقم التلفون",
                               style: Constants.theme.textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.black),
                             ),
                           ),
                           const SizedBox(
@@ -109,7 +113,6 @@ class _RegisterViewState extends State<RegisterView> {
                             child: Text(
                               "عنوان البريد الإلكتروني",
                               style: Constants.theme.textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.black),
                             ),
                           ),
                           const SizedBox(
@@ -134,7 +137,6 @@ class _RegisterViewState extends State<RegisterView> {
                             child: Text(
                               "كلمة السر",
                               style: Constants.theme.textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.black),
                             ),
                           ),
                           const SizedBox(
@@ -159,7 +161,7 @@ class _RegisterViewState extends State<RegisterView> {
                             height: 30,
                           ),
                           const SizedBox(height: 30),
-                          
+
 
                           FadeInRight(
                             delay: const Duration(microseconds: 1100),
@@ -174,10 +176,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       password: passwordController.text,
                                       phoneNumber: phoneController.text, rule:"0");
 
-                                  if (formKey.currentState!.validate()) {
-                                    registerCubit
-                                        .registerUser(data)
-                                        .then((value) {
+                                  if (formKey.currentState!.validate()) {registerCubit.registerUser(data).then((value) {
                                       if (value) {
                                         nameController.clear();
                                         phoneController.clear();

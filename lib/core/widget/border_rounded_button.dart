@@ -36,7 +36,7 @@ class BorderRoundedButton extends StatelessWidget {
         decoration: BoxDecoration(
           // border: Border.all(color: color ?? Colors.black, width: 1),
           borderRadius: BorderRadius.circular(15),
-          color: Constants.theme.primaryColor.withOpacity(0.5),
+          color: Colors.black.withOpacity(0.7),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,8 +45,8 @@ class BorderRoundedButton extends StatelessWidget {
             Text(
               title,
               maxLines: 2,
-              style: Constants.theme.textTheme.titleLarge?.copyWith(
-                color: Colors.black
+              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                color: Colors.white
               ),
             ),
             const SizedBox(width: 10),

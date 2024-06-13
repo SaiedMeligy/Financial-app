@@ -21,6 +21,8 @@ class RegisterPatientRepositoryImp implements RepositoryRegisterPatient{
       final response = await registerDataSource.register(data);
       if(response.statusCode ==200){
         if (response.data["status"] == true) {
+          SnackBarService.showSuccessMessage(response.data["message"]);
+
           return Right(true);
         }
         else{
