@@ -204,23 +204,13 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                         ),
                         children: [
                           TableCell(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PatientDetailsView(pationt_data: widget.items[index]),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Center(
-                                  child: Text(
-                                    widget.itemNameBuilder(widget.items[index]),
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: Colors.white,
-                                    ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Center(
+                                child: Text(
+                                  widget.itemNameBuilder(widget.items[index]),
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),

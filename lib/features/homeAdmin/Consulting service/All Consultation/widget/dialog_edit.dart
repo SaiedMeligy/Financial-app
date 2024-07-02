@@ -44,13 +44,15 @@ class _DialogEditState extends State<DialogEdit> {
     return BlocBuilder<UpdateConsultationCubit, UpdateConsultationStates>(
       bloc: updateConsultationCubit,
       builder: (context, state) {
-        return IconButton(
+        return
+          IconButton(
           icon: Icon(Icons.edit,color: Colors.white70,),
           onPressed: () {
             showDialog(
               context: context,
               builder: (context) {
                 return AlertDialog(
+                  // backgroundColor: Colors.black87,
                   content: Form(
                     key: formKey,
                     child: SizedBox(
@@ -93,7 +95,8 @@ class _DialogEditState extends State<DialogEdit> {
                             widget.consultationServices!.id!,
                             titleController.text,
                             descriptionController.text,
-                          ).then((_) {
+                          ).
+                          then((_) {
                             widget.allConsultationCubit.getAllConsultations();
                             Navigator.of(context).pop();
                           });
@@ -103,13 +106,13 @@ class _DialogEditState extends State<DialogEdit> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: Constants.theme.primaryColor,
+                            color: Colors.grey,
                             width: 2.5,
                           ),
                         ),
                         child: Text(
                           "موافق",
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black)
                         ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       ),
                     ),

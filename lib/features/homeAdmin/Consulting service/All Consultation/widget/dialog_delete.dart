@@ -50,11 +50,10 @@ class _DialogDeleteState extends State<DialogDelete> {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  title: Text("حذف الخدمة الاستشارية",style:Constants.theme.textTheme.titleLarge?.copyWith(
-                    color: Colors.black
-                  ),),
+                  // backgroundColor: Colors.black87,
+                  title: Text("حذف الخدمة الاستشارية",style:Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black)),
                   content: Text("هل أنت متأكد أنك تريد حذف هذه الخدمة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.black
+                       color: Colors.black
                   ),),
                   actions: [
                     TextButton(
@@ -70,13 +69,15 @@ class _DialogDeleteState extends State<DialogDelete> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: Constants.theme.primaryColor,
+                            color: Colors.grey,
                             width: 2.5,
                           ),
                         ),
                         child: Text(
                           "موافق",
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                            color: Colors.black
+                          ),
                         ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:experts_app/core/config/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../widget/LineChartAdvice.dart';
 
@@ -14,24 +15,42 @@ class _AdviceReportViewState extends State<AdviceReportView> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("توصيات الحالات",style: Constants.theme.textTheme.titleLarge,),
-        centerTitle: true,
-        backgroundColor: Colors.black87,
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-      ),
       body: Container(
         width: double.maxFinite,
         height: double.maxFinite,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/background.jpg"),
+            image: AssetImage("assets/images/back.jpg"),
             fit: BoxFit.cover,
             opacity: 1.0
           )
         ),
-        child: LineChartsAdvice(),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color:Colors.black,
+                        width: 2,
+                      )
+                  ),
+                  child: Text("توصيات الحالات", style: Constants.theme.textTheme
+                      .titleLarge?.copyWith(
+                      color: Colors.black,
+                      fontSize: 27
+                  ),),
+                ),
+              ],
+            ),
+
+            Expanded(child: LineChartsAdvice()),
+          ],
+        ),
       ),
     );
   }

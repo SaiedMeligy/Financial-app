@@ -1,4 +1,3 @@
-import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/manager/states.dart';
@@ -7,10 +6,7 @@ import 'package:experts_app/features/homeAdvisor/allPatients/updatePatient/page/
 import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_widget_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/config/constants.dart';
 import '../../../../core/widget/custom_text_field.dart';
-import '../../../../core/widget/second_table_widget.dart';
-import '../../../../core/widget/table_widget.dart';
 
 class AllPatientView extends StatefulWidget {
   const AllPatientView({super.key});
@@ -21,12 +17,26 @@ class AllPatientView extends StatefulWidget {
 
 class _AllPatientViewState extends State<AllPatientView> {
   late AllPatientCubit allPatientCubit;
+  TextEditingController searchController = TextEditingController();
+  String searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     allPatientCubit = AllPatientCubit();
     allPatientCubit.getAllPatient();
+
+    searchController.addListener(() {
+      setState(() {
+        searchQuery = searchController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -38,45 +48,51 @@ class _AllPatientViewState extends State<AllPatientView> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SuccessAllPatient) {
           var patients = state.patients;
+
+          var filteredPatients = patients.where((patient) {
+            return patient.name != null && patient.name!.contains(searchQuery);
+          }).toList();
+
           return Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/background.jpg"),
-                fit: BoxFit.cover,
-              )
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/back.jpg"),
+                  fit: BoxFit.cover,
+                  opacity: 0.8
+                )
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  const CustomTextField(
+                  CustomTextField(
+                    controller: searchController,
                     hint: "البحث",
                     icon: Icons.search,
                   ),
                   const SizedBox(height: 10),
-                Expanded(
-                  child: PatientWidgetView<Pationts>(
-                            label1: "اسم الحالة",
-                            label2: "التعديل",
-                            label3: "الحذف",
-                            items: patients,
-                            itemNameBuilder: (item) => item.name ?? 'No Name',
-                          itemEditWidgetBuilder: (item) =>
-                          //
-                         DialogEditPatient(allPatientCubit: allPatientCubit,
-                           patient: item,
-                         ),
-                          itemDeleteWidgetBuilder: (item){
-                          if (item == null) {
+                  Expanded(
+                    child: PatientWidgetView<Pationts>(
+                      label1: "اسم الحالة",
+                      label2: "التعديل",
+                      label3: "الحذف",
+                      items: filteredPatients,
+                      itemNameBuilder: (item) => item.name ?? 'No Name',
+                      itemEditWidgetBuilder: (item) => DialogEditPatient(
+                        allPatientCubit: allPatientCubit,
+                        patient: item,
+                      ),
+                      itemDeleteWidgetBuilder: (item) {
+                        if (item == null) {
                           return const Text("Invalid Item");
-                          }
-                           return
-                            DialogDeletePatient(allPatientCubit: allPatientCubit,
-                          patient: item,);
-                            }
-
-                          ),
-                ),
+                        }
+                        return DialogDeletePatient(
+                          allPatientCubit: allPatientCubit,
+                          patient: item,
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),

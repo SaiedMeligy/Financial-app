@@ -32,8 +32,9 @@ class _AddRecommendState extends State<AddRecommend> {
             height: double.maxFinite,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background.jpg"),
+                image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
+                opacity: 0.8
 
               ),
             ),

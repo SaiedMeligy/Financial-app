@@ -20,6 +20,7 @@ class TabItemWidget extends StatefulWidget {
 }
 
 class _TabItemWidgetState extends State<TabItemWidget> {
+  bool isMobile =false;
   @override
   Widget build(BuildContext context) {
     final List<Tab> myTabs = <Tab>[
@@ -35,32 +36,40 @@ class _TabItemWidgetState extends State<TabItemWidget> {
 
     ];
     return
-      Directionality(
-        textDirection: TextDirection.rtl,
-        child: DefaultTabController(
-          length: myTabs.length,
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            toolbarHeight: 0,
-            elevation: 0.0,
-            titleSpacing: 0.0,
-            bottom: TabBar(
-              labelStyle: Constants.theme.textTheme.titleLarge?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+      LayoutBuilder(
+        builder: (context, constraints) {
+          isMobile = constraints.maxWidth < 600;
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: DefaultTabController(
+            length: myTabs.length,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              toolbarHeight: 0,
+              elevation: 0.0,
+              titleSpacing: 0.0,
+              bottom: TabBar(
+                labelStyle: Constants.theme.textTheme.titleLarge?.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: isMobile? 18 : 24,
+                ),
+                unselectedLabelStyle:Constants.theme.textTheme.bodyLarge?.copyWith(
+                  fontSize: isMobile? 16 : 22,
+                ),
+                unselectedLabelColor: Colors.black,
+                tabs: myTabs, // use the tabs we defined earlier
               ),
-              unselectedLabelStyle:Constants.theme.textTheme.bodyLarge,
-              unselectedLabelColor: Colors.white,
-              tabs: myTabs, // use the tabs we defined earlier
             ),
+            body: TabBarView(
+              children: myTabViews, // use the tab views we defined earlier
+            ),
+                ),
           ),
-          body: TabBarView(
-            children: myTabViews, // use the tab views we defined earlier
-          ),
-              ),
-        ),
+        );
+        }
       );
 
   }

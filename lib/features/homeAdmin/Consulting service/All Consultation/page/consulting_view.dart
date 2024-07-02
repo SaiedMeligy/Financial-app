@@ -23,7 +23,7 @@ class _ConsultingViewState extends State<ConsultingView> {
   @override
   void initState() {
     super.initState();
-    allConsultationCubit.getAllConsultations();
+    allConsultationCubit.getAllConsultationsAdmin();
   }
 
   @override
@@ -39,8 +39,9 @@ class _ConsultingViewState extends State<ConsultingView> {
             height: double.maxFinite,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background.jpg"),
+                image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
+                opacity: 0.8
               ),
             ),
 

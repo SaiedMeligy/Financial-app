@@ -1,5 +1,6 @@
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/core/widget/tab_item_widget.dart';
@@ -36,78 +37,98 @@ class _EditIndicatorState extends State<EditIndicator> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SuccessAllPointers) {
           return Scaffold(
-            appBar: AppBar(
-              title: Text("المؤشرات",style: Constants.theme.textTheme.titleLarge,),
-              centerTitle: true,
-              backgroundColor: Colors.black87,
-              automaticallyImplyLeading: false,
-            ),
             body: Container(
                   height: double.maxFinite,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/images/background.jpg"),
+                          image: AssetImage("assets/images/back.jpg"),
                           fit: BoxFit.cover,
-                      ),
+                        opacity: 0.8                      ),
                   ),
 
-              child: TabItemWidget(
-                item1: "السيناريو الاول",
-                item2: "السيناريو التاني",
-                item3: "السيناريو التالت",
-                firstWidget:
-                TableWidget<Pointers>(
-                  label1: 'المؤشر',
-                  label2: 'التعديل',
-                  label3: 'الحذف',
-                  items: state.pointers1,
-                  itemNameBuilder: (item) => item.text ?? "No name",
-                  itemEditWidgetBuilder: (item) =>
-                  DialogEditPointer(
-                    allPointerCubit: allPointerCubit,
-                    pointerServices:item,
-                  ),
-                  itemDeleteWidgetBuilder: (item) =>
-                      DialogDeletePointer(
-                        allPointerCubit: allPointerCubit,
-                        pointerServices:item,
-                      )
-
-                ).setVerticalPadding(context,enableMediaQuery: false,30),
-                secondWidget: TableWidget<Pointers>(
-                  label1: 'المؤشر',
-                  label2: 'التعديل',
-                  label3: 'الحذف',
-                  items: state.pointers2,
-                  itemNameBuilder: (item) => item.text ?? "",
-                  itemEditWidgetBuilder: (item) =>
-                      DialogEditPointer(
-                        allPointerCubit: allPointerCubit,
-                        pointerServices:item,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color:Colors.black,
+                              width: 2,
+                            )
+                        ),
+                        child: Text("المؤشرات", style: Constants.theme.textTheme
+                            .titleLarge?.copyWith(
+                            color: Colors.black,
+                            fontSize: 27
+                        ),),
                       ),
-                  itemDeleteWidgetBuilder: (item) =>
-                      DialogDeletePointer(
-                        allPointerCubit: allPointerCubit,
-                        pointerServices:item,
-                      )
-                ).setVerticalPadding(context,enableMediaQuery: false,30),
-                thirdWidget: TableWidget<Pointers>(
-                  label1: 'المؤشر',
-                  label2: 'التعديل',
-                  label3: 'الحذف',
-                  items: state.pointers3,
-                  itemNameBuilder: (item) => item.text ?? "",
-                  itemEditWidgetBuilder: (item) =>
-                  DialogEditPointer(
-                    allPointerCubit: allPointerCubit,
-                    pointerServices:item,
+                    ],
                   ),
-                  itemDeleteWidgetBuilder: (item) =>
-                      DialogDeletePointer(
-                        allPointerCubit: allPointerCubit,
-                        pointerServices:item,
-                      )
-                ).setVerticalPadding(context,enableMediaQuery: false,30),
+                  Expanded(
+                    child: TabItemWidget(
+                      item1: "السيناريو الاول",
+                      item2: "السيناريو التاني",
+                      item3: "السيناريو التالت",
+                      firstWidget:
+                      TableWidget<Pointers>(
+                        label1: 'المؤشر',
+                        label2: 'التعديل',
+                        label3: 'الحذف',
+                        items: state.pointers1,
+                        itemNameBuilder: (item) => item.text ?? "No name",
+                        itemEditWidgetBuilder: (item) =>
+                        DialogEditPointer(
+                          allPointerCubit: allPointerCubit,
+                          pointerServices:item,
+                        ),
+                        itemDeleteWidgetBuilder: (item) =>
+                            DialogDeletePointer(
+                              allPointerCubit: allPointerCubit,
+                              pointerServices:item,
+                            )
+
+                      ).setVerticalPadding(context,enableMediaQuery: false,30),
+                      secondWidget: TableWidget<Pointers>(
+                        label1: 'المؤشر',
+                        label2: 'التعديل',
+                        label3: 'الحذف',
+                        items: state.pointers2,
+                        itemNameBuilder: (item) => item.text ?? "",
+                        itemEditWidgetBuilder: (item) =>
+                            DialogEditPointer(
+                              allPointerCubit: allPointerCubit,
+                              pointerServices:item,
+                            ),
+                        itemDeleteWidgetBuilder: (item) =>
+                            DialogDeletePointer(
+                              allPointerCubit: allPointerCubit,
+                              pointerServices:item,
+                            )
+                      ).setVerticalPadding(context,enableMediaQuery: false,30),
+                      thirdWidget: TableWidget<Pointers>(
+                        label1: 'المؤشر',
+                        label2: 'التعديل',
+                        label3: 'الحذف',
+                        items: state.pointers3,
+                        itemNameBuilder: (item) => item.text ?? "",
+                        itemEditWidgetBuilder: (item) =>
+                        DialogEditPointer(
+                          allPointerCubit: allPointerCubit,
+                          pointerServices:item,
+                        ),
+                        itemDeleteWidgetBuilder: (item) =>
+                            DialogDeletePointer(
+                              allPointerCubit: allPointerCubit,
+                              pointerServices:item,
+                            )
+                      ).setVerticalPadding(context,enableMediaQuery: false,30),
+                    ),
+                  ),
+                ],
               ),
             ),
           );

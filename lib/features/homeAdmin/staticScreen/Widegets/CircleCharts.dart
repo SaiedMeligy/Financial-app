@@ -1,79 +1,68 @@
-import 'package:experts_app/domain/entities/sales_data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../../../../core/config/constants.dart';
 
-class CircleCharts extends StatefulWidget {
-  const CircleCharts({super.key});
+class CircleCharts extends StatelessWidget {
+  final List<SalesData> advisorData;
 
-  @override
-  State<CircleCharts> createState() => _CircleChartsState();
-}
+  const CircleCharts({Key? key, required this.advisorData}) : super(key: key);
 
-class _CircleChartsState extends State<CircleCharts> {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context); // Initialize ScreenUtil
+    ScreenUtil.init(context);
+    bool isMobile = false;
 
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(10),
-      width: Constants.mediaQuery.width*0.55,
+      width: Constants.mediaQuery.width * 0.55,
       decoration: BoxDecoration(
-        color: Constants.theme.primaryColor.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color: Colors.black26
-          )
+        color: Constants.theme.primaryColor.withOpacity(0.6),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.black26),
       ),
-      child:  Column(
+      child: Column(
         children: [
-           Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Expanded(
                 child: Text(
-                  "Annual sales  by category" ,
+                  "الاستشارين",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold ,
-                      fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
               ),
-              Expanded(
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                      child: Icon(CupertinoIcons.arrow_right_circle,color: Colors.white,)))
+              // Expanded(
+              //   child: Container(
+              //     alignment: Alignment.centerLeft,
+              //     child: Icon(CupertinoIcons.arrow_right_circle, color: Colors.white),
+              //   ),
+              // ),
             ],
           ),
           SfCircularChart(
             series: <CircularSeries>[
               PieSeries<SalesData, String>(
-                dataSource: <SalesData>[
-                  SalesData('s', 35),
-                  SalesData('a', 28),
-                  SalesData('m', 34),
-                  SalesData('e', 32),
-                  SalesData('h', 32),
-                  SalesData('space', 32),
-                ],
-
-                xValueMapper: (SalesData sales, _) => sales.year ,
-                yValueMapper: (SalesData sales, _) => sales.sales ,
+                dataSource: advisorData,
+                xValueMapper: (SalesData sales, _) => sales.advisorName,
+                yValueMapper: (SalesData sales, _) => sales.patientCount,
+                dataLabelMapper: (SalesData sales, _) => '${sales.advisorName}: ${sales.patientCount}',
                 dataLabelSettings: const DataLabelSettings(
                   isVisible: true,
                   labelPosition: ChartDataLabelPosition.outside,
                   labelAlignment: ChartDataLabelAlignment.middle,
                   connectorLineSettings: ConnectorLineSettings(
                     length: '20%',
-                    type: ConnectorType.curve ,
+                    type: ConnectorType.curve,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -82,4 +71,9 @@ class _CircleChartsState extends State<CircleCharts> {
   }
 }
 
+class SalesData {
+  final String advisorName;
+  final double patientCount;
 
+  SalesData(this.advisorName, this.patientCount);
+}

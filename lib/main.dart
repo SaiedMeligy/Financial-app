@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'core/config/app_theme_manager.dart';
 import 'core/config/cash_helper.dart';
 import 'core/config/routes.dart';
+import 'features/initialPage/initial_page.dart';
 
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
       title: 'My App',
       theme: AppThemeManager.lightTheme,
       debugShowCheckedModeBanner: false,
-        home: const LogView(),
-      initialRoute: PageRouteName.login,
+        home: const InitialPage(),
+      initialRoute: PageRouteName.initial,
       onGenerateRoute: Routes.onGenerateRoute,
       navigatorKey: navigatorKey,
       builder: EasyLoading.init(

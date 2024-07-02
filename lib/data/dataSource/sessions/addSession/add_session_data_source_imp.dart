@@ -10,16 +10,18 @@ class AddSessionDataSourceImp implements AddSessionDataSource{
   final Dio dio;
   AddSessionDataSourceImp(this.dio);
   @override
-  Future<Response> addSession(AddSessionModel data) async{
+  Future<Response> addSession(Sessions data) async{
     return await dio.post(
       "/api/session",
       data: {
-        "advicor_id":data.advisorId,
-        "pationt_id":data.patientId,
+        "advicor_id":data.advicorId,
+        "pationt_id":data.pationtId,
         "case_manager":data.caseManager,
         "phone_number":data.phoneNumber,
-        "date":data.dateTime,
-        "time":data.time
+        "date":data.date,
+        "time":data.time,
+        "other_phone_number":data.otherPhoneNumber,
+        "comments":data.comments,
       },
       options: Options(
         headers: {

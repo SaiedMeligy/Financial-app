@@ -10,7 +10,7 @@ class AddSessionRepositoryImp implements AddSessionRepository{
   final AddSessionDataSource dataSource;
   AddSessionRepositoryImp(this.dataSource);
   @override
-  Future<Response> addSession(AddSessionModel data) async {
+  Future<Response> addSession(Sessions data) async {
     try {
       final response = await dataSource.addSession(data);
       if (response.statusCode == 200) {

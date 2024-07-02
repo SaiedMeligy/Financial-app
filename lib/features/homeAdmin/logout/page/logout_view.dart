@@ -41,7 +41,7 @@ class _LogoutViewState extends State<LogoutView> {
               children: [
                 Text(
                   "الخروج",
-                  style: Constants.theme.textTheme.bodyMedium,
+                  style: Constants.theme.textTheme.bodyLarge,
                 ),
                 const SizedBox(
                   width: 5,

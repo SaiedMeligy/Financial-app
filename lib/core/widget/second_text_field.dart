@@ -76,7 +76,7 @@ class _SecondTextFieldState extends State<SecondTextField> {
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
-      style:Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.w400,
+      style:Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black,fontWeight: FontWeight.w400,
 
       ),
       // autovalidateMode: AutovalidateMode.disabled,

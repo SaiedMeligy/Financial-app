@@ -11,7 +11,7 @@ class DeletePatientDataSourceImp implements DeletePatientDataSource{
   @override
   Future<Response> deletePatient(int id) async{
     return await dio.delete(
-      "/api/advicor/pationt",
+      "/api/advicor/pationt/destroy",
       options: Options(
           headers: {
             "api-password": Constants.apiPassword,

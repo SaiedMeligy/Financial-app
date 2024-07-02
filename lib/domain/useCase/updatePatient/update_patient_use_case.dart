@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
 
-import '../../updatePatient/update_patient_repository.dart';
+import '../../repository/updatePatient/update_patient_repository.dart';
 
 
 class UpdatePatientUseCase{

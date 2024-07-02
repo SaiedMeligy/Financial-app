@@ -80,9 +80,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
       readOnly: widget.readOnly!,
-      style: Constants.theme.textTheme.bodyMedium?.copyWith(
-        color: Colors.white,
-        fontWeight: FontWeight.w400,
+      style: Constants.theme.textTheme.bodyLarge?.copyWith(
+        color: Colors.black
       ),
       textInputAction: widget.action ?? TextInputAction.done,
       focusNode: widget.focusNode,
@@ -104,7 +103,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             : widget.suffixWidget,
         prefixIcon: widget.prefixIcon,
         hintText: widget.hint,
-        hintStyle: Constants.theme.textTheme.bodySmall?.copyWith(
+        hintStyle: Constants.theme.textTheme.bodyLarge?.copyWith(
           color: Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 12
@@ -120,14 +119,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.black,
+            color: Colors.black54,
             width: 2.5,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.black,
+            color: Colors.black54,
             width: 2.5,
           ),
         ),

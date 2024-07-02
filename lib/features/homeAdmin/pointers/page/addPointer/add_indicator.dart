@@ -31,9 +31,9 @@ class _AddIndicatorState extends State<AddIndicator> {
             decoration: const BoxDecoration(
               color: Colors.white,
                 image: DecorationImage(
-                    image: AssetImage("assets/images/background.jpg"),
+                    image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 1.0
+                    opacity: 0.8
                 )
 
             ),

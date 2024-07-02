@@ -37,8 +37,9 @@ class _RegisterViewState extends State<RegisterView> {
                 height: double.maxFinite,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/background.jpg"),
+                    image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
+                      opacity: 0.8
                   ),
                 ),
                 child: Padding(
@@ -51,7 +52,8 @@ class _RegisterViewState extends State<RegisterView> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text("اضافة استشاري",style: Constants.theme.textTheme.titleLarge?.copyWith(
-                            color:  Colors.black
+                              color: Colors.black,
+                              fontSize: 27
                           ),),
                           SizedBox(
                             height: 10,
@@ -60,7 +62,8 @@ class _RegisterViewState extends State<RegisterView> {
                             delay: const Duration(microseconds: 200),
                             child: Text(
                               "الاسم كامل",
-                              style: Constants.theme.textTheme.bodyMedium,
+                              style: Constants.theme.textTheme.bodyLarge
+                                  ?.copyWith(color: Colors.black),
                             ),
                           ),
                           const SizedBox(
@@ -86,7 +89,8 @@ class _RegisterViewState extends State<RegisterView> {
                             delay: const Duration(microseconds: 400),
                             child: Text(
                               "رقم التلفون",
-                              style: Constants.theme.textTheme.bodyMedium
+                              style: Constants.theme.textTheme.bodyLarge
+                                  ?.copyWith(color: Colors.black),
                             ),
                           ),
                           const SizedBox(
@@ -112,7 +116,8 @@ class _RegisterViewState extends State<RegisterView> {
                             delay: const Duration(microseconds: 700),
                             child: Text(
                               "عنوان البريد الإلكتروني",
-                              style: Constants.theme.textTheme.bodyMedium
+                              style: Constants.theme.textTheme.bodyLarge
+                                  ?.copyWith(color: Colors.black),
                             ),
                           ),
                           const SizedBox(
@@ -136,7 +141,8 @@ class _RegisterViewState extends State<RegisterView> {
                             delay: const Duration(microseconds: 900),
                             child: Text(
                               "كلمة السر",
-                              style: Constants.theme.textTheme.bodyMedium
+                              style: Constants.theme.textTheme.bodyLarge
+                                  ?.copyWith(color: Colors.black),
                             ),
                           ),
                           const SizedBox(

@@ -24,8 +24,9 @@ class InitialPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           image: const DecorationImage(
-                            image: AssetImage('assets/images/background.jpg'),
+                            image: AssetImage('assets/images/back.jpg'),
                             fit: BoxFit.cover,
+                            opacity: 0.9
                           )
                       ),
                       child:
@@ -55,7 +56,7 @@ class InitialPage extends StatelessWidget {
                                   child: ElevatedButton(onPressed: () {
                                     navigatorKey.currentState!
                                         .pushReplacementNamed(
-                                        PageRouteName.homeAdmin);
+                                        PageRouteName.login);
                                   },
                                       child: Text("Get Started",
                                         style: Constants.theme.textTheme

@@ -75,7 +75,7 @@ class QuestionViewCubit extends Cubit<QuestionViewStates> {
     storeFormDataSource = StoreFormDataSourceImp(service.freeDio);
     storeFormRepository = StoreFormRepositoryImp(storeFormDataSource);
     storeFormUseCase = StoreFormUseCase(storeFormRepository);
-    emit(LoadingQuestionViewState());
+    // emit(LoadingQuestionViewState());
 
     return await storeFormUseCase.execute(storeData);
   }

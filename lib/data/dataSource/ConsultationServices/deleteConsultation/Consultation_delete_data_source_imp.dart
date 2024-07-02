@@ -13,7 +13,7 @@ class DeleteConsultationDataSourceImp implements DeleteConsultationDataSource{
   @override
   Future<Response> deleteConsultation(int id) async{
     return await dio.delete(
-      "/api/ConsultationServices/destroy",
+      "/api/advicor/ConsultationServices/destroy",
       options: Options(
           headers: {
             "api-password": Constants.apiPassword,

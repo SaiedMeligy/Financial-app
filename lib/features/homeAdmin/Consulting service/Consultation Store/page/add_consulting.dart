@@ -29,8 +29,9 @@ class _AddConsultingState extends State<AddConsulting> {
           height: double.maxFinite,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/background.jpg"),
+              image: AssetImage("assets/images/back.jpg"),
               fit: BoxFit.cover,
+              opacity: 0.8
             ),
           ),
           child: Padding(

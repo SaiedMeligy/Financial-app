@@ -47,39 +47,42 @@ class _DialogDeletePointerState extends State<DialogDeletePointer> {
             showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  title: Text("حذف المؤشر",style:Constants.theme.textTheme.titleLarge?.copyWith(
-                    color: Colors.black
-                  ),),
-                  content: Text("هل أنت متأكد أنك تريد حذف هذا المؤشر ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                return Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: AlertDialog(
+                    title: Text("حذف المؤشر",style:Constants.theme.textTheme.titleLarge?.copyWith(
                       color: Colors.black
-                  ),),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        updatePointerCubit.
-                        deletePointer(
-                          widget.pointerServices!.id!,
-                        ).then((_) {
-                          widget.allPointerCubit.getAllPointers();
-                          Navigator.of(context).pop();
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Constants.theme.primaryColor,
-                            width: 2.5,
+                    ),),
+                    content: Text("هل أنت متأكد أنك تريد حذف هذا المؤشر ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black
+                    ),),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          updatePointerCubit.
+                          deletePointer(
+                            widget.pointerServices!.id!,
+                          ).then((_) {
+                            widget.allPointerCubit.getAllPointers();
+                            Navigator.of(context).pop();
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Constants.theme.primaryColor,
+                              width: 2.5,
+                            ),
                           ),
+                          child: Text(
+                            "موافق",
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
-                        child: Text(
-                          "موافق",
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             );

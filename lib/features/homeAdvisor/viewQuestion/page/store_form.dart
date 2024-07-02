@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../../../core/Services/snack_bar_service.dart';
 import '../widget/date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,9 @@ class StoreForm extends StatefulWidget {
 }
 
 class _StoreFormState extends State<StoreForm> {
+  DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
+  TextEditingController _dateTimeController = TextEditingController();
   var questionViewCubit = QuestionViewCubit();
   List<ConsultationServices> menuItem = [];
   List<bool> _checkBoxValues = [];
@@ -36,6 +40,41 @@ class _StoreFormState extends State<StoreForm> {
   DateTime selectedDate = DateTime.now();
 
   TextEditingController advicorComment = TextEditingController();
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate)
+      setState(() {
+        _selectedDate = pickedDate;
+        _updateDateTimeText();
+      });
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (pickedTime != null && pickedTime != _selectedTime)
+      setState(() {
+        _selectedTime = pickedTime;
+        _updateDateTimeText();
+      });
+  }
+
+  void _updateDateTimeText() {
+    if (_selectedDate != null && _selectedTime != null) {
+      final date = '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}';
+      final time = '${_selectedTime!.hour}:${_selectedTime!.minute}';
+      _dateTimeController.text = '$date $time';
+    }
+  }
+
+
 
   @override
   void initState() {
@@ -106,23 +145,6 @@ class _StoreFormState extends State<StoreForm> {
                       color: Colors.black,
                       child: Column(
                         children: [
-                          DateTimeView(
-                                onChange: (value) {
-                              setState(() {
-                                questionViewCubit.selectedDate = value;
-                              });
-                            },
-                          ),
-                          // Text("Select Time",style: Constants.theme.textTheme.bodyMedium),
-                          // GestureDetector(
-                          //   onTap: (){
-                          //     questionViewCubit.selectTaskDate(context);
-                          //     setState(() {
-                          //
-                          //     });
-                          //     },
-                          //   child: Text(DateFormat.yMMMMd().format(questionViewCubit.selectedate),style: Constants.theme.textTheme.bodyMedium),
-                          // ),
                           Text(
                             widget.pationt_data['pationt']['name'],
                             style: Constants.theme.textTheme.titleLarge,
@@ -144,7 +166,7 @@ class _StoreFormState extends State<StoreForm> {
                             endIndent: 10,
                           ),
                           Text(
-                            widget.pationt_data['pationt']['national_id'],
+                            "nationalId: "+widget.pationt_data['pationt']['national_id'],
                             style: Constants.theme.textTheme.titleLarge,
                           ),
                           const Divider(
@@ -157,6 +179,19 @@ class _StoreFormState extends State<StoreForm> {
                             "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
                             style: Constants.theme.textTheme.titleLarge,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                onPressed: () => _selectDate(context),
+                                icon: Icon(Icons.date_range_outlined, size: 40, color: Colors.white),
+                              ),
+                              // IconButton(
+                              //   onPressed: () => _selectTime(context),
+                              //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
+                              // ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -166,9 +201,10 @@ class _StoreFormState extends State<StoreForm> {
                           children: [
                             Expanded(
                               child: ListView.builder(
-                                  itemCount: question.length,
+                                  itemCount: question.length+1,
                                   itemBuilder: (context, index) {
                                     List<Radio<int>> radiobtnsWidgets= [];
+                                  try{
                                     question[index].questionOptions?.
                                     forEach((element) {
                                       if(element.type == 1){
@@ -184,19 +220,23 @@ class _StoreFormState extends State<StoreForm> {
                                                     answers[o.id] = 0;
                                                   }
                                                 }
-                                                },);
+                                              },);
                                               radiosBtn[question[index].id] = value!;
-                                                                     // print("----//--------//----//-------->$value");
+                                              // print("----//--------//----//-------->$value");
                                               print(answers[element.id!]);
                                               setState(() {},);
-                                              },
+                                            },
                                           ),
                                         );
                                       }
                                     },);
+                                  }
+                                  catch(error){
+                                    print(error.toString());
+                                  }
                                     return Column(
                                       children: [
-                                         if (question.length != index+1) ...[
+                                         if (question.length != index) ...[
                                           if (axisDisplay[index] != 0)
                                             Column(
                                               children: [
@@ -361,6 +401,7 @@ class _StoreFormState extends State<StoreForm> {
                                                     });
 
                                                     List<dynamic> lastAnswers = [];
+
                                                     answers.forEach((key, value) {
                                                       lastAnswers.add({
                                                         "question_option_id": key,
@@ -374,14 +415,18 @@ class _StoreFormState extends State<StoreForm> {
                                                       "need_other_session": needOtherSession,
                                                       "consultation_service_id": selected_consultation_service,
                                                       "comments": advicorComment.text,
-                                                      "date":questionViewCubit.date,
-                                                      // DateFormat('yyyy-MM-dd').format(selectedDate),
+                                                      "date":_selectedDate?.toString() ?? '',
                                                       "answers": lastAnswers
                                                     };
 
                                                     print("Data to be sent: $storeDate"); // Log the data before sending
 
-                                                    questionViewCubit.getStoreForm(storeDate);
+                                                    questionViewCubit.getStoreForm(storeDate).then((value) {
+                                                      if(value!=null) {
+                                                        Navigator.pop(context);
+                                                        SnackBarService.showSuccessMessage("تم اضافة الفورم");
+                                                      }
+                                                    });
                                                   }
                                               ).setHorizontalPadding(
                                                   context,

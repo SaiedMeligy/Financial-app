@@ -8,27 +8,33 @@ import '../../../../domain/entities/ConsultationViewModel.dart';
 import '../../../homeAdmin/Consulting service/All Consultation/manager/states.dart';
 
 class DropDown extends StatefulWidget {
-  ValueChanged onChange;
-  DropDown({super.key,required this.onChange});
+  final ValueChanged<int> onChange;
+  var items;
+  DropDown({super.key, required this.onChange,  this.items});
+
   @override
   State<DropDown> createState() => _DropDownState(onChange: onChange);
 }
 
 class _DropDownState extends State<DropDown> {
   var allConsultationCubit = AllConsultationCubit();
-  ConsultationServices? selectedValue; // Added to store the selected value
-  ValueChanged onChange;
+  ConsultationServices? selectedValue;
+  final ValueChanged<int> onChange;
+
   _DropDownState({required this.onChange});
+
   @override
   void initState() {
     super.initState();
-    allConsultationCubit.getAllConsultations(); // Fetch consultations on init
+    allConsultationCubit.getAllConsultations();
   }
 
   void handleDropdownValueChanged(ConsultationServices? newValue) {
     setState(() {
       selectedValue = newValue;
-      return onChange(newValue!.id);
+      if (newValue != null) {
+        onChange(newValue.id!);
+      }
     });
   }
 
@@ -39,16 +45,22 @@ class _DropDownState extends State<DropDown> {
       builder: (context, state) {
         if (state is LoadingAllConsultations) {
           return const Center(child: CircularProgressIndicator());
-        }
-        else if (state is SuccessAllConsultations) {
+        } else if (state is SuccessAllConsultations) {
           var consultations = state.consultationServices;
-          // var consultationNames = consultations.map((c) => c.name).toList();
+
+          if (selectedValue == null && consultations.isNotEmpty) {
+            selectedValue = consultations.first;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              handleDropdownValueChanged(selectedValue);
+            });
+          }
+
           return Container(
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.black,
                 width: 1,
-              )
+              ),
             ),
             child: DropdownButton<ConsultationServices>(
               value: selectedValue,
@@ -56,9 +68,12 @@ class _DropDownState extends State<DropDown> {
               items: consultations.map((dynamic value) {
                 return DropdownMenuItem<ConsultationServices>(
                   value: value,
-                  child: Text(value.name,style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.black
-                  ),),
+                  child: Text(
+                    value.name,
+                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black,
+                    ),
+                  ),
                 );
               }).toList(),
             ),

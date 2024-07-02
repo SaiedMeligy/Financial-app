@@ -11,7 +11,7 @@ import '../../../../../data/dataSource/allPatient/updatepatient/update_patient_d
 import '../../../../../data/repository_imp/delete_Patient_repository_imp.dart';
 import '../../../../../data/repository_imp/update_patient_repository_imp.dart';
 import '../../../../../domain/repository/deletePatient/delete_patient_repository.dart';
-import '../../../../../domain/updatePatient/update_patient_repository.dart';
+import '../../../../../domain/repository/updatePatient/update_patient_repository.dart';
 import '../../../../../domain/useCase/deletePatient/delete_patient_use_case.dart';
 import '../../../../../domain/useCase/updatePatient/update_patient_use_case.dart';
 import 'dialog_state.dart';
@@ -24,12 +24,9 @@ class UpdatePatientCubit extends Cubit<UpdatePatientStates>{
 
   Future<void> updatePatient(int id ,Pationts patient) async {
     WebServices service = WebServices();
-    updatePatientDataSource =
-        UpdatePatientDataSourceImp(service.freeDio);
-    updatePatientRepository =
-        UpdatePatientRepositoryImp(updatePatientDataSource);
-    updatePatientUseCase =
-        UpdatePatientUseCase(updatePatientRepository);
+    updatePatientDataSource = UpdatePatientDataSourceImp(service.freeDio);
+    updatePatientRepository = UpdatePatientRepositoryImp(updatePatientDataSource);
+    updatePatientUseCase = UpdatePatientUseCase(updatePatientRepository);
     emit(LoadingUpdatePatientState());
 
     try {

@@ -9,9 +9,12 @@ class SecondTableWidget extends StatefulWidget {
   final Widget label2;
   final Widget? label3;
   final Widget? label4;
+  final Widget? label5;
   final Widget itemRow1;
   final Widget? itemRow2;
   final Widget? itemRow3;
+  final Widget? itemRow4;
+  final Widget? itemRow5;
   final List<Pationts> items;
 
   SecondTableWidget({
@@ -20,10 +23,13 @@ class SecondTableWidget extends StatefulWidget {
     required this.label2,
     this.label3,
     this.label4,
+    this.label5,
     required this.items,
     required this.itemRow1,
     this.itemRow2,
     this.itemRow3,
+    this.itemRow4,
+    this.itemRow5,
   });
 
   @override

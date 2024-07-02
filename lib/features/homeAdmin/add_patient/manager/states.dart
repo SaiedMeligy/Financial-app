@@ -1,0 +1,7 @@
+sealed class RegisterPatientWithAdminState{}
+class LoadingRegisterPatientWithAdminState extends RegisterPatientWithAdminState{}
+class SuccessRegisterPatientWithAdminState extends RegisterPatientWithAdminState{}
+class ErrorRegisterPatientWithAdminState extends RegisterPatientWithAdminState{
+  final String errorMessage;
+  ErrorRegisterPatientWithAdminState(this.errorMessage);
+}

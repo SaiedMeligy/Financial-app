@@ -35,6 +35,7 @@ class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
 
   @override
   Widget build(BuildContext context) {
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SizedBox(
@@ -45,7 +46,7 @@ class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
           itemBuilder: (context, index) {
             return CheckboxListTile(
               checkColor: Colors.white,
-              title: Text(widget.items[index].text,style: Constants.theme.textTheme.bodyMedium,),
+              title: Text(widget.items[index].runtimeType.toString() == "Questions" ? widget.items[index].title : widget.items[index].text ,style: Constants.theme.textTheme.bodyMedium,),
               value: checked[index],
               selected: checked[index],
               onChanged: (bool? value) {

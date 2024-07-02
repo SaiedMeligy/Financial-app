@@ -38,7 +38,7 @@ class _AddUserViewState extends State<AddUserView> {
             body: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/background.jpg"),
+                  image: AssetImage("assets/images/back.jpg"),
                   fit: BoxFit.cover,
                   opacity: 0.8
                 )
@@ -51,11 +51,25 @@ class _AddUserViewState extends State<AddUserView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text("اضافة حالة", style: Constants.theme.textTheme
-                            .titleLarge?.copyWith(
-                            color: Colors.black,
-                          fontSize: 27
-                        ),),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color:Colors.black,
+                                    width: 2,
+                                  )
+                              ),
+                              child: Text("اضافة حالة", style: Constants.theme.textTheme
+                                  .titleLarge?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 27
+                              ),),
+                            ),
+                          ],
+                        ),
                         SizedBox(
                           height: 10,
                         ),

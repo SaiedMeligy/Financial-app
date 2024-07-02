@@ -1,20 +1,28 @@
+
+
+
+
 import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
-import 'package:experts_app/core/Services/snack_bar_service.dart';
-import 'package:experts_app/features/homeAdmin/question/manager/cubit.dart';
-import 'package:experts_app/features/homeAdmin/question/manager/states.dart';
+import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/Services/snack_bar_service.dart';
 import '../../../../core/config/cash_helper.dart';
-import 'package:experts_app/core/config/constants.dart';
+import '../../../../core/config/constants.dart';
+import '../../../../core/widget/check_box_question.dart';
 import '../../../../core/widget/custom_text_field.dart';
-import 'package:experts_app/core/widget/radio_button.dart';
-import 'package:experts_app/domain/entities/AdviceMode.dart';
-import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/core/widget/tab_item_widget.dart';
-import 'package:experts_app/domain/entities/pointerModel.dart';
-import 'package:experts_app/core/widget/drop_down_button.dart';
-import 'package:experts_app/core/widget/check_box_question.dart';
+import '../../../../core/widget/drop_down_button.dart';
+import '../../../../core/widget/radio_button.dart';
+import '../../../../core/widget/tab_item_widget.dart';
+import '../../../../domain/entities/AdviceMode.dart';
+import '../../../../domain/entities/QuestionModel.dart';
+import '../../allQuestionView/manager/cubit.dart';
+import '../manager/cubit.dart';
+import '../manager/states.dart';
+import '../widget/question_drop_down.dart';
 
 class AddQuestion extends StatefulWidget {
   const AddQuestion({super.key});
@@ -42,31 +50,45 @@ class _AddQuestionState extends State<AddQuestion> {
   List<List<int>> selectedPointers2 = [];
   List<List<int>> selectedPointers3 = [];
   List<List<int>> selectedAdvices = [];
+  List<List<int>> selectedQuestions = [];
+  var questionViewCubit =  AllQuestionCubit();
+  // var  questions;
+  List<Questions> realtedQuestion = [];
 
   late int _selecetdAixs = 0;
   var addQuestionCubit = AddQuestionCubit();
+  bool isMobile =false;
 
   @override
   void initState() {
     super.initState();
     fetchPointers();
     fetchAdvices();
-  }
+    questionViewCubit.getAllQuestion();
+    //  questions = questionViewCubit.getAllQuestion();
+    // print('1111111111111111111111111111111111111111111111111111111111\n${questions}');
+    // (questions["questions"] as List<dynamic>).forEach((value) {
+    //   realtedQuestion.add(Questions(id: value["id"] , title: value["title"]));
+    // });
+    // print('2222222222222222222222222222222222222222222222222222222222');
 
+  }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddQuestionCubit, AddQuestionStates>(
+
+    return
+      BlocBuilder<AddQuestionCubit, AddQuestionStates>(
       bloc: addQuestionCubit,
       builder: (context, state) {
         return Container(
           height: double.maxFinite,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/background.jpg"),
-                      fit: BoxFit.cover,
-                      opacity: 1.0
-                  )
-              ),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/back.jpg"),
+                  fit: BoxFit.cover,
+                  opacity: 0.8
+              )
+          ),
           child: ListView(children: [
             Container(
               decoration: const BoxDecoration(
@@ -81,8 +103,7 @@ class _AddQuestionState extends State<AddQuestion> {
                 child: Form(
                   key: formKey,
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment
-                          .start, // Align children to the end (bottom) of the column
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         FadeInRight(
@@ -114,7 +135,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                 },
                               ),
                             ],
-                          ),
+                          ).setVerticalPadding(context,enableMediaQuery: false, 10),
                         ),
                         const SizedBox(
                           height: 15,
@@ -149,8 +170,8 @@ class _AddQuestionState extends State<AddQuestion> {
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                      "اضافة اجابة",
-                                      style: Constants.theme.textTheme.bodyLarge
+                                        "اضافة اجابة",
+                                        style: Constants.theme.textTheme.bodyLarge
                                     ),
                                     const Icon(Icons.add, size: 30, color: Colors.white,
                                     ),
@@ -177,6 +198,8 @@ class _AddQuestionState extends State<AddQuestion> {
                                   SizedBox(
                                     width: Constants.mediaQuery.width * 0.2,
                                     child: CustomTextField(
+                                      fillColor: Colors.grey,
+
                                       controller: answerControllers[index],
                                       hint: "ادخل الاجابة",
                                       onValidate: (value) {
@@ -224,8 +247,8 @@ class _AddQuestionState extends State<AddQuestion> {
                                                           ),
                                                         ),
                                                         child: Text(
-                                                          "اختر من التوصيات",
-                                                          style: Constants.theme.textTheme.titleLarge
+                                                            "اختر من التوصيات",
+                                                            style: Constants.theme.textTheme.titleLarge
                                                         ),
                                                       ),
                                                       CheckBoxQuestion(
@@ -250,17 +273,18 @@ class _AddQuestionState extends State<AddQuestion> {
                                                         border: Border.all(color: Constants.theme.primaryColor, width: 2.5,),
                                                       ),
                                                       child: Text(
-                                                        "موافق", style: Constants.theme.textTheme.bodyMedium
+                                                          "موافق", style: Constants.theme.textTheme.bodyMedium
                                                       ).setHorizontalPadding(context, enableMediaQuery: false, 20)),
                                                 ),],);},
                                         );
                                       },
                                       child: Text(
                                         "التوصيات", style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white,
-                                        ),
+                                      ),
                                       ),
                                     ),
                                   ),
+
                                   DropDownButton(
                                     titleRadio: GestureDetector(
                                       onTap: () {
@@ -273,7 +297,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(10),
+                                                  BorderRadius.circular(10),
                                                   border: Border.all(
                                                     color: Constants
                                                         .theme.primaryColor,
@@ -281,7 +305,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                                   ),
                                                 ),
                                                 child: Text(
-                                                  "اختر من المؤشرات", style: Constants.theme.textTheme.titleLarge
+                                                    "اختر من المؤشرات", style: Constants.theme.textTheme.titleLarge
                                                 ),
                                               ),
                                               content: SizedBox(height: Constants.mediaQuery.height * 0.6,
@@ -296,7 +320,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                                     onChanged: (value) {
                                                       setState(() {
                                                         selectedPointers1[index] =
-                                                            value!;
+                                                        value!;
                                                       });
                                                     },
                                                   ),
@@ -311,7 +335,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                                     items: pointers3,
                                                     onChanged: (value) {
                                                       selectedPointers3[index] =
-                                                          value!;
+                                                      value!;
                                                     },
                                                   ),
                                                 ),
@@ -324,8 +348,8 @@ class _AddQuestionState extends State<AddQuestion> {
                                                   child: Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                10),
+                                                        BorderRadius.circular(
+                                                            10),
                                                         border: Border.all(
                                                           color: Constants
                                                               .theme.primaryColor,
@@ -333,9 +357,9 @@ class _AddQuestionState extends State<AddQuestion> {
                                                         ),
                                                       ),
                                                       child: Text(
-                                                        "موافق",
-                                                        style: Constants.theme
-                                                            .textTheme.bodyMedium
+                                                          "موافق",
+                                                          style: Constants.theme
+                                                              .textTheme.bodyMedium
                                                       ).setHorizontalPadding(
                                                           context,
                                                           enableMediaQuery: false,
@@ -354,66 +378,177 @@ class _AddQuestionState extends State<AddQuestion> {
                                           )),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        " سؤال اجباري",
-                                        style: Constants
-                                            .theme.textTheme.bodyMedium
-                                      ),
-                                      Checkbox(
-                                        value: _checkBoxValues.length > index
-                                            ? _checkBoxValues[index]
-                                            : false,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            if (_checkBoxValues.length > index) {
-                                              _checkBoxValues[index] = value!;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
+
+                                  // BlocBuilder<AllQuestionCubit,AllQuestionStates>(
+                                  //   bloc: questionViewCubit,
+                                  //   builder: (context, state) {
+                                  //     if (state is LoadingAllQuestion) {
+                                  //       return const Center(
+                                  //         child: CircularProgressIndicator(),
+                                  //       );
+                                  //     }
+                                  //     if (state is ErrorAllQuestion) {
+                                  //       return Center(
+                                  //         child: Text(state.errorMessage),
+                                  //       );
+                                  //     }
+                                  //     if (state is SuccessAllQuestion) {
+                                  //
+                                  //       var question = state.question;
+                                  //       print("++++++++++++++++++++>>"+question.toString());
+                                  //       return DropDownButton(
+                                  //       titleRadio: GestureDetector(
+                                  //         onTap: () {
+                                  //           showDialog(
+                                  //             context: context,
+                                  //             builder: (context) {
+                                  //               return AlertDialog(
+                                  //                 backgroundColor: Colors.black,
+                                  //                 content: SizedBox(
+                                  //                     height: Constants
+                                  //                         .mediaQuery.height *
+                                  //                         0.6,
+                                  //                     width: Constants
+                                  //                         .mediaQuery.width *
+                                  //                         0.45,
+                                  //                     child: Column(
+                                  //                       crossAxisAlignment: CrossAxisAlignment
+                                  //                           .stretch,
+                                  //                       children: [
+                                  //                         Container(
+                                  //                           alignment: Alignment
+                                  //                               .center,
+                                  //                           decoration: BoxDecoration(
+                                  //                             borderRadius: BorderRadius
+                                  //                                 .circular(10),
+                                  //                             border: Border
+                                  //                                 .all(
+                                  //                               color: Constants
+                                  //                                   .theme
+                                  //                                   .primaryColor,
+                                  //                               width: 2.5,
+                                  //                             ),
+                                  //                           ),
+                                  //                           child: Text(
+                                  //                               "اختر من الاسئلة",
+                                  //                               style: Constants
+                                  //                                   .theme
+                                  //                                   .textTheme
+                                  //                                   .titleLarge
+                                  //                           ),
+                                  //                         ),
+                                  //                         CheckBoxQuestion(
+                                  //                           previous: selectedQuestions[index],
+                                  //                           items: question,
+                                  //                           onChanged: (value) {
+                                  //                             setState(() {
+                                  //                               selectedQuestions[index] =
+                                  //                               value!;
+                                  //                             });
+                                  //                           },
+                                  //                         ),
+                                  //                       ],
+                                  //                     )),
+                                  //                 actions: [
+                                  //                   TextButton(
+                                  //                     onPressed: () {
+                                  //                       Navigator.of(context)
+                                  //                           .pop();
+                                  //                     },
+                                  //                     child: Container(
+                                  //                         decoration: BoxDecoration(
+                                  //                           borderRadius: BorderRadius
+                                  //                               .circular(10),
+                                  //                           border: Border.all(
+                                  //                             color: Constants
+                                  //                                 .theme
+                                  //                                 .primaryColor,
+                                  //                             width: 2.5,),
+                                  //                         ),
+                                  //                         child: Text(
+                                  //                             "موافق",
+                                  //                             style: Constants
+                                  //                                 .theme
+                                  //                                 .textTheme
+                                  //                                 .bodyMedium
+                                  //                         )
+                                  //                             .setHorizontalPadding(
+                                  //                             context,
+                                  //                             enableMediaQuery: false,
+                                  //                             20)),
+                                  //                   ),
+                                  //                 ],);
+                                  //             },
+                                  //           );
+                                  //         },
+                                  //         child: Text("الاسئلة",
+                                  //           style: Constants.theme.textTheme
+                                  //               .bodyMedium?.copyWith(
+                                  //             color: Colors.white,),),
+                                  //       ),
+                                  //     );}
+                                  //     else {
+                                  //       return  Text("some thing went rong");
+                                  //     }
+                                  //   }
+                                  // ),
+                                  QuestionDropDown(
+                                    selectedQuestion: selectedQuestions[index],
+                                    onSelect:(value) {
+                                      setState(() {
+                                        selectedQuestions[index] = value!;
+                                      });
+
+                                    },
+                                  ),
+
+                                  IconButton(
+                                    icon: Icon(Icons.delete, color: Colors.red),
+                                    onPressed: () {
+                                      setState(() {
+                                        _deleteAnswer(index);
+                                      });
+                                    },
+                                  ),
                                 ],
                               ),
                             );
-                          }).toList(),
+                          }),
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 25,),
                         FadeInRight(
-                          delay: Duration(microseconds: 1700),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Constants.theme.primaryColor
-                                    .withOpacity(0.8)),
-                            child: Text(
-                              "اضافة السؤال",
-                              style: Constants.theme.textTheme.bodyLarge
-                                  ?.copyWith(color: Colors.white,),
-                            ),
-                            onPressed: () {
-                              if (_selecetdAixs == 0) {
-                                SnackBarService.showErrorMessage(
-                                    "من فضلك اختر المحور");
-                              } else if (formKey.currentState!.validate()) {
-                                formKey.currentState!.save();
-                                if (_isFormValid()) {
-                                  storeQuestion(context);
-                                } else {
-                                  _showValidationError();
-                                }
-                                setState(() {});
-                              }
-                            },
-                          ),
-                        ),
-                      ]),
-                )
-                    .setVerticalPadding(enableMediaQuery: false, context, 20)
-                    .setHorizontalPadding(context, enableMediaQuery: false, 10),
+                                                delay: Duration(microseconds: 1700),
+                                                child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Constants.theme.primaryColor
+                                                          .withOpacity(0.8)),
+                                                  onPressed: () {
+                                                    if (_selecetdAixs == 0) {
+                                                      SnackBarService.showErrorMessage(
+                                                          "من فضلك اختر المحور");
+                                                    }
+                                                    else if (formKey.currentState!.validate()) {
+                                                      formKey.currentState!.save();
+                                                      if (_isFormValid()) {
+                                                        storeQuestion(context);
+                                                      } else {
+                                                        _showValidationError();
+                                                      }
+                                                      setState(() {
+                                                      });
+                                                    }
+                                                  },
+                                                  child: Text(
+                                                    "اضافة السؤال",
+                                                    style: Constants.theme.textTheme.bodyLarge
+                                                        ?.copyWith(color: Colors.white,),
+                                                  ),
+
+                                                ),
+                                              ),
+                      ]
+                  ),
+                ),
               ),
             ),
           ]),
@@ -421,6 +556,28 @@ class _AddQuestionState extends State<AddQuestion> {
       },
     );
   }
+
+  void _deleteAnswer(int index) {
+    answerControllers.removeAt(index);
+    _answerTypes.removeAt(index);
+    selectedAdvices.removeAt(index);
+    selectedPointers1.removeAt(index);
+    selectedPointers2.removeAt(index);
+    selectedPointers3.removeAt(index);
+    _checkBoxValues.removeAt(index);
+  }
+
+  void _addAnswer() {
+    answerControllers.add(TextEditingController());
+    _answerTypes.add(1);
+    selectedAdvices.add([]);
+    selectedPointers1.add([]);
+    selectedPointers2.add([]);
+    selectedPointers3.add([]);
+    selectedQuestions.add([]);
+    _checkBoxValues.add(false);
+  }
+
 
   bool _isFormValid() {
     bool isValid = formKey.currentState!.validate();
@@ -445,50 +602,31 @@ class _AddQuestionState extends State<AddQuestion> {
               "required": _checkBoxValues[i],
               "title": answerControllers[i].text,
               "advices": selectedAdvices[i],
-              "pointers": selectedPointers1[i] +
-                  selectedPointers2[i] +
-                  selectedPointers3[i]
+              "pointers": selectedPointers1[i] + selectedPointers2[i] + selectedPointers3[i],
+              "releted_questions_id":selectedQuestions[i]
             }
         ]
       };
-      addQuestionCubit.addQuestion(requestData);
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Directionality(
-              textDirection: TextDirection.rtl,
-              child:
-              AlertDialog(
-                title: Text(
-                  "تم اضافة السؤال",
-                  style: Constants.theme.textTheme.bodyMedium
-                      ?.copyWith(color: Colors.black),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Constants.theme.primaryColor,
-                            width: 2.5,
-                          ),
-                        ),
-                        child: Text(
-                          "اغلاق",
-                          style: Constants.theme.textTheme.bodyMedium
-                              ?.copyWith(color: Colors.black),
-                        ).setHorizontalPadding(
-                            context, enableMediaQuery: false, 20)),
-                  ),
-                ],
-              ),
-            );
-          });
+      addQuestionCubit.addQuestion(requestData).then((value) {
+        if(value!=null) {
+          SnackBarService.showSuccessMessage("تم اضافة السؤال بنجاح");
+          _clearAnswer();
+
+        }
+      });
     }
+  }
+  void _clearAnswer() {
+    titleController.clear();
+    answerControllers.clear();
+    _answerTypes.clear();
+    selectedAdvices.clear();
+    selectedPointers1.clear();
+    selectedPointers2.clear();
+    selectedPointers3.clear();
+    selectedQuestions.clear();
+    _checkBoxValues.clear();
+
   }
 
   void _toggleTextField() {
@@ -497,17 +635,6 @@ class _AddQuestionState extends State<AddQuestion> {
     });
   }
 
-  void _addAnswer() {
-    setState(() {
-      answerControllers.add(TextEditingController());
-      _checkBoxValues.add(false);
-      _answerTypes.add(1);
-      selectedPointers1.add([]);
-      selectedPointers2.add([]);
-      selectedPointers3.add([]);
-      selectedAdvices.add([]);
-    });
-  }
 
   @override
   void dispose() {
@@ -585,7 +712,3 @@ class _AddQuestionState extends State<AddQuestion> {
     }
   }
 }
-
-
-
-

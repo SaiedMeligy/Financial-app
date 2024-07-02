@@ -3,7 +3,7 @@ import 'package:dio/src/response.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
 
 import '../../core/Failure/server_failure.dart';
-import '../../domain/updatePatient/update_patient_repository.dart';
+import '../../domain/repository/updatePatient/update_patient_repository.dart';
 import '../dataSource/allPatient/updatepatient/update_patient_data_source.dart';
 
 class UpdatePatientRepositoryImp implements UpdatePatientRepository{
