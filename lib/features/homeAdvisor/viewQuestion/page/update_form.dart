@@ -492,10 +492,12 @@
 //   }
 // }
 //
+import 'package:experts_app/core/widget/second_text_field.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/widget/manager/states.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/widget/Question_text_field.dart';
+import '../../../../core/widget/custom_text_field.dart';
 import '../../allPatients/widget/manager/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -566,6 +568,7 @@ class _UpdateFormState extends State<UpdateForm> {
           var answers = state.response.data["form"]["answers"];
           var consultation = formData["consultationService"];
           _initializeTextControllers(answers);
+          TextEditingController commentController = TextEditingController(text: formData["comments"]);
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
@@ -897,7 +900,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                         }
                                         return Container();
                                       }).toList(),
-                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                    ).setHorizontalPadding(context, enableMediaQuery: false, 40),
                                   ),
                                   Divider(
                                     thickness: 2,
@@ -912,8 +915,14 @@ class _UpdateFormState extends State<UpdateForm> {
                             } else {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
+
                                 children: [
-                                  Text(consultation["name"]),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(consultation["name"],style: Constants.theme.textTheme.bodyLarge,),
+                                    ],
+                                  ),
                                   SizedBox(height: 10),
                                   Container(
                                     height: Constants.mediaQuery.height * 0.15,
@@ -931,8 +940,46 @@ class _UpdateFormState extends State<UpdateForm> {
                                         color: Colors.black,
                                       ),
                                     ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                  ).setHorizontalPadding(context,enableMediaQuery: false, 20),
+                                  SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
+                                    ],
                                   ),
-                                  SizedBox(height: 15),
+                                  SizedBox(height: 10),
+                                  TextField(
+                                    controller: commentController,
+                                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                      color: Colors.black, // Change to your desired text color
+                                    ),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+
+                                      ),
+                                      fillColor: Colors.grey.shade300,
+                                      filled: true,
+                                      contentPadding: EdgeInsets.all(10),
+                                      hintText: "ادخل الملا��ظات",
+                                      hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                        color: Colors.black,
+
+                                      ),
+
+
+                                  ),
+                                  ).setHorizontalPadding(context,enableMediaQuery: false,20),
+                                  SizedBox(height: 20),
                                   BorderRoundedButton(
                                     title: "تعديل",
                                     onPressed: () {
@@ -944,7 +991,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                     },
                                   ),
                                 ],
-                              ).setVerticalPadding(context, enableMediaQuery: false, 20);
+                              ).setVerticalPadding(context, enableMediaQuery: false, 40);
                             }
                           },
                         ).setHorizontalPadding(context, enableMediaQuery: false, 20),

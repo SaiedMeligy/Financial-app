@@ -1043,12 +1043,13 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                       //     ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       //   ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       // ),
+                      formData==null?Container():
                       Expanded(
                         child: Container(
                           height: Constants.mediaQuery.height * 0.8,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Constants.theme.primaryColor.withOpacity(0.3),
+                            color: Constants.theme.primaryColor.withOpacity(0.4),
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: ListView.builder(
@@ -1139,7 +1140,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                               } else {
                                 return Column(
                                   children: [
-                                    Text(consultation["name"]),
+                                    Text(consultation["name"],style: Constants.theme.textTheme.bodyLarge,),
                                     SizedBox(height: 10),
                                     Container(
                                       height: Constants.mediaQuery.height * 0.15,
@@ -1153,6 +1154,26 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       ),
                                       child: Text(
                                         consultation["description"],
+                                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                          color: Colors.black,
+                                        ),
+                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                    ),
+                                    SizedBox(height: 20),
+                                    Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
+                                    SizedBox(height: 10),
+                                    Container(
+                                      height: Constants.mediaQuery.height * 0.15,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        formData["comments"],
                                         style: Constants.theme.textTheme.bodyMedium?.copyWith(
                                           color: Colors.black,
                                         ),

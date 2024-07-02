@@ -36,7 +36,7 @@ class BorderRoundedButton extends StatelessWidget {
         decoration: BoxDecoration(
           // border: Border.all(color: color ?? Colors.black, width: 1),
           borderRadius: BorderRadius.circular(15),
-          color: Colors.black.withOpacity(0.7),
+          color: Constants.theme.primaryColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

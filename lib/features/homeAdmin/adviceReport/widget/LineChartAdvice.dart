@@ -63,42 +63,46 @@ class _LineChartsAdviceState extends State<LineChartsAdvice> {
                 children: [
                   Column(
                     children: [
-                      SfCartesianChart(
-                        primaryXAxis: CategoryAxis(
-                          labelStyle: Constants.theme.textTheme.bodySmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        primaryYAxis: NumericAxis(
-                          labelStyle: Constants.theme.textTheme.bodySmall,
-                          minimum: 0,
-                          maximum: 100,
-                        ),
-                        series: <ColumnSeries<PointerData, String>>[
-                          ColumnSeries<PointerData, String>(
-                            dataSource: countData,
-                            xValueMapper: (PointerData data, _) => data.patiens,
-                            yValueMapper: (PointerData data, _) => data.percentage,
-                            pointColorMapper: (PointerData data, _) => data.color, // Use pointColorMapper
-                          ),
-                        ],
-                        annotations: <CartesianChartAnnotation>[
-                          for (var data in countData)
-                            CartesianChartAnnotation(
-                              x: data.patiens,
-                              y: data.percentage,
-                              widget: Column(
-                                children: [
-                                  Text(
-                                    '${data.percentage.toStringAsFixed(2)}%',
-                                    style: Constants.theme.textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
-                              coordinateUnit: CoordinateUnit.point,
-                              region: AnnotationRegion.chart,
+                      Container(
+                        height: Constants.mediaQuery.height*1.2,
+                        child: SfCartesianChart(
+                          primaryXAxis: CategoryAxis(
+                            labelStyle: Constants.theme.textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
                             ),
-                        ],
+                            labelRotation: 90,
+                          ),
+                          primaryYAxis: NumericAxis(
+                            labelStyle: Constants.theme.textTheme.bodySmall,
+                            minimum: 0,
+                            maximum: 100,
+                          ),
+                          series: <ColumnSeries<PointerData, String>>[
+                            ColumnSeries<PointerData, String>(
+                              dataSource: countData,
+                              xValueMapper: (PointerData data, _) => data.patiens,
+                              yValueMapper: (PointerData data, _) => data.percentage,
+                              pointColorMapper: (PointerData data, _) => data.color, // Use pointColorMapper
+                            ),
+                          ],
+                          annotations: <CartesianChartAnnotation>[
+                            for (var data in countData)
+                              CartesianChartAnnotation(
+                                x: data.patiens,
+                                y: data.percentage,
+                                widget: Column(
+                                  children: [
+                                    Text(
+                                      '${data.percentage.toStringAsFixed(2)}%',
+                                      style: Constants.theme.textTheme.bodyMedium,
+                                    ),
+                                  ],
+                                ),
+                                coordinateUnit: CoordinateUnit.point,
+                                region: AnnotationRegion.chart,
+                              ),
+                          ],
+                        ),
                       ),
                       SizedBox(height: 10),
                       GestureDetector(

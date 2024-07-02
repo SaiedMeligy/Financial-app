@@ -34,38 +34,51 @@ class InitialPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(
-                            "We think extraordinary \n people deserve \n extraordinary care ",
-                            style: Constants.theme.textTheme.titleLarge
-                                ?.copyWith(
-                              fontSize: 35,
-                              fontWeight: FontWeight.w500,
 
+                          Container(
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Constants.theme.primaryColor.withOpacity(0.6),
                             ),
-                          ),
-                          SizedBox(height: 15,),
-                          Text(
-                            "Empowering our community to live with hope \n throughout the journey with better live",
-                            style: Constants.theme.textTheme.bodyMedium,),
-                          SizedBox(height: 15,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                  width: Constants.mediaQuery.width * 0.2,
-                                  child: ElevatedButton(onPressed: () {
-                                    navigatorKey.currentState!
-                                        .pushReplacementNamed(
-                                        PageRouteName.login);
-                                  },
-                                      child: Text("Get Started",
-                                        style: Constants.theme.textTheme
-                                            .bodyMedium?.copyWith(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "We think extraordinary \n people deserve \n extraordinary care ",
+                                  style: Constants.theme.textTheme.titleLarge
+                                      ?.copyWith(
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w500,
 
-                                            color: Colors.black
-                                        ),))),
-                            ],
-                          )
+                                  ),
+                                ),
+                                SizedBox(height: 15,),
+                                Text(
+                                  "Empowering our community to live with hope \n throughout the journey with better live",
+                                  style: Constants.theme.textTheme.bodyMedium,),
+                                SizedBox(height: 15,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                        width: Constants.mediaQuery.width * 0.2,
+                                        child: ElevatedButton(onPressed: () {
+                                          navigatorKey.currentState!
+                                              .pushReplacementNamed(
+                                              PageRouteName.login);
+                                        },
+                                            child: Text("Get Started",
+                                              style: Constants.theme.textTheme
+                                                  .bodyMedium?.copyWith(
+
+                                                  color: Colors.black
+                                              ),))),
+                                  ],
+                                ),
+                              ],
+                            ).setHorizontalPadding(context,enableMediaQuery: false, 20).setVerticalPadding(context,enableMediaQuery: false, 20),
+                          ).setOnlyPadding(context,enableMediaQuery: false, 0, 0, 800, 0)
                         ],
 
                       ).setHorizontalPadding(

@@ -368,6 +368,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
           var answers = state.response.data["form"]["answers"];
           var consultation = formData["consultationService"];
           _initializeTextControllers(answers);
+          TextEditingController commentController = TextEditingController(text: formData["comments"]);
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
@@ -715,7 +716,12 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(consultation["name"]),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(consultation["name"]),
+                                ],
+                              ),
                               SizedBox(height: 10),
                               Container(
                                 height: Constants.mediaQuery.height * 0.15,
@@ -733,8 +739,47 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                     color: Colors.black,
                                   ),
                                 ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                              ),
+                              ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                               SizedBox(height: 15),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              TextField(
+                                controller: commentController,
+                                style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                  color: Colors.black, // Change to your desired text color
+                                ),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+
+                                  ),
+                                  fillColor: Colors.grey.shade300,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(10),
+                                  hintText: "ادخل الملا��ظات",
+                                  hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                    color: Colors.black,
+
+                                  ),
+
+
+                                ),
+                              ).setHorizontalPadding(context,enableMediaQuery: false, 20),
+                              SizedBox(height: 20),
                               BorderRoundedButton(
                                 title: "تعديل",
                                 onPressed: () {
