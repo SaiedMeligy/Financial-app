@@ -1,16 +1,17 @@
+
+
 import 'package:dio/dio.dart';
-import 'package:experts_app/domain/entities/AllPatientModel.dart';
 
-import '../../../../repository/admin repository/patiens/AllPatientWithAdmin/all_patient_recycle_repository.dart';
-
+import '../../../../entities/AllPatientModel.dart';
+import '../../../../repository/admin repository/all_patient_recycle_with_admin_repository.dart';
 
 class AllPatientRecycleWithAdminUseCase{
 
-  final AllPatientRecycleWithAdminRepository allPatientRecycleRepository;
+  final AllPatientRecycleWithAdminRepository allPatientRecycleWithAdminRepository;
 
-  AllPatientRecycleWithAdminUseCase( this.allPatientRecycleRepository);
+  AllPatientRecycleWithAdminUseCase( this.allPatientRecycleWithAdminRepository);
 
   Future<Response> execute(AllPatientModel patientModel,int recycle){
-    return allPatientRecycleRepository.getAllPatientRecycleWithAdmin(patientModel,recycle);
+    return allPatientRecycleWithAdminRepository.getAllPatientRecycleWithAdmin(patientModel,recycle);
   }
 }

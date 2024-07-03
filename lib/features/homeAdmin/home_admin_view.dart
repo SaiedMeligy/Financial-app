@@ -8,6 +8,7 @@ import 'package:experts_app/features/homeAdmin/pointers/page/addPointer/add_indi
 import 'package:experts_app/features/homeAdmin/pointers/page/all%20Pointers/page/edit_indicator.dart';
 import 'package:experts_app/features/homeAdmin/registrationAdvisor/page/register_view.dart';
 import 'package:experts_app/features/homeAdmin/staticScreen/page/static_screen.dart';
+import 'package:experts_app/features/homeAdvisor/recycle_pin/page/all_patient_recycle_admin_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/config/constants.dart';
@@ -202,6 +203,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
       SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home)),
       SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add)),
       SideBarModel(title: "الحالات", icon: Icon(Icons.list)),
+      SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete)),
       SideBarModel(title: "تقارير المؤاشرات", icon: Icon(Icons.list)),
       SideBarModel(title: "تقارير التوصيات", icon: Icon(Icons.list)),
       SideBarModel(title: "اضافة الأسئلة", icon: Icon(Icons.add)),
@@ -222,6 +224,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
       StaticScreen(),
       AddPatientView(),
       AllPatientAdminView(),
+      AllPatientRecycleAdminView(),
       PointerReportView(),
       AdviceReportView(),
       AddQuestion(),

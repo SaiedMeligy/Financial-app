@@ -5,6 +5,7 @@ import 'package:experts_app/features/homeAdvisor/allPatients/manager/states.dart
 import 'package:experts_app/features/homeAdvisor/allPatients/updatePatient/page/dialog_delete_patient.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/updatePatient/page/dialog_edit_patient.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_widget_view.dart';
+import 'package:experts_app/features/homeAdvisor/recycle_pin/widget/dialog_delete_patient_recycle_with_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/constants.dart';
@@ -16,21 +17,21 @@ import '../manager/states.dart';
 import '../widget/dialog_delete_patient_recycle.dart';
 import '../widget/table_cycle.dart';
 
-class AllPatientRecycleView extends StatefulWidget {
-  const AllPatientRecycleView({super.key});
+class AllPatientRecycleAdminView extends StatefulWidget {
+  const AllPatientRecycleAdminView({super.key});
 
   @override
-  State<AllPatientRecycleView> createState() => _AllPatientRecycleViewState();
+  State<AllPatientRecycleAdminView> createState() => _AllPatientRecycleAdminViewState();
 }
 
-class _AllPatientRecycleViewState extends State<AllPatientRecycleView> {
+class _AllPatientRecycleAdminViewState extends State<AllPatientRecycleAdminView> {
   late AllPatientRecycleCubit allPatientCubit;
 
   @override
   void initState() {
     super.initState();
     allPatientCubit = AllPatientRecycleCubit();
-    allPatientCubit.getAllPatientRecycle(1);
+    allPatientCubit.getAllPatientRecycleWithAdmin(1);
   }
 
   @override
@@ -66,7 +67,7 @@ class _AllPatientRecycleViewState extends State<AllPatientRecycleView> {
                           return const Text("Invalid Item");
                           }
                            return
-                             DialogDeletePatientCycle(allPatientCubit: allPatientCubit,
+                             DialogDeletePatientCycleWithAdmin(allPatientCubit: allPatientCubit,
                           patient: item,);
                             }
 

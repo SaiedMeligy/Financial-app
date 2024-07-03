@@ -8,6 +8,10 @@ class SuccessAllPatientRecycle extends AllPatientRecycleStates {
   final List<Pationts> patients;
   SuccessAllPatientRecycle(this.patients);
 }
+class SuccessAllPatientRecycleWithAdmin extends AllPatientRecycleStates {
+  final List<Pationts> patients;
+  SuccessAllPatientRecycleWithAdmin(this.patients);
+}
 
 class ErrorAllPatientRecycle extends AllPatientRecycleStates {
   final String errorMessage;

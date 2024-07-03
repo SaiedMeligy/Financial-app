@@ -42,7 +42,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
       AllPatientView(),
       PatientNationalId(),
       SessionDate(),
-      AllPatientRecyclebinView(),
+      AllPatientRecycleView(),
       AddUserView(),
     ];
 
