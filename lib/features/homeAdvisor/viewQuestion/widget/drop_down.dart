@@ -20,6 +20,7 @@ class _DropDownState extends State<DropDown> {
   var allConsultationCubit = AllConsultationCubit();
   ConsultationServices? selectedValue;
   final ValueChanged<int> onChange;
+  bool isMobile = false;
 
   _DropDownState({required this.onChange});
 
@@ -40,49 +41,55 @@ class _DropDownState extends State<DropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllConsultationCubit, AllConsultationStates>(
-      bloc: allConsultationCubit,
-      builder: (context, state) {
-        if (state is LoadingAllConsultations) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is SuccessAllConsultations) {
-          var consultations = state.consultationServices;
+    return LayoutBuilder(
+      builder: (context, constraints) {
 
-          if (selectedValue == null && consultations.isNotEmpty) {
-            selectedValue = consultations.first;
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              handleDropdownValueChanged(selectedValue);
-            });
-          }
+      isMobile = constraints.maxWidth < 600;
 
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-                width: 1,
+      return BlocBuilder<AllConsultationCubit, AllConsultationStates>(
+        bloc: allConsultationCubit,
+        builder: (context, state) {
+          if (state is LoadingAllConsultations) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is SuccessAllConsultations) {
+            var consultations = state.consultationServices;
+
+            if (selectedValue == null && consultations.isNotEmpty) {
+              selectedValue = consultations.first;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                handleDropdownValueChanged(selectedValue);
+              });
+            }
+
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 1,
+                ),
               ),
-            ),
-            child: DropdownButton<ConsultationServices>(
-              value: selectedValue,
-              onChanged: handleDropdownValueChanged,
-              items: consultations.map((dynamic value) {
-                return DropdownMenuItem<ConsultationServices>(
-                  value: value,
-                  child: Text(
-                    value.name,
-                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.black,
+              child: DropdownButton<ConsultationServices>(
+                value: selectedValue,
+                onChanged: handleDropdownValueChanged,
+                items: consultations.map((dynamic value) {
+                  return DropdownMenuItem<ConsultationServices>(
+                    value: value,
+                    child: Text(
+                      value.name,
+                      style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
-            ),
-          );
-        } else if (state is ErrorAllConsultations) {
-          return Center(child: Text(state.errorMessage));
-        }
-        return const SizedBox.shrink();
-      },
+                  );
+                }).toList(),
+              ),
+            );
+          } else if (state is ErrorAllConsultations) {
+            return Center(child: Text(state.errorMessage));
+          }
+          return const SizedBox.shrink();
+        },
+      );}
     );
   }
 }

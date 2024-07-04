@@ -9,16 +9,21 @@ import 'package:intl/intl.dart';
 import '../../../../core/Services/web_services.dart';
 import '../../../../data/dataSource/Form/storeForm/store_form_data_source.dart';
 import '../../../../data/dataSource/Form/storeForm/store_form_data_source_imp.dart';
+import '../../../../data/dataSource/Form/updateForm/update_form_data_source.dart';
+import '../../../../data/dataSource/Form/updateForm/update_form_data_source_imp.dart';
 import '../../../../data/dataSource/patientNationalId/patient_nationalId_data_source.dart';
 import '../../../../data/dataSource/patientNationalId/patient_nationalId_data_source_imp.dart';
 import '../../../../data/dataSource/questionView/question_view_data_source.dart';
 import '../../../../data/repository_imp/patient_nationalId_repository_imp.dart';
 import '../../../../data/repository_imp/store_form_repository_imp.dart';
+import '../../../../data/repository_imp/update_form_repository_imp.dart';
 import '../../../../domain/entities/QuestionView.dart';
 import '../../../../domain/repository/FormRepository/storeForm/store_form_repository.dart';
+import '../../../../domain/repository/FormRepository/updateForm/update_form_repository.dart';
 import '../../../../domain/repository/patientNationalIdRepository/patient_nationalId_repository.dart';
 import '../../../../domain/repository/questionView/view_question_repository.dart';
 import '../../../../domain/useCase/Form/storeForm/store_form_use_case.dart';
+import '../../../../domain/useCase/Form/updateForm/update_form_use_case.dart';
 import '../../../../domain/useCase/patientNationalId/patient_nationalId_use_case.dart';
 class QuestionViewCubit extends Cubit<QuestionViewStates> {
   QuestionViewCubit() : super(LoadingQuestionViewState()) {
@@ -78,6 +83,20 @@ class QuestionViewCubit extends Cubit<QuestionViewStates> {
     // emit(LoadingQuestionViewState());
 
     return await storeFormUseCase.execute(storeData);
+  }
+
+  late UpdateFormUseCase updateFormUseCase;
+  late UpdateFormRepository updateFormRepository;
+  late UpdateFormDataSource updateFormDataSource;
+
+  Future<Response> getUpdateForm(Map<String, dynamic> updateData) async {
+    WebServices service = WebServices();
+    updateFormDataSource = UpdateFormDataSourceImp(service.freeDio);
+    updateFormRepository = UpdateFormRepositoryImp(updateFormDataSource);
+    updateFormUseCase = UpdateFormUseCase(updateFormRepository);
+    // emit(LoadingQuestionViewState());
+
+    return await updateFormUseCase.execute(updateData);
   }
 
 

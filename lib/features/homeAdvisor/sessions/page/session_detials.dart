@@ -36,9 +36,10 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
   int isAttendSelected = 0;
   int isSuccessStorySelected = 0;
   int selected_consultation_service = 0;
-  TextEditingController advisorComment = TextEditingController();
    late AddSessionCubit _patientSessionCubit;
   late UpdateSessionCubit updateSessionCubit;
+  late TextEditingController advisorComment;
+
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -47,6 +48,8 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
     _patientSessionCubit = AddSessionCubit();
     _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
     updateSessionCubit = UpdateSessionCubit();
+     advisorComment = TextEditingController(text: widget.sessionComment!??"",);
+
   }
 
   @override
@@ -276,7 +279,6 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                   var sessions = state.result.data["pationt"]["sessions"];
                   var patient = state.result.data["pationt"];
 
-                  // Fetching case manager from the first session
                   var caseManager = sessions.isNotEmpty ? sessions[0]["case_manager"] : '';
 
                   return Container(
@@ -304,7 +306,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                             ),
                           ),
                           Text(
-                            "رقم الهوية : " + patient["national_id"],
+                            "رقم الهوية الأماراتية : " + patient["national_id"],
                             style: Constants.theme.textTheme.bodyLarge?.copyWith(
                               color: Colors.black,
                             ),
