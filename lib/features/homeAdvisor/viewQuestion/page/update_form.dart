@@ -875,7 +875,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                           "advicor_id": CacheHelper.getData(key: 'id'),
                                           "pationt_id": patient["id"],
                                           "need_other_session": needOtherSession,
-                                          "consultation_service_id": selected_consultation_service,
+                                          "consultation_service_id": consultation["name"],
                                           "comments": commentController.text,
                                           "date":formData["date"],
                                           "answers": lastAnswers
