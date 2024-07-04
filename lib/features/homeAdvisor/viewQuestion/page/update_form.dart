@@ -582,7 +582,8 @@ class _UpdateFormState extends State<UpdateForm> {
           var patient = formData["pationt"];
           var advisor = formData["advicor"];
           var questionAnswer = state.response.data["form"]["answers"];
-          var consultation = formData["consultationService"] as ConsultationServices;
+          ConsultationServices consultation = ConsultationServices.fromJson(formData["consultationService"] );
+
           // selected_consultation_service_id = consultation.id!;
 
           // print("*******************>" + (consultation["name"]));
@@ -1014,28 +1015,35 @@ class _DropDownButtonConsultaionWidgetState
           // if (!dropList.contains(widget.selectedValue)) {
           //   widget.selectedValue = dropList.isNotEmpty ? dropList.first : '';
           // }
+          if(state.consultationServices.isNotEmpty){
+            return DropdownButton<ConsultationServices>(
+              value: widget.selectedValue,
+              onChanged: (ConsultationServices? newValue) {
+                setState(() {
+                  widget.selectedValue = newValue!;
+                });
+                // int index = dropList.indexOf(newValue!);
+                if (newValue != null) {
+                  widget.onChange(newValue);
+                }
+              },
+              items: state.consultationServices
+                  .map<DropdownMenuItem<ConsultationServices>>(
+                      (ConsultationServices value) {
+                    return DropdownMenuItem<ConsultationServices>(
+                      value: value,
+                      child: Text(value.name??''),
+                    );
+                  }).toList(),
+            );
 
-          return DropdownButton<ConsultationServices>(
-            value: widget.selectedValue,
-            onChanged: (ConsultationServices? newValue) {
-              setState(() {
-                widget.selectedValue = newValue!;
-              });
-              // int index = dropList.indexOf(newValue!);
-              if (newValue != null) {
-                widget.onChange(newValue);
-              }
-            },
-            items: state.consultationServices
-                .map<DropdownMenuItem<ConsultationServices>>(
-                    (ConsultationServices value) {
-              return DropdownMenuItem<ConsultationServices>(
-                value: value,
-                child: Text(value.name??''),
-              );
-            }).toList(),
-          );
-        } else {
+
+          }
+          else{
+            return Container();
+          }
+        }
+        else {
           return Center(child: CircularProgressIndicator());
         }
       },
