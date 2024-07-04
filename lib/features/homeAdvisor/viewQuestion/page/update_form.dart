@@ -1,3 +1,20 @@
+import '../manager/cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/config/cash_helper.dart';
+import '../../../../../core/config/constants.dart';
+import '../../allPatients/widget/manager/cubit.dart';
+import '../../../../core/Services/snack_bar_service.dart';
+import '../../../../../core/widget/Question_text_field.dart';
+import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/core/widget/drop_down_button.dart';
+import '../../../../domain/entities/ConsultationViewModel.dart';
+import 'package:experts_app/core/widget/second_text_field.dart';
+import 'package:experts_app/core/widget/border_rounded_button.dart';
+import '../../../homeAdmin/Consulting service/All Consultation/manager/cubit.dart';
+import 'package:experts_app/features/homeAdvisor/allPatients/widget/manager/states.dart';
+import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/manager/states.dart';
+import 'package:experts_app/features/homeAdmin/Consulting%20service/All%20Consultation/manager/states.dart';
 // import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
 //
 // import '../widget/date_time.dart';
@@ -492,23 +509,6 @@
 //   }
 // }
 //
-import 'package:experts_app/core/widget/drop_down_button.dart';
-import 'package:experts_app/core/widget/second_text_field.dart';
-import 'package:experts_app/features/homeAdmin/Consulting%20service/All%20Consultation/manager/states.dart';
-import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/manager/states.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/widget/manager/states.dart';
-import '../../../../../core/config/constants.dart';
-import '../../../../../core/widget/Question_text_field.dart';
-import '../../../../core/Services/snack_bar_service.dart';
-import '../../../../core/config/cash_helper.dart';
-import '../../../homeAdmin/Consulting service/All Consultation/manager/cubit.dart';
-import '../../allPatients/widget/manager/cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/core/widget/border_rounded_button.dart';
-
-import '../manager/cubit.dart';
 
 class UpdateForm extends StatefulWidget {
   final dynamic pationt_data;
@@ -531,7 +531,7 @@ class _UpdateFormState extends State<UpdateForm> {
   late Map<dynamic, dynamic> radiosBtn = {};
 
   int needOtherSession = 0;
-  int selected_consultation_service=0;
+  int? selected_consultation_service_id;
   @override
   void initState() {
     super.initState();
@@ -553,13 +553,16 @@ class _UpdateFormState extends State<UpdateForm> {
     for (var answer in answers) {
       for (var option in answer["question_options"]) {
         if (option["type"] == 3 && option["answer"] != null) {
-          textControllers[int.parse(option["id"].toString())] = TextEditingController(text: option["answer"]);
+          textControllers[int.parse(option["id"].toString())] =
+              TextEditingController(text: option["answer"]);
         }
         if (option["type"] == 1 && option["answer"] == "1") {
-          selectedAnswers[int.parse(answer["id"].toString())] = option["id"].toString();
+          selectedAnswers[int.parse(answer["id"].toString())] =
+              option["id"].toString();
         }
         if (option["type"] == 2) {
-          checkboxValues[int.parse(option["id"].toString())] = option["answer"] == "1";
+          checkboxValues[int.parse(option["id"].toString())] =
+              option["answer"] == "1";
         }
       }
     }
@@ -579,20 +582,25 @@ class _UpdateFormState extends State<UpdateForm> {
           var patient = formData["pationt"];
           var advisor = formData["advicor"];
           var questionAnswer = state.response.data["form"]["answers"];
-          var consultation = formData["consultationService"];
+          var consultation = formData["consultationService"] as ConsultationServices;
+          // selected_consultation_service_id = consultation.id!;
 
-          print("*******************>"+(consultation["name"]));
-          print("*******************>"+(consultation["description"]));
-           print("*******************>"+advisor.toString());
+          // print("*******************>" + (consultation["name"]));
+          // print("*******************>" + (consultation["description"]));
+          print("*******************>" + advisor.toString());
           // int selectedConsultationService = consultation["id"];
           _initializeTextControllers(questionAnswer);
-          TextEditingController commentController = TextEditingController(text: formData["comments"]);
+          TextEditingController commentController =
+              TextEditingController(text: formData["comments"]);
           if (answers.isEmpty) {
             for (int index = 0; index < questionAnswer.length; index++) {
               radiosBtn[questionAnswer[index]["id"]] = -1;
-              for (int i = 0; i < questionAnswer[index]["question_options"].length; i++) {
+              for (int i = 0;
+                  i < questionAnswer[index]["question_options"].length;
+                  i++) {
                 answers[questionAnswer[index]["question_options"][i]["id"]] = 0;
-                radiosBtn.addAll({questionAnswer[index]["id"]: -1,
+                radiosBtn.addAll({
+                  questionAnswer[index]["id"]: -1,
                 });
                 answers.addAll({
                   questionAnswer[index]["question_options"][i]["id"]: 0,
@@ -600,7 +608,7 @@ class _UpdateFormState extends State<UpdateForm> {
                 if (questionAnswer[index]["question_options"][i]["type"] == 3) {
                   textControllers.addAll({
                     questionAnswer[index]["question_options"][i]["id"]:
-                    TextEditingController(text: ""),
+                        TextEditingController(text: ""),
                   });
                 }
               }
@@ -661,17 +669,21 @@ class _UpdateFormState extends State<UpdateForm> {
                                   Center(
                                     child: Text(
                                       answer["title"],
-                                      style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                      style: Constants
+                                          .theme.textTheme.titleLarge
+                                          ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
                                   Container(
                                     width: double.infinity,
-                                    height: answer["question_options"].length > 1
+                                    height: answer["question_options"].length >
+                                            1
                                         ? answer["question_options"].length * 65
                                         : 70,
-                                    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 20),
                                     decoration: BoxDecoration(
                                       color: Colors.grey.shade300,
                                       borderRadius: BorderRadius.only(
@@ -680,15 +692,19 @@ class _UpdateFormState extends State<UpdateForm> {
                                       ),
                                     ),
                                     child: Column(
-                                      children: answer["question_options"].map<Widget>((option) {
-                                        bool isAnswered = option['answer'] == "1";
+                                      children: answer["question_options"]
+                                          .map<Widget>((option) {
+                                        bool isAnswered =
+                                            option['answer'] == "1";
                                         if (option["type"] == 3) {
                                           return Row(
                                             children: [
                                               Expanded(
                                                 child: Text(
                                                   option["title"].toString(),
-                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                  style: Constants.theme
+                                                      .textTheme.bodyMedium
+                                                      ?.copyWith(
                                                     color: Colors.black,
                                                   ),
                                                 ),
@@ -697,7 +713,9 @@ class _UpdateFormState extends State<UpdateForm> {
                                                 child: QuestionTextField(
                                                   hint: "ادخل النص",
                                                   maxLines: 1,
-                                                  controller: textControllers[int.parse(option["id"].toString())],
+                                                  controller: textControllers[
+                                                      int.parse(option["id"]
+                                                          .toString())],
                                                   onChanged: (value) {
                                                     setState(() {
                                                       option["answer"] = value;
@@ -713,21 +731,35 @@ class _UpdateFormState extends State<UpdateForm> {
                                               Expanded(
                                                 child: Text(
                                                   option["title"].toString(),
-                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                  style: Constants.theme
+                                                      .textTheme.bodyMedium
+                                                      ?.copyWith(
                                                     color: Colors.black,
                                                   ),
                                                 ),
                                               ),
                                               Expanded(
                                                 child: Radio<String>(
-                                                  value: option["id"].toString(),
-                                                  groupValue: selectedAnswers[int.parse(answer["id"].toString())],
+                                                  value:
+                                                      option["id"].toString(),
+                                                  groupValue: selectedAnswers[
+                                                      int.parse(answer["id"]
+                                                          .toString())],
                                                   onChanged: (value) {
                                                     setState(() {
-                                                      selectedAnswers[int.parse(answer["id"].toString())] = value!;
-                                                      for (var opt in answer["question_options"]) {
+                                                      selectedAnswers[int.parse(
+                                                              answer["id"]
+                                                                  .toString())] =
+                                                          value!;
+                                                      for (var opt in answer[
+                                                          "question_options"]) {
                                                         if (opt["type"] == 1) {
-                                                          opt["answer"] = opt["id"].toString() == value ? "1" : "0";
+                                                          opt["answer"] = opt[
+                                                                          "id"]
+                                                                      .toString() ==
+                                                                  value
+                                                              ? "1"
+                                                              : "0";
                                                         }
                                                       }
                                                     });
@@ -742,18 +774,27 @@ class _UpdateFormState extends State<UpdateForm> {
                                               Expanded(
                                                 child: Text(
                                                   option["title"].toString(),
-                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                  style: Constants.theme
+                                                      .textTheme.bodyMedium
+                                                      ?.copyWith(
                                                     color: Colors.black,
                                                   ),
                                                 ),
                                               ),
                                               Expanded(
                                                 child: Checkbox(
-                                                  value: checkboxValues[int.parse(option["id"].toString())] ?? false,
+                                                  value: checkboxValues[
+                                                          int.parse(option["id"]
+                                                              .toString())] ??
+                                                      false,
                                                   onChanged: (value) {
                                                     setState(() {
-                                                      checkboxValues[int.parse(option["id"].toString())] = value!;
-                                                      option["answer"] = value ? "1" : "0";
+                                                      checkboxValues[int.parse(
+                                                              option["id"]
+                                                                  .toString())] =
+                                                          value!;
+                                                      option["answer"] =
+                                                          value ? "1" : "0";
                                                     });
                                                   },
                                                 ),
@@ -763,7 +804,8 @@ class _UpdateFormState extends State<UpdateForm> {
                                         }
                                         return Container();
                                       }).toList(),
-                                    ).setHorizontalPadding(context, enableMediaQuery: false, 40),
+                                    ).setHorizontalPadding(
+                                        context, enableMediaQuery: false, 40),
                                   ),
                                   Divider(
                                     thickness: 2,
@@ -778,7 +820,6 @@ class _UpdateFormState extends State<UpdateForm> {
                             } else {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
-
                                 children: [
                                   // DropDown(
                                   //   onChange: (value) {
@@ -788,11 +829,15 @@ class _UpdateFormState extends State<UpdateForm> {
                                   //     });
                                   //   },
                                   // ),
-                                  DropDownButtonWidget(
-                                    onChange: (value){
-                                      print("vvvvvvvvvvvvv>>"+value);
+                                  DropDownButtonConsultaionWidget(
+                                    onChange: (value) {
+                                      setState(() {
+                                        selected_consultation_service_id = value.id!;
+                                        
+                                      });
                                     },
-                                  selectedValue: consultation["name"],),
+                                    selectedValue: consultation,
+                                  ),
                                   SizedBox(height: 10),
                                   Container(
                                     height: Constants.mediaQuery.height * 0.15,
@@ -805,53 +850,61 @@ class _UpdateFormState extends State<UpdateForm> {
                                       ),
                                     ),
                                     child: Text(
-                                      consultation["description"],
-                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                      consultation.description??'',
+                                      style: Constants
+                                          .theme.textTheme.bodyMedium
+                                          ?.copyWith(
                                         color: Colors.black,
                                       ),
-                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                                  ).setHorizontalPadding(context,enableMediaQuery: false, 20),
+                                    ).setHorizontalPadding(
+                                        context, enableMediaQuery: false, 20),
+                                  ).setHorizontalPadding(
+                                      context, enableMediaQuery: false, 20),
                                   SizedBox(height: 20),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
+                                      Text(
+                                        "ملاحظات الاستشاري",
+                                        style:
+                                            Constants.theme.textTheme.bodyLarge,
+                                      ),
                                     ],
                                   ),
                                   SizedBox(height: 10),
                                   TextField(
                                     controller: commentController,
-                                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                      color: Colors.black, // Change to your desired text color
+                                    style: Constants.theme.textTheme.bodyMedium
+                                        ?.copyWith(
+                                      color: Colors
+                                          .black, // Change to your desired text color
                                     ),
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(20),
                                           topRight: Radius.circular(20),
-
                                         ),
                                         borderSide: BorderSide(
                                           color: Colors.white,
                                           width: 2,
                                         ),
-
                                       ),
                                       fillColor: Colors.grey.shade300,
                                       filled: true,
                                       contentPadding: EdgeInsets.all(10),
                                       hintText: "ادخل الملا��ظات",
-                                      hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                      hintStyle: Constants
+                                          .theme.textTheme.bodyMedium
+                                          ?.copyWith(
                                         color: Colors.black,
-
                                       ),
-
-
-                                  ),
-                                  ).setHorizontalPadding(context,enableMediaQuery: false,20),
+                                    ),
+                                  ).setHorizontalPadding(
+                                      context, enableMediaQuery: false, 20),
                                   SizedBox(height: 20),
                                   BorderRoundedButton(
-                                    title: "تعديل",
+                                      title: "تعديل",
                                       onPressed: () {
                                         setState(() {
                                           textControllers.forEach((key1, val) {
@@ -869,34 +922,42 @@ class _UpdateFormState extends State<UpdateForm> {
                                         });
 
                                         Map<String, dynamic> updateDate = {
-                                          "id":formData["id"],
-                                          "advicor_id": CacheHelper.getData(key: 'id'),
+                                          "id": formData["id"],
+                                          "advicor_id":
+                                              CacheHelper.getData(key: 'id'),
                                           "pationt_id": patient["id"],
-                                          "need_other_session": needOtherSession,
-                                          "consultation_service_id": consultation["name"],
+                                          "need_other_session":
+                                              needOtherSession,
+                                          "consultation_service_id":
+                                              selected_consultation_service_id??consultation.id,
                                           "comments": commentController.text,
-                                          "date":formData["date"],
+                                          "date": formData["date"],
                                           "answers": lastAnswers
                                         };
 
-                                        print("Data to be sent: $updateDate"); // Log the data before sending
+                                        print(
+                                            "Data to be sent: $updateDate"); // Log the data before sending
 
-                                        QuestionViewCubit().getUpdateForm(updateDate).then((value) {
-                                          if(value!=null) {
+                                        QuestionViewCubit()
+                                            .getUpdateForm(updateDate)
+                                            .then((value) {
+                                          if (value != null) {
                                             Navigator.pop(context);
-                                            SnackBarService.showSuccessMessage("تم التعديل بنجاح");
+                                            SnackBarService.showSuccessMessage(
+                                                "تم التعديل بنجاح");
                                           }
                                         });
-                                      }
-                                  ),
+                                      }),
                                 ],
-                              ).setVerticalPadding(context, enableMediaQuery: false, 40);
+                              ).setVerticalPadding(
+                                  context, enableMediaQuery: false, 40);
                             }
                           },
-                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                        ).setHorizontalPadding(
+                            context, enableMediaQuery: false, 20),
+                      ).setHorizontalPadding(
+                          context, enableMediaQuery: false, 20),
                     ),
-
                   ],
                 ),
               ),
@@ -908,27 +969,25 @@ class _UpdateFormState extends State<UpdateForm> {
       },
     );
   }
-
 }
-
-
 
 ////////////////////////////////////////////////////
 
+class DropDownButtonConsultaionWidget extends StatefulWidget {
+  ConsultationServices selectedValue;
+  final Function(ConsultationServices value) onChange;
 
-
-
-class DropDownButtonWidget extends StatefulWidget {
-  String selectedValue;
-  final Function(dynamic value) onChange;
-
-  DropDownButtonWidget({Key? key, required this.selectedValue, required this.onChange}) : super(key: key);
+  DropDownButtonConsultaionWidget(
+      {Key? key, required this.selectedValue, required this.onChange})
+      : super(key: key);
 
   @override
-  _DropDownButtonWidgetState createState() => _DropDownButtonWidgetState();
+  _DropDownButtonConsultaionWidgetState createState() =>
+      _DropDownButtonConsultaionWidgetState();
 }
 
-class _DropDownButtonWidgetState extends State<DropDownButtonWidget> {
+class _DropDownButtonConsultaionWidgetState
+    extends State<DropDownButtonConsultaionWidget> {
   List<String> dropList = [];
   List<String> descriptionList = [];
   var allConsultationCubit = AllConsultationCubit();
@@ -947,28 +1006,32 @@ class _DropDownButtonWidgetState extends State<DropDownButtonWidget> {
         if (state is SuccessAllConsultations) {
           dropList.clear();
           descriptionList.clear();
-          state.consultationServices.forEach((element) {
-            dropList.add(element.name.toString());
-            descriptionList.add(element.description.toString());
-          });
+          // state.consultationServices.forEach((element) {
+          //   dropList.add(element.name.toString());
+          //   descriptionList.add(element.description.toString());
+          // });
 
-          if (!dropList.contains(widget.selectedValue)) {
-            widget.selectedValue = dropList.isNotEmpty ? dropList.first : '';
-          }
+          // if (!dropList.contains(widget.selectedValue)) {
+          //   widget.selectedValue = dropList.isNotEmpty ? dropList.first : '';
+          // }
 
-          return DropdownButton<String>(
-            value: widget.selectedValue.isNotEmpty ? widget.selectedValue : null,
-            onChanged: (String? newValue) {
+          return DropdownButton<ConsultationServices>(
+            value: widget.selectedValue,
+            onChanged: (ConsultationServices? newValue) {
               setState(() {
                 widget.selectedValue = newValue!;
               });
-              int index = dropList.indexOf(newValue!);
-              widget.onChange(descriptionList[index]);
+              // int index = dropList.indexOf(newValue!);
+              if (newValue != null) {
+                widget.onChange(newValue);
+              }
             },
-            items: dropList.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
+            items: state.consultationServices
+                .map<DropdownMenuItem<ConsultationServices>>(
+                    (ConsultationServices value) {
+              return DropdownMenuItem<ConsultationServices>(
                 value: value,
-                child: Text(value),
+                child: Text(value.name??''),
               );
             }).toList(),
           );
@@ -987,23 +1050,23 @@ class _DropDownButtonWidgetState extends State<DropDownButtonWidget> {
 
 
 //
-// class DropDownButtonWidget extends StatefulWidget {
+// class DropDownButtonConsultaionWidget extends StatefulWidget {
 //   String selectedValue ='';
 //   Function(dynamic Value) onChange ;
 //
-//   DropDownButtonWidget({Key? key,  required this.selectedValue,required this.onChange}) : super(key: key);
+//   DropDownButtonConsultaionWidget({Key? key,  required this.selectedValue,required this.onChange}) : super(key: key);
 //   @override
-//   _DropdownButtonWidgetState createState() => _DropdownButtonWidgetState(selectedValue:  this.selectedValue,onChange: this.onChange);
+//   _DropdownButtonConsultaionWidgetState createState() => _DropdownButtonConsultaionWidgetState(selectedValue:  this.selectedValue,onChange: this.onChange);
 // }
 //
-// class _DropdownButtonWidgetState extends State<DropDownButtonWidget> {
+// class _DropdownButtonConsultaionWidgetState extends State<DropDownButtonConsultaionWidget> {
 //   List<String> dropList = [];
 //   List<String> descriptionList = [];
 //   String selectedValue ='';
 //   Function(dynamic Value) onChange ;
 //   var allConsultationCubit = AllConsultationCubit();
 //
-//   _DropdownButtonWidgetState({Key? key, required this.selectedValue,required this.onChange});
+//   _DropdownButtonConsultaionWidgetState({Key? key, required this.selectedValue,required this.onChange});
 //
 //   @override
 //   void initState() {
