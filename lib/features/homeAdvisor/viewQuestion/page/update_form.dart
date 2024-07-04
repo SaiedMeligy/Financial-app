@@ -858,9 +858,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                             answers[key1] = val.text;
                                           });
                                         });
-
                                         List<dynamic> lastAnswers = [];
-
                                         answers.forEach((key, value) {
                                           lastAnswers.add({
                                             // "question_id": key,

@@ -68,7 +68,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                             child: Text(
                               "اسم الجلسة",
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline6?.copyWith(
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 fontSize: 20,
                                 color: Colors.white,
                               ),
@@ -83,7 +83,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                             child: Text(
                               "تاريخ الجلسة",
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline6?.copyWith(
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 fontSize: 20,
                                 color: Colors.white,
                               ),
