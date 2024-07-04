@@ -74,10 +74,8 @@ class _UpdateFormState extends State<UpdateForm> {
           var formData = state.response.data["form"];
           var answers = state.response.data["form"]["answers"];
           var consultation = formData["consultationService"];
-
           // Initialize text controllers with the current answers
           _initializeTextControllers(answers);
-
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
