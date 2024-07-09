@@ -109,9 +109,17 @@ class _StoreFormState extends State<StoreForm> {
     questionViewCubit.getAllQuestion();
     Map<int, List<dynamic>> relatedQuestionsMap = {};
 
-    void _updateRelatedQuestions(int optionId, List<dynamic>? relatedQuestions) {
+    void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
       setState(() {
         if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+          for (var q in relatedQuestions) {
+            questionsWidget.entries.map((Q){
+              if (Q.key.id == q.id) {
+                Q.key.isRelatedQuestion=0;
+                return MapEntry(Q.key, Q.value);
+              }
+            }); 
+          }
           relatedQuestionsMap[optionId] = relatedQuestions;
         } else {
           relatedQuestionsMap.remove(optionId);
@@ -138,7 +146,9 @@ class _StoreFormState extends State<StoreForm> {
 
               List<int> axisDisplay = [];
               question.forEach((q) {
-                questionsWidget.addAll({q:_buildQuestionWidget(q)});
+                if(questionsWidget.isEmpty){
+                  questionsWidget.addAll({q:_buildQuestionWidget(q)});
+                }
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
                 } else {
@@ -333,8 +343,11 @@ class _StoreFormState extends State<StoreForm> {
                                                 ),
                                               const SizedBox(height: 10),
                                                 if(question[index].isRelatedQuestion==0)...[
-                                                  questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).value,
-                                                  SizedBox(height: 10,),
+                                                  if(questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).key.isRelatedQuestion==0)...[
+                                                    questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).value,
+                                                    SizedBox(height: 10,),
+                                                  ]
+                                                  
                                                 ]
                                               //  _buildQuestion(question, index, context),
                                                        // if (question[index].questionOptions!.length > 1)
