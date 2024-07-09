@@ -1,6 +1,6 @@
+import 'QuestionModel.dart';
 import 'package:experts_app/domain/entities/AdviceMode.dart';
 
-import 'QuestionModel.dart';
 
 /// status : true
 /// errNum : 0
@@ -168,7 +168,7 @@ class QuestionOptions {
   String? updatedAt;
   List<dynamic>? pointers;
   List<dynamic>? advices;
-  List<dynamic>? reletedQuestions;
+  List<Questions>? reletedQuestions;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
