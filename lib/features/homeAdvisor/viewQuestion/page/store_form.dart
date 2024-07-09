@@ -146,9 +146,10 @@ class _StoreFormState extends State<StoreForm> {
 
               List<int> axisDisplay = [];
               question.forEach((q) {
-                // if(questionsWidget.isEmpty){
+                dynamic exists = questionsWidget.entries.firstWhere((Q)=>Q.key.id==q.id);
+                if(exists==null){
                   questionsWidget.addAll({q:_buildQuestionWidget(q)});
-                // }
+                }
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
                 } else {
