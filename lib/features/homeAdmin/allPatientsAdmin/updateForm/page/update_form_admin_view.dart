@@ -295,6 +295,8 @@
 //   }
 // }
 
+import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
+import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/manager/states.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/widget/Question_text_field.dart';
@@ -317,7 +319,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
   final dynamic pationt_data;
   _UpdateFormAdminViewState(this.pationt_data);
 
-  late PatientFormViewWithAdminCubit _patientFormViewCubit;
+  late AddSessionCubit _patientFormViewCubit;
   Map<int, TextEditingController> textControllers = {};
   Map<int, String> selectedAnswers = {};
   Map<int, bool> checkboxValues = {};
@@ -325,8 +327,8 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
   @override
   void initState() {
     super.initState();
-    _patientFormViewCubit = PatientFormViewWithAdminCubit();
-    _patientFormViewCubit.getPatientFormViewWithAdmin(widget.pationt_data.id);
+    _patientFormViewCubit = AddSessionCubit();
+    _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId);
   }
 
   @override
@@ -356,16 +358,16 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PatientFormViewWithAdminCubit, PatientFormViewWithAdminStates>(
+    return BlocBuilder<AddSessionCubit, AddSessionStates>(
       bloc: _patientFormViewCubit,
       builder: (context, state) {
-        if (state is LoadingPatientFormViewWithAdminState) {
+        if (state is LoadingAddSessionState) {
           return Center(child: CircularProgressIndicator());
-        } else if (state is ErrorPatientFormViewWithAdminState) {
+        } else if (state is ErrorAddSessionState) {
           return Center(child: Text(state.errorMessage));
-        } else if (state is SuccessPatientFormViewWithAdminState) {
-          var formData = state.response.data["form"];
-          var answers = state.response.data["form"]["answers"];
+        } else if (state is SuccessPatientNationalIdState) {
+          var formData = state.result.data["pationt"]["form"];
+          var answers = formData["answers"];
           var consultation = formData["consultationService"];
           _initializeTextControllers(answers);
           TextEditingController commentController = TextEditingController(text: formData["comments"]);

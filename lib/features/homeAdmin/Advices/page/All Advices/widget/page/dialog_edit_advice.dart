@@ -50,6 +50,7 @@ class _DialogEditAdviceState extends State<DialogEditAdvice> {
                 return Directionality(
                   textDirection: TextDirection.ltr,
                   child: AlertDialog(
+                    backgroundColor: Constants.theme.primaryColor.withOpacity(0.8),
                     content: Form(
                       key: formKey,
                       child: SizedBox(
@@ -90,13 +91,13 @@ class _DialogEditAdviceState extends State<DialogEditAdvice> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: Constants.theme.primaryColor,
+                              color: Colors.black,
                               width: 2.5,
                             ),
                           ),
                           child: Text(
                             "موافق",
-                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
                           ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
                       ),

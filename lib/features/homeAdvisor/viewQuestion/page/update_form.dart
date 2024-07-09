@@ -1,3 +1,7 @@
+import 'package:experts_app/domain/entities/AllSessionModel.dart';
+import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
+
+import '../../../homeAdmin/addSession/manager/cubit.dart';
 import '../manager/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,13 +11,10 @@ import '../../allPatients/widget/manager/cubit.dart';
 import '../../../../core/Services/snack_bar_service.dart';
 import '../../../../../core/widget/Question_text_field.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/core/widget/drop_down_button.dart';
 import '../../../../domain/entities/ConsultationViewModel.dart';
-import 'package:experts_app/core/widget/second_text_field.dart';
 import 'package:experts_app/core/widget/border_rounded_button.dart';
 import '../../../homeAdmin/Consulting service/All Consultation/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/widget/manager/states.dart';
-import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/manager/states.dart';
 import 'package:experts_app/features/homeAdmin/Consulting%20service/All%20Consultation/manager/states.dart';
 // import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
 //
@@ -523,7 +524,7 @@ class _UpdateFormState extends State<UpdateForm> {
   final dynamic pationt_data;
   _UpdateFormState(this.pationt_data);
 
-  late PatientFormViewCubit _patientFormViewCubit;
+  late AddSessionCubit _patientFormViewCubit;
   Map<int, TextEditingController> textControllers = {};
   Map<int, String> selectedAnswers = {};
   Map<int, bool> checkboxValues = {};
@@ -531,12 +532,12 @@ class _UpdateFormState extends State<UpdateForm> {
   late Map<dynamic, dynamic> radiosBtn = {};
 
   int needOtherSession = 0;
-  int? selected_consultation_service_id;
+   ConsultationServices? selected_consultation;
   @override
   void initState() {
     super.initState();
-    _patientFormViewCubit = PatientFormViewCubit();
-    _patientFormViewCubit.getPatientFormView(widget.pationt_data.id);
+    _patientFormViewCubit = AddSessionCubit();
+    _patientFormViewCubit.getSessionDetails(widget.pationt_data.nationalId);
     // selected_consultation_service = consultation["id"];
   }
 
@@ -570,21 +571,24 @@ class _UpdateFormState extends State<UpdateForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PatientFormViewCubit, PatientFormViewStates>(
+    return BlocBuilder<AddSessionCubit, AddSessionStates>(
       bloc: _patientFormViewCubit,
       builder: (context, state) {
-        if (state is LoadingPatientFormViewState) {
+        if (state is LoadingAddSessionState) {
           return Center(child: CircularProgressIndicator());
-        } else if (state is ErrorPatientFormViewState) {
+        } else if (state is ErrorAddSessionState) {
           return Center(child: Text(state.errorMessage));
-        } else if (state is SuccessPatientFormViewState) {
-          var formData = state.response.data["form"];
+        } else if (state is SuccessAddSessionState) {
+
+          var formData = state.result.data["pationt"]["form"];
           var patient = formData["pationt"];
           var advisor = formData["advicor"];
-          var questionAnswer = state.response.data["form"]["answers"];
+          var questionAnswer = formData["answers"];
           ConsultationServices consultation = ConsultationServices.fromJson(formData["consultationService"] );
-
-          // selected_consultation_service_id = consultation.id!;
+          if(selected_consultation==null)
+          {
+            selected_consultation = consultation;
+          }
 
           // print("*******************>" + (consultation["name"]));
           // print("*******************>" + (consultation["description"]));
@@ -822,22 +826,15 @@ class _UpdateFormState extends State<UpdateForm> {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  // DropDown(
-                                  //   onChange: (value) {
-                                  //     setState(() {
-                                  //       selected_consultation_service = value;
-                                  //       // consultation["description"] = value;
-                                  //     });
-                                  //   },
-                                  // ),
                                   DropDownButtonConsultaionWidget(
+
                                     onChange: (value) {
                                       setState(() {
-                                        selected_consultation_service_id = value.id!;
-                                        
+                                        selected_consultation = value;
+                                        print("=============>"+selected_consultation!.description.toString());
                                       });
                                     },
-                                    selectedValue: consultation,
+                                    selectedValue: selected_consultation??consultation,
                                   ),
                                   SizedBox(height: 10),
                                   Container(
@@ -851,11 +848,9 @@ class _UpdateFormState extends State<UpdateForm> {
                                       ),
                                     ),
                                     child: Text(
-                                      consultation.description??'',
-                                      style: Constants
-                                          .theme.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: Colors.black,
+                                      selected_consultation?.description??'',
+                                      style: Constants.theme.textTheme.bodyMedium
+                                          ?.copyWith(color: Colors.black,
                                       ),
                                     ).setHorizontalPadding(
                                         context, enableMediaQuery: false, 20),
@@ -930,7 +925,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                           "need_other_session":
                                               needOtherSession,
                                           "consultation_service_id":
-                                              selected_consultation_service_id??consultation.id,
+                                              selected_consultation?.id??consultation.id,
                                           "comments": commentController.text,
                                           "date": formData["date"],
                                           "answers": lastAnswers
@@ -972,7 +967,11 @@ class _UpdateFormState extends State<UpdateForm> {
   }
 }
 
+
+
+
 ////////////////////////////////////////////////////
+
 
 class DropDownButtonConsultaionWidget extends StatefulWidget {
   ConsultationServices selectedValue;
@@ -989,8 +988,6 @@ class DropDownButtonConsultaionWidget extends StatefulWidget {
 
 class _DropDownButtonConsultaionWidgetState
     extends State<DropDownButtonConsultaionWidget> {
-  List<String> dropList = [];
-  List<String> descriptionList = [];
   var allConsultationCubit = AllConsultationCubit();
 
   @override
@@ -1005,51 +1002,127 @@ class _DropDownButtonConsultaionWidgetState
       bloc: allConsultationCubit,
       builder: (context, state) {
         if (state is SuccessAllConsultations) {
-          dropList.clear();
-          descriptionList.clear();
-          // state.consultationServices.forEach((element) {
-          //   dropList.add(element.name.toString());
-          //   descriptionList.add(element.description.toString());
-          // });
+          List<ConsultationServices> consultations = state.consultationServices as List<ConsultationServices> ?? [];
 
-          // if (!dropList.contains(widget.selectedValue)) {
-          //   widget.selectedValue = dropList.isNotEmpty ? dropList.first : '';
-          // }
-          if(state.consultationServices.isNotEmpty){
-            return DropdownButton<ConsultationServices>(
-              value: widget.selectedValue,
-              onChanged: (ConsultationServices? newValue) {
+          int index = consultations.indexWhere((element) => element.id==widget.selectedValue.id);
+          if (!consultations.contains(widget.selectedValue)&&index!=-1) {
+
+            widget.selectedValue = consultations.first ;
+
+          }
+          else {
+            widget.selectedValue = consultations[index];
+          }
+
+          return DropdownButton<ConsultationServices?>(
+            value: widget.selectedValue,
+            onChanged: (ConsultationServices? newValue) {
+              if (newValue != null) {
                 setState(() {
-                  widget.selectedValue = newValue!;
-                });
-                // int index = dropList.indexOf(newValue!);
-                if (newValue != null) {
+                  widget.selectedValue = newValue;
                   widget.onChange(newValue);
-                }
-              },
-              items: state.consultationServices
-                  .map<DropdownMenuItem<ConsultationServices>>(
-                      (ConsultationServices value) {
-                    return DropdownMenuItem<ConsultationServices>(
-                      value: value,
-                      child: Text(value.name??''),
-                    );
-                  }).toList(),
-            );
+                  print("^^^^^^^^^^^>"+widget.selectedValue.id.toString());
 
-
-          }
-          else{
-            return Container();
-          }
-        }
-        else {
+                });
+              }
+            },
+            items: consultations.map<DropdownMenuItem<ConsultationServices?>>(
+                    (ConsultationServices value) {
+                  return DropdownMenuItem<ConsultationServices?>(
+                    value: value,
+                    child: Text(value.name ?? ''),
+                  );
+                }).toList(),
+          );
+        } else {
           return Center(child: CircularProgressIndicator());
         }
       },
     );
   }
 }
+
+
+
+
+// class DropDownButtonConsultaionWidget extends StatefulWidget {
+//   ConsultationServices selectedValue;
+//   final Function(ConsultationServices value) onChange;
+//
+//   DropDownButtonConsultaionWidget(
+//       {Key? key, required this.selectedValue, required this.onChange})
+//       : super(key: key);
+//
+//   @override
+//   _DropDownButtonConsultaionWidgetState createState() =>
+//       _DropDownButtonConsultaionWidgetState();
+// }
+//
+// class _DropDownButtonConsultaionWidgetState
+//     extends State<DropDownButtonConsultaionWidget> {
+//   List<String> dropList = [];
+//   List<String> descriptionList = [];
+//   var allConsultationCubit = AllConsultationCubit();
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     allConsultationCubit.getAllConsultations();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<AllConsultationCubit, AllConsultationStates>(
+//       bloc: allConsultationCubit,
+//       builder: (context, state) {
+//         if (state is SuccessAllConsultations) {
+//           var consultations = state.consultationServices??[];
+//           dropList.clear();
+//           descriptionList.clear();
+//           // state.consultationServices.forEach((element) {
+//           //   dropList.add(element.name.toString());
+//           //   descriptionList.add(element.description.toString());
+//           // });
+//
+//           // if (!dropList.contains(widget.selectedValue)) {
+//           //   widget.selectedValue = dropList.isNotEmpty ? dropList.first : '';
+//           // }
+//           if(consultations.length>=1&&consultations != null) {
+//             return DropdownButton<ConsultationServices?>(
+//               value: widget.selectedValue,
+//               onChanged: (ConsultationServices? newValue) {
+//                 setState(() {
+//                   if (newValue != null) {
+//                     widget.onChange(newValue);
+//                     widget.selectedValue = newValue;
+//
+//                   }
+//
+//                 });
+//                  int index = dropList.indexOf(newValue!);
+//               },
+//               items: consultations.map<DropdownMenuItem<ConsultationServices?>>(
+//                       (ConsultationServices value) {
+//                     return DropdownMenuItem<ConsultationServices?>(
+//                       value: value,
+//                       child: Text(value.name??''),
+//                     );
+//                   }).toList(),
+//             );
+//
+//
+//           }
+//           else{
+//             return Container();
+//           }
+//         }
+//         else {
+//           return Center(child: CircularProgressIndicator());
+//         }
+//       },
+//     );
+//   }
+// }
 
 
 
@@ -1087,7 +1160,7 @@ class _DropDownButtonConsultaionWidgetState
 //       builder: (context, state) {
 //         if(state is SuccessAllConsultations)
 //           {
-//             var consultation = state.consultationServices.forEach((element) {
+//             var consultation = consultations.forEach((element) {
 //               dropList.add(element.name.toString());
 //               descriptionList.add(element.description.toString());
 //             });

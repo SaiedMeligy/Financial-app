@@ -15,3 +15,7 @@ class ErrorAddSessionState extends AddSessionStates{
   final String errorMessage;
   ErrorAddSessionState(this.errorMessage);
 }
+class ErrorFormState extends AddSessionStates{
+
+  ErrorFormState();
+}

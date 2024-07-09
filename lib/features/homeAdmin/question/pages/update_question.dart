@@ -62,7 +62,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
   @override
   void initState() {
     super.initState();
-    titleController = new TextEditingController(text: question.title) ;
+    titleController = TextEditingController(text: question.title) ;
     fetchPointers();
     fetchAdvices();
     // widget.allQuestions.forEach((question) {
@@ -365,6 +365,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
                                             )),
                                       ),
                                     ),
+                                    question.isRelatedQuestion==1?Container():
                                     DropDownButton(
                                       titleRadio: GestureDetector(
                                         onTap: () {
@@ -513,7 +514,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
       _answerTypes.add(element.type!);
 
       List<int> selectedAdvices1IDs = [];
-      element.advices!.forEach((advice) {
+      element.advices?.forEach((advice) {
         selectedAdvices1IDs.add(advice.id);
       });
       selectedAdvices.add(selectedAdvices1IDs);
@@ -522,7 +523,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
       List<int> selectedPointers2IDs = [];
       List<int> selectedPointers3IDs = [];
 
-      element.pointers!.forEach((pointer) {
+      element.pointers?.forEach((pointer) {
         if (pointer.senarioId == 1)
           selectedPointers1IDs.add(pointer.id!);
         if (pointer.senarioId == 2)

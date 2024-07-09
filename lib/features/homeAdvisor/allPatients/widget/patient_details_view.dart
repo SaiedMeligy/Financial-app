@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html'as html;
+import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
@@ -18,7 +19,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/Services/snack_bar_service.dart';
 import '../../../../core/config/cash_helper.dart';
+import '../../../homeAdmin/addSession/manager/cubit.dart';
 
   class PatientDetailsView extends StatefulWidget {
     PatientDetailsView({super.key, required this.pationt_data});
@@ -32,15 +35,15 @@ import '../../../../core/config/cash_helper.dart';
 
     int _currentAnimation = 1;
 
-    late PatientFormViewCubit _patientFormViewCubit;
+    late AddSessionCubit _patientFormViewCubit;
     bool isMobile =false;
 
     @override
     void initState() {
       super.initState();
 
-      _patientFormViewCubit = PatientFormViewCubit();
-      _patientFormViewCubit.getPatientFormView(widget.pationt_data.id);
+      _patientFormViewCubit = AddSessionCubit();
+      _patientFormViewCubit.getSessionDetails(widget.pationt_data.nationalId);
     }
 
     @override
@@ -107,19 +110,20 @@ import '../../../../core/config/cash_helper.dart';
           isMobile = constraints.maxWidth < 600;
 
 
-          return BlocBuilder<PatientFormViewCubit, PatientFormViewStates>(
+          return BlocBuilder<AddSessionCubit, AddSessionStates>(
           bloc: _patientFormViewCubit, // Use the initialized cubit here
           builder: (context, state) {
-            if (state is LoadingPatientFormViewState) {
+            if (state is LoadingAddSessionState) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is ErrorPatientFormViewState) {
+            } else if (state is ErrorFormState) {
+              Navigator.pop(context);
               return Center(
-                child: Text(state.errorMessage),
+                child: CircularProgressIndicator(),
               );
-            } else if (state is SuccessPatientFormViewState) {
-              var formData = state.response.data["form"];
+            } else if (state is SuccessAddSessionState) {
+              var formData = state.result.data["pationt"]["form"];
               var patient = formData["pationt"];
               var advicor = formData["advicor"];
               var answers = formData["answers"];
@@ -537,11 +541,11 @@ import '../../../../core/config/cash_helper.dart';
                                           children: [
                                             Column(
                                               children: answer["question_options"].map<Widget>((option) {
-                                                bool isAnswered = (option['answer'] is String && option['answer'] == "1") ||
-                                                    (option['answer'] is int && option['answer'] == 1);
+                                                // bool isAnswered = (option['answer'] is String && option['answer'] == "1") ||
+                                                //     (option['answer'] is int && option['answer'] == 1);
                                                 return Row(
                                                   children: [
-                                                    if (isAnswered)
+                                                    // if (isAnswered)
                                                       Expanded(
                                                         child: Text(
                                                           option["title"].toString(),
@@ -550,18 +554,18 @@ import '../../../../core/config/cash_helper.dart';
                                                           ),
                                                         ),
                                                       ),
-                                                    if (option["type"] == 1 && isAnswered)
+                                                    if (option["type"] == 1 )
                                                       Expanded(
                                                         child: Radio<bool>(
-                                                          value: true,
+                                                          value: option["answer"]=="1"?true:false,
                                                           groupValue: true,
                                                           onChanged: (value) {},
                                                         ),
                                                       ),
-                                                    if (option["type"] == 2 && isAnswered)
+                                                    if (option["type"] == 2 )
                                                       Expanded(
                                                         child: Checkbox(
-                                                          value: true,
+                                                          value: option["answer"]=="1"?true:false,
                                                           onChanged: (value) {},
                                                         ),
                                                       ),

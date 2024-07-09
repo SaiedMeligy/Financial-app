@@ -33,6 +33,8 @@ class QuestionViewCubit extends Cubit<QuestionViewStates> {
   bool isLoading = true;
   DateTime selectedDate = DateTime.now();
   late String date;
+  Map<int, List<dynamic>> relatedQuestionsMap = {};
+
 
   late QuestionViewUseCase questionViewUseCase;
   late QuestionViewRepository questionViewRepository;
@@ -101,6 +103,14 @@ class QuestionViewCubit extends Cubit<QuestionViewStates> {
 
 
 
+  void updateRelatedQuestions(int optionId, List<dynamic>? relatedQuestions) {
+    emit(LoadingQuestionViewState());
+    if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+      relatedQuestionsMap[optionId] = relatedQuestions;
+    } else {
+      relatedQuestionsMap.remove(optionId);
+    }
+  }
 
 
   Future<DateTime?> selectTaskDate(BuildContext context) async {

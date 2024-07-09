@@ -1,5 +1,6 @@
 import 'package:dio/src/response.dart';
 
+import '../../../../domain/entities/AllSessionModel.dart';
 import '../../../../domain/entities/QuestionView.dart';
 
 abstract class QuestionViewStates{}
@@ -9,7 +10,8 @@ class SuccessQuestionViewState extends QuestionViewStates{
   SuccessQuestionViewState(this.question);
 }
 class SuccessPatientNationalIdState extends QuestionViewStates{
-  SuccessPatientNationalIdState(Response result);
+  final List<Pationt> patiens;
+  SuccessPatientNationalIdState(this.patiens);
 }
 class QuestionViewDateSelected extends QuestionViewStates {
   final DateTime selectedDate;

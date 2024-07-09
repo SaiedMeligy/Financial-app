@@ -81,7 +81,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       enabled: widget.enabled,
       readOnly: widget.readOnly!,
       style: Constants.theme.textTheme.bodyLarge?.copyWith(
-        color: Colors.black
+        fontSize: 20
       ),
       textInputAction: widget.action ?? TextInputAction.done,
       focusNode: widget.focusNode,
@@ -112,7 +112,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         border: OutlineInputBorder(),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey.shade200,
+            color: Constants.theme.primaryColor,
             width: 1,
           ),
         ),
@@ -143,6 +143,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
         ),
       ),
+
     );
   }
 }

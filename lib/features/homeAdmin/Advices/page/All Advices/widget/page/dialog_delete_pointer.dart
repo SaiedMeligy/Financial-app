@@ -51,11 +51,12 @@ class _DialogDeleteAdviceState extends State<DialogDeleteAdvice> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: AlertDialog(
-                    title: Text("حذف التوصية",style:Constants.theme.textTheme.titleLarge?.copyWith(
-                      color: Colors.black
+                      backgroundColor: Constants.theme.primaryColor.withOpacity(0.8),
+                      title: Text("حذف التوصية",style:Constants.theme.textTheme.titleLarge?.copyWith(
+                      color: Colors.white
                     ),),
                     content: Text("هل أنت متأكد أنك تريد حذف هذه التوصية ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
-                        color: Colors.black
+                        color: Colors.white
                     ),),
                     actions: [
                       TextButton(
@@ -72,13 +73,13 @@ class _DialogDeleteAdviceState extends State<DialogDeleteAdvice> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: Constants.theme.primaryColor,
+                              color: Colors.black,
                               width: 2.5,
                             ),
                           ),
                           child: Text(
                             "موافق",
-                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
                           ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
                       ),

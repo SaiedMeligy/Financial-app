@@ -54,9 +54,9 @@ class _PointerReportViewState extends State<PointerReportView> {
                 ),
                 Expanded(
                   child: TabItemWidget(
-                    item1: "السيناريو الاول",
-                    item2: "السيناريو التاني",
-                    item3: "السيناريو التالت",
+                    item1: "السيناريوالأول(الحالات المتوازنة نسبيا)",
+                    item2: "السيناريوالثاني(للحالات الغير متوازنة في الصرف)",
+                    item3: "السيناريوالثالث(للحالات المتعثرة ماليا)",
                     firstWidget: LineCharts(senario_id: 1,),
                     secondWidget: LineCharts(senario_id: 2,),
                     thirdWidget: LineCharts(senario_id: 3,),

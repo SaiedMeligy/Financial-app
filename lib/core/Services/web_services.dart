@@ -32,10 +32,10 @@ class WebServices {
   final String storageKeyMobileToken = "Authorization";
 
   WebServices._() {
-    freeDio.options.connectTimeout = const Duration(milliseconds: 30000);
+    freeDio.options.connectTimeout = const Duration(milliseconds: 200000);
     freeDio.options.baseUrl = Constants.baseUrl;
 
-    tokenDio.options.connectTimeout = const Duration(milliseconds: 30000);
+    tokenDio.options.connectTimeout = const Duration(milliseconds: 200000);
     tokenDio.options.baseUrl = Constants.baseUrl;
     initializeInterceptors();
   }

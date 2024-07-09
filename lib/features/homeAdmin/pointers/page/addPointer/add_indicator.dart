@@ -1,4 +1,5 @@
 import 'package:experts_app/features/homeAdmin/pointers/page/addPointer/manager/cubit.dart';
+import 'package:experts_app/features/homeAdmin/question/widget/radio_answer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/Services/snack_bar_service.dart';
@@ -57,13 +58,13 @@ class _AddIndicatorState extends State<AddIndicator> {
                           const SizedBox(
                             width: 10,
                           ),
-                          RadioWidget(
+                          RadioAnswerWidget(
                               titleRadio: "اختر السيناريو",
                               items: const [
                                 MapEntry("اختر السيناريو  ", 0),
-                                MapEntry("السيناريو الاول", 1),
-                                MapEntry("السيناريو التاني", 2),
-                                MapEntry("السيناريو التالت", 3)
+                                MapEntry("السيناريوالأول(الحالات المتوازنة نسبيا)", 1),
+                                MapEntry("السيناريوالثاني(للحالات الغير متوازنة في الصرف)", 2),
+                                MapEntry("السيناريوالثالث(للحالات المتعثرة ماليا)", 3)
                               ],
                               onChanged: (value) {
                                 setState(() {
@@ -123,10 +124,13 @@ class _AddIndicatorState extends State<AddIndicator> {
                                               .theme.textTheme.bodyMedium
                                               ?.copyWith(color: Colors.black),
                                         ),
+                                        ////////need to be clear
                                         actions: [
                                           TextButton(
                                             onPressed: () {
                                               Navigator.of(context).pop();
+                                              titleController.clear();
+                                              selectedScenarioId = 0;
                                             },
                                             child: Container(
                                                 decoration: BoxDecoration(
@@ -153,6 +157,7 @@ class _AddIndicatorState extends State<AddIndicator> {
                                       ),
                                     );
                                   });
+
                             } catch (e) {
                               print(e);
                             }

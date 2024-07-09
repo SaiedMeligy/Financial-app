@@ -442,6 +442,8 @@
 //   }
 // }
 import 'package:experts_app/core/config/constants.dart';
+import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
+import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -469,14 +471,14 @@ class PatientDetailsAdminView extends StatefulWidget {
 }
 
 class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
-  late PatientFormViewWithAdminCubit _patientFormViewCubit;
+  late AddSessionCubit _patientFormViewCubit;
   bool isMobile = false;
 
   @override
   void initState() {
     super.initState();
-    _patientFormViewCubit = PatientFormViewWithAdminCubit();
-    _patientFormViewCubit.getPatientFormViewWithAdmin(widget.pationt_data.id);
+    _patientFormViewCubit = AddSessionCubit();
+    _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId);
   }
 
   @override
@@ -538,22 +540,23 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
       builder: (context, constraints) {
         isMobile = constraints.maxWidth < 600;
 
-        return BlocBuilder<PatientFormViewWithAdminCubit, PatientFormViewWithAdminStates>(
+        return BlocBuilder<AddSessionCubit, AddSessionStates>(
         bloc: _patientFormViewCubit,
         builder: (context, state) {
-          if (state is LoadingPatientFormViewWithAdminState) {
+          if (state is LoadingAddSessionState) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is ErrorPatientFormViewWithAdminState) {
+          } else if (state is ErrorFormState) {
+            Navigator.pop(context);
             return Center(
-              child: Text(state.errorMessage),
+              child: CircularProgressIndicator(),
             );
-          } else if (state is SuccessPatientFormViewWithAdminState) {
-            var formData = state.response.data["form"];
-            var patient = state.response.data["form"]["pationt"];
-            var advicor = state.response.data["form"]["advicor"];
-            var answers = state.response.data["form"]["answers"];
+          } else if (state is SuccessPatientNationalIdState) {
+            var formData = state.result.data["pationt"]["form"];
+            var patient = formData["pationt"];
+            var advicor = formData["advicor"];
+            var answers = formData["answers"];
             var consultation = formData["consultationService"];
             var filteredAnswers = filterQuestionsWithAnswer(answers);
 
@@ -1083,11 +1086,9 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                         children: [
                                           Column(
                                             children: answer["question_options"].map<Widget>((option) {
-                                              bool isAnswered = (option['answer'] is String && option['answer'] == "1") ||
-                                                  (option['answer'] is int && option['answer'] == 1);
                                               return Row(
                                                 children: [
-                                                  if (isAnswered)
+
                                                     Expanded(
                                                       child: Text(
                                                         option["title"].toString(),
@@ -1096,18 +1097,18 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                         ),
                                                       ),
                                                     ),
-                                                  if (option["type"] == 1 && isAnswered)
+                                                  if (option["type"] == 1 )
                                                     Expanded(
                                                       child: Radio<bool>(
-                                                        value: true,
+                                                        value: option["answer"]=="1"?true:false,
                                                         groupValue: true,
                                                         onChanged: (value) {},
                                                       ),
                                                     ),
-                                                  if (option["type"] == 2 && isAnswered)
+                                                  if (option["type"] == 2 )
                                                     Expanded(
                                                       child: Checkbox(
-                                                        value: true,
+                                                        value: option["answer"]=="1"?true:false,
                                                         onChanged: (value) {},
                                                       ),
                                                     ),

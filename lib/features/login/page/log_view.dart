@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../core/Services/snack_bar_service.dart';
 import '../../../core/config/constants.dart';
+import '../../../core/config/page_route_name.dart';
 import '../../../core/widget/second_text_field.dart';
 import '../manager/states.dart';
 
@@ -163,11 +164,11 @@ class _LogViewState extends State<LogView> {
                                           if(value){
                                             print("Done");
                                             EasyLoading.dismiss();
-                                            SnackBarService.showSuccessMessage("logged in Successfuly");
+                                            SnackBarService.showSuccessMessage("تم تسجيل الدخول بنجاح");
 
-                                            // Navigator.of(context).pushNamedAndRemoveUntil(PageRouteName.home,
-                                            //   (route) => false
-                                            //);
+                                            //  Navigator.of(context).pushNamedAndRemoveUntil(PageRouteName.homeAdmin,
+                                            //    (route) => false
+                                            // );
 
                                           }
 

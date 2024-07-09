@@ -70,9 +70,9 @@ class _EditIndicatorState extends State<EditIndicator> {
                   ),
                   Expanded(
                     child: TabItemWidget(
-                      item1: "السيناريو الاول",
-                      item2: "السيناريو التاني",
-                      item3: "السيناريو التالت",
+                      item1: "السيناريوالأول(الحالات المتوازنة نسبيا)",
+                      item2: "السيناريوالثاني(للحالات الغير متوازنة في الصرف)",
+                      item3: "السيناريوالثالث(للحالات المتعثرة ماليا)",
                       firstWidget:
                       TableWidget<Pointers>(
                         label1: 'المؤشر',

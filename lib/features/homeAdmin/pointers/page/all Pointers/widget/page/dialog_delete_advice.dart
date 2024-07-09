@@ -50,11 +50,13 @@ class _DialogDeletePointerState extends State<DialogDeletePointer> {
                 return Directionality(
                   textDirection: TextDirection.rtl,
                   child: AlertDialog(
+                    backgroundColor: Constants.theme.primaryColor.withOpacity(0.8),
+
                     title: Text("حذف المؤشر",style:Constants.theme.textTheme.titleLarge?.copyWith(
-                      color: Colors.black
+                      color: Colors.white
                     ),),
                     content: Text("هل أنت متأكد أنك تريد حذف هذا المؤشر ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
-                        color: Colors.black
+                        color: Colors.white
                     ),),
                     actions: [
                       TextButton(
@@ -71,13 +73,13 @@ class _DialogDeletePointerState extends State<DialogDeletePointer> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: Constants.theme.primaryColor,
+                              color: Colors.black,
                               width: 2.5,
                             ),
                           ),
                           child: Text(
                             "موافق",
-                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
                           ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
                       ),

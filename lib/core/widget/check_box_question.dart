@@ -6,7 +6,7 @@ class CheckBoxQuestion extends StatefulWidget {
   final List<int> previous;
   final ValueChanged<List<int>?> onChanged;
 
-  const CheckBoxQuestion({
+  const   CheckBoxQuestion({
     super.key,
     required this.items,
     required this.previous,

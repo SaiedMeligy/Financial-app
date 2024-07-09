@@ -13,7 +13,7 @@ class UpdateConsultationDataSourceImp implements UpdateConsultationDataSource{
   @override
   Future<Response> updateConsultation(int id,String name,String description) async{
     return await dio.patch(
-      "/api/advicor/ConsultationServices/update",
+      "/api/ConsultationServices/update",
       options: Options(
           headers: {
             "api-password": Constants.apiPassword,

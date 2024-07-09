@@ -64,9 +64,7 @@ class InitialPage extends StatelessWidget {
                                     SizedBox(
                                         width: Constants.mediaQuery.width * 0.2,
                                         child: ElevatedButton(onPressed: () {
-                                          navigatorKey.currentState!
-                                              .pushReplacementNamed(
-                                              PageRouteName.login);
+                                          navigatorKey.currentState!.pushReplacementNamed(PageRouteName.login);
                                         },
                                             child: Text("Get Started",
                                               style: Constants.theme.textTheme

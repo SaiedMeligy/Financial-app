@@ -2,13 +2,13 @@ import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:experts_app/core/config/constants.dart';
 
-class RadioWidget extends StatefulWidget {
+class RadioAnswerWidget extends StatefulWidget {
   final String titleRadio;
   final List<MapEntry> items;
   final ValueChanged<int?> onChanged;
   final String? errorMessage;
 
-  RadioWidget({
+  RadioAnswerWidget({
     Key? key,
     required this.titleRadio,
     required this.items,
@@ -17,10 +17,10 @@ class RadioWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<RadioWidget> createState() => _RadioWidgetState();
+  State<RadioAnswerWidget> createState() => _RadioAnswerWidgetState();
 }
 
-class _RadioWidgetState extends State<RadioWidget> {
+class _RadioAnswerWidgetState extends State<RadioAnswerWidget> {
   int? selectedValue;
   bool isDropdownOpen = false;
 
@@ -59,7 +59,7 @@ class _RadioWidgetState extends State<RadioWidget> {
                     ),
                   ),
                   child: SizedBox(
-                    width: Constants.mediaQuery.width * 0.21,
+                    width: Constants.mediaQuery.width * 0.15,
                     child: DropdownButton<int>(
                       value: selectedValue,
                       dropdownColor: Constants.theme.primaryColor.withOpacity(0.9),

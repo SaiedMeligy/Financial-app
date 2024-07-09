@@ -49,39 +49,43 @@ class _DialogDeleteState extends State<DialogDelete> {
             showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  // backgroundColor: Colors.black87,
-                  title: Text("حذف الخدمة الاستشارية",style:Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black)),
-                  content: Text("هل أنت متأكد أنك تريد حذف هذه الخدمة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
-                       color: Colors.black
-                  ),),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        updateConsultationCubit.deleteConsultation(
-                          widget.consultationServices!.id!,
-                        ).then((_) {
-                          widget.allConsultationCubit.getAllConsultations();
-                          Navigator.of(context).pop();
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 2.5,
+                return Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: AlertDialog(
+                    backgroundColor: Constants.theme.primaryColor.withOpacity(0.8),
+                    // backgroundColor: Colors.white87,
+                    title: Text("حذف الخدمة الاستشارية",style:Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.white)),
+                    content: Text("هل أنت متأكد أنك تريد حذف هذه الخدمة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                         color: Colors.white
+                    ),),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          updateConsultationCubit.deleteConsultation(
+                            widget.consultationServices!.id!,
+                          ).then((_) {
+                            widget.allConsultationCubit.getAllConsultations();
+                            Navigator.of(context).pop();
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 2.5,
+                            ),
                           ),
+                          child: Text(
+                            "موافق",
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                              color: Colors.white
+                            ),
+                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
-                        child: Text(
-                          "موافق",
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                            color: Colors.black
-                          ),
-                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             );

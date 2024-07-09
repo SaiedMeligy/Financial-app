@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:experts_app/core/Services/snack_bar_service.dart';
 import 'package:experts_app/domain/entities/AddSessionModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
+import 'package:experts_app/main.dart';
 
 import '../../../../core/Failure/server_failure.dart';
 import '../../../../core/Services/web_services.dart';
@@ -54,6 +55,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
       final patientDetails = await getPatientDetailsUseCase.execute(nationalId);
       if(patientDetails.data['pationt']["form"]==null  ) {
         SnackBarService.showErrorMessage("لم يسجل في الفورم");
+        emit(ErrorFormState());
       }
       else {
         emit(SuccessPatientNationalIdState(patientDetails));
@@ -98,6 +100,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
       final patientDetails = await getSessionDetailsUseCase.execute(nationalId);
       if(patientDetails.data['pationt']["form"]==null  ) {
         SnackBarService.showErrorMessage("لم يسجل في الفورم");
+        emit(ErrorFormState());
       }
       else {
         emit(SuccessAddSessionState(patientDetails));

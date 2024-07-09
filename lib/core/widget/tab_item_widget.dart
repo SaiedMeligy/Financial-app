@@ -47,24 +47,27 @@ class _TabItemWidgetState extends State<TabItemWidget> {
               backgroundColor: Colors.transparent,
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              toolbarHeight: 0,
+              toolbarHeight:0,
               elevation: 0.0,
               titleSpacing: 0.0,
+              leadingWidth: 0,
               bottom: TabBar(
-                labelStyle: Constants.theme.textTheme.titleLarge?.copyWith(
-                  color: Colors.black,
+                labelStyle: Constants.theme.textTheme.bodyLarge?.copyWith(
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: isMobile? 18 : 24,
+                  fontSize: isMobile? 12 : 15,
+
                 ),
                 unselectedLabelStyle:Constants.theme.textTheme.bodyLarge?.copyWith(
-                  fontSize: isMobile? 16 : 22,
+                  fontSize: isMobile? 12 : 15,
                 ),
-                unselectedLabelColor: Colors.black,
-                tabs: myTabs, // use the tabs we defined earlier
+                unselectedLabelColor: Colors.white,
+                tabs: myTabs,
+                labelPadding: EdgeInsets.only(right: 5),
               ),
             ),
             body: TabBarView(
-              children: myTabViews, // use the tab views we defined earlier
+              children: myTabViews,
             ),
                 ),
           ),
