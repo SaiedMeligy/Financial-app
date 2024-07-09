@@ -1,19 +1,20 @@
-import 'package:flutter/cupertino.dart';
-
-import '../../../../core/Services/snack_bar_service.dart';
 import '../widget/date_time.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/constants.dart';
 import '../../../../core/widget/custom_text_field.dart';
+import '../../../../core/Services/snack_bar_service.dart';
 import 'package:experts_app/core/config/cash_helper.dart';
 import '../../../../core/widget/Question_text_field.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/domain/entities/QuestionView.dart';
 import 'package:experts_app/core/widget/border_rounded_button.dart';
 import 'package:experts_app/domain/entities/ConsultationViewModel.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
+
 
 
 class StoreForm extends StatefulWidget {
@@ -143,49 +144,8 @@ class _StoreFormState extends State<StoreForm> {
               });
               print(question);
               print(question.length);
-              if (answers.isEmpty) {
-                for (int index = 0; index < question.length; index++) {
-                  radiosBtn[question[index].id!] = -1;
-                  for (int i = 0; i < question[index].questionOptions!.length; i++) {
-                    answers[question[index].questionOptions![i].id] = 0;
-                    radiosBtn.addAll({question[index].id: -1,
-                    });
-                    answers.addAll({
-                      question[index].questionOptions![i].id: 0,
-                    });
-                    if (question[index].questionOptions![i].type == 3) {
-                      textControllers.addAll({
-                        question[index].questionOptions![i].id:
-                            TextEditingController(text: ""),
-                      });
-                    }
-                    /////
-                    if (question[index].questionOptions![i].reletedQuestions != null) {
-                      for (var relatedQuestion in question[index].questionOptions![i].reletedQuestions!) {
-                        radiosBtn[relatedQuestion.id!] = -1;
-                        // print('-------------------------------------->>>Related Question Title: ${relatedQuestion.title}');
-                        for (var option in relatedQuestion.questionOptions) {
-                          answers[option.id] = 0;
-                          radiosBtn.addAll({relatedQuestion.id: -1,
-                          });
-                          answers.addAll({
-                            option.id: 0,
-                          });
 
-                          if(option.type==3){
-                            textControllers.addAll({
-                              option.id: TextEditingController(text: ""),
-                            });
-                          }
-                          // print('-------------------------------------->>>Related Question Option Title: ${option.title}');
-                        }
-                      }
-                    }
-
-                    ////
-                  }
-                }
-              }
+              _fillAnsewrsMap(question);
 
               return Directionality(
                 textDirection: TextDirection.rtl,
@@ -369,108 +329,7 @@ class _StoreFormState extends State<StoreForm> {
                                                   ],
                                                 ),
                                               const SizedBox(height: 10),
-                                               SizedBox(
-                                                width: double.infinity,
-                                                child:
-                                                CustomPaint(foregroundPainter: LinePainter(
-                                                      text: question[index].title.toString(),
-                                                    ),
-                                                    child: Container(
-                                                      width: Constants.mediaQuery.width * 0.2,
-                                                      height: question[index].questionOptions!.length > 2
-                                                          ? question[index].questionOptions!.length * 100 : 200,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
-                                                        border: Border.all(
-                                                          color: Colors.black87,
-                                                          width: 2.5,),),
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          for (int i = 0; i < question[index].questionOptions!.length; i++) ...[
-                                                            Expanded(
-                                                              child: Container(
-                                                                width: Constants.mediaQuery.width * 0.47,
-                                                                height: Constants.mediaQuery.height * 0.1,
-                                                                margin: const EdgeInsets.all(8),
-                                                                decoration: BoxDecoration(
-                                                                  color: Colors.white54,
-                                                                  borderRadius: BorderRadius.circular(10),
-                                                                  border: question[index].questionOptions![i].type != 3
-                                                                      ? Border.all(
-                                                                    color: Colors.black87,
-                                                                    width: 2.5,
-                                                                  )
-                                                                      : null,
-                                                                ),
-                                                                child:
-                                                                Row(
-                                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                                    question[index].questionOptions![i].title.toString(),
-                                                                                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                                                      color: Colors.black,
-                                                                                    ),
-                                                                                  ),
-                                                                    if (question[index].questionOptions![i].type == 1)
-                                                                      Radio<int>(
-                                                                        value: question[index].questionOptions![i].id ?? 0,
-                                                                        groupValue: radiosBtn[question[index].id],
-                                                                        onChanged: (value) {
-                                                                          answers[question[index].questionOptions![i].id] = 1;
-                                                                          question[index].questionOptions!.forEach(
-                                                                                  (o) {
-                                                                                if (o.type == 1) {
-                                                                                  if (o.id != question[index].questionOptions![i].id) {
-                                                                                    answers[o.id] = 0;
-                                                                                  }
-                                                                                }
-                                                                              });
-                                                                          radiosBtn[question[index].id] = value!;
-                                                                          _updateRelatedQuestions(question[index].questionOptions![i].id!,
-                                                                              question[index].questionOptions![i].reletedQuestions);
-                                                                          setState(() {});
-                                                                        },
-                                                                      ),
-                                                                    if (question[index].questionOptions![i].type == 2)
-                                                                      Checkbox(
-                                                                        value: (answers[question[index].questionOptions![i].id] == 1)
-                                                                            ? true
-                                                                            : false,
-                                                                        onChanged: (value) {
-                                                                          answers[question[index].questionOptions![i].id] =
-                                                                          (value!) ? 1 : 0;
-                                                                          setState(() {});
-                                                                        },
-                                                                      ),
-                                                                    if (question[index].questionOptions![i].type == 3)
-                                                                      Container(
-                                                                        width: Constants.mediaQuery.width * 0.2,
-                                                                        height: Constants.mediaQuery.height * 0.2,
-                                                                        decoration: BoxDecoration(),
-                                                                        child: QuestionTextField(
-                                                                          hint: "ادخل النص",
-                                                                          maxLines: 3,
-                                                                          controller: textControllers[
-                                                                            question[index].questionOptions![i].id!],
-                                                                        ),
-                                                                      ).setVerticalPadding(context, enableMediaQuery: false, 5),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-
-
-                                                          ],
-                                                        ],
-                                                      ),
-                                                    ),
-
-                                                ),
-                                              ),
+                                               _buildQuestion(question, index, context),
                                                SizedBox(height: 10,),
                                                        // if (question[index].questionOptions!.length > 1)
                                                          for(int i = 0; i < question[index].questionOptions!.length;i++)
@@ -765,6 +624,140 @@ class _StoreFormState extends State<StoreForm> {
         );
       }
     );
+  }
+
+  void _fillAnsewrsMap(List<Questions> questions) {
+    if (answers.isEmpty) {
+      for (int index = 0; index < questions.length; index++) {
+
+        radiosBtn[questions[index].id!] = -1;
+        for (int i = 0; i < questions[index].questionOptions!.length; i++) {
+          answers[questions[index].questionOptions![i].id] = 0;
+          radiosBtn.addAll({questions[index].id: -1,
+          });
+          answers.addAll({
+            questions[index].questionOptions![i].id: 0,
+          });
+          if (questions[index].questionOptions![i].type == 3) {
+            textControllers.addAll({
+              questions[index].questionOptions![i].id:
+                  TextEditingController(text: ""),
+            });
+          }
+          /////
+          if (questions[index].questionOptions![i].reletedQuestions != null && questions[index].questionOptions![i].reletedQuestions!.isNotEmpty) {
+            _fillAnsewrsMap(questions[index].questionOptions![i].reletedQuestions as List<Questions>);
+          }
+    
+          ////
+        }
+      }
+    }
+  }
+
+  SizedBox _buildQuestion(List<Questions> question, int index, BuildContext context) {
+    return SizedBox(
+                                              width: double.infinity,
+                                              child:
+                                              CustomPaint(foregroundPainter: LinePainter(
+                                                    text: question[index].title.toString(),
+                                                  ),
+                                                  child: Container(
+                                                    width: Constants.mediaQuery.width * 0.2,
+                                                    height: question[index].questionOptions!.length > 2
+                                                        ? question[index].questionOptions!.length * 100 : 200,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(
+                                                        color: Colors.black87,
+                                                        width: 2.5,),),
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        for (int i = 0; i < question[index].questionOptions!.length; i++) ...[
+                                                          Expanded(
+                                                            child: Container(
+                                                              width: Constants.mediaQuery.width * 0.47,
+                                                              height: Constants.mediaQuery.height * 0.1,
+                                                              margin: const EdgeInsets.all(8),
+                                                              decoration: BoxDecoration(
+                                                                color: Colors.white54,
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                border: question[index].questionOptions![i].type != 3
+                                                                    ? Border.all(
+                                                                  color: Colors.black87,
+                                                                  width: 2.5,
+                                                                )
+                                                                    : null,
+                                                              ),
+                                                              child:
+                                                              Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                                  question[index].questionOptions![i].title.toString(),
+                                                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                                                    color: Colors.black,
+                                                                                  ),
+                                                                                ),
+                                                                  if (question[index].questionOptions![i].type == 1)
+                                                                    Radio<int>(
+                                                                      value: question[index].questionOptions![i].id ?? 0,
+                                                                      groupValue: radiosBtn[question[index].id],
+                                                                      onChanged: (value) {
+                                                                        answers[question[index].questionOptions![i].id] = 1;
+                                                                        question[index].questionOptions!.forEach(
+                                                                                (o) {
+                                                                              if (o.type == 1) {
+                                                                                if (o.id != question[index].questionOptions![i].id) {
+                                                                                  answers[o.id] = 0;
+                                                                                }
+                                                                              }
+                                                                            });
+                                                                        radiosBtn[question[index].id] = value!;
+                                                                        _updateRelatedQuestions(question[index].questionOptions![i].id!,
+                                                                            question[index].questionOptions![i].reletedQuestions);
+                                                                        setState(() {});
+                                                                      },
+                                                                    ),
+                                                                  if (question[index].questionOptions![i].type == 2)
+                                                                    Checkbox(
+                                                                      value: (answers[question[index].questionOptions![i].id] == 1)
+                                                                          ? true
+                                                                          : false,
+                                                                      onChanged: (value) {
+                                                                        answers[question[index].questionOptions![i].id] =
+                                                                        (value!) ? 1 : 0;
+                                                                        setState(() {});
+                                                                      },
+                                                                    ),
+                                                                  if (question[index].questionOptions![i].type == 3)
+                                                                    Container(
+                                                                      width: Constants.mediaQuery.width * 0.2,
+                                                                      height: Constants.mediaQuery.height * 0.2,
+                                                                      decoration: BoxDecoration(),
+                                                                      child: QuestionTextField(
+                                                                        hint: "ادخل النص",
+                                                                        maxLines: 3,
+                                                                        controller: textControllers[
+                                                                          question[index].questionOptions![i].id!],
+                                                                      ),
+                                                                    ).setVerticalPadding(context, enableMediaQuery: false, 5),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+
+
+                                                        ],
+                                                      ],
+                                                    ),
+                                                  ),
+
+                                              ),
+                                            );
   }
 }
 

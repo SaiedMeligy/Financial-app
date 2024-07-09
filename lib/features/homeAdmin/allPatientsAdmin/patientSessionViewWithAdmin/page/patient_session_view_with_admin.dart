@@ -71,7 +71,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                             child: Text(
                               "اسم الجلسة",
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline6?.copyWith(
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 fontSize: 20,
                                 color: Colors.white,
                               ),
@@ -86,7 +86,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                             child: Text(
                               "تاريخ الجلسة",
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline6?.copyWith(
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 fontSize: 20,
                                 color: Colors.white,
                               ),
@@ -122,7 +122,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                               alignment: Alignment.center,
                               child: Text(
                                 "الجلسة " + session[index]["session_number"].toString(),
-                                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Colors.white,
                                 ),
                               ),
@@ -134,7 +134,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                             alignment: Alignment.center,
                             child: Text(
                               session[index]["date"],
-                              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Colors.white,
                               ),
                             ),
