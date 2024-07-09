@@ -40,8 +40,8 @@ class _StoreFormState extends State<StoreForm> {
    int selected_consultation_service=0;
   DateTime selectedDate = DateTime.now();
   bool isMobile = false;
-  Map<bool,Questions> questionsWidgetBuilder = {};
-  
+  Map<Questions,SizedBox> questionsWidget = {};
+
 
   TextEditingController advicorComment = TextEditingController();
   void _showDateSelectionSnackBar(BuildContext context) {
@@ -91,18 +91,9 @@ class _StoreFormState extends State<StoreForm> {
 
   Map<int, List<dynamic>> relatedQuestionsMap = {};
 
-  void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
+  void _updateRelatedQuestions(int optionId, List<dynamic>? relatedQuestions) {
     setState(() {
       if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
-        for (var q in relatedQuestions) {
-            questionsWidgetBuilder.map((key,val){
-              if(val.id == q.id){
-                return MapEntry(true, val);
-              }else{
-                return MapEntry(key, val);
-              }
-            });
-        }
         relatedQuestionsMap[optionId] = relatedQuestions;
       } else {
         relatedQuestionsMap.remove(optionId);
@@ -147,7 +138,7 @@ class _StoreFormState extends State<StoreForm> {
 
               List<int> axisDisplay = [];
               question.forEach((q) {
-                questionsWidgetBuilder.addAll({(q.isRelatedQuestion==0):q});
+                questionsWidget.addAll({q:_buildQuestionWidget(q)});
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
                 } else {
@@ -158,6 +149,7 @@ class _StoreFormState extends State<StoreForm> {
               print(question.length);
 
               _fillAnsewrsMap(question);
+              print(questionsWidget);
               return Directionality(
                 textDirection: TextDirection.rtl,
                 child: Scaffold(
@@ -317,7 +309,6 @@ class _StoreFormState extends State<StoreForm> {
                                       catch(error){
                                         print(error.toString());
                                       }
-                                        // dynamic displayQ = questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id); 
                                         return
                                           Column(
                                           children: [
@@ -341,9 +332,8 @@ class _StoreFormState extends State<StoreForm> {
                                                   ],
                                                 ),
                                               const SizedBox(height: 10),
-                                              
-                                                if(questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id).key)...[
-                                                  _buildQuestionWidget(questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id).value),
+                                                if(question[index].isRelatedQuestion==0)...[
+                                                  questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).value,
                                                   SizedBox(height: 10,),
                                                 ]
                                               //  _buildQuestion(question, index, context),
