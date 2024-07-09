@@ -41,7 +41,7 @@ class _StoreFormState extends State<StoreForm> {
   DateTime selectedDate = DateTime.now();
   bool isMobile = false;
   Map<Questions,SizedBox> questionsWidget = {};
-
+Map<int, List<Questions>> relatedQuestionsMap = {};
 
   TextEditingController advicorComment = TextEditingController();
   void _showDateSelectionSnackBar(BuildContext context) {
@@ -89,12 +89,21 @@ class _StoreFormState extends State<StoreForm> {
     }
   }
 
-  Map<int, List<Questions>> relatedQuestionsMap = {};
+  
 
   void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
     setState(() {
       if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
         relatedQuestionsMap[optionId] = relatedQuestions;
+            if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+          for (var q in relatedQuestions) {
+            questionsWidget.entries.map((Q){
+              if (Q.key.id == q.id) {
+                Q.key.isRelatedQuestion=0;
+                return MapEntry(Q.key, Q.value);
+              }
+            }); 
+          }}
       } else {
         relatedQuestionsMap.remove(optionId);
       }
@@ -107,25 +116,24 @@ class _StoreFormState extends State<StoreForm> {
   void initState() {
     super.initState();
     questionViewCubit.getAllQuestion();
-    Map<int, List<dynamic>> relatedQuestionsMap = {};
 
-    void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
-      setState(() {
-        if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
-          for (var q in relatedQuestions) {
-            questionsWidget.entries.map((Q){
-              if (Q.key.id == q.id) {
-                Q.key.isRelatedQuestion=0;
-                return MapEntry(Q.key, Q.value);
-              }
-            }); 
-          }
-          relatedQuestionsMap[optionId] = relatedQuestions;
-        } else {
-          relatedQuestionsMap.remove(optionId);
-        }
-      });
-    }
+    // void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
+    //   setState(() {
+    //     if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+    //       for (var q in relatedQuestions) {
+    //         questionsWidget.entries.map((Q){
+    //           if (Q.key.id == q.id) {
+    //             Q.key.isRelatedQuestion=0;
+    //             return MapEntry(Q.key, Q.value);
+    //           }
+    //         }); 
+    //       }
+    //       relatedQuestionsMap[optionId] = relatedQuestions;
+    //     } else {
+    //       relatedQuestionsMap.remove(optionId);
+    //     }
+    //   });
+    // }
 
   }
   @override
