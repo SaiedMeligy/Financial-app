@@ -146,9 +146,9 @@ class _StoreFormState extends State<StoreForm> {
 
               List<int> axisDisplay = [];
               question.forEach((q) {
-                if(questionsWidget.isEmpty){
+                // if(questionsWidget.isEmpty){
                   questionsWidget.addAll({q:_buildQuestionWidget(q)});
-                }
+                // }
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
                 } else {
