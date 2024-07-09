@@ -317,7 +317,7 @@ class _StoreFormState extends State<StoreForm> {
                                       catch(error){
                                         print(error.toString());
                                       }
-                                        MapEntry<bool,Questions> displayQ =questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id); 
+                                        dynamic displayQ = questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id); 
                                         return
                                           Column(
                                           children: [
