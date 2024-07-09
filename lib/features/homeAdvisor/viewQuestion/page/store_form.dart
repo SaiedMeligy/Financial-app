@@ -317,7 +317,7 @@ class _StoreFormState extends State<StoreForm> {
                                       catch(error){
                                         print(error.toString());
                                       }
-                                        dynamic displayQ = questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id); 
+                                        // dynamic displayQ = questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id); 
                                         return
                                           Column(
                                           children: [
@@ -342,8 +342,8 @@ class _StoreFormState extends State<StoreForm> {
                                                 ),
                                               const SizedBox(height: 10),
                                               
-                                                if(displayQ.key)...[
-                                                  _buildQuestionWidget(displayQ.value),
+                                                if(questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id).key)...[
+                                                  _buildQuestionWidget(questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id).value),
                                                   SizedBox(height: 10,),
                                                 ]
                                               //  _buildQuestion(question, index, context),
