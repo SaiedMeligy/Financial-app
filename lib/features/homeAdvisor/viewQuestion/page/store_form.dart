@@ -89,9 +89,9 @@ class _StoreFormState extends State<StoreForm> {
     }
   }
 
-  Map<int, List<dynamic>> relatedQuestionsMap = {};
+  Map<int, List<Questions>> relatedQuestionsMap = {};
 
-  void _updateRelatedQuestions(int optionId, List<dynamic>? relatedQuestions) {
+  void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
     setState(() {
       if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
         relatedQuestionsMap[optionId] = relatedQuestions;
@@ -156,6 +156,18 @@ class _StoreFormState extends State<StoreForm> {
                   axisDisplay.add(0);
                 }
               });
+              if(relatedQuestionsMap.isNotEmpty){
+                relatedQuestionsMap.forEach((key, value) {
+                  for (var rQuestion in value) {
+                    questionsWidget.entries.map((e) {
+                      if(e.key.id==rQuestion.id){
+                        e.key.isRelatedQuestion=0;
+                        return MapEntry(e.key,e.value);
+                      }
+                    },);
+                  }
+                },);
+              }
               print(question);
               print(question.length);
 
