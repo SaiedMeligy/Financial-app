@@ -40,7 +40,7 @@ class _StoreFormState extends State<StoreForm> {
    int selected_consultation_service=0;
   DateTime selectedDate = DateTime.now();
   bool isMobile = false;
-  Map<bool,Questions> questionsWidgetBuilder = {};
+  Map<bool,Questions>? questionsWidgetBuilder = null;
   
 
   TextEditingController advicorComment = TextEditingController();
@@ -95,7 +95,7 @@ class _StoreFormState extends State<StoreForm> {
     setState(() {
       if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
         for (var q in relatedQuestions) {
-            questionsWidgetBuilder.map((key,val){
+            questionsWidgetBuilder?.map((key,val){
               if(val.id == q.id){
                 return MapEntry(true, val);
               }else{
@@ -147,9 +147,9 @@ class _StoreFormState extends State<StoreForm> {
 
               List<int> axisDisplay = [];
               question.forEach((q) {
-                if(questionsWidgetBuilder.isEmpty){
+                if(questionsWidgetBuilder==null){
 
-                questionsWidgetBuilder.addAll({(q.isRelatedQuestion==0):q});
+                questionsWidgetBuilder?.addAll({(q.isRelatedQuestion==0):q});
                 }
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
@@ -320,7 +320,7 @@ class _StoreFormState extends State<StoreForm> {
                                       catch(error){
                                         print(error.toString());
                                       }
-                                        MapEntry<bool,Questions> displayQ =questionsWidgetBuilder.entries.firstWhere((q)=>q.value.id==question[index].id); 
+                                        MapEntry<bool,Questions> displayQ =questionsWidgetBuilder!.entries.firstWhere((q)=>q.value.id==question[index].id); 
                                         return
                                           Column(
                                           children: [
