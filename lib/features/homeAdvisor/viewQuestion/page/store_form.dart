@@ -156,7 +156,7 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
               question.forEach((q) {
                 // dynamic exists = questionsWidget.entries.firstWhere((Q)=>Q.key.id==q.id);
                 // if(questionsWidget.entries.length==0){
-                  questionsWidget.addAll({q:_buildQuestionWidget(q)});
+                  _fillQuestionWidgetMap(q);
                 // }
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
@@ -662,6 +662,17 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
         );
       }
     );
+  }
+
+  void _fillQuestionWidgetMap(Questions q) {
+    questionsWidget.addAll({q:_buildQuestionWidget(q)});
+    q.questionOptions?.forEach((qOption) {
+      if(qOption.reletedQuestions != null && qOption.reletedQuestions!.isNotEmpty){
+        qOption.reletedQuestions?.forEach((relatedQ) {
+          _fillQuestionWidgetMap(relatedQ);
+        },);
+      }
+    },);
   }
 
   void _fillAnsewrsMap(List<Questions> questions) {
