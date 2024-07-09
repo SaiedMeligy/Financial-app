@@ -363,10 +363,8 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
                                                   ],
                                                 ),
                                               const SizedBox(height: 10),
-                                                if(question[index].isRelatedQuestion==0)...[
-                                                  if(questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).key.isRelatedQuestion==0)...[
+                                                if(questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).key.isRelatedQuestion==0)...[
                                                     questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).value,
-                                                  ],
                                                   SizedBox(height: 10,),
                                                 ]else...[
                                                   SizedBox(height: 10,),
