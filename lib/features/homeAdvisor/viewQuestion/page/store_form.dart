@@ -183,10 +183,9 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
               if(relatedQuestionsMap.isNotEmpty){
                 relatedQuestionsMap.forEach((key, value) {
                   for (var rQuestion in value) {
-                    questionsWidget.entries.map((e) {
+                    questionsWidget.entries.forEach((e) {
                       if(e.key.id==rQuestion.id){
                         e.key.isRelatedQuestion=0;
-                        return MapEntry(e.key,e.value);
                       }
                     },);
                   }
@@ -194,12 +193,12 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
               }
               print(question);
               print(question.length);
-              print(".................>>"+questionsWidget.length.toString());
+              // print(".................>>id${}"+questionsWidget.length.toString());
               // for (int i = 0; i < questionsWidget.length; i++){
               //   print(questionsWidget[i]);
               // }
               questionsWidget.forEach((key, value) {
-                print(key.isRelatedQuestion);
+                print(".................>>id :${key.id} / ${key.isRelatedQuestion}");
               },);
 
               _fillAnsewrsMap(question);
