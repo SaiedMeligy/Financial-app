@@ -97,10 +97,10 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
         relatedQuestionsMap[optionId] = relatedQuestions;
             if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
           for (var q in relatedQuestions) {
-            questionsWidget.entries.map((Q){
+            questionsWidget.entries.forEach((Q){
               if (Q.key.id == q.id) {
                 Q.key.isRelatedQuestion=0;
-                return MapEntry(Q.key, Q.value);
+                // return MapEntry(Q.key, Q.value);
               }
             });
           }}
