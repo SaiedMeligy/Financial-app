@@ -43,6 +43,7 @@ class _StoreFormState extends State<StoreForm> {
   Map<Questions,SizedBox> questionsWidget = {};
 Map<int, List<Questions>> relatedQuestionsMap = {};
 
+
   TextEditingController advicorComment = TextEditingController();
   void _showDateSelectionSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -211,6 +212,7 @@ if (relatedQuestionsMap[optionId] != null) {
 
               _fillAnsewrsMap(question);
               print(questionsWidget);
+              List<Questions> questionsList = questionsWidget.keys as List<Questions>;
               return Directionality(
                 textDirection: TextDirection.rtl,
                 child: Scaffold(
@@ -335,20 +337,20 @@ if (relatedQuestionsMap[optionId] != null) {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                      itemCount: question.length+1,
+                                      itemCount: questionsList.length+1,
                                       itemBuilder: (context, index) {
                                         List<Radio<int>> radiobtnsWidgets= [];
                                       try{
-                                        question[index].questionOptions?.
+                                        questionsList[index].questionOptions?.
                                         forEach((element) {
                                           if(element.type == 1){
                                             radiobtnsWidgets.add(
                                               Radio<int>(
                                                 value: element.id!,
-                                                groupValue: radiosBtn[question[index].id],
+                                                groupValue: radiosBtn[questionsList[index].id],
                                                 onChanged: (value) {
                                                   answers[element.id!] = 1; //46 => 0
-                                                  question[index].questionOptions?.forEach((o) {
+                                                  questionsList[index].questionOptions?.forEach((o) {
                                                     if(o.type==1){
                                                       if(o.id!= element.id){
                                                         answers[o.id] = 0;
@@ -356,7 +358,7 @@ if (relatedQuestionsMap[optionId] != null) {
                                                     }
                                                   },);
                                                   setState(() {
-                                                    radiosBtn[question[index].id] = value!;
+                                                    radiosBtn[questionsList[index].id] = value!;
                                                     _updateRelatedQuestions(
                                                         element.id!,
                                                         element.reletedQuestions);
@@ -373,11 +375,11 @@ if (relatedQuestionsMap[optionId] != null) {
                                         return
                                           Column(
                                           children: [
-                                             if (question.length != index) ...[
+                                             if (questionsList.length != index) ...[
                                               if (axisDisplay[index] != 0)
                                                 Column(
                                                   children: [
-                                                    Text(question[index].axis!.name.toString(),
+                                                    Text(questionsList[index].axis!.name.toString(),
                                                       style: Constants.theme.textTheme.titleLarge?.copyWith(
                                                         color: Colors.black,
                                                         fontWeight:
@@ -393,8 +395,8 @@ if (relatedQuestionsMap[optionId] != null) {
                                                   ],
                                                 ),
                                               const SizedBox(height: 10),
-                                                if(questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).key.isRelatedQuestion==0)...[
-                                                    questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).value,
+                                                if(questionsWidget.entries.firstWhere((q)=>q.key.id==questionsList[index].id).key.isRelatedQuestion==0)...[
+                                                    questionsWidget.entries.firstWhere((q)=>q.key.id==questionsList[index].id).value,
                                                   ///
                                         //           for(int i=0;i<question[index].questionOptions![i].reletedQuestions!.length;i++)
                                         //           if(relatedQuestionsMap.containsKey(question[index].questionOptions![i].id))...[
