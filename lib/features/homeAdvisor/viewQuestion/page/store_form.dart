@@ -198,7 +198,9 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
               // for (int i = 0; i < questionsWidget.length; i++){
               //   print(questionsWidget[i]);
               // }
-
+              questionsWidget.forEach((key, value) {
+                print(key.isRelatedQuestion);
+              },);
 
               _fillAnsewrsMap(question);
               print(questionsWidget);
