@@ -214,7 +214,11 @@ if (relatedQuestionsMap[optionId] != null) {
               print(questionsWidget);
               List<Questions> questionsList = [];
               questionsWidget.forEach((key, value) {
-                  questionsList.add(key);
+                  if(key.isRelatedQuestion == 0) {
+                    questionsList.add(key);
+                  }
+                  
+
               },);
               return Directionality(
                 textDirection: TextDirection.rtl,
