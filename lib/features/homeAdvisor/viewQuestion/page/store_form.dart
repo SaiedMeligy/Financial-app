@@ -178,26 +178,26 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
               List<int> axisDisplay = [];
               question.forEach((q) {
                 // dynamic exists = questionsWidget.entries.firstWhere((Q)=>Q.key.id==q.id);
-                // if(questionsWidget.entries.length==0){
+                if(questionsWidget.isEmpty){
                   _fillQuestionWidgetMap(q);
-                // }
+                }
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
                 } else {
                   axisDisplay.add(0);
                 }
               });
-              if(relatedQuestionsMap.isNotEmpty){
-                relatedQuestionsMap.forEach((key, value) {
-                  for (var rQuestion in value) {
-                    questionsWidget.entries.forEach((e) {
-                      if(e.key.id==rQuestion.id){
-                        e.key.isRelatedQuestion=0;
-                      }
-                    },);
-                  }
-                },);
-              }
+              // if(relatedQuestionsMap.isNotEmpty){
+              //   relatedQuestionsMap.forEach((key, value) {
+              //     for (var rQuestion in value) {
+              //       questionsWidget.entries.forEach((e) {
+              //         if(e.key.id==rQuestion.id){
+              //           e.key.isRelatedQuestion=0;
+              //         }
+              //       },);
+              //     }
+              //   },);
+              // }
               print(question);
               print(question.length);
               // print(".................>>id${}"+questionsWidget.length.toString());
