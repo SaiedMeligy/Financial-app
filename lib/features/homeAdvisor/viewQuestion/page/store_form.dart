@@ -92,8 +92,18 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
   
 
   void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
-    setState(() {
-      if (relatedQuestions != null && relatedQuestions.isNotEmpty && relatedQuestionsMap[optionId] == null) {
+    if(relatedQuestionsMap[optionId] != null){
+if (relatedQuestionsMap[optionId] != null) {
+          for (var q in relatedQuestionsMap[optionId]!) {
+            questionsWidget.entries.forEach((Q){
+              if (Q.key.id == q.id) {
+                Q.key.isRelatedQuestion=1;
+              }
+            });
+          }}
+        relatedQuestionsMap.remove(optionId);
+    }
+      if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
         relatedQuestionsMap[optionId] = relatedQuestions;
             if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
           for (var q in relatedQuestions) {
@@ -103,17 +113,8 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
               }
             });
           }}
-      } else {
-        if (relatedQuestionsMap[optionId] != null) {
-          for (var q in relatedQuestionsMap[optionId]!) {
-            questionsWidget.entries.forEach((Q){
-              if (Q.key.id == q.id) {
-                Q.key.isRelatedQuestion=1;
-              }
-            });
-          }}
-        relatedQuestionsMap.remove(optionId);
       }
+      setState(() {
     });
   }
   // void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
