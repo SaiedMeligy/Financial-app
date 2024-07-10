@@ -179,10 +179,9 @@ if (relatedQuestionsMap[optionId] != null) {
 
               List<int> axisDisplay = [];
               questionsResponse.forEach((q) {
-                // dynamic exists = questionsWidget.entries.firstWhere((Q)=>Q.key.id==q.id);
-                // if(questionsWidget.entries.length==0){
+                
                   _fillQuestionWidgetMap(q);
-                // }
+                
                 if (!axisDisplay.contains(q.axisId)) {
                   axisDisplay.add(q.axisId!);
                 } else {
@@ -200,25 +199,12 @@ if (relatedQuestionsMap[optionId] != null) {
                   }
                 },);
               }
-              print(questionsResponse);
-              print(questionsResponse.length);
-              // print(".................>>id${}"+questionsWidget.length.toString());
-              // for (int i = 0; i < questionsWidget.length; i++){
-              //   print(questionsWidget[i]);
-              // }
-              questionsWidget.forEach((key, value) {
-                print(".................>>id :${key.id} / ${key.isRelatedQuestion}");
-              },);
-
               _fillAnsewrsMap(questionsResponse);
-              print(questionsWidget);
               List<Questions> questionsList = [];
               questionsWidget.forEach((key, value) {
                   if(key.isRelatedQuestion == 0) {
                     questionsList.add(key);
                   }
-                  
-
               },);
               return Directionality(
                 textDirection: TextDirection.rtl,
@@ -375,14 +361,10 @@ if (relatedQuestionsMap[optionId] != null) {
                                             );
                                           }
                                         },);
-                                      }
-                                      catch(error){
-                                        print(error.toString());
-                                      }
                                         return
                                           Column(
                                           children: [
-                                             if (questionsList.length != index) ...[
+                                             if (questionsList.length != index)...[
                                               if (axisDisplay[index] != 0)
                                                 Column(
                                                   children: [
@@ -402,139 +384,8 @@ if (relatedQuestionsMap[optionId] != null) {
                                                   ],
                                                 ),
                                               const SizedBox(height: 10),
-                                                if(questionsWidget.entries.firstWhere((q)=>q.key.id==questionsList[index].id).key.isRelatedQuestion==0)...[
-                                                    questionsWidget.entries.firstWhere((q)=>q.key.id==questionsList[index].id).value,
-                                                  ///
-                                        //           for(int i=0;i<question[index].questionOptions![i].reletedQuestions!.length;i++)
-                                        //           if(relatedQuestionsMap.containsKey(question[index].questionOptions![i].id))...[
-                                        //             for(var relatedQuestion in relatedQuestionsMap[question[index].questionOptions![i].id]!)...[
-                                        //               _buildQuestionWidget(relatedQuestion),
-                                        //               if (relatedQuestion.questionOptions != null && relatedQuestion.questionOptions!.isNotEmpty)
-                                        //                 for (var subRelatedQuestionOption in relatedQuestion.questionOptions!)...[
-                                        //                   if (subRelatedQuestionOption.reletedQuestions != null && subRelatedQuestionOption.reletedQuestions!.isNotEmpty)
-                                        //                     // Iterate through and build widgets for further related questions
-                                        //                      for (var furtherRelatedQuestion in subRelatedQuestionOption.reletedQuestions!)...[
-                                        //                      _buildQuestionWidget(furtherRelatedQuestion),
-                                        //                        // Check if further related question option has nested related questions
-                                        //                         if (furtherRelatedQuestion.questionOptions != null && furtherRelatedQuestion.questionOptions!.isNotEmpty)
-                                        //                           // Iterate through each question option of the further related question
-                                        //                             for (var nestedRelatedQuestionOption in furtherRelatedQuestion.questionOptions!)
-                                        //                              // Check if the nested question option has related questions
-                                        //                           if (nestedRelatedQuestionOption.reletedQuestions != null && nestedRelatedQuestionOption.reletedQuestions!.isNotEmpty)
-                                        //                             // Iterate through and build widgets for further nested related questions
-                                        //                             for (var nestedFurtherRelatedQuestion in nestedRelatedQuestionOption.reletedQuestions!)
-                                        //                               _buildQuestionWidget(nestedFurtherRelatedQuestion)
-                                        // ]
-                                        // ]
-                                        //             ]
-                                        //
-                                        //             ///
-                                        //
-                                        //
-                                        //
-                                        //
-                                        //
-                                        //
-                                        //      ],
+                                                  questionsWidget.entries.firstWhere((q)=>q.key.id==questionsList[index].id).value,
                                                   SizedBox(height: 10,),
-                                                ]else...[
-                                                  SizedBox(height: 10,),
-                                                ]
-                                              //  _buildQuestion(question, index, context),
-                                                       // if (question[index].questionOptions!.length > 1)
-//                                                          for(int i = 0; i < question[index].questionOptions!.length;i++)
-//                                                            if (relatedQuestionsMap.containsKey(question[index].questionOptions![i].id))
-//                                                              for(var relatedQuestionOption in relatedQuestionsMap[question[index].questionOptions![i].id]!)
-//                                                                SizedBox(
-//                                                                  width: double.infinity,
-//                                                                  child: CustomPaint(foregroundPainter: LinePainter(
-//                                                                    text: relatedQuestionOption.title.toString(),),
-//                                                                    child: Container(
-//                                                                      width: Constants.mediaQuery.width * 0.2,
-//                                                                      height: question[index].questionOptions!.length > 2
-//                                                                          ? question[index].questionOptions!.length * 500 :400 ,
-//                                                                      decoration: BoxDecoration(
-//                                                                        borderRadius: BorderRadius.circular(10),
-//                                                                        border: Border.all(
-//                                                                          color: Colors.black87,
-//                                                                          width: 2.5,),),
-//                                                                      child: Column(
-//                                                                          mainAxisAlignment: MainAxisAlignment.start,
-//                                                                          crossAxisAlignment: CrossAxisAlignment.start,
-//                                                                          children: [
-//                         // for (int i = 0; i < relatedQuestionOption.questionOptions!.length; i++) ...[
-//                                                                            for(var relatedOption in relatedQuestionOption.questionOptions)
-//                                                                              Expanded(
-//                                                                                child: Container(
-//                                                                                  width: Constants.mediaQuery.width * 0.47,
-//                                                                                  height: Constants.mediaQuery.height * 0.15,
-//                                                                                  margin: const EdgeInsets.all(8),
-//                                                                                  decoration: BoxDecoration(
-//                                                                                    color: Colors.white54,
-//                                                                                    borderRadius: BorderRadius.circular(10),
-//                                                                                    border: question[index].questionOptions![i].type != 3 ? Border.all(
-//                                                                                      color: Colors.black87,
-//                                                                                      width: 2.5,
-//                                                                                    ) : null,
-//                                                                                 ),
-//                                                                                  child: Row(
-//                                                                                    crossAxisAlignment: CrossAxisAlignment.center,
-//                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                                                                                    children: [
-//                                                                                      Text(
-//                                                                                        relatedOption.title.toString(),
-//                                                                                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
-//                                                                                          color: Colors.black,),),
-
-//                                                                                      if (relatedOption.type == 1)
-//                                                                                        Radio<int>(
-//                                                                                          value: relatedOption.id ?? 0,
-//                                                                                          groupValue: radiosBtn[relatedQuestionOption.id],
-//                                                                                          onChanged: (value) {
-//                                                                                            setState(() {
-//                                                                                              radiosBtn[relatedQuestionOption.id] = value!;
-//                                                                                              answers[relatedOption.id] = 1;
-//                                                                                              question[index].questionOptions!.forEach((o) {
-//                                                                                                if (o.type == 1) {
-//                                                                                                  if (o.id != question[index].questionOptions![i].id) {
-//                                                                                                    answers[o.id] = 0;
-//                                                                                                  }
-//                                                                                                }
-//                                                                                              });});
-//                                                                                            _updateRelatedQuestions(question[index].questionOptions![i].id!,
-//                                                                                                question[index].questionOptions![i].reletedQuestions);
-
-//                                                                                            },
-//                                                                                        ), if (relatedOption.type == 2)
-//                                                                                          Checkbox(
-//                                                                                            value: (answers[relatedOption.id] == 1) ? true : false,
-//                                                                                            onChanged: (value) {
-//                                                                                              answers[relatedOption.id] =
-//                                                                                              (value!) ? 1 : 0;
-//                                                                                              setState(() {});
-//                                                                                              },
-//                                                                                          ),
-//                                                                                      if (relatedOption.type == 3)
-//                                                                                        Container(
-//                                                                                          width: Constants.mediaQuery.width * 0.2,
-//                                                                                          height: Constants.mediaQuery.height * 0.2,
-//                                                                                          decoration: BoxDecoration(),
-//                                                                                          child: QuestionTextField(
-//                                                                                            hint: "ادخل النص",
-//                                                                                            maxLines: 3,
-//                                                                                            controller: textControllers[relatedOption.id!],
-//                                                                                          ),
-//                                                                                        ).setVerticalPadding(context, enableMediaQuery: false, 5),
-//                                                                                    ],),
-//                                                                                             ),
-//                                                                              ),
-//                                                                          ]
-// ),
-// ),
-//                            ),
-// ),
-
-
                                         ]
                                             else ...[
                                               Column(
@@ -704,10 +555,8 @@ if (relatedQuestionsMap[optionId] != null) {
                                                 ],
                                               ),
                                             ]
-                                                      ]
-                                        )
-
-                                            .setVerticalPadding(
+                                          ]
+                                        ).setVerticalPadding(
                                                 context,
                                                 enableMediaQuery: false,
                                                 10)
@@ -715,6 +564,11 @@ if (relatedQuestionsMap[optionId] != null) {
                                                 context,
                                                 enableMediaQuery: false,
                                                 10);
+                                      }
+                                      catch(error){
+                                        print(error.toString());
+                                      }
+                                        
                                       }),
                                 ),
 
