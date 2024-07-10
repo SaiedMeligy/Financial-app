@@ -212,7 +212,10 @@ if (relatedQuestionsMap[optionId] != null) {
 
               _fillAnsewrsMap(question);
               print(questionsWidget);
-              List<Questions> questionsList = questionsWidget.keys as List<Questions>;
+              List<Questions> questionsList = [];
+              questionsWidget.forEach((key, value) {
+                  questionsList.add(key);
+              },);
               return Directionality(
                 textDirection: TextDirection.rtl,
                 child: Scaffold(
