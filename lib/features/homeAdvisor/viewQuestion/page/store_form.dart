@@ -372,318 +372,318 @@ class _StoreFormState extends State<StoreForm> {
                                 ],
                               ),
                       ),
-                      Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(
-                                child: ListView.builder(
-                                    itemCount: questionsList.length,
-                                    itemBuilder: (context, index) {
-                                      return Column(children: [
-                                        if (questionsList.length !=
-                                            index) ...[
-                                          if (axisDisplay[index] != 0)
+                      Consumer(builder: (context, ref, _) {
+                        return Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: ListView.builder(
+                                      itemCount: questionsList.length + 1,
+                                      itemBuilder: (context, index) {
+                                        return Column(children: [
+                                          if (questionsList.length !=
+                                              index) ...[
+                                            if (axisDisplay[index] != 0)
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    questionsList[index]
+                                                        .axis!
+                                                        .name
+                                                        .toString(),
+                                                    style: Constants.theme
+                                                        .textTheme.titleLarge
+                                                        ?.copyWith(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  Container(
+                                                    height: 3,
+                                                    width: 140,
+                                                    color: Colors.black54,
+                                                  )
+                                                ],
+                                              ),
+                                            const SizedBox(height: 10),
+                                            questionsWidget.entries
+                                                .firstWhere((q) =>
+                                                    q.key.id ==
+                                                    questionsList[index].id)
+                                                .value,
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                          ] else ...[
                                             Column(
                                               children: [
                                                 Text(
-                                                  questionsList[index]
-                                                      .axis!
-                                                      .name
-                                                      .toString(),
+                                                  "ملاحظات الاستشاري",
                                                   style: Constants.theme
                                                       .textTheme.titleLarge
                                                       ?.copyWith(
                                                     color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold,
                                                   ),
                                                 ),
-                                                const SizedBox(height: 5),
-                                                Container(
-                                                  height: 3,
-                                                  width: 140,
-                                                  color: Colors.black54,
-                                                )
-                                              ],
-                                            ),
-                                          const SizedBox(height: 10),
-                                          questionsWidget.entries
-                                              .firstWhere((q) =>
-                                                  q.key.id ==
-                                                  questionsList[index].id)
-                                              .value,
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                        ] else ...[
-                                        
-                                        ]
-                                      ])
-                                          .setVerticalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              10)
-                                          .setHorizontalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              10);
-                                    }),
-                              ),
-                              Expanded(child:   Column(
-                                            children: [
-                                              Text(
-                                                "ملاحظات الاستشاري",
-                                                style: Constants.theme
-                                                    .textTheme.titleLarge
-                                                    ?.copyWith(
-                                                  color: Colors.black,
+                                                CustomTextField(
+                                                  maxLines: 4,
+                                                  hint: "ملاحظات الاستشاري",
+                                                  controller: advicorComment,
                                                 ),
-                                              ),
-                                              CustomTextField(
-                                                maxLines: 4,
-                                                hint: "ملاحظات الاستشاري",
-                                                controller: advicorComment,
-                                              ),
-                                              isMobile
-                                                  ? Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceAround,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .stretch,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              " هل يحتاج الي جلسة اخري",
-                                                              style: Constants
-                                                                  .theme
-                                                                  .textTheme
-                                                                  .bodyMedium
-                                                                  ?.copyWith(
-                                                                      color: Colors
-                                                                          .black),
-                                                            ),
-                                                            Checkbox(
-                                                              value:
-                                                                  (needOtherSession ==
-                                                                      1),
-                                                              onChanged:
-                                                                  (value) {
-                                                                setState(() {
-                                                                  needOtherSession =
-                                                                      (value!)
-                                                                          ? 1
-                                                                          : 0;
-                                                                });
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              "الخدمة الاستشارية",
-                                                              style: Constants
-                                                                  .theme
-                                                                  .textTheme
-                                                                  .bodyMedium
-                                                                  ?.copyWith(
-                                                                color: Colors
-                                                                    .black,
+                                                isMobile
+                                                    ? Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .stretch,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                " هل يحتاج الي جلسة اخري",
+                                                                style: Constants
+                                                                    .theme
+                                                                    .textTheme
+                                                                    .bodyMedium
+                                                                    ?.copyWith(
+                                                                        color: Colors
+                                                                            .black),
                                                               ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            DropDown(
-                                                              onChange:
-                                                                  (value) {
-                                                                setState(() {
-                                                                  selected_consultation_service =
-                                                                      value;
-                                                                });
-                                                              },
-                                                            ),
-                                                          ],
+                                                              Checkbox(
+                                                                value:
+                                                                    (needOtherSession ==
+                                                                        1),
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    needOtherSession =
+                                                                        (value!)
+                                                                            ? 1
+                                                                            : 0;
+                                                                  });
+                                                                },
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                "الخدمة الاستشارية",
+                                                                style: Constants
+                                                                    .theme
+                                                                    .textTheme
+                                                                    .bodyMedium
+                                                                    ?.copyWith(
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              DropDown(
+                                                                onChange:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    selected_consultation_service =
+                                                                        value;
+                                                                  });
+                                                                },
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          " هل يحتاج الي جلسة اخري",
+                                                          style: Constants
+                                                              .theme
+                                                              .textTheme
+                                                              .titleLarge
+                                                              ?.copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                        Checkbox(
+                                                          value:
+                                                              (needOtherSession ==
+                                                                  1),
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              needOtherSession =
+                                                                  (value!)
+                                                                      ? 1
+                                                                      : 0;
+                                                            });
+                                                          },
                                                         ),
                                                       ],
-                                                    )
-                                                  : SizedBox(
-                                                      height: 10,
                                                     ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        " هل يحتاج الي جلسة اخري",
-                                                        style: Constants
-                                                            .theme
-                                                            .textTheme
-                                                            .titleLarge
-                                                            ?.copyWith(
-                                                                color: Colors
-                                                                    .black),
-                                                      ),
-                                                      Checkbox(
-                                                        value:
-                                                            (needOtherSession ==
-                                                                1),
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            needOtherSession =
-                                                                (value!)
-                                                                    ? 1
-                                                                    : 0;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        "الخدمة الاستشارية",
-                                                        style: Constants
-                                                            .theme
-                                                            .textTheme
-                                                            .titleLarge
-                                                            ?.copyWith(
-                                                          color: Colors.black,
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "الخدمة الاستشارية",
+                                                          style: Constants
+                                                              .theme
+                                                              .textTheme
+                                                              .titleLarge
+                                                              ?.copyWith(
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      DropDown(
-                                                        onChange: (value) {
-                                                          setState(() {
-                                                            selected_consultation_service =
-                                                                value;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .stretch,
-                                                children: [
-                                                  BorderRoundedButton(
-                                                          title: "التالي",
-                                                          onPressed: () {
-                                                            if (advicorComment
-                                                                .text
-                                                                .isEmpty) {
-                                                              SnackBarService
-                                                                  .showErrorMessage(
-                                                                "من فضلك ادخل ملاحظات الاستشاري",
-                                                              ); // Exit the onPressed handler early
-                                                            }
-                                                            if (_selectedDate ==
-                                                                null) {
-                                                              SnackBarService
-                                                                  .showErrorMessage(
-                                                                "من فضلك اختر التاريخ ",
-                                                              ); // Exit the onPressed handler early
-                                                            }
-                      
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        DropDown(
+                                                          onChange: (value) {
                                                             setState(() {
-                                                              textControllers
-                                                                  .forEach(
-                                                                      (key1,
-                                                                          val) {
-                                                                answers[key1] =
-                                                                    val.text;
-                                                              });
+                                                              selected_consultation_service =
+                                                                  value;
                                                             });
-                      
-                                                            List<dynamic>
-                                                                lastAnswers =
-                                                                [];
-                      
-                                                            answers.forEach(
-                                                                (key, value) {
-                                                              lastAnswers
-                                                                  .add({
-                                                                "question_option_id":
-                                                                    key,
-                                                                "pationt_answer":
-                                                                    value
-                                                              });
-                                                            });
-                      
-                                                            Map<String,
-                                                                    dynamic>
-                                                                storeDate = {
-                                                              "advicor_id":
-                                                                  CacheHelper
-                                                                      .getData(
-                                                                          key:
-                                                                              'id'),
-                                                              "pationt_id":
-                                                                  widget.pationt_data[
-                                                                          'pationt']
-                                                                      ['id'],
-                                                              "need_other_session":
-                                                                  needOtherSession,
-                                                              "consultation_service_id":
-                                                                  selected_consultation_service,
-                                                              "comments":
-                                                                  advicorComment
-                                                                      .text,
-                                                              "date": _selectedDate
-                                                                      ?.toString() ??
-                                                                  '',
-                                                              "answers":
-                                                                  lastAnswers
-                                                            };
-                      
-                                                            print(
-                                                                "Data to be sent: $storeDate"); // Log the data before sending
-                      
-                                                            questionViewCubit
-                                                                .getStoreForm(
-                                                                    storeDate)
-                                                                .then(
-                                                                    (value) {
-                                                              if (value !=
-                                                                  null) {
-                                                                Navigator.pop(
-                                                                    context);
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .stretch,
+                                                  children: [
+                                                    BorderRoundedButton(
+                                                            title: "التالي",
+                                                            onPressed: () {
+                                                              if (advicorComment
+                                                                  .text
+                                                                  .isEmpty) {
                                                                 SnackBarService
-                                                                    .showSuccessMessage(
-                                                                        "تم اضافة الفورم");
+                                                                    .showErrorMessage(
+                                                                  "من فضلك ادخل ملاحظات الاستشاري",
+                                                                ); // Exit the onPressed handler early
                                                               }
-                                                            });
-                                                          })
-                                                      .setVerticalPadding(
-                                                          context,
-                                                          enableMediaQuery:
-                                                              false,
-                                                          20),
-                                                ],
-                                              ).setHorizontalPadding(
-                                                  context,
-                                                  enableMediaQuery: false,
-                                                  10),
-                                            ],
-                                          ),
-                                        )
-                            ]),
-                      ),
+                                                              if (_selectedDate ==
+                                                                  null) {
+                                                                SnackBarService
+                                                                    .showErrorMessage(
+                                                                  "من فضلك اختر التاريخ ",
+                                                                ); // Exit the onPressed handler early
+                                                              }
+
+                                                              setState(() {
+                                                                textControllers
+                                                                    .forEach(
+                                                                        (key1,
+                                                                            val) {
+                                                                  answers[key1] =
+                                                                      val.text;
+                                                                });
+                                                              });
+
+                                                              List<dynamic>
+                                                                  lastAnswers =
+                                                                  [];
+
+                                                              answers.forEach(
+                                                                  (key, value) {
+                                                                lastAnswers
+                                                                    .add({
+                                                                  "question_option_id":
+                                                                      key,
+                                                                  "pationt_answer":
+                                                                      value
+                                                                });
+                                                              });
+
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  storeDate = {
+                                                                "advicor_id":
+                                                                    CacheHelper
+                                                                        .getData(
+                                                                            key:
+                                                                                'id'),
+                                                                "pationt_id":
+                                                                    widget.pationt_data[
+                                                                            'pationt']
+                                                                        ['id'],
+                                                                "need_other_session":
+                                                                    needOtherSession,
+                                                                "consultation_service_id":
+                                                                    selected_consultation_service,
+                                                                "comments":
+                                                                    advicorComment
+                                                                        .text,
+                                                                "date": _selectedDate
+                                                                        ?.toString() ??
+                                                                    '',
+                                                                "answers":
+                                                                    lastAnswers
+                                                              };
+
+                                                              print(
+                                                                  "Data to be sent: $storeDate"); // Log the data before sending
+
+                                                              questionViewCubit
+                                                                  .getStoreForm(
+                                                                      storeDate)
+                                                                  .then(
+                                                                      (value) {
+                                                                if (value !=
+                                                                    null) {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  SnackBarService
+                                                                      .showSuccessMessage(
+                                                                          "تم اضافة الفورم");
+                                                                }
+                                                              });
+                                                            })
+                                                        .setVerticalPadding(
+                                                            context,
+                                                            enableMediaQuery:
+                                                                false,
+                                                            20),
+                                                  ],
+                                                ).setHorizontalPadding(
+                                                    context,
+                                                    enableMediaQuery: false,
+                                                    10),
+                                              ],
+                                            ),
+                                          ]
+                                        ])
+                                            .setVerticalPadding(
+                                                context,
+                                                enableMediaQuery: false,
+                                                10)
+                                            .setHorizontalPadding(
+                                                context,
+                                                enableMediaQuery: false,
+                                                10);
+                                      }),
+                                ),
+                              ]),
+                        );
+                      }),
                     ],
                   ),
                 ),
