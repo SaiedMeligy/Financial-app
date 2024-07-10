@@ -378,7 +378,7 @@ class _StoreFormState extends State<StoreForm> {
                             children: [
                               Expanded(
                                 child: ListView.builder(
-                                    itemCount: questionsList.length + 1,
+                                    itemCount: questionsList.length,
                                     itemBuilder: (context, index) {
                                       return Column(children: [
                                         if (questionsList.length !=
