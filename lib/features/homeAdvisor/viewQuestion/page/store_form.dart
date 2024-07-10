@@ -361,6 +361,10 @@ if (relatedQuestionsMap[optionId] != null) {
                                             );
                                           }
                                         },);
+                                      }
+                                      catch(error){
+                                        print(error.toString());
+                                      }
                                         return
                                           Column(
                                           children: [
@@ -384,8 +388,10 @@ if (relatedQuestionsMap[optionId] != null) {
                                                   ],
                                                 ),
                                               const SizedBox(height: 10),
-                                                  questionsWidget.entries.firstWhere((q)=>q.key.id==questionsList[index].id).value,
+                                                
+                                                    questionsWidget.entries.firstWhere((q)=>q.key.id==questionsList[index].id).value,
                                                   SizedBox(height: 10,),
+                                                
                                         ]
                                             else ...[
                                               Column(
@@ -564,11 +570,6 @@ if (relatedQuestionsMap[optionId] != null) {
                                                 context,
                                                 enableMediaQuery: false,
                                                 10);
-                                      }
-                                      catch(error){
-                                        print(error.toString());
-                                      }
-                                        
                                       }),
                                 ),
 
