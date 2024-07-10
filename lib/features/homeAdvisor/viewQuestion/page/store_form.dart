@@ -377,10 +377,10 @@ class _StoreFormState extends State<StoreForm> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Expanded(
-                                child: ListView(
-                                    children: [
-                                      for(int index = 0; index < questionsList.length; index++)
-                                        Column(children: [
+                                child: ListView.builder(
+                                    itemCount: questionsList.length + 1,
+                                    itemBuilder: (context, index) {
+                                      return Column(children: [
                                         if (questionsList.length !=
                                             index) ...[
                                           if (axisDisplay[index] != 0)
@@ -417,7 +417,20 @@ class _StoreFormState extends State<StoreForm> {
                                             height: 10,
                                           ),
                                         ] else ...[
-                                          Column(
+                                        
+                                        ]
+                                      ])
+                                          .setVerticalPadding(
+                                              context,
+                                              enableMediaQuery: false,
+                                              10)
+                                          .setHorizontalPadding(
+                                              context,
+                                              enableMediaQuery: false,
+                                              10);
+                                    }),
+                              ),
+                              Expanded(child:   Column(
                                             children: [
                                               Text(
                                                 "ملاحظات الاستشاري",
@@ -668,20 +681,7 @@ class _StoreFormState extends State<StoreForm> {
                                                   10),
                                             ],
                                           ),
-                                        ]
-                                      ])
-                                          .setVerticalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              10)
-                                          .setHorizontalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              10)
-                                    ],
-
-                                    ),
-                              ),
+                                        )
                             ]),
                       ),
                     ],
