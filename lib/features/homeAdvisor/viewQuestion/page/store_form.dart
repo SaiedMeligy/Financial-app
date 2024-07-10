@@ -100,11 +100,18 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
             questionsWidget.entries.forEach((Q){
               if (Q.key.id == q.id) {
                 Q.key.isRelatedQuestion=0;
-                // return MapEntry(Q.key, Q.value);
               }
             });
           }}
       } else {
+        if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+          for (var q in relatedQuestionsMap[optionId]!) {
+            questionsWidget.entries.forEach((Q){
+              if (Q.key.id == q.id) {
+                Q.key.isRelatedQuestion=1;
+              }
+            });
+          }}
         relatedQuestionsMap.remove(optionId);
       }
     });
