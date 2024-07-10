@@ -102,13 +102,29 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
                 Q.key.isRelatedQuestion=0;
                 return MapEntry(Q.key, Q.value);
               }
-            }); 
+            });
           }}
       } else {
         relatedQuestionsMap.remove(optionId);
       }
     });
   }
+  // void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
+  //   setState(() {
+  //     if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+  //       relatedQuestionsMap[optionId] = relatedQuestions;
+  //       for (var q in relatedQuestions) {
+  //         questionsWidget.forEach((key, value) {
+  //           if (key.id == q.id) {
+  //             key.isRelatedQuestion = 0;
+  //           }
+  //         });
+  //       }
+  //     } else {
+  //       relatedQuestionsMap.remove(optionId);
+  //     }
+  //   });
+  // }
 
 
 
@@ -178,6 +194,11 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
               }
               print(question);
               print(question.length);
+              print(".................>>"+questionsWidget.length.toString());
+              // for (int i = 0; i < questionsWidget.length; i++){
+              //   print(questionsWidget[i]);
+              // }
+
 
               _fillAnsewrsMap(question);
               print(questionsWidget);
@@ -365,6 +386,38 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
                                               const SizedBox(height: 10),
                                                 if(questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).key.isRelatedQuestion==0)...[
                                                     questionsWidget.entries.firstWhere((q)=>q.key.id==question[index].id).value,
+                                                  ///
+                                        //           for(int i=0;i<question[index].questionOptions![i].reletedQuestions!.length;i++)
+                                        //           if(relatedQuestionsMap.containsKey(question[index].questionOptions![i].id))...[
+                                        //             for(var relatedQuestion in relatedQuestionsMap[question[index].questionOptions![i].id]!)...[
+                                        //               _buildQuestionWidget(relatedQuestion),
+                                        //               if (relatedQuestion.questionOptions != null && relatedQuestion.questionOptions!.isNotEmpty)
+                                        //                 for (var subRelatedQuestionOption in relatedQuestion.questionOptions!)...[
+                                        //                   if (subRelatedQuestionOption.reletedQuestions != null && subRelatedQuestionOption.reletedQuestions!.isNotEmpty)
+                                        //                     // Iterate through and build widgets for further related questions
+                                        //                      for (var furtherRelatedQuestion in subRelatedQuestionOption.reletedQuestions!)...[
+                                        //                      _buildQuestionWidget(furtherRelatedQuestion),
+                                        //                        // Check if further related question option has nested related questions
+                                        //                         if (furtherRelatedQuestion.questionOptions != null && furtherRelatedQuestion.questionOptions!.isNotEmpty)
+                                        //                           // Iterate through each question option of the further related question
+                                        //                             for (var nestedRelatedQuestionOption in furtherRelatedQuestion.questionOptions!)
+                                        //                              // Check if the nested question option has related questions
+                                        //                           if (nestedRelatedQuestionOption.reletedQuestions != null && nestedRelatedQuestionOption.reletedQuestions!.isNotEmpty)
+                                        //                             // Iterate through and build widgets for further nested related questions
+                                        //                             for (var nestedFurtherRelatedQuestion in nestedRelatedQuestionOption.reletedQuestions!)
+                                        //                               _buildQuestionWidget(nestedFurtherRelatedQuestion)
+                                        // ]
+                                        // ]
+                                        //             ]
+                                        //
+                                        //             ///
+                                        //
+                                        //
+                                        //
+                                        //
+                                        //
+                                        //
+                                        //      ],
                                                   SizedBox(height: 10,),
                                                 ]else...[
                                                   SizedBox(height: 10,),
