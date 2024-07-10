@@ -3,6 +3,7 @@ import 'package:experts_app/core/config/page_route_name.dart';
 import 'package:experts_app/features/login/page/log_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/config/app_theme_manager.dart';
 import 'core/config/cash_helper.dart';
@@ -16,7 +17,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   CacheHelper.init();
-  runApp(const MyApp());
+  runApp(ProviderScope( child:MyApp()));
 }
 
 class MyApp extends StatelessWidget {
