@@ -175,10 +175,10 @@ if (relatedQuestionsMap[optionId] != null) {
               return const Center(child: CircularProgressIndicator());
             }
             else if (state is SuccessQuestionViewState) {
-              var question = state.question;
+              var questionsResponse = state.question;
 
               List<int> axisDisplay = [];
-              question.forEach((q) {
+              questionsResponse.forEach((q) {
                 // dynamic exists = questionsWidget.entries.firstWhere((Q)=>Q.key.id==q.id);
                 // if(questionsWidget.entries.length==0){
                   _fillQuestionWidgetMap(q);
@@ -200,8 +200,8 @@ if (relatedQuestionsMap[optionId] != null) {
                   }
                 },);
               }
-              print(question);
-              print(question.length);
+              print(questionsResponse);
+              print(questionsResponse.length);
               // print(".................>>id${}"+questionsWidget.length.toString());
               // for (int i = 0; i < questionsWidget.length; i++){
               //   print(questionsWidget[i]);
@@ -210,7 +210,7 @@ if (relatedQuestionsMap[optionId] != null) {
                 print(".................>>id :${key.id} / ${key.isRelatedQuestion}");
               },);
 
-              _fillAnsewrsMap(question);
+              _fillAnsewrsMap(questionsResponse);
               print(questionsWidget);
               List<Questions> questionsList = [];
               questionsWidget.forEach((key, value) {
