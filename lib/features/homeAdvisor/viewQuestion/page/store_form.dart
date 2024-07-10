@@ -104,14 +104,13 @@ Map<int, List<Questions>> relatedQuestionsMap = {};
             });
           }}
       } else {
-        if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
           for (var q in relatedQuestionsMap[optionId]!) {
             questionsWidget.entries.forEach((Q){
               if (Q.key.id == q.id) {
                 Q.key.isRelatedQuestion=1;
               }
             });
-          }}
+          }
         relatedQuestionsMap.remove(optionId);
       }
     });
