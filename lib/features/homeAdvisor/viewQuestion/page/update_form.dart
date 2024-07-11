@@ -595,8 +595,7 @@ class _UpdateFormState extends State<UpdateForm> {
           print("*******************>" + advisor.toString());
           // int selectedConsultationService = consultation["id"];
           _initializeTextControllers(questionAnswer);
-          TextEditingController commentController =
-              TextEditingController(text: formData["comments"]);
+          TextEditingController commentController = TextEditingController(text: formData["comments"]);
           if (answers.isEmpty) {
             for (int index = 0; index < questionAnswer.length; index++) {
               radiosBtn[questionAnswer[index]["id"]] = -1;
@@ -697,117 +696,53 @@ class _UpdateFormState extends State<UpdateForm> {
                                       ),
                                     ),
                                     child: Column(
-                                      children: answer["question_options"]
-                                          .map<Widget>((option) {
-                                        bool isAnswered =
-                                            option['answer'] == "1";
-                                        if (option["type"] == 3) {
-                                          return Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  option["title"].toString(),
-                                                  style: Constants.theme
-                                                      .textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
+                                      children: answer["question_options"].map<Widget>((option) {
+                                        TextEditingController optionController = TextEditingController(text: option["answer"]);
+                                        return Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                option["title"].toString(),
+                                                style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                  color: Colors.black,
                                                 ),
                                               ),
+                                            ),
+                                            if (option["type"] == 1 )
                                               Expanded(
-                                                child: QuestionTextField(
-                                                  hint: "ادخل النص",
-                                                  maxLines: 1,
-                                                  controller: textControllers[
-                                                      int.parse(option["id"]
-                                                          .toString())],
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      option["answer"] = value;
-                                                    });
-                                                  },
+                                                child: Radio<bool>(
+                                                  value: option["answer"]=="1"?true:false,
+                                                  groupValue: true,
+                                                  onChanged: (value) {},
                                                 ),
                                               ),
-                                            ],
-                                          );
-                                        } else if (option["type"] == 1) {
-                                          return Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  option["title"].toString(),
-                                                  style: Constants.theme
-                                                      .textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Radio<String>(
-                                                  value:
-                                                      option["id"].toString(),
-                                                  groupValue: selectedAnswers[
-                                                      int.parse(answer["id"]
-                                                          .toString())],
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      selectedAnswers[int.parse(
-                                                              answer["id"]
-                                                                  .toString())] =
-                                                          value!;
-                                                      for (var opt in answer[
-                                                          "question_options"]) {
-                                                        if (opt["type"] == 1) {
-                                                          opt["answer"] = opt[
-                                                                          "id"]
-                                                                      .toString() ==
-                                                                  value
-                                                              ? "1"
-                                                              : "0";
-                                                        }
-                                                      }
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else if (option["type"] == 2) {
-                                          return Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  option["title"].toString(),
-                                                  style: Constants.theme
-                                                      .textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
+                                            if (option["type"] == 2 )
                                               Expanded(
                                                 child: Checkbox(
-                                                  value: checkboxValues[
-                                                          int.parse(option["id"]
-                                                              .toString())] ??
-                                                      false,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      checkboxValues[int.parse(
-                                                              option["id"]
-                                                                  .toString())] =
-                                                          value!;
-                                                      option["answer"] =
-                                                          value ? "1" : "0";
-                                                    });
-                                                  },
+                                                  value: option["answer"]=="1"?true:false,
+                                                  onChanged: (value) {},
                                                 ),
                                               ),
-                                            ],
-                                          );
-                                        }
-                                        return Container();
+                                            if (option["type"] == 3 && option["answer"] != null)
+                                              Expanded(
+                                                child: Text(
+                                                  option["answer"].toString(),
+                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                        // TextField(
+                                        // controller: optionController,
+                                        // style: Constants.theme.textTheme.bodyMedium
+                                        //     ?.copyWith(
+                                        // color: Colors
+                                        //     .black, // Change to your desired text color
+                                        // ),
+                                        // ),
+                                          ],
+                                        );
                                       }).toList(),
                                     ).setHorizontalPadding(
                                         context, enableMediaQuery: false, 40),
@@ -854,8 +789,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                       ),
                                     ).setHorizontalPadding(
                                         context, enableMediaQuery: false, 20),
-                                  ).setHorizontalPadding(
-                                      context, enableMediaQuery: false, 20),
+                                  ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                   SizedBox(height: 20),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

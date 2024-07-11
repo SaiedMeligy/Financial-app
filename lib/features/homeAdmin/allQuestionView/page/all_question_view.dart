@@ -19,7 +19,7 @@ class _AllQuestionViewState extends State<AllQuestionView> {
   @override
   void initState() {
     super.initState();
-    questionViewCubit.getAllQuestion();
+    questionViewCubit.getAllQuestionWithoutRelation();
   }
 
   @override
@@ -89,13 +89,16 @@ class _AllQuestionViewState extends State<AllQuestionView> {
                                               ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  question.title.toString(),
-                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                    color: Colors.white,
+                                Expanded(
+                                  child: Text(
+                                    question.title.toString(),
+                                    style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
                                 Row(
                                   children: [

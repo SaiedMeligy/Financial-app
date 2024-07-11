@@ -300,6 +300,9 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/manager/states.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/widget/Question_text_field.dart';
+import '../../../../../domain/entities/ConsultationViewModel.dart';
+import '../../../Consulting service/All Consultation/manager/cubit.dart';
+import '../../../Consulting service/All Consultation/manager/states.dart';
 import '../../widget/manager/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -323,6 +326,8 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
   Map<int, TextEditingController> textControllers = {};
   Map<int, String> selectedAnswers = {};
   Map<int, bool> checkboxValues = {};
+  ConsultationServices? selected_consultation;
+
 
   @override
   void initState() {
@@ -369,6 +374,11 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
           var formData = state.result.data["pationt"]["form"];
           var answers = formData["answers"];
           var consultation = formData["consultationService"];
+          ConsultationServices consultations = ConsultationServices.fromJson(formData["consultationService"] );
+          if(selected_consultation==null)
+          {
+            selected_consultation = consultations;
+          }
           _initializeTextControllers(answers);
           TextEditingController commentController = TextEditingController(text: formData["comments"]);
           return Directionality(
@@ -718,13 +728,41 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(consultation["name"]),
-                                ],
+                              // Row(
+                              //                               //   mainAxisAlignment: MainAxisAlignment.center,
+                              //                               //   children: [
+                              //                               //     Text(consultation["name"]),
+                              //                               //   ],
+                              //                               // ),
+                              //                               // SizedBox(height: 10),
+                              //                               // Container(
+                              //                               //   height: Constants.mediaQuery.height * 0.15,
+                              //                               //   width: double.infinity,
+                              //                               //   decoration: BoxDecoration(
+                              //                               //     color: Colors.grey.shade300,
+                              //                               //     borderRadius: BorderRadius.only(
+                              //                               //       topLeft: Radius.circular(20),
+                              //                               //       topRight: Radius.circular(20),
+                              //                               //     ),
+                              //                               //   ),
+                              //                               //   child: Text(
+                              //                               //     consultation["description"],
+                              //                               //     style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                              //                               //       color: Colors.black,
+                              //                               //     ),
+                              //                               //   ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                              //                               // ).setHorizontalPadding(context,enableMediaQuery: false, 20),
+                              DropDownButtonConsultaionWidget(
+
+                                onChange: (value) {
+                                  setState(() {
+                                    selected_consultation = value;
+                                    print("=============>"+selected_consultation!.description.toString());
+                                  });
+                                },
+                                selectedValue: selected_consultation??consultation,
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 15),
                               Container(
                                 height: Constants.mediaQuery.height * 0.15,
                                 width: double.infinity,
@@ -736,13 +774,14 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                   ),
                                 ),
                                 child: Text(
-                                  consultation["description"],
-                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                    color: Colors.black,
+                                  selected_consultation?.description??'',
+                                  style: Constants.theme.textTheme.bodyMedium
+                                      ?.copyWith(color: Colors.black,
                                   ),
-                                ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                              ).setHorizontalPadding(context,enableMediaQuery: false, 20),
-                              SizedBox(height: 15),
+                                ).setHorizontalPadding(
+                                    context, enableMediaQuery: false, 20),
+                              ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+
                               SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -807,6 +846,74 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
           );
         } else {
           return Center(child: Text('Unexpected state'));
+        }
+      },
+    );
+  }
+}
+class DropDownButtonConsultaionWidget extends StatefulWidget {
+  ConsultationServices selectedValue;
+  final Function(ConsultationServices value) onChange;
+
+  DropDownButtonConsultaionWidget(
+      {Key? key, required this.selectedValue, required this.onChange})
+      : super(key: key);
+
+  @override
+  _DropDownButtonConsultaionWidgetState createState() =>
+      _DropDownButtonConsultaionWidgetState();
+}
+
+class _DropDownButtonConsultaionWidgetState
+    extends State<DropDownButtonConsultaionWidget> {
+  var allConsultationCubit = AllConsultationCubit();
+
+  @override
+  void initState() {
+    super.initState();
+    allConsultationCubit.getAllConsultationsAdmin();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AllConsultationCubit, AllConsultationStates>(
+      bloc: allConsultationCubit,
+      builder: (context, state) {
+        if (state is SuccessAllConsultations) {
+          List<ConsultationServices> consultations = state.consultationServices as List<ConsultationServices> ?? [];
+
+          int index = consultations.indexWhere((element) => element.id==widget.selectedValue.id);
+          if (!consultations.contains(widget.selectedValue)&&index!=-1) {
+
+            widget.selectedValue = consultations.first ;
+
+          }
+          else {
+            widget.selectedValue = consultations[index];
+          }
+
+          return DropdownButton<ConsultationServices?>(
+            value: widget.selectedValue,
+            onChanged: (ConsultationServices? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  widget.selectedValue = newValue;
+                  widget.onChange(newValue);
+                  print("^^^^^^^^^^^>"+widget.selectedValue.id.toString());
+
+                });
+              }
+            },
+            items: consultations.map<DropdownMenuItem<ConsultationServices?>>(
+                    (ConsultationServices value) {
+                  return DropdownMenuItem<ConsultationServices?>(
+                    value: value,
+                    child: Text(value.name ?? ''),
+                  );
+                }).toList(),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
         }
       },
     );
