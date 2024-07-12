@@ -170,18 +170,7 @@ class _StoreFormState extends State<StoreForm> {
           } else if (state is SuccessQuestionViewState) {
             var questionsResponse = state.question;
 
-            List<int> axisDisplay = [];
-            questionsResponse.forEach((q) {
-              _fillQuestionWidgetMap(q);
-
-              if (!axisDisplay.contains(q.axisId)) {
-                axisDisplay.add(q.axisId!);
-
-              }
-              else {
-                axisDisplay.add(0);
-              }
-            });
+            
 
             if (relatedQuestionsMap.isNotEmpty) {
               relatedQuestionsMap.forEach(
@@ -208,7 +197,19 @@ class _StoreFormState extends State<StoreForm> {
                 }
               },
             );
+            
+            List<int> axisDisplay = [];
+            questionsList.forEach((q) {
+              _fillQuestionWidgetMap(q);
 
+              if (!axisDisplay.contains(q.axisId)) {
+                axisDisplay.add(q.axisId!);
+
+              }
+              else {
+                axisDisplay.add(0);
+              }
+            });
             List<Radio<int>> radiobtnsWidgets = [];
             for (int index = 0; index < questionsList.length; index++) {
               try {
