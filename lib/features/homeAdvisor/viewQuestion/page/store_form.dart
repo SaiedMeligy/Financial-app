@@ -93,7 +93,7 @@ class _StoreFormState extends State<StoreForm> {
   }
 
   void _updateRelatedQuestions(
-      int optionId, List<Questions>? relatedQuestions) {
+      Questions mainQuestion, int optionId, List<Questions>? relatedQuestions) {
     // if (relatedQuestionsMap[optionId] != null) {
     //   if (relatedQuestionsMap[optionId] != null) {
     //     for (var q in relatedQuestionsMap[optionId]!) {
@@ -118,28 +118,46 @@ class _StoreFormState extends State<StoreForm> {
     //     }
     //   }
     // }
-    if (relatedQuestionsMap[optionId] != null) {
-      for (var q in relatedQuestionsMap[optionId]!) {
+    // if (relatedQuestionsMap[optionId] != null) {
+    //   for (var q in relatedQuestionsMap[optionId]!) {
+    //     questionsWidget.entries.forEach((Q) {
+    //       if (Q.key.id == q.id) {
+    //         Q.key.isRelatedQuestion = 1;
+    //       }
+    //     });
+    //   }
+
+    //   relatedQuestionsMap.remove(optionId);
+    // } else {
+
+    // }
+    relatedQuestionsMap[optionId] = relatedQuestions ?? [];
+    if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+      for (var q in relatedQuestions) {
         questionsWidget.entries.forEach((Q) {
           if (Q.key.id == q.id) {
-            Q.key.isRelatedQuestion = 1;
+            Q.key.isRelatedQuestion = 0;
           }
         });
       }
-
-      relatedQuestionsMap.remove(optionId);
-    } else {
-      relatedQuestionsMap[optionId] = relatedQuestions ?? [];
-      if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
-        for (var q in relatedQuestions) {
-          questionsWidget.entries.forEach((Q) {
-            if (Q.key.id == q.id) {
-              Q.key.isRelatedQuestion = 0;
-            }
-          });
-        }
-      }
     }
+    mainQuestion.questionOptions?.forEach(
+      (option) {
+        if (option.id != optionId) {
+          if(relatedQuestionsMap[option.id] != null){
+            for (var q in relatedQuestionsMap[option.id]!) {
+            questionsWidget.entries.forEach((Q) {
+              if (Q.key.id == q.id) {
+                Q.key.isRelatedQuestion = 1;
+              }
+            });
+          }
+
+          relatedQuestionsMap.remove(option.id);
+          }
+        }
+      },
+    );
     setState(() {});
   }
   // void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
@@ -255,7 +273,9 @@ class _StoreFormState extends State<StoreForm> {
                             setState(() {
                               radiosBtn[questionsList[index].id] = value!;
                               _updateRelatedQuestions(
-                                  element.id!, element.reletedQuestions);
+                                  radiosBtn[questionsList[index]],
+                                  element.id!,
+                                  element.reletedQuestions);
                             });
                           },
                         ),
@@ -814,6 +834,7 @@ class _StoreFormState extends State<StoreForm> {
                               });
                               radiosBtn[question[index].id] = value!;
                               _updateRelatedQuestions(
+                                  radiosBtn[question[index]],
                                   question[index].questionOptions![i].id!,
                                   question[index]
                                       .questionOptions![i]
@@ -927,6 +948,7 @@ class _StoreFormState extends State<StoreForm> {
                               });
                               radiosBtn[question.id] = value!;
                               _updateRelatedQuestions(
+                                  radiosBtn[question],
                                   question.questionOptions![i].id!,
                                   question
                                       .questionOptions![i].reletedQuestions);
