@@ -273,7 +273,7 @@ class _StoreFormState extends State<StoreForm> {
                             setState(() {
                               radiosBtn[questionsList[index].id] = value!;
                               _updateRelatedQuestions(
-                                  radiosBtn[questionsList[index]],
+                                  questionsList[index],
                                   element.id!,
                                   element.reletedQuestions);
                             });
@@ -834,7 +834,7 @@ class _StoreFormState extends State<StoreForm> {
                               });
                               radiosBtn[question[index].id] = value!;
                               _updateRelatedQuestions(
-                                  radiosBtn[question[index]],
+                                  question[index],
                                   question[index].questionOptions![i].id!,
                                   question[index]
                                       .questionOptions![i]
@@ -948,7 +948,7 @@ class _StoreFormState extends State<StoreForm> {
                               });
                               radiosBtn[question.id] = value!;
                               _updateRelatedQuestions(
-                                  radiosBtn[question],
+                                  question,
                                   question.questionOptions![i].id!,
                                   question
                                       .questionOptions![i].reletedQuestions);
