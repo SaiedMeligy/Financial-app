@@ -151,7 +151,6 @@ class _StoreFormState extends State<StoreForm> {
   //   setState(() {});
   // }
 
-
   @override
   void initState() {
     super.initState();
@@ -170,14 +169,16 @@ class _StoreFormState extends State<StoreForm> {
           } else if (state is SuccessQuestionViewState) {
             var questionsResponse = state.question;
 
-            
+            questionsResponse.forEach((q) {
+              _fillQuestionWidgetMap(q);
+            });
 
             if (relatedQuestionsMap.isNotEmpty) {
               relatedQuestionsMap.forEach(
-                    (key, value) {
+                (key, value) {
                   for (var rQuestion in value) {
                     questionsWidget.entries.forEach(
-                          (e) {
+                      (e) {
                         if (e.key.id == rQuestion.id) {
                           e.key.isRelatedQuestion = 0;
                         }
@@ -191,30 +192,29 @@ class _StoreFormState extends State<StoreForm> {
             _fillAnsewrsMap(questionsResponse);
             List<Questions> questionsList = [];
             questionsWidget.forEach(
-                  (key, value) {
+              (key, value) {
                 if (key.isRelatedQuestion == 0) {
                   questionsList.add(key);
                 }
               },
             );
-            
+
             List<int> axisDisplay = [];
-            questionsList.forEach((q) {
-              _fillQuestionWidgetMap(q);
+            questionsList.forEach(
+              (q) {
+                if (!axisDisplay.contains(q.axisId)) {
+                  axisDisplay.add(q.axisId!);
+                } else {
+                  axisDisplay.add(0);
+                }
+              },
+            );
 
-              if (!axisDisplay.contains(q.axisId)) {
-                axisDisplay.add(q.axisId!);
-
-              }
-              else {
-                axisDisplay.add(0);
-              }
-            });
             List<Radio<int>> radiobtnsWidgets = [];
             for (int index = 0; index < questionsList.length; index++) {
               try {
                 questionsList[index].questionOptions?.forEach(
-                      (element) {
+                  (element) {
                     if (element.type == 1) {
                       radiobtnsWidgets.add(
                         Radio<int>(
@@ -223,7 +223,7 @@ class _StoreFormState extends State<StoreForm> {
                           onChanged: (value) {
                             answers[element.id!] = 1;
                             questionsList[index].questionOptions?.forEach(
-                                  (o) {
+                              (o) {
                                 if (o.type == 1) {
                                   if (o.id != element.id) {
                                     answers[o.id] = 0;
@@ -233,7 +233,8 @@ class _StoreFormState extends State<StoreForm> {
                             );
                             setState(() {
                               radiosBtn[questionsList[index].id] = value!;
-                              _updateRelatedQuestions(element.id!, element.reletedQuestions);
+                              _updateRelatedQuestions(
+                                  element.id!, element.reletedQuestions);
                             });
                           },
                         ),
@@ -263,119 +264,118 @@ class _StoreFormState extends State<StoreForm> {
                   ),
                   child: Row(
                     children: [
-                                      Container(
-                                        height: double.maxFinite,
-                                        width: Constants.mediaQuery.width * 0.2,
-                                        color: Constants.theme.primaryColor.withOpacity(0.6),
-                                        child: isMobile
-                                            ? Column(
-                                                children: [
-                                                  Text(
-                                                    widget.pationt_data['pationt']['name'],
-                                                    style: Constants.theme.textTheme.bodyMedium,
-                                                  ),
-                                                  const Divider(
-                                                    color: Colors.white,
-                                                    thickness: 1,
-                                                    indent: 10,
-                                                    endIndent: 10,
-                                                  ),
-                                                  Text(
-                                                    CacheHelper.getData(key: 'name'),
-                                                    style: Constants.theme.textTheme.bodyMedium,
-                                                  ),
-                                                  const Divider(
-                                                    color: Colors.white,
-                                                    thickness: 1,
-                                                    indent: 10,
-                                                    endIndent: 10,
-                                                  ),
-                                                  Text(
-                                                    "nationalId: " +
-                                                        widget.pationt_data['pationt']
-                                                            ['national_id'],
-                                                    style: Constants.theme.textTheme.bodyMedium,
-                                                  ),
-                                                  const Divider(
-                                                    color: Colors.white,
-                                                    thickness: 1,
-                                                    indent: 10,
-                                                    endIndent: 10,
-                                                  ),
-                                                  Text(
-                                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
-                                                    style: Constants.theme.textTheme.bodyMedium,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceEvenly,
-                                                    children: [
-                                                      IconButton(
-                                                        onPressed: () => _selectDate(context),
-                                                        icon: Icon(Icons.date_range_outlined,
-                                                            size: 40, color: Colors.white),
-                                                      ),
-                                                      // IconButton(
-                                                      //   onPressed: () => _selectTime(context),
-                                                      //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
-                                                      // ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            : Column(
-                                                children: [
-                                                  Text(
-                                                    widget.pationt_data['pationt']['name'],
-                                                    style: Constants.theme.textTheme.titleLarge,
-                                                  ),
-                                                  const Divider(
-                                                    color: Colors.white,
-                                                    thickness: 1,
-                                                    indent: 10,
-                                                    endIndent: 10,
-                                                  ),
-                                                  Text(
-                                                    CacheHelper.getData(key: 'name'),
-                                                    style: Constants.theme.textTheme.titleLarge,
-                                                  ),
-                                                  const Divider(
-                                                    color: Colors.white,
-                                                    thickness: 1,
-                                                    indent: 10,
-                                                    endIndent: 10,
-                                                  ),
-                                                  Text(
-                                                    "nationalId: " +
-                                                        widget.pationt_data['pationt']
-                                                            ['national_id'],
-                                                    style: Constants.theme.textTheme.titleLarge,
-                                                  ),
-                                                  const Divider(
-                                                    color: Colors.white,
-                                                    thickness: 1,
-                                                    indent: 10,
-                                                    endIndent: 10,
-                                                  ),
-                                                  Text(
-                                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
-                                                    style: Constants.theme.textTheme.titleLarge,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceEvenly,
-                                                    children: [
-                                                      IconButton(
-                                                        onPressed: () => _selectDate(context),
-                                                        icon: Icon(Icons.date_range_outlined,
-                                                            size: 40, color: Colors.white),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                      Container(
+                        height: double.maxFinite,
+                        width: Constants.mediaQuery.width * 0.2,
+                        color: Constants.theme.primaryColor.withOpacity(0.6),
+                        child: isMobile
+                            ? Column(
+                                children: [
+                                  Text(
+                                    widget.pationt_data['pationt']['name'],
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    CacheHelper.getData(key: 'name'),
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "nationalId: " +
+                                        widget.pationt_data['pationt']
+                                            ['national_id'],
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () => _selectDate(context),
+                                        icon: Icon(Icons.date_range_outlined,
+                                            size: 40, color: Colors.white),
                                       ),
-
+                                      // IconButton(
+                                      //   onPressed: () => _selectTime(context),
+                                      //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
+                                      // ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  Text(
+                                    widget.pationt_data['pationt']['name'],
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    CacheHelper.getData(key: 'name'),
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "nationalId: " +
+                                        widget.pationt_data['pationt']
+                                            ['national_id'],
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () => _selectDate(context),
+                                        icon: Icon(Icons.date_range_outlined,
+                                            size: 40, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                      ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -387,12 +387,18 @@ class _StoreFormState extends State<StoreForm> {
                                   if (index < questionsList.length) {
                                     return Column(
                                       children: [
-                                        if (index < axisDisplay.length && axisDisplay[index] != 0)
+                                        if (index < axisDisplay.length &&
+                                            axisDisplay[index] != 0)
                                           Column(
                                             children: [
                                               Text(
-                                                questionsList[index].axis!.name.toString(),
-                                                style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                questionsList[index]
+                                                    .axis!
+                                                    .name
+                                                    .toString(),
+                                                style: Constants
+                                                    .theme.textTheme.titleLarge
+                                                    ?.copyWith(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -407,20 +413,27 @@ class _StoreFormState extends State<StoreForm> {
                                           ),
                                         const SizedBox(height: 10),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                                          child: questionsWidget.entries.firstWhere((q) => q.key.id == questionsList[index].id).value,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: questionsWidget.entries
+                                              .firstWhere((q) =>
+                                                  q.key.id ==
+                                                  questionsList[index].id)
+                                              .value,
                                         ),
-                                        SizedBox(height: 10,
+                                        SizedBox(
+                                          height: 10,
                                         ),
                                       ],
                                     );
-                                  }
-                                  else {
+                                  } else {
                                     return Column(
                                       children: [
                                         Text(
                                           "ملاحظات الاستشاري",
-                                          style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                          style: Constants
+                                              .theme.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: Colors.black,
                                           ),
                                         ),
@@ -431,68 +444,90 @@ class _StoreFormState extends State<StoreForm> {
                                         ),
                                         isMobile
                                             ? Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  " هل يحتاج الي جلسة اخري",
-                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                    color: Colors.black,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        " هل يحتاج الي جلسة اخري",
+                                                        style: Constants
+                                                            .theme
+                                                            .textTheme
+                                                            .bodyMedium
+                                                            ?.copyWith(
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      Checkbox(
+                                                        value:
+                                                            (needOtherSession ==
+                                                                1),
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            needOtherSession =
+                                                                (value!)
+                                                                    ? 1
+                                                                    : 0;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                                Checkbox(
-                                                  value: (needOtherSession == 1),
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      needOtherSession = (value!) ? 1 : 0;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "الخدمة الاستشارية",
-                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                    color: Colors.black,
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        "الخدمة الاستشارية",
+                                                        style: Constants
+                                                            .theme
+                                                            .textTheme
+                                                            .bodyMedium
+                                                            ?.copyWith(
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      DropDown(
+                                                        onChange: (value) {
+                                                          setState(() {
+                                                            selected_consultation_service =
+                                                                value;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                DropDown(
-                                                  onChange: (value) {
-                                                    setState(() {
-                                                      selected_consultation_service = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        )
+                                                ],
+                                              )
                                             : SizedBox(
-                                          height: 10,
-                                        ),
+                                                height: 10,
+                                              ),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
                                           children: [
                                             Row(
                                               children: [
                                                 Text(
                                                   " هل يحتاج الي جلسة اخري",
-                                                  style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                  style: Constants.theme
+                                                      .textTheme.titleLarge
+                                                      ?.copyWith(
                                                     color: Colors.black,
                                                   ),
                                                 ),
                                                 Checkbox(
-                                                  value: (needOtherSession == 1),
+                                                  value:
+                                                      (needOtherSession == 1),
                                                   onChanged: (value) {
                                                     setState(() {
-                                                      needOtherSession = (value!) ? 1 : 0;
+                                                      needOtherSession =
+                                                          (value!) ? 1 : 0;
                                                     });
                                                   },
                                                 ),
@@ -502,7 +537,9 @@ class _StoreFormState extends State<StoreForm> {
                                               children: [
                                                 Text(
                                                   "الخدمة الاستشارية",
-                                                  style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                  style: Constants.theme
+                                                      .textTheme.titleLarge
+                                                      ?.copyWith(
                                                     color: Colors.black,
                                                   ),
                                                 ),
@@ -512,7 +549,8 @@ class _StoreFormState extends State<StoreForm> {
                                                 DropDown(
                                                   onChange: (value) {
                                                     setState(() {
-                                                      selected_consultation_service = value;
+                                                      selected_consultation_service =
+                                                          value;
                                                     });
                                                   },
                                                 ),
@@ -524,55 +562,97 @@ class _StoreFormState extends State<StoreForm> {
                                           height: 10,
                                         ),
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
                                           children: [
                                             BorderRoundedButton(
-                                                title: "التالي",
-                                                onPressed: () {
-                                                  if (advicorComment.text.isEmpty) {
-                                                    SnackBarService.showErrorMessage("من فضلك ادخل ملاحظات الاستشاري");
-                                                  } else if (_selectedDate == null) {
-                                                    SnackBarService.showErrorMessage("من فضلك اختر التاريخ ");
-                                                  } else {
-                                                    setState(() {
-                                                      textControllers.forEach((key1, val) {
-                                                        answers[key1] = val.text;
-                                                      });
-                                                    });
+                                                    title: "التالي",
+                                                    onPressed: () {
+                                                      if (advicorComment
+                                                          .text.isEmpty) {
+                                                        SnackBarService
+                                                            .showErrorMessage(
+                                                                "من فضلك ادخل ملاحظات الاستشاري");
+                                                      } else if (_selectedDate ==
+                                                          null) {
+                                                        SnackBarService
+                                                            .showErrorMessage(
+                                                                "من فضلك اختر التاريخ ");
+                                                      } else {
+                                                        setState(() {
+                                                          textControllers
+                                                              .forEach(
+                                                                  (key1, val) {
+                                                            answers[key1] =
+                                                                val.text;
+                                                          });
+                                                        });
 
-                                                    List<dynamic> lastAnswers = [];
-                                                    answers.forEach((key, value) {
-                                                      lastAnswers.add({
-                                                        "question_option_id": key,
-                                                        "pationt_answer": value,
-                                                      });
-                                                    });
+                                                        List<dynamic>
+                                                            lastAnswers = [];
+                                                        answers.forEach(
+                                                            (key, value) {
+                                                          lastAnswers.add({
+                                                            "question_option_id":
+                                                                key,
+                                                            "pationt_answer":
+                                                                value,
+                                                          });
+                                                        });
 
-                                                    Map<String, dynamic> storeDate = {
-                                                      "advicor_id": CacheHelper.getData(key: 'id'),
-                                                      "pationt_id": widget.pationt_data['pationt']['id'],
-                                                      "need_other_session": needOtherSession,
-                                                      "consultation_service_id": selected_consultation_service,
-                                                      "comments": advicorComment.text,
-                                                      "date": _selectedDate?.toString() ?? '',
-                                                      "answers": lastAnswers,
-                                                    };
+                                                        Map<String, dynamic>
+                                                            storeDate = {
+                                                          "advicor_id":
+                                                              CacheHelper
+                                                                  .getData(
+                                                                      key:
+                                                                          'id'),
+                                                          "pationt_id": widget
+                                                                  .pationt_data[
+                                                              'pationt']['id'],
+                                                          "need_other_session":
+                                                              needOtherSession,
+                                                          "consultation_service_id":
+                                                              selected_consultation_service,
+                                                          "comments":
+                                                              advicorComment
+                                                                  .text,
+                                                          "date": _selectedDate
+                                                                  ?.toString() ??
+                                                              '',
+                                                          "answers":
+                                                              lastAnswers,
+                                                        };
 
-                                                    print("Data to be sent: $storeDate");
+                                                        print(
+                                                            "Data to be sent: $storeDate");
 
-                                                    questionViewCubit.getStoreForm(storeDate).then((value) {
-                                                      if (value != null) {
-                                                        Navigator.pop(context);
-                                                        SnackBarService.showSuccessMessage("تم اضافة الفورم");
+                                                        questionViewCubit
+                                                            .getStoreForm(
+                                                                storeDate)
+                                                            .then((value) {
+                                                          if (value != null) {
+                                                            Navigator.pop(
+                                                                context);
+                                                            SnackBarService
+                                                                .showSuccessMessage(
+                                                                    "تم اضافة الفورم");
+                                                          }
+                                                        });
                                                       }
-                                                    });
-                                                  }
-                                                })
-                                                .setVerticalPadding(context, enableMediaQuery: false, 20),
+                                                    })
+                                                .setVerticalPadding(
+                                                    context,
+                                                    enableMediaQuery: false,
+                                                    20),
                                           ],
-                                        ).setHorizontalPadding(context, enableMediaQuery: false, 10),
+                                        ).setHorizontalPadding(
+                                            context,
+                                            enableMediaQuery: false,
+                                            10),
                                       ],
-                                    ).setHorizontalPadding(context,enableMediaQuery: false, 20);
+                                    ).setHorizontalPadding(
+                                        context, enableMediaQuery: false, 20);
                                   }
                                 },
                               ),
@@ -591,9 +671,6 @@ class _StoreFormState extends State<StoreForm> {
           return const SizedBox.shrink();
         },
       );
-
-
-
     });
   }
 
@@ -632,7 +709,14 @@ class _StoreFormState extends State<StoreForm> {
             });
           }
           /////
-          if (questions[index].questionOptions![i].reletedQuestions != null && questions[index].questionOptions![i].reletedQuestions!.isNotEmpty) {_fillAnsewrsMap(questions[index].questionOptions![i].reletedQuestions as List<Questions>);
+          if (questions[index].questionOptions![i].reletedQuestions != null &&
+              questions[index]
+                  .questionOptions![i]
+                  .reletedQuestions!
+                  .isNotEmpty) {
+            _fillAnsewrsMap(questions[index]
+                .questionOptions![i]
+                .reletedQuestions as List<Questions>);
           }
           ////
         }
@@ -801,7 +885,8 @@ class _StoreFormState extends State<StoreForm> {
                         Expanded(
                           child: Text(
                             question.questionOptions![i].title.toString(),
-                            style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                            style:
+                                Constants.theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.black,
                             ),
                           ),
