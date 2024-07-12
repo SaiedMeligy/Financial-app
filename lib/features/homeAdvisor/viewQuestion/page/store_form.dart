@@ -17,7 +17,6 @@ import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
 
-
 class StoreForm extends StatefulWidget {
   StoreForm({super.key, required this.pationt_data});
   List<int> axis = [];
@@ -95,20 +94,42 @@ class _StoreFormState extends State<StoreForm> {
 
   void _updateRelatedQuestions(
       int optionId, List<Questions>? relatedQuestions) {
+    // if (relatedQuestionsMap[optionId] != null) {
+    //   if (relatedQuestionsMap[optionId] != null) {
+    //     for (var q in relatedQuestionsMap[optionId]!) {
+    //       questionsWidget.entries.forEach((Q) {
+    //         if (Q.key.id == q.id) {
+    //           Q.key.isRelatedQuestion = 1;
+    //         }
+    //       });
+    //     }
+    //   }
+    //   relatedQuestionsMap.remove(optionId);
+    // }
+    // if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+    //   relatedQuestionsMap[optionId] = relatedQuestions;
+    //   if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+    //     for (var q in relatedQuestions) {
+    //       questionsWidget.entries.forEach((Q) {
+    //         if (Q.key.id == q.id) {
+    //           Q.key.isRelatedQuestion = 0;
+    //         }
+    //       });
+    //     }
+    //   }
+    // }
     if (relatedQuestionsMap[optionId] != null) {
-      if (relatedQuestionsMap[optionId] != null) {
-        for (var q in relatedQuestionsMap[optionId]!) {
-          questionsWidget.entries.forEach((Q) {
-            if (Q.key.id == q.id) {
-              Q.key.isRelatedQuestion = 1;
-            }
-          });
-        }
+      for (var q in relatedQuestionsMap[optionId]!) {
+        questionsWidget.entries.forEach((Q) {
+          if (Q.key.id == q.id) {
+            Q.key.isRelatedQuestion = 1;
+          }
+        });
       }
+
       relatedQuestionsMap.remove(optionId);
-    }
-    if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
-      relatedQuestionsMap[optionId] = relatedQuestions;
+    } else {
+      relatedQuestionsMap[optionId] = relatedQuestions ?? [];
       if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
         for (var q in relatedQuestions) {
           questionsWidget.entries.forEach((Q) {
