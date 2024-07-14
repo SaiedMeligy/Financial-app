@@ -13,8 +13,7 @@ class AllAdvisorRepositoryImp implements AllAdvisorRepository{
   @override
   Future<Response> getAllAdvisor(AllAdvisorsModel advisorModel) async {
     try {
-      final response = await dataSource.getAllAdvisor(
-          advisorModel);
+      final response = await dataSource.getAllAdvisor(advisorModel);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

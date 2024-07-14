@@ -2,6 +2,7 @@
 
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/features/homeAdvisor/addSessionWithAdmin/page/add_session_with_admin_view.dart';
 import 'package:experts_app/features/homeAdvisor/add_user/page/add_user_view.dart';
 import 'package:experts_app/features/homeAdvisor/home/page/home_advisor_view.dart';
 import 'package:experts_app/features/homeAdvisor/recycle_pin/page/all_patient_recycle_view.dart';
@@ -33,6 +34,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
       SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home)),
       SideBarModel(title: "حالاتك", icon: Icon(Icons.list)),
       SideBarModel(title: "بدء جلسة", icon: Icon(Icons.timer)),
+      SideBarModel(title: "حجز جلسات", icon: Icon(Icons.border_color_outlined)),
       SideBarModel(title: "مواعيد الجلسات", icon: Icon(Icons.access_time_rounded)),
        SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete)),
       SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add)),
@@ -41,6 +43,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
       HomeAdvisorView(),
       AllPatientView(),
       PatientNationalId(),
+      AddSessionWithAdminView(),
       SessionDate(),
       AllPatientRecycleView(),
       AddUserView(),

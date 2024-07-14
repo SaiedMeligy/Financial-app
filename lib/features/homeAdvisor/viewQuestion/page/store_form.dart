@@ -333,9 +333,7 @@ class _StoreFormState extends State<StoreForm> {
                                     endIndent: 10,
                                   ),
                                   Text(
-                                    "nationalId: " +
-                                        widget.pationt_data['pationt']
-                                            ['national_id'],
+                                    "رقم الهوية الأماراتية: " + widget.pationt_data['pationt']['national_id'],
                                     style: Constants.theme.textTheme.bodyMedium,
                                   ),
                                   const Divider(
@@ -388,7 +386,7 @@ class _StoreFormState extends State<StoreForm> {
                                     endIndent: 10,
                                   ),
                                   Text(
-                                    "nationalId: " +
+                                    "رقم الهوية الأماراتية: " +
                                         widget.pationt_data['pationt']
                                             ['national_id'],
                                     style: Constants.theme.textTheme.titleLarge,

@@ -46,7 +46,8 @@ class _AllPatientViewState extends State<AllPatientView> {
       builder: (context, state) {
         if (state is LoadingAllPatient) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is SuccessAllPatient) {
+        }
+        else if (state is SuccessAllPatient) {
           var patients = state.patients;
 
           var filteredPatients = patients.where((patient) {
@@ -97,7 +98,8 @@ class _AllPatientViewState extends State<AllPatientView> {
               ),
             ),
           );
-        } else if (state is ErrorAllPatient) {
+        }
+        else if (state is ErrorAllPatient) {
           return Center(child: Text(state.errorMessage));
         }
         return const SizedBox.shrink();

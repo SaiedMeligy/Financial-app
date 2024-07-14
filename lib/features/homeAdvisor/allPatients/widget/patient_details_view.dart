@@ -6,21 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:screenshot/screenshot.dart';
-import 'package:dio/dio.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/widget/manager/cubit.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/widget/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_Session/page/patient_session_view.dart';
 import 'package:experts_app/features/homeAdvisor/allPatients/widget/report_chart/page/report_chart_view.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/page/update_form.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/Services/snack_bar_service.dart';
-import '../../../../core/config/cash_helper.dart';
 import '../../../homeAdmin/addSession/manager/cubit.dart';
 
   class PatientDetailsView extends StatefulWidget {

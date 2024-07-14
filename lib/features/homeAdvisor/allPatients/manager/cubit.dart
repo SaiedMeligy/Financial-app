@@ -31,4 +31,5 @@ class AllPatientCubit extends Cubit<AllPatientStates> {
       emit(ErrorAllPatient(error.toString()));
     }
   }
+
 }
