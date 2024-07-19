@@ -6,7 +6,6 @@ import 'core/config/app_theme_manager.dart';
 import 'features/initialPage/initial_page.dart';
 import 'package:experts_app/core/config/page_route_name.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:experts_app/features/login/page/log_view.dart';
 
 
 
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Routes.onGenerateRoute,
       navigatorKey: navigatorKey,
       builder: EasyLoading.init(
-builder:BotToastInit()
+        builder:BotToastInit()
       ),
     );
   }

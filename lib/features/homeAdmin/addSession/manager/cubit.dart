@@ -73,9 +73,9 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
   late AddSessionDataSource addSessionDataSource;
 
 
-  Future<Response> addSession(Sessions data) async {
+  Future<Response> addSession(Sessions data,{bool isAdvicer = false}) async {
     WebServices services = WebServices();
-    addSessionDataSource = AddSessionDataSourceImp(services.freeDio);
+    addSessionDataSource = AddSessionDataSourceImp(services.freeDio,isAdvicer: isAdvicer);
     adviceRepository = AddSessionRepositoryImp(addSessionDataSource);
     addSessionUseCase = AddSessionUseCase(adviceRepository);
 

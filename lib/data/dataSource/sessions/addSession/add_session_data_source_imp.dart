@@ -8,11 +8,12 @@ import 'add_session_data_source.dart';
 
 class AddSessionDataSourceImp implements AddSessionDataSource{
   final Dio dio;
-  AddSessionDataSourceImp(this.dio);
+  bool isAdvicer;
+  AddSessionDataSourceImp(this.dio,{this.isAdvicer = false});
   @override
   Future<Response> addSession(Sessions data) async{
     return await dio.post(
-      "/api/session",
+      (isAdvicer)?"/api/advicor/session":"/api/session",
       data: {
         "advicor_id":data.advicorId,
         "pationt_id":data.pationtId,

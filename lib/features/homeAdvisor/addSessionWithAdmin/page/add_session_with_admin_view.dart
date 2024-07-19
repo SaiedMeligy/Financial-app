@@ -1,4 +1,5 @@
 import 'package:experts_app/core/Services/snack_bar_service.dart';
+import 'package:experts_app/core/config/cash_helper.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/border_rounded_button.dart';
@@ -27,7 +28,8 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
   TextEditingController _phoneNumber = TextEditingController();
   TextEditingController _secondPhoneNumber = TextEditingController();
   TextEditingController advisorComment = TextEditingController();
-  String? selected_advisor;
+  int? selected_advisor;
+  String? advisor_name;
   int? patient_id;
   int? sessionNum;
   final formKey = GlobalKey<FormState>();
@@ -80,6 +82,8 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
 
   @override
   Widget build(BuildContext context) {
+    selected_advisor=CacheHelper.getData(key: 'id');
+    advisor_name=CacheHelper.getData(key: 'name');
     return LayoutBuilder(
       builder: (context, constraints) {
         isMobile = constraints.maxWidth < 600;
@@ -150,13 +154,7 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                               color: Colors.black
                             )),
                             SizedBox(width: 15),
-                            DropdownButtonAdvisor(
-                              onAdvisorSelected: (advicor_id) {
-                                setState(() {
-                                  selected_advisor = advicor_id;
-                                });
-                              },
-                            ),
+                            Text('${advisor_name}')
                           ],
                         ),
                         Text("ادخل رقم الهوية الأماراتية", style: Constants.theme.textTheme.bodyLarge?.copyWith(
@@ -323,7 +321,7 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                             if (formKey.currentState!.validate()) {
                               var data = Sessions(
                                 date: _selectedDate?.toString() ?? '',
-                                advicorId: int.parse(selected_advisor ?? '0'),
+                                advicorId: selected_advisor??0,
                                 pationtId: patient_id ?? 0,
                                 caseManager: _nameManagerController.text,
                                 phoneNumber: _phoneNumber.text,
@@ -331,7 +329,7 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                                 time: "${_selectedTime?.hour}:${_selectedTime?.minute}",
                                 comments: advisorComment.text
                               );
-                              addSessionCubit.addSession(data).then((response) {
+                              addSessionCubit.addSession(data,isAdvicer: true).then((response) {
                                 if (response.data["status"]==true){
                                   print("تم اضافة الجلسة");
                                    _dateTimeController.clear();

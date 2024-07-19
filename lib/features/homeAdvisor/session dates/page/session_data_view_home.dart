@@ -225,7 +225,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                         textDirection: TextDirection.rtl,
                                         child: AlertDialog(
                                           title: Text(
-                                            "تم اضافة الجلسة",
+                                            "تم إنهاء الجلسة",
                                             style: Constants.theme.textTheme.bodyMedium?.copyWith(
                                               color: Colors.black,
                                             ),
