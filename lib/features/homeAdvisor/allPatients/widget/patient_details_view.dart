@@ -520,6 +520,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                       Container(
                                         width: double.infinity,
                                         // height: answer["question_options"].length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
+                                        
                                         height: answer["question_options"].length * 40,
                                         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                                         decoration: BoxDecoration(
