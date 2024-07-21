@@ -96,6 +96,9 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
               _phoneNumber.text = state.result.data['pationt']['phone_number'] ?? '';
               _nameAdvisorController.text = state.result.data['pationt']["form"]?['advicor']?['name'] ?? '';
               sessionNum =state.result.data['pationt']["sessions"].length+1;
+              print("----------->>"+state.result.data);
+
+
               if(sessionNum==0){
                  sessionNum=state.result.data['pationt']["sessions"].length+1;
              }

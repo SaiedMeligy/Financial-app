@@ -298,6 +298,7 @@
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/manager/states.dart';
+import 'package:flutter/cupertino.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/widget/Question_text_field.dart';
 import '../../../../../domain/entities/ConsultationViewModel.dart';
@@ -790,36 +791,62 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                 ],
                               ),
                               SizedBox(height: 10),
-                              TextField(
+                              Container(
+                                height: Constants.mediaQuery.height * 0.2,
+                                child: TextField(
                                 controller: commentController,
-                                style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                  color: Colors.black, // Change to your desired text color
-                                ),
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-
+                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                    color: Colors.black,),
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
                                     ),
-                                    borderSide: BorderSide(
-                                      color: Colors.white,
-                                      width: 2,
-                                    ),
+                                    fillColor: Colors.grey.shade300,
+                                    filled: true,
+                                    contentPadding: EdgeInsets.symmetric(vertical:50, horizontal: 10),
+                                    hintText: "ادخل الملاحظات",
+                                    hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                      color: Colors.black,),),).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                              ),
 
-                                  ),
-                                  fillColor: Colors.grey.shade300,
-                                  filled: true,
-                                  contentPadding: EdgeInsets.all(10),
-                                  hintText: "ادخل الملا��ظات",
-                                  hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                    color: Colors.black,
-
-                                  ),
-
-
-                                ),
-                              ).setHorizontalPadding(context,enableMediaQuery: false, 20),
+                        // TextField(
+                              //   controller: commentController,
+                              //   style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                              //     color: Colors.black,
+                              //
+                              //   ),
+                              //   decoration: InputDecoration(
+                              //     border: OutlineInputBorder(
+                              //       borderRadius: BorderRadius.only(
+                              //         topLeft: Radius.circular(20),
+                              //         topRight: Radius.circular(20),
+                              //
+                              //       ),
+                              //       borderSide: BorderSide(
+                              //         color: Colors.white,
+                              //         width: 2,
+                              //       ),
+                              //
+                              //     ),
+                              //     fillColor: Colors.grey.shade300,
+                              //     filled: true,
+                              //     contentPadding: EdgeInsets.all(10),
+                              //     hintText: "ادخل الملا��ظات",
+                              //     hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
+                              //       color: Colors.black,
+                              //
+                              //     ),
+                              //
+                              //
+                              //   ),
+                              // ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                               SizedBox(height: 20),
                               BorderRoundedButton(
                                 title: "تعديل",
