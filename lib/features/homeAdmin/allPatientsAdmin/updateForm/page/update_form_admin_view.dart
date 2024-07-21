@@ -651,7 +651,8 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                               onChanged: (value) {
                                                 setState(() {
                                                   option["answer"] = value;
-                                                });
+                                                }
+                                                );
                                               },
                                             ),
                                           ),

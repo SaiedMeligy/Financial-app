@@ -868,8 +868,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                         print(
                                             "Data to be sent: $updateDate"); // Log the data before sending
 
-                                        QuestionViewCubit()
-                                            .getUpdateForm(updateDate)
+                                        QuestionViewCubit().getUpdateForm(updateDate)
                                             .then((value) {
                                           if (value != null) {
                                             Navigator.pop(context);

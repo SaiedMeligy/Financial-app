@@ -98,7 +98,6 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
               sessionNum =state.result.data['pationt']["sessions"].length+1;
               print("----------->>"+state.result.data);
 
-
               if(sessionNum==0){
                  sessionNum=state.result.data['pationt']["sessions"].length+1;
              }
