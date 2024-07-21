@@ -144,16 +144,16 @@ class _StoreFormState extends State<StoreForm> {
     mainQuestion.questionOptions?.forEach(
       (option) {
         if (option.id != optionId) {
-          if(relatedQuestionsMap[option.id] != null){
+          if (relatedQuestionsMap[option.id] != null) {
             for (var q in relatedQuestionsMap[option.id]!) {
-            questionsWidget.entries.forEach((Q) {
-              if (Q.key.id == q.id) {
-                Q.key.isRelatedQuestion = 1;
-              }
-            });
-          }
+              questionsWidget.entries.forEach((Q) {
+                if (Q.key.id == q.id) {
+                  Q.key.isRelatedQuestion = 1;
+                }
+              });
+            }
 
-          relatedQuestionsMap.remove(option.id);
+            relatedQuestionsMap.remove(option.id);
           }
         }
       },
@@ -272,10 +272,8 @@ class _StoreFormState extends State<StoreForm> {
                             );
                             setState(() {
                               radiosBtn[questionsList[index].id] = value!;
-                              _updateRelatedQuestions(
-                                  questionsList[index],
-                                  element.id!,
-                                  element.reletedQuestions);
+                              _updateRelatedQuestions(questionsList[index],
+                                  element.id!, element.reletedQuestions);
                             });
                           },
                         ),
@@ -333,7 +331,9 @@ class _StoreFormState extends State<StoreForm> {
                                     endIndent: 10,
                                   ),
                                   Text(
-                                    "رقم الهوية الأماراتية: " + widget.pationt_data['pationt']['national_id'],
+                                    "رقم الهوية الأماراتية: " +
+                                        widget.pationt_data['pationt']
+                                            ['national_id'],
                                     style: Constants.theme.textTheme.bodyMedium,
                                   ),
                                   const Divider(
