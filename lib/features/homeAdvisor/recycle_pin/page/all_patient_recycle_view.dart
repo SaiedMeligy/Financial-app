@@ -44,11 +44,11 @@ class _AllPatientRecycleViewState extends State<AllPatientRecycleView> {
         } else if (state is SuccessAllPatientRecycle) {
           var patients = state.patients;
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
-                opacity: 0.8
+                opacity: 0.7
               )
             ),
             child: Padding(

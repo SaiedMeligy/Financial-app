@@ -200,7 +200,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                   for(int index = 0; index < widget.items.length ; index++)...[
                     TableRow(
                         decoration: BoxDecoration(
-                          color: Colors.black38 ,
+                          color: Colors.black45 ,
                         ),
                         children: [
                           TableCell(

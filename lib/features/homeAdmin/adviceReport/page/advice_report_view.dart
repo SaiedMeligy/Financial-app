@@ -22,7 +22,7 @@ class _AdviceReportViewState extends State<AdviceReportView> {
           image: DecorationImage(
             image: AssetImage("assets/images/back.jpg"),
             fit: BoxFit.cover,
-            opacity: 1.0
+            opacity: 0.7
           )
         ),
         child: Column(

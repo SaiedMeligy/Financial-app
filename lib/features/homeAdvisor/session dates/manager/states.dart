@@ -1,12 +1,12 @@
-import 'package:experts_app/domain/entities/AdviceMode.dart';
 
-import '../../../../domain/entities/AddSessionModel.dart';
 
+
+import '../../../../domain/entities/AllSessionModel.dart';
 
 abstract class AllSessionStates{}
 class LoadingAllSession extends AllSessionStates{}
 class SuccessAllSession extends AllSessionStates{
-  final dynamic session;
+   List<Sessions> session;
   SuccessAllSession(this.session);
 }
 

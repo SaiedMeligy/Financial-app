@@ -39,11 +39,12 @@ class _EditIndicatorState extends State<EditIndicator> {
           return Scaffold(
             body: Container(
                   height: double.maxFinite,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/images/back.jpg"),
                           fit: BoxFit.cover,
-                        opacity: 0.8                      ),
+                        opacity: 0.7
+                      ),
                   ),
 
               child: Column(
@@ -91,7 +92,7 @@ class _EditIndicatorState extends State<EditIndicator> {
                               pointerServices:item,
                             )
 
-                      ).setVerticalPadding(context,enableMediaQuery: false,30),
+                      ).setVerticalPadding(context,enableMediaQuery: false,20),
                       secondWidget: TableWidget<Pointers>(
                         label1: 'المؤشر',
                         label2: 'التعديل',
@@ -108,7 +109,7 @@ class _EditIndicatorState extends State<EditIndicator> {
                               allPointerCubit: allPointerCubit,
                               pointerServices:item,
                             )
-                      ).setVerticalPadding(context,enableMediaQuery: false,30),
+                      ).setVerticalPadding(context,enableMediaQuery: false,20),
                       thirdWidget: TableWidget<Pointers>(
                         label1: 'المؤشر',
                         label2: 'التعديل',
@@ -125,7 +126,7 @@ class _EditIndicatorState extends State<EditIndicator> {
                               allPointerCubit: allPointerCubit,
                               pointerServices:item,
                             )
-                      ).setVerticalPadding(context,enableMediaQuery: false,30),
+                      ).setVerticalPadding(context,enableMediaQuery: false,20),
                     ),
                   ),
                 ],

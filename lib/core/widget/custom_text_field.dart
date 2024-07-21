@@ -81,7 +81,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       enabled: widget.enabled,
       readOnly: widget.readOnly!,
       style: Constants.theme.textTheme.bodyLarge?.copyWith(
-        fontSize: 20
+        fontSize: 20,
+        color: Colors.black87,
+        fontWeight: FontWeight.bold,
       ),
       textInputAction: widget.action ?? TextInputAction.done,
       focusNode: widget.focusNode,

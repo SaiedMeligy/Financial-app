@@ -1073,7 +1073,8 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     ),
                                     Container(
                                       width: double.infinity,
-                                      height: answer["question_options"].where((option) => option["answer"] == "1").length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
+                                      height: answer["question_options"].length * 40,
+                                      // height: answer["question_options"].where((option) => option["answer"] == "1").length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
                                       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                                       decoration: BoxDecoration(
                                         color: Colors.grey.shade300,
@@ -1181,7 +1182,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                     ),
                                   ],
-                                ).setVerticalPadding(context, enableMediaQuery: false, 20);
+                                ).setVerticalPadding(context, enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 20);
                               }
                             },
                           ).setHorizontalPadding(context, enableMediaQuery: false, 20),

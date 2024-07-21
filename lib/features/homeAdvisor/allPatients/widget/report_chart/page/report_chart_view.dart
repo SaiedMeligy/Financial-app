@@ -224,7 +224,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                           ],
                                         );
                                       },
-                                    ),
+                                    ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
                                     secondWidget: ListView.builder(
                                       itemCount: pointers2Temp.length,
                                       itemBuilder: (context, index) {
@@ -243,7 +243,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                           ],
                                         );
                                       },
-                                    ),
+                                    ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
                                     thirdWidget: ListView.builder(
                                       itemCount: pointers3Temp.length,
                                       itemBuilder: (context, index) {
@@ -262,7 +262,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                           ],
                                         );
                                       },
-                                    ),
+                                    ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
                                   ),
                                 ),
                               ],

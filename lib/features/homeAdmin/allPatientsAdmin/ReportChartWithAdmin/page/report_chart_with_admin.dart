@@ -105,7 +105,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                     image: DecorationImage(
                       image: AssetImage("assets/images/back.jpg"),
                       fit: BoxFit.cover,
-                      opacity: 0.8  ,
+                      opacity: 0.7  ,
                     ),
                   ),
                   child: Padding(
@@ -222,7 +222,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 ),
                                               ),
                                           ],
-                                        );
+                                        ).setHorizontalPadding(context,enableMediaQuery: false,10 );
                                       },
                                     ),
                                     secondWidget: ListView.builder(
@@ -242,7 +242,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 ),
                                               ),
                                           ],
-                                        );
+                                        ).setHorizontalPadding(context,enableMediaQuery: false,10 );
                                       },
                                     ),
                                     thirdWidget: ListView.builder(
@@ -262,7 +262,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 ),
                                               ),
                                           ],
-                                        );
+                                        ).setHorizontalPadding(context,enableMediaQuery: false,10 );
                                       },
                                     ),
                                   ),
@@ -301,7 +301,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               color: Colors.black,
                                               fontSize: isMobile?16:20
                                             ),
-                                          ),
+                                          ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
                                         ],
                                       );
                                     },

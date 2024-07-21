@@ -59,7 +59,7 @@ class _AllPatientViewState extends State<AllPatientView> {
                 image: DecorationImage(
                   image: AssetImage("assets/images/back.jpg"),
                   fit: BoxFit.cover,
-                  opacity: 0.8
+                  opacity: 0.7
                 )
             ),
             child: Padding(

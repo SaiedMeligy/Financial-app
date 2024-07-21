@@ -39,7 +39,7 @@ class _AddPatientViewState extends State<AddPatientView> {
                 image: DecorationImage(
                   image: AssetImage("assets/images/back.jpg"),
                   fit: BoxFit.cover,
-                  opacity: 0.8
+                  opacity: 0.7
                 )
               ),
               child: Center(
@@ -106,7 +106,7 @@ class _AddPatientViewState extends State<AddPatientView> {
                           FadeInRight(
                             delay: const Duration(microseconds: 200),
                             child: Text(
-                              "الرقم القومي",
+                              "رقم الهوية الأماراتية",
                               style: Constants.theme.textTheme.bodyLarge
                                   ?.copyWith(color: Colors.black),
                             ),
@@ -118,12 +118,12 @@ class _AddPatientViewState extends State<AddPatientView> {
                             delay: const Duration(microseconds: 300),
                             child: CustomTextField(
                               controller: nationalController,
-                              hint: "ادخل الرقم القومي",
+                              hint: "ادخل رقم الهوية الأماراتية",
                               onValidate: (value) {
                                 if (value == null || value
                                     .trim()
                                     .isEmpty) {
-                                  return "من فضلك ادخل الرقم القومي ";
+                                  return "من فضلك ادخل رقم الهوية الأماراتية ";
                                 }
                                 return null;
                               },

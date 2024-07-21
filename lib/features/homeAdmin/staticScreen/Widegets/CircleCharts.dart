@@ -53,7 +53,7 @@ class CircleCharts extends StatelessWidget {
                 xValueMapper: (SalesData sales, _) => sales.advisorName,
                 yValueMapper: (SalesData sales, _) => sales.patientCount,
                 dataLabelMapper: (SalesData sales, _) => '${sales.advisorName}: ${sales.patientCount}',
-                dataLabelSettings: const DataLabelSettings(
+                dataLabelSettings:  DataLabelSettings(
                   isVisible: true,
                   labelPosition: ChartDataLabelPosition.outside,
                   labelAlignment: ChartDataLabelAlignment.middle,
@@ -61,6 +61,11 @@ class CircleCharts extends StatelessWidget {
                     length: '20%',
                     type: ConnectorType.curve,
                   ),
+                    textStyle: Constants.theme.textTheme.bodySmall?.copyWith(
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    alignment: ChartAlignment.center,
+
                 ),
               ),
             ],

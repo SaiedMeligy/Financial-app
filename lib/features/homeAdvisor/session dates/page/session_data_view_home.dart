@@ -14,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widget/border_rounded_button.dart';
 import '../../sessions/manager/states.dart';
 import '../../viewQuestion/widget/drop_down.dart';
-import '../manager/states.dart';
 
 class SessionDetailsViewHome extends StatefulWidget {
   final dynamic pationt_data;

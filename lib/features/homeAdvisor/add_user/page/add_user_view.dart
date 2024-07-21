@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/constants.dart';
 import '../../../../core/widget/border_rounded_button.dart';
 import '../../../../core/widget/custom_text_field.dart';
-import '../../../../domain/entities/RegisterModel.dart';
 import '../../../../domain/entities/RegisterPatient.dart';
 import '../manager/cubit.dart';
 
@@ -36,11 +35,11 @@ class _AddUserViewState extends State<AddUserView> {
       builder: (context, state) {
         return Scaffold(
             body: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/back.jpg"),
                   fit: BoxFit.cover,
-                  opacity: 0.8
+                  opacity: 0.7
                 )
               ),
               child: Center(
@@ -105,7 +104,7 @@ class _AddUserViewState extends State<AddUserView> {
                         FadeInRight(
                           delay: const Duration(microseconds: 200),
                           child: Text(
-                            "الرقم القومي",
+                            "رقم الهوية الأماراتية",
                             style: Constants.theme.textTheme.bodyLarge
                                 ?.copyWith(color: Colors.black),
                           ),
@@ -117,12 +116,12 @@ class _AddUserViewState extends State<AddUserView> {
                           delay: const Duration(microseconds: 300),
                           child: CustomTextField(
                             controller: nationalController,
-                            hint: "ادخل الرقم القومي",
+                            hint: "ادخل رقم الهوية الأماراتية",
                             onValidate: (value) {
                               if (value == null || value
                                   .trim()
                                   .isEmpty) {
-                                return "من فضلك ادخل الرقم القومي ";
+                                return "من فضلك ادخل رقم الهوية الأماراتية ";
                               }
                               return null;
                             },

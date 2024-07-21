@@ -70,27 +70,25 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
                     icon: Icons.search,
                   ),
                   const SizedBox(height: 10),
-                  Expanded(
-                    child: PatientWidgetViewWithAdmin<Pationts>(
-                      label1: "اسم الحالة",
-                      label2: "التعديل",
-                      label3: "الحذف",
-                      items: filteredPatients,
-                      itemNameBuilder: (item) => item.name ?? 'No Name',
-                      itemEditWidgetBuilder: (item) => DialogEditPatientWithAdmin(
+                  PatientWidgetViewWithAdmin<Pationts>(
+                    label1: "اسم الحالة",
+                    label2: "التعديل",
+                    label3: "الحذف",
+                    items: filteredPatients,
+                    itemNameBuilder: (item) => item.name ?? 'No Name',
+                    itemEditWidgetBuilder: (item) => DialogEditPatientWithAdmin(
+                      allPatientCubit: allPatientCubit,
+                      patient: item,
+                    ),
+                    itemDeleteWidgetBuilder: (item) {
+                      if (item == null) {
+                        return const Text("Invalid Item");
+                      }
+                      return DialogDeletePatientWithAdmin(
                         allPatientCubit: allPatientCubit,
                         patient: item,
-                      ),
-                      itemDeleteWidgetBuilder: (item) {
-                        if (item == null) {
-                          return const Text("Invalid Item");
-                        }
-                        return DialogDeletePatientWithAdmin(
-                          allPatientCubit: allPatientCubit,
-                          patient: item,
-                        );
-                      },
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),
