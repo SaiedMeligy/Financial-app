@@ -668,9 +668,9 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                                       int.parse(option["id"]
                                                           .toString())],
                                                   onChanged: (value) {
-                                                    setState(() {
+                                                    // setState(() {
                                                       option["answer"] = value;
-                                                    });
+                                                    // });
                                                   },
                                                 ),
                                               ),
