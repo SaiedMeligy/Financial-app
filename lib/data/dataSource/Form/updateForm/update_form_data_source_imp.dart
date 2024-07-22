@@ -12,7 +12,7 @@ class UpdateFormDataSourceImp implements UpdateFormDataSource{
   Future<Response> update(Map<String, dynamic> updateData) async {
     try {
       final response = await dio.post(
-        '/api/advicor/update-form',
+        '/api/update-form',
         data: updateData,
         options: Options(
             headers: {

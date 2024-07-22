@@ -365,7 +365,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
                                             )),
                                       ),
                                     ),
-                                    question.isRelatedQuestion==1?Container():
+                                    // question.isRelatedQuestion==1?Container():
                                     DropDownButton(
                                       titleRadio: GestureDetector(
                                         onTap: () {
@@ -561,7 +561,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
         "axis_id": _selecetdAixs,
         "title": titleController.text,
         "question_options": [
-          for (int i = 0; i < answerControllers.length; i++)
+          for (int i = 0; i < answerControllers.length+1 ; i++)
             {
               "id": widget.question.questionOptions![i].id,
               "type": _answerTypes[i],

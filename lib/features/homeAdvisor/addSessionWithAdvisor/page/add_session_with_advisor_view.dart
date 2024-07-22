@@ -89,14 +89,14 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
       return BlocBuilder<AddSessionCubit, AddSessionStates>(
         bloc: addSessionCubit,
         builder: (context, state) {
-          if (state is SuccessPatientNationalIdState) {
+          if (state is SuccessAddSessionState) {
             if (state.result.data['pationt'] != null) {
               _namePatientController.text = state.result.data['pationt']['name'] ?? '';
               patient_id = state.result.data['pationt']['id'] ?? 0;
               _phoneNumber.text = state.result.data['pationt']['phone_number'] ?? '';
               _nameAdvisorController.text = state.result.data['pationt']["form"]?['advicor']?['name'] ?? '';
               sessionNum =state.result.data['pationt']["sessions"].length+1;
-              print("----------->>"+state.result.data);
+              // print("----------->>"+state.result.data);
 
               if(sessionNum==0){
                  sessionNum=state.result.data['pationt']["sessions"].length+1;
