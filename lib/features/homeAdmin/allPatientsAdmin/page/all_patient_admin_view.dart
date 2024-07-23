@@ -1,3 +1,4 @@
+import 'package:experts_app/core/Services/snack_bar_service.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/updatePatient/page/dialog_delete_patient_withAdmin.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/updatePatient/page/dialog_edit_patient_WithAdmin.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/patient_widget_view.dart';
@@ -45,7 +46,8 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
       builder: (context, state) {
         if (state is LoadingAllPatientWithAdmin) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is SuccessAllPatientWithAdmin) {
+        }
+        else if (state is SuccessAllPatientWithAdmin) {
           var patients = state.patients;
 
           var filteredPatients = patients.where((patient) {
@@ -94,8 +96,9 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
               ),
             ),
           );
-        } else if (state is ErrorAllPatientWithAdmin) {
-          return Center(child: Text(state.errorMessage));
+        }
+        else if (state is ErrorAllPatientWithAdmin) {
+          SnackBarService.showErrorMessage(state.errorMessage);
         }
         return const SizedBox.shrink();
       },

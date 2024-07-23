@@ -11,6 +11,7 @@ import 'package:experts_app/features/homeAdmin/staticScreen/page/static_screen.d
 import 'package:experts_app/features/homeAdvisor/recycle_pin/page/all_patient_recycle_admin_view.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/config/cash_helper.dart';
 import '../../core/config/constants.dart';
 import 'Advices/page/All Advices/page/advice_view.dart';
 import 'Advices/page/addAdvice/add_advice.dart';
@@ -33,8 +34,14 @@ class HomeAdminView extends StatefulWidget {
 class _HomeAdminViewState extends State<HomeAdminView> {
   int currentIndex = 0;
   bool isMobile = false;
+  late String admin_name;
 
   @override
+  void initState() {
+    super.initState();
+    admin_name = CacheHelper.getData(key: 'name');
+
+  }
   Widget build(BuildContext context) {
     List<SideBarModel> titles = [
       SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home)),
@@ -99,9 +106,18 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                 ),
               ),
             ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
-            title: Text(
-              "العيادات المالية",
-              style: Constants.theme.textTheme.titleLarge,
+            title: Column(
+              children: [
+                Text(
+                  "العيادات المالية",
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+                SizedBox(height: 15,),
+                Text(
+                  "$admin_name",
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+              ],
             ),
             actions: [
               LogoutView(),

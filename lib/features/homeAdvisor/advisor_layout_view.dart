@@ -6,6 +6,7 @@ import 'package:experts_app/features/homeAdvisor/recycle_pin/page/all_patient_re
 import 'package:experts_app/features/homeAdvisor/session%20dates/page/session_data_view.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/page/patient_nationalId.dart';
 import 'package:flutter/material.dart';
+import '../../core/config/cash_helper.dart';
 import '../../core/config/constants.dart';
 import '../../domain/entities/side_bar_model.dart';
 import '../homeAdmin/logout/page/logout_view.dart';
@@ -21,8 +22,14 @@ class AdvisorLayoutView extends StatefulWidget {
 class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
   int currentIndex = 0;
   bool isMobile = false;
+  late String advisor_name;
+
 
   @override
+  void initState() {
+    super.initState();
+    advisor_name=CacheHelper.getData(key: 'name');
+  }
   Widget build(BuildContext context) {
     List<SideBarModel> titles = [
       SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home)),
@@ -63,9 +70,18 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
               ),
             ),
           ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
-          title: Text(
-            "العيادات المالية",
-            style: Constants.theme.textTheme.titleLarge,
+          title: Column(
+            children: [
+              Text(
+                "العيادات المالية",
+                style: Constants.theme.textTheme.titleLarge,
+              ),
+              SizedBox(height: 15,),
+              Text(
+                "$advisor_name",
+                style: Constants.theme.textTheme.titleLarge,
+              ),
+            ],
           ),
           actions: [
             LogoutView(),

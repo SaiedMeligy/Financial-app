@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
 
-abstract class UpdateFormWithAdminRepository{
-  Future<Response> updateWithAdmin(Map<String,dynamic> updateData);
+abstract class UpdateFormRepository{
+  Future<Response> update(Map<String,dynamic> updateData);
 }

@@ -159,7 +159,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                         Container(
                                           margin: EdgeInsets.all(10),
                                           decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Colors.grey,
                                             borderRadius: BorderRadius.circular(20)
                                           ),
                                           child: IconButton(
@@ -178,7 +178,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                     Container(
                                       margin: EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: Colors.grey,
                                           borderRadius: BorderRadius.circular(20)
                                       ),
                                       child:
@@ -445,45 +445,66 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                 ),
                               Column(
                                 children: [
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20)
-                                    ),
-                                    child: IconButton(
-                                        icon: Icon(Icons.list,color: Colors.black),
-                                        onPressed: () {
-                                          // print(AddSessionCubit().getPatientDetails(widget.pationt_data.nationalId));
-
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                            return PatientSessionView(
-                                              pationt_data: widget.pationt_data,
-                                            );
-
-
-                                          },));
-                                        }
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(20)
+                                      ),
+                                      child: IconButton(
+                                          icon: Icon(Icons.arrow_forward,color: Colors.black),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          }
+                                      ),
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20)
+                                  
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(20)
+                                      ),
+                                      child: IconButton(
+                                          icon: Icon(Icons.list,color: Colors.black),
+                                          onPressed: () {
+                                            // print(AddSessionCubit().getPatientDetails(widget.pationt_data.nationalId));
+                                    
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return PatientSessionView(
+                                                pationt_data: widget.pationt_data,
+                                              );
+                                    
+                                    
+                                            },));
+                                          }
+                                      ),
                                     ),
-                                    child: IconButton(
-                                        icon: Icon(Icons.thumb_up_alt_outlined,color: Colors.black),
-                                        onPressed: () {
-
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                            return ReportChartView(
-                                              pationt_data: widget.pationt_data,
-                                            );
-
-
-                                          },));
-                                        }
+                                  ),
+                                  
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(20)
+                                      ),
+                                      child: IconButton(
+                                          icon: Icon(Icons.thumb_up_alt_outlined,color: Colors.black),
+                                          onPressed: () {
+                                    
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return ReportChartView(
+                                                pationt_data: widget.pationt_data,
+                                              );
+                                    
+                                    
+                                            },));
+                                          }
+                                      ),
                                     ),
                                   ),
                                 ],

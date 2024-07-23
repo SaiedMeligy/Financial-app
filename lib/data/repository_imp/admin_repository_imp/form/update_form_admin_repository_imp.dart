@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
 import '../../../../core/Failure/server_failure.dart';
-import '../../../../domain/repository/admin repository/form/updateForm/update_form_repository.dart';
-import '../../../dataSource/admin/form/updateForm/update_form_admin_data_source.dart';
+import '../../../../domain/repository/admin repository/form/updateFormWithAdmin/update_form_with_admin_repository.dart';
+import '../../../dataSource/Form/updateFormWithAdmin/update_form_with_Admin_data_source.dart';
 
 class UpdateFormWithAdminRepositoryImp implements UpdateFormWithAdminRepository {
   final UpdateFormWithAdminDataSource dataSource;
@@ -12,7 +12,7 @@ class UpdateFormWithAdminRepositoryImp implements UpdateFormWithAdminRepository 
   Future<Response> updateWithAdmin(Map<String, dynamic> updateRequest) async {
     try {
       print('Update Request: $updateRequest');
-      final response = await dataSource.updateWithAdmin(updateRequest);
+      final response = await dataSource.update(updateRequest);
       print('Response Status: ${response.statusCode}');
       print('Response Data: ${response.data}');
       if (response.statusCode == 200) {
