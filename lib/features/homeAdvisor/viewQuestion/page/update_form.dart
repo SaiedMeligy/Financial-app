@@ -826,7 +826,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                     ],
                                   ),
                                   SizedBox(height: 10),
-                                  Container(
+                                  SizedBox(
                                     height: Constants.mediaQuery.height * 0.2,
                                     child: TextField(
                                       controller: commentController,
@@ -836,7 +836,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                         color: Colors.black,
                                       ),
                                       decoration: InputDecoration(
-                                        border: OutlineInputBorder(
+                                        border: const OutlineInputBorder(
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(20),
                                             topRight: Radius.circular(20),
@@ -847,9 +847,9 @@ class _UpdateFormState extends State<UpdateForm> {
                                           ),
                                         ),
                                         fillColor: Colors.grey.shade300,
+
                                         filled: true,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 50, horizontal: 10),
+                                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                         hintText: "ادخل الملاحظات",
                                         hintStyle: Constants
                                             .theme.textTheme.bodyMedium
@@ -857,41 +857,11 @@ class _UpdateFormState extends State<UpdateForm> {
                                           color: Colors.black,
                                         ),
                                       ),
+                                      maxLines: 5,
+                                      minLines: 1,
                                     ).setHorizontalPadding(
                                         context, enableMediaQuery: false, 20),
                                   ),
-
-                                  // TextField(
-                                  //   controller: commentController,
-                                  //   style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                  //     color: Colors.black,
-                                  //
-                                  //   ),
-                                  //   decoration: InputDecoration(
-                                  //     border: OutlineInputBorder(
-                                  //       borderRadius: BorderRadius.only(
-                                  //         topLeft: Radius.circular(20),
-                                  //         topRight: Radius.circular(20),
-                                  //
-                                  //       ),
-                                  //       borderSide: BorderSide(
-                                  //         color: Colors.white,
-                                  //         width: 2,
-                                  //       ),
-                                  //
-                                  //     ),
-                                  //     fillColor: Colors.grey.shade300,
-                                  //     filled: true,
-                                  //     contentPadding: EdgeInsets.all(10),
-                                  //     hintText: "ادخل الملا��ظات",
-                                  //     hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                  //       color: Colors.black,
-                                  //
-                                  //     ),
-                                  //
-                                  //
-                                  //   ),
-                                  // ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                                   SizedBox(height: 20),
                                   BorderRoundedButton(
                                     title: "تعديل",

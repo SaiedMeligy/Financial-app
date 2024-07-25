@@ -3,12 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:experts_app/core/Services/snack_bar_service.dart';
 import 'package:experts_app/domain/entities/AddSessionModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
-import 'package:experts_app/main.dart';
-
-import '../../../../core/Failure/server_failure.dart';
 import '../../../../core/Services/web_services.dart';
-import '../../../../core/config/cash_helper.dart';
-import '../../../../core/config/constants.dart';
 import '../../../../data/dataSource/admin/Patients/getSessionDetails/get_session_details_data_source.dart';
 import '../../../../data/dataSource/admin/Patients/getSessionDetails/get_session_details_data_source_imp.dart';
 import '../../../../data/dataSource/getPatientDetails/get_patient_details_data_source.dart';

@@ -1,5 +1,6 @@
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/features/homeAdmin/staticScreen/Widegets/SenarioWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +37,7 @@ class _StaticScreenState extends State<StaticScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // homeAdminCubit.getHomeAdminSenario();
     return LayoutBuilder(
       builder: (context, constraints) {
         isMobile = constraints.maxWidth < 600;
@@ -50,7 +52,6 @@ class _StaticScreenState extends State<StaticScreen> {
                     child: CircularProgressIndicator(),
                   );
                 }
-
                 if (state is ErrorHomeAdmin) {
                   return Center(
                     child: Text(
@@ -65,11 +66,13 @@ class _StaticScreenState extends State<StaticScreen> {
                 if (state is SuccessHomeAdmin) {
                   var homeAdmin = state.home;
                   var topAdvisors = homeAdmin?.topAdvicors ?? [];
-                  var senarioReport = homeAdmin?.senariosReport ?? [];
 
-                  var senario1 = calculatePercentage(senarioReport[0].pationtsPointersCount ?? 0, senarioReport[0]?.pointersCount ?? 0).toString();
-                  var senario2 = calculatePercentage(senarioReport[1].pationtsPointersCount ?? 0, senarioReport[1]?.pointersCount ?? 0).toString();
-                  var senario3 = calculatePercentage(senarioReport[2].pationtsPointersCount ?? 0, senarioReport[2]?.pointersCount ?? 0).toString();
+                  print("ssssssssssssssss>" + homeAdmin.toString());
+                  // var senarioReport = homeAdmin?.senariosReport ?? [];
+
+                  // var senario1 = calculatePercentage(senarioReport[0].pationtsPointersCount ?? 0, senarioReport[0]?.pointersCount ?? 0).toString();
+                  // var senario2 = calculatePercentage(senarioReport[1].pationtsPointersCount ?? 0, senarioReport[1]?.pointersCount ?? 0).toString();
+                  // var senario3 = calculatePercentage(senarioReport[2].pationtsPointersCount ?? 0, senarioReport[2]?.pointersCount ?? 0).toString();
 
                   List<SalesData> advisorData = topAdvisors.map((advisor) {
                     return SalesData(advisor.advicor?.name ?? '', advisor.pationtCount!.toDouble());
@@ -108,7 +111,7 @@ class _StaticScreenState extends State<StaticScreen> {
                               ),
                             ],
                           ),
-                          _buildScenarioReport(senario1, senario2, senario3, senarioReport),
+                          // _buildScenarioReport(senario1, senario2, senario3, senarioReport),
                           Row(
                             children: [
                               _buildTopAdvisors(topAdvisors),
@@ -152,7 +155,34 @@ class _StaticScreenState extends State<StaticScreen> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          _buildScenarioReport(senario1, senario2, senario3, senarioReport),
+                          // BlocBuilder<HomeAdminCubit,HomeAdminStates>(
+                          //   bloc: homeAdminCubit,
+                          //   builder: (context, state) {
+                          //     if (state is LoadingHomeAdmin) {}
+                          //     if (state is ErrorHomeAdmin) {
+                          //       return Text(state.errorMessage);
+                          //     }
+                          //     if(state is SuccessHomeAdminSenario){
+                          //       var senarioReport = state.senario?.senariosReport??[];
+                          //       print('------------->'+);
+                          //             print("------------>"+senarioReport.toString());
+                          //
+                          //       // var senario1 = calculatePercentage(senarioReport[0].pationtsPointersCount ?? 0, senarioReport?[0].pointersCount ?? 0).toString();
+                          //       // var senario2 = calculatePercentage(senarioReport[1].pationtsPointersCount ?? 0, senarioReport?[1].pointersCount ?? 0).toString();
+                          //       // var senario3 = calculatePercentage(senarioReport[2].pationtsPointersCount ?? 0, senarioReport?[2].pointersCount ?? 0).toString();
+                          //       //
+                          //       //
+                          //       //
+                          //       //   return _buildScenarioReport(senario1, senario2, senario3, senarioReport.cast<SenariosReport>());
+                          //     }
+                          //     else {
+                          //       Text("wrong");
+                          //     }
+                          //     return SizedBox.shrink();
+                          //   },
+                          //
+                          // ),
+                          SenarioWadget(),
                           Row(
                             children: [
                               Container(
@@ -206,14 +236,17 @@ class _StaticScreenState extends State<StaticScreen> {
                       ).setHorizontalPadding(context,enableMediaQuery: false,15),
                     ),
                   );
-                } else {
+                }
+                else {
                   return Center(
-                    child: Text(
-                      "حدث خطأ ما",
-                      style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                        color: Colors.red,
-                      ),
-                    ),
+                    child:
+                    // Text(
+                    //   "حدث خطأ ما",
+                    //   style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                    //     color: Colors.red,
+                    //   ),
+                    // ),
+                    CircularProgressIndicator()
                   );
                 }
               },

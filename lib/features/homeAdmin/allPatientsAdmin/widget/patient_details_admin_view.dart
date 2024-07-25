@@ -457,13 +457,13 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                 ),
                                 Expanded(
                                   child: Container(
-                                    margin: EdgeInsets.all(5),
+                                    margin: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: IconButton(
-                                      icon: Icon(Icons.list, color: Colors.black),
+                                      icon: const Icon(Icons.list, color: Colors.black),
                                       onPressed: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           return PatientSessionViewWithAdmin(
@@ -741,11 +741,11 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
                                     SizedBox(height: 10),
                                     Container(
-                                      height: Constants.mediaQuery.height * 0.15,
+                                      height: Constants.mediaQuery.height * 0.2,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                         color: Colors.grey.shade300,
-                                        borderRadius: BorderRadius.only(
+                                        borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(20),
                                           topRight: Radius.circular(20),
                                         ),

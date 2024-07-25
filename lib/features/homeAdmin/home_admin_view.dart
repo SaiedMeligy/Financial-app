@@ -44,24 +44,24 @@ class _HomeAdminViewState extends State<HomeAdminView> {
   }
   Widget build(BuildContext context) {
     List<SideBarModel> titles = [
-      SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home)),
-      SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add)),
-      SideBarModel(title: "الحالات", icon: Icon(Icons.list)),
-      SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete)),
-      SideBarModel(title: "تقارير المؤاشرات", icon: Icon(Icons.list)),
-      SideBarModel(title: "تقارير التوصيات", icon: Icon(Icons.list)),
-      SideBarModel(title: "اضافة الأسئلة", icon: Icon(Icons.add)),
-      SideBarModel(title: "عرض الأسئلة", icon: Icon(Icons.list)),
-      SideBarModel(title: "اضافة المؤاشرات", icon: Icon(Icons.add)),
-      SideBarModel(title: "المؤاشرات", icon: Icon(Icons.list)),
-      SideBarModel(title: "اضافة التوصيات", icon: Icon(Icons.add)),
-      SideBarModel(title: " التوصيات", icon: Icon(Icons.list)),
-      SideBarModel(title: "اضافة الحالات من مصدر خارجي", icon: Icon(Icons.add)),
-      SideBarModel(title: "حجز جلسات", icon: Icon(Icons.border_color_outlined)),
-      SideBarModel(title: "الجلسات المحجوزة", icon: Icon(Icons.list)),
-      SideBarModel(title: "اضافة خدمة استشارية", icon: Icon(Icons.add)),
-      SideBarModel(title: "الخدمات الاستشارية", icon: Icon(Icons.list)),
-      SideBarModel(title: "اضافة استشاري", icon: Icon(Icons.add)),
+      SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home,color: Colors.black87,)),
+      SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "الحالات", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete,color: Colors.black87)),
+      SideBarModel(title: "تقارير المؤاشرات", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "تقارير التوصيات", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة الأسئلة", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "عرض الأسئلة", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة المؤاشرات", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "المؤاشرات", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة التوصيات", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: " التوصيات", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة الحالات من مصدر خارجي", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "حجز جلسات", icon: Icon(Icons.border_color_outlined,color: Colors.black87)),
+      SideBarModel(title: "الجلسات المحجوزة", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة خدمة استشارية", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "الخدمات الاستشارية", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة استشاري", icon: Icon(Icons.add,color: Colors.black87)),
     ];
 
     List<Widget> bodies = [
@@ -154,7 +154,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                         Expanded(
                           child: Text(
                             titles[index].title,
-                            style: Constants.theme.textTheme.bodyMedium,
+                            style: Constants.theme.textTheme.titleLarge,
                           ),
                         ),
                       ],
@@ -162,7 +162,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                     onTap: () {
                       setState(() {
                         currentIndex = index;
-                        Navigator.pop(context); // Close the drawer after selecting an item
+                        Navigator.pop(context);
                       });
                     },
                   );
@@ -179,7 +179,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                   Container(
                     width: Constants.mediaQuery.width * 0.24,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.86),
+                      color: Constants.theme.primaryColor,
                     ),
                     child: Column(
                       children: [
@@ -194,7 +194,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                                   });
                                 },
                                 child: Container(
-                                  color: currentIndex == index ? Colors.grey : Constants.theme.primaryColor.withOpacity(0.3),
+                                  color: currentIndex == index ? Colors.grey.shade400 : Constants.theme.primaryColor.withOpacity(0.5),
                                   child: ListTile(
                                     title: Row(
                                       children: [
@@ -204,8 +204,8 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                                           child: Text(
                                             titles[index].title,
                                             style: currentIndex == index
-                                                ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Constants.theme.primaryColor, fontSize: 21)
-                                                : Constants.theme.textTheme.bodyMedium,
+                                                ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Constants.theme.primaryColor, fontSize: 24)
+                                                : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20),
                                             textAlign: TextAlign.start,
                                           ),
                                         ),
