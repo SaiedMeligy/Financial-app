@@ -280,6 +280,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                     } else if (state is SuccessPatientNationalIdState) {
                       // print("ssssssssssssssssssss->"+state.result.data.toString());
                       var sessions = state.result.data["pationt"]["sessions"];
+                      var patient = state.result.data["pationt"];
                       for(int i = 0; i < sessions.length; i++) {
                          session = sessions[i];
                       }
@@ -318,13 +319,13 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                               ),
                             ),
                             Text(
-                              "الخدمة الاستشارية : ${session["consultation_service"]?? ""}",
+                              "الخدمة الأستشارية :${patient["form"]["consultation_service"]["name"]??""}",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              "وصف الخدمة الاستشارية : ${session["consultation_service"] ?? ""}",
+                              "وصف الخدمة الاستشارية : ${patient["form"]["consultation_service"]["description"]??""}",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
@@ -405,7 +406,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                         alignment: Alignment.center,
                                         child: Text(
                                           session["date"] ?? "",
-                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                             color: Colors.white,
                                           ),
                                         ),

@@ -489,6 +489,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                     } else if (state is SuccessAddSessionState) {
                       // print("ssssssssssssssssssss->"+state.result.data.toString());
                       var sessions = state.result.data["pationt"]["sessions"];
+                      var patient = state.result.data["pationt"];
                       for(int i = 0; i < sessions.length; i++) {
                         session = sessions[i];
                       }
@@ -527,13 +528,13 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                               ),
                             ),
                             Text(
-                              "الخدمة الاستشارية : ${session["consultation_service"]?? ""}",
+                              "الخدمة الاستشارية : ${patient["form"]["consultation_service"]["name"]??""}",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              "وصف الخدمة الاستشارية : ${session["consultation_service"] ?? ""}",
+                              "وصف الخدمة الاستشارية : ${patient["form"]["consultation_service"]["description"]??""}",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
@@ -614,7 +615,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                         alignment: Alignment.center,
                                         child: Text(
                                           session["date"] ?? "",
-                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                             color: Colors.white,
                                           ),
                                         ),
@@ -667,8 +668,8 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                 sessionId: widget.sessionId,
                                                 comments: commentController.text,
                                               );
-                                              updateSessionCubit.updateSessionWithAdmin(data).then((_) {
-                                                _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+                                              updateSessionCubit.updateSession(data).then((_) {
+                                                _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
                                                 Navigator.of(context).pop();
                                               });
                                             }
