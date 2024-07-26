@@ -3,11 +3,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/features/homeAdmin/allQuestionView/manager/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/Services/snack_bar_service.dart';
 import '../../../../core/config/cash_helper.dart';
 import '../../../../core/config/constants.dart';
@@ -18,10 +16,10 @@ import '../../../../core/widget/radio_button.dart';
 import '../../../../core/widget/tab_item_widget.dart';
 import '../../../../domain/entities/AdviceMode.dart';
 import '../../../../domain/entities/QuestionModel.dart';
-import '../../../homeAdvisor/viewQuestion/manager/cubit.dart';
 import '../manager/cubit.dart';
 import '../manager/states.dart';
 
+// ignore: must_be_immutable
 class UpdateQuestion extends StatefulWidget {
   List<Questions> allQuestions ;
   Questions question ;
@@ -561,7 +559,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
         "axis_id": _selecetdAixs,
         "title": titleController.text,
         "question_options": [
-          for (int i = 0; i < answerControllers.length+1 ; i++)
+          for (int i = 0; i < answerControllers.length ; i++)
             {
               "id": widget.question.questionOptions![i].id,
               "type": _answerTypes[i],
