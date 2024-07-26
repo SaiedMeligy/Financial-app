@@ -1,3 +1,4 @@
+import 'package:experts_app/core/config/page_route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,10 +29,11 @@ class _LogoutViewState extends State<LogoutView> {
                 if (value) {
                   print("Logout successful: $value");
                   CacheHelper.clearAllData();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LogView())
-                  );
+                  Navigator.pushNamedAndRemoveUntil(context, PageRouteName.login,(route) => false,);
+                  // Navigator.pushAndRemoveUntil(
+                  //     context, MaterialPageRoute(builder: (context) => LogView()),
+                  //     (route) => false,
+                  // );
                 } else {
                   print("Logout failed: $value");
                 }

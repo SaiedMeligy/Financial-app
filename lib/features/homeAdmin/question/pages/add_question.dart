@@ -67,19 +67,11 @@ class _AddQuestionState extends State<AddQuestion> {
     fetchPointers();
     fetchAdvices();
     questionViewCubit.getAllQuestion();
-    //  questions = questionViewCubit.getAllQuestion();
-    // print('1111111111111111111111111111111111111111111111111111111111\n${questions}');
-    // (questions["questions"] as List<dynamic>).forEach((value) {
-    //   realtedQuestion.add(Questions(id: value["id"] , title: value["title"]));
-    // });
-    // print('2222222222222222222222222222222222222222222222222222222222');
-
   }
   @override
   Widget build(BuildContext context) {
 
-    return
-      BlocBuilder<AddQuestionCubit, AddQuestionStates>(
+    return BlocBuilder<AddQuestionCubit, AddQuestionStates>(
       bloc: addQuestionCubit,
       builder: (context, state) {
         return Container(
@@ -381,120 +373,6 @@ class _AddQuestionState extends State<AddQuestion> {
                                             )),
                                       ),
                                     ),
-
-                                    // BlocBuilder<AllQuestionCubit,AllQuestionStates>(
-                                    //   bloc: questionViewCubit,
-                                    //   builder: (context, state) {
-                                    //     if (state is LoadingAllQuestion) {
-                                    //       return const Center(
-                                    //         child: CircularProgressIndicator(),
-                                    //       );
-                                    //     }
-                                    //     if (state is ErrorAllQuestion) {
-                                    //       return Center(
-                                    //         child: Text(state.errorMessage),
-                                    //       );
-                                    //     }
-                                    //     if (state is SuccessAllQuestion) {
-                                    //
-                                    //       var question = state.question;
-                                    //       print("++++++++++++++++++++>>"+question.toString());
-                                    //       return DropDownButton(
-                                    //       titleRadio: GestureDetector(
-                                    //         onTap: () {
-                                    //           showDialog(
-                                    //             context: context,
-                                    //             builder: (context) {
-                                    //               return AlertDialog(
-                                    //                 backgroundColor: Colors.black,
-                                    //                 content: SizedBox(
-                                    //                     height: Constants
-                                    //                         .mediaQuery.height *
-                                    //                         0.6,
-                                    //                     width: Constants
-                                    //                         .mediaQuery.width *
-                                    //                         0.45,
-                                    //                     child: Column(
-                                    //                       crossAxisAlignment: CrossAxisAlignment
-                                    //                           .stretch,
-                                    //                       children: [
-                                    //                         Container(
-                                    //                           alignment: Alignment
-                                    //                               .center,
-                                    //                           decoration: BoxDecoration(
-                                    //                             borderRadius: BorderRadius
-                                    //                                 .circular(10),
-                                    //                             border: Border
-                                    //                                 .all(
-                                    //                               color: Constants
-                                    //                                   .theme
-                                    //                                   .primaryColor,
-                                    //                               width: 2.5,
-                                    //                             ),
-                                    //                           ),
-                                    //                           child: Text(
-                                    //                               "اختر من الاسئلة",
-                                    //                               style: Constants
-                                    //                                   .theme
-                                    //                                   .textTheme
-                                    //                                   .titleLarge
-                                    //                           ),
-                                    //                         ),
-                                    //                         CheckBoxQuestion(
-                                    //                           previous: selectedQuestions[index],
-                                    //                           items: question,
-                                    //                           onChanged: (value) {
-                                    //                             setState(() {
-                                    //                               selectedQuestions[index] =
-                                    //                               value!;
-                                    //                             });
-                                    //                           },
-                                    //                         ),
-                                    //                       ],
-                                    //                     )),
-                                    //                 actions: [
-                                    //                   TextButton(
-                                    //                     onPressed: () {
-                                    //                       Navigator.of(context)
-                                    //                           .pop();
-                                    //                     },
-                                    //                     child: Container(
-                                    //                         decoration: BoxDecoration(
-                                    //                           borderRadius: BorderRadius
-                                    //                               .circular(10),
-                                    //                           border: Border.all(
-                                    //                             color: Constants
-                                    //                                 .theme
-                                    //                                 .primaryColor,
-                                    //                             width: 2.5,),
-                                    //                         ),
-                                    //                         child: Text(
-                                    //                             "موافق",
-                                    //                             style: Constants
-                                    //                                 .theme
-                                    //                                 .textTheme
-                                    //                                 .bodyMedium
-                                    //                         )
-                                    //                             .setHorizontalPadding(
-                                    //                             context,
-                                    //                             enableMediaQuery: false,
-                                    //                             20)),
-                                    //                   ),
-                                    //                 ],);
-                                    //             },
-                                    //           );
-                                    //         },
-                                    //         child: Text("الاسئلة",
-                                    //           style: Constants.theme.textTheme
-                                    //               .bodyMedium?.copyWith(
-                                    //             color: Colors.white,),),
-                                    //       ),
-                                    //     );}
-                                    //     else {
-                                    //       return  Text("some thing went rong");
-                                    //     }
-                                    //   }
-                                    // ),
                                     QuestionDropDown(
                                       selectedQuestion: selectedQuestions[index],
                                       onSelect:(value) {

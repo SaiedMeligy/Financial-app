@@ -45,8 +45,7 @@ class HomeAdmin {
       this.pationtsCount, 
       this.sessionsCount, 
       this.successStoryCount, 
-      this.topAdvicors, 
-      this.senariosReport,});
+      this.topAdvicors,});
 
   HomeAdmin.fromJson(dynamic json) {
     pationtsCount = json['pationts_count'];
@@ -58,18 +57,18 @@ class HomeAdmin {
         topAdvicors?.add(TopAdvicors.fromJson(v));
       });
     }
-    if (json['senarios_report'] != null) {
-      senariosReport = [];
-      json['senarios_report'].forEach((v) {
-        senariosReport?.add(SenariosReport.fromJson(v));
-      });
-    }
+    // if (json['senarios_report'] != null) {
+    //   senariosReport = [];
+    //   json['senarios_report'].forEach((v) {
+    //     senariosReport?.add(SenariosReport.fromJson(v));
+    //   });
+    // }
   }
   int? pationtsCount;
   int? sessionsCount;
   int? successStoryCount;
   List<TopAdvicors>? topAdvicors;
-  List<SenariosReport>? senariosReport;
+  // List<SenariosReport>? senariosReport;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -79,10 +78,10 @@ class HomeAdmin {
     if (topAdvicors != null) {
       map['top_advicors'] = topAdvicors?.map((v) => v.toJson()).toList();
     }
-    if (senariosReport != null) {
-      map['senarios_report'] = senariosReport?.map((v) => v.toJson()).toList();
-    }
-    return map;
+    // if (senariosReport != null) {
+    //   map['senarios_report'] = senariosReport?.map((v) => v.toJson()).toList();
+    // }
+     return map;
   }
 
 }

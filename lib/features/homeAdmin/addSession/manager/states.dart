@@ -1,4 +1,6 @@
 
+import 'package:dio/dio.dart';
+
 sealed class AddSessionStates{}
 class LoadingAddSessionState extends AddSessionStates{}
 class SuccessPatientNationalIdState extends AddSessionStates{
@@ -6,7 +8,7 @@ class SuccessPatientNationalIdState extends AddSessionStates{
   SuccessPatientNationalIdState(this.result);
 }
 class SuccessAddSessionState extends AddSessionStates{
-  final dynamic result;
+  final Response result;
   SuccessAddSessionState(this.result);
 
 }

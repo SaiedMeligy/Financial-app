@@ -69,7 +69,6 @@ class InitialPage extends StatelessWidget {
                                             child: Text("Get Started",
                                               style: Constants.theme.textTheme
                                                   .bodyMedium?.copyWith(
-
                                                   color: Colors.black
                                               ),))),
                                   ],

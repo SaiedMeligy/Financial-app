@@ -29,10 +29,10 @@ LoginRepositoryImp(this.loginDataSource);
           CacheHelper.saveData(key: "id", value: response.data["user"]["id"]);
 
           if(response.data["user"]["rule"]==0){
-            navigatorKey.currentState!.pushNamed(PageRouteName.homeAdvisor);
+            navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdvisor);
           }
           else if(response.data["user"]["rule"]==1){
-            navigatorKey.currentState!.pushNamed(PageRouteName.homeAdmin);
+            navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdmin);
           }
           return Right(true);
         }

@@ -393,50 +393,22 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                         ),
                                         fillColor: Colors.grey.shade300,
                                         filled: true,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 50, horizontal: 10),
+                                        contentPadding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 10),
                                         hintText: "ادخل الملاحظات",
                                         hintStyle: Constants
                                             .theme.textTheme.bodyMedium
                                             ?.copyWith(
                                           color: Colors.black,
                                         ),
+
                                       ),
+                                      maxLines: 5,
+                                      minLines: 1,
                                     ).setHorizontalPadding(
                                         context, enableMediaQuery: false, 20),
                                   ),
 
-                                  // TextField(
-                                  //   controller: commentController,
-                                  //   style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                  //     color: Colors.black,
-                                  //
-                                  //   ),
-                                  //   decoration: InputDecoration(
-                                  //     border: OutlineInputBorder(
-                                  //       borderRadius: BorderRadius.only(
-                                  //         topLeft: Radius.circular(20),
-                                  //         topRight: Radius.circular(20),
-                                  //
-                                  //       ),
-                                  //       borderSide: BorderSide(
-                                  //         color: Colors.white,
-                                  //         width: 2,
-                                  //       ),
-                                  //
-                                  //     ),
-                                  //     fillColor: Colors.grey.shade300,
-                                  //     filled: true,
-                                  //     contentPadding: EdgeInsets.all(10),
-                                  //     hintText: "ادخل الملا��ظات",
-                                  //     hintStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                  //       color: Colors.black,
-                                  //
-                                  //     ),
-                                  //
-                                  //
-                                  //   ),
-                                  // ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                                   SizedBox(height: 20),
                                   BorderRoundedButton(
                                     title: "تعديل",

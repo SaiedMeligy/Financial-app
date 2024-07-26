@@ -612,7 +612,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                 } else {
                                   return Column(
                                     children: [
-                                      Text(consultation["name"]),
+                                      Text(consultation["name"],style: Constants.theme.textTheme.bodyLarge,),
                                       SizedBox(height: 10),
                                       Container(
                                         height: Constants.mediaQuery.height * 0.15,
@@ -635,7 +635,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                       Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
                                       SizedBox(height: 10),
                                       Container(
-                                        height: Constants.mediaQuery.height * 0.15,
+                                        height: Constants.mediaQuery.height * 0.2,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade300,
@@ -644,12 +644,14 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                             topRight: Radius.circular(20),
                                           ),
                                         ),
-                                        child: Text(
-                                          formData["comments"],
-                                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                            color: Colors.black,
-                                          ),
-                                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                        child: Expanded(
+                                          child: Text(
+                                            formData["comments"],
+                                            style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                              color: Colors.black,
+                                            ),
+                                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                        ),
                                       ),
                                     ],
                                   ).setVerticalPadding(context, enableMediaQuery: false, 20);

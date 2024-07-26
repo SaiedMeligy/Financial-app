@@ -32,13 +32,13 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
   }
   Widget build(BuildContext context) {
     List<SideBarModel> titles = [
-      SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home)),
-      SideBarModel(title: "حالاتك", icon: Icon(Icons.list)),
-      SideBarModel(title: "بدء جلسة", icon: Icon(Icons.timer)),
-      SideBarModel(title: "حجز جلسات", icon: Icon(Icons.border_color_outlined)),
-      SideBarModel(title: "مواعيد الجلسات", icon: Icon(Icons.access_time_rounded)),
-       SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete)),
-      SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add)),
+      SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home,color: Colors.black87)),
+      SideBarModel(title: "حالاتك", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "بدء جلسة", icon: Icon(Icons.timer,color: Colors.black87)),
+      SideBarModel(title: "حجز جلسات", icon: Icon(Icons.border_color_outlined,color: Colors.black87)),
+      SideBarModel(title: "مواعيد الجلسات", icon: Icon(Icons.access_time_rounded,color: Colors.black87)),
+       SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete,color: Colors.black87)),
+      SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add,color: Colors.black87)),
     ];
     List<Widget> bodies = [
       HomeAdvisorView(),
@@ -102,7 +102,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
                     Expanded(
                       child: Text(
                         titles[index].title,
-                        style: Constants.theme.textTheme.bodyMedium,
+                        style: Constants.theme.textTheme.titleLarge,
                       ),
                     ),
                   ],
@@ -125,7 +125,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
               Container(
                 width: Constants.mediaQuery.width * 0.24,
                 decoration:  BoxDecoration(
-                  color: Colors.black.withOpacity(0.86),
+                  color: Constants.theme.primaryColor
                 ),
                 child: Column(children: [
                   Expanded(
@@ -154,10 +154,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
                                       Text(
                                         titles[index].title,
                                         style: currentIndex == index
-                                            ? Constants.theme.textTheme.bodyLarge
-                                                ?.copyWith(
-                                                    color: Constants.theme.primaryColor,fontSize: 21)
-                                            : Constants.theme.textTheme.bodyMedium,
+                                            ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Constants.theme.primaryColor, fontSize: 24)
+                                            : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20),
                                         textAlign: TextAlign.start,
                                       ),
                                     ],
