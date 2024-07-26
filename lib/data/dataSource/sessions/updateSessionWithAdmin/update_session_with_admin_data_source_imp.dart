@@ -21,7 +21,7 @@ class UpdateSessionWithAdminDataSourceImp implements UpdateSessionWithAdminDataS
       ),
       queryParameters: {
         "id":data.sessionId,
-        "comments":data.comments,
+        "advicor_comments":data.comments,
         "consultation_service_id":data.consultationId,
         "is_attended":data.isAttend,
         "need_other_session":data.needOtherSession,
