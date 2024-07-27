@@ -581,7 +581,7 @@ class _UpdateFormState extends State<UpdateForm> {
                   image: DecorationImage(
                     image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 0.8,
+                    opacity: 0.5,
                   ),
                 ),
                 child: Column(
@@ -614,7 +614,7 @@ class _UpdateFormState extends State<UpdateForm> {
                         height: Constants.mediaQuery.height * 0.8,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Constants.theme.primaryColor.withOpacity(0.3),
+                          color: Constants.theme.primaryColor.withOpacity(0.6),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: ListView.builder(
@@ -770,7 +770,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                     height: 3,
                                     indent: 20,
                                     endIndent: 20,
-                                    color: Colors.grey.shade600,
+                                    color: Colors.black54,
                                   ),
                                   SizedBox(height: 10),
                                 ],

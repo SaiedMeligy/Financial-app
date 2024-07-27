@@ -121,15 +121,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
               var consultation = formData["consultationService"];
 
                var filteredAnswers = filterQuestionsWithAnswer(answers);
-              // filteredAnswers.add(filteredAnswers[0]);
-              // filteredAnswers.add(filteredAnswers[1]);
-              // filteredAnswers.add(filteredAnswers[2]);
-              // filteredAnswers.add(filteredAnswers[3]);
-              // filteredAnswers.add(filteredAnswers[4]);
-              // filteredAnswers.add(filteredAnswers[5]);
-              // filteredAnswers.add(filteredAnswers[6]);
-              // filteredAnswers.add(filteredAnswers[7]);
-              // filteredAnswers.add(filteredAnswers[8]);
+
               return Directionality(
                 textDirection: TextDirection.rtl,
                 child: Scaffold(
@@ -138,7 +130,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                       image: DecorationImage(
                         image: AssetImage("assets/images/back.jpg"),
                         fit: BoxFit.cover,
-                        opacity: 0.8,
+                        opacity: 0.5,
                       ),
                     ),
                     child: Column(
@@ -519,7 +511,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                             height: Constants.mediaQuery.height * 0.8,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: Constants.theme.primaryColor.withOpacity(0.4),
+                              color: Constants.theme.primaryColor.withOpacity(0.6),
                               borderRadius: BorderRadius.all(Radius.circular(10)),
                             ),
                             child: ListView.builder(
@@ -604,7 +596,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                         height: 3,
                                         indent: 20,
                                         endIndent: 20,
-                                        color: Colors.grey.shade600,
+                                        color: Colors.black54,
                                       ),
                                       SizedBox(height: 10),
                                     ],

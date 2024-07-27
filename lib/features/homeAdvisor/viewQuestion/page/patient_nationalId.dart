@@ -39,7 +39,7 @@ class _PatientNationalIdState extends State<PatientNationalId> {
                   image: DecorationImage(
                     image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 0.7,
+                    opacity: 0.4,
                   ),
                 ),
                 child: Column(

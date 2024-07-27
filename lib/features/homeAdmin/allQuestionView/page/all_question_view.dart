@@ -40,7 +40,7 @@ class _AllQuestionViewState extends State<AllQuestionView> {
                   image: DecorationImage(
                     image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 0.8
+                    opacity: 0.4
                   ),
                 ),
                 child: ListView.builder(
@@ -165,7 +165,7 @@ class _AllQuestionViewState extends State<AllQuestionView> {
                           ),
                         ),
                       ],
-                    ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10);
+                    ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 20);
                   },
                 ),
               ),

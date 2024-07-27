@@ -34,7 +34,7 @@ class _AddIndicatorState extends State<AddIndicator> {
                 image: DecorationImage(
                     image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 0.7
+                    opacity: 0.4
                 )
 
             ),
@@ -95,7 +95,7 @@ class _AddIndicatorState extends State<AddIndicator> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor:
-                                Constants.theme.primaryColor.withOpacity(0.5)),
+                                Constants.theme.primaryColor),
                         child: Text(
                           "اضافة المؤشر",
                           style: Constants.theme.textTheme.bodyLarge
@@ -134,11 +134,9 @@ class _AddIndicatorState extends State<AddIndicator> {
                                             },
                                             child: Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                                  borderRadius: BorderRadius.circular(10),
                                                   border: Border.all(
-                                                    color: Constants
-                                                        .theme.primaryColor,
+                                                    color: Constants.theme.primaryColor,
                                                     width: 2.5,
                                                   ),
                                                 ),

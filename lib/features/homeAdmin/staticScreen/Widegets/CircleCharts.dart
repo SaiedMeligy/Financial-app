@@ -35,6 +35,7 @@ class CircleCharts extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -61,8 +62,11 @@ class CircleCharts extends StatelessWidget {
                     length: '20%',
                     type: ConnectorType.curve,
                   ),
-                    textStyle: Constants.theme.textTheme.bodySmall?.copyWith(
+                    textStyle: Constants.theme.textTheme.bodyMedium?.copyWith(
                       overflow: TextOverflow.ellipsis,
+                      color: Colors.black87,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                     alignment: ChartAlignment.center,
 

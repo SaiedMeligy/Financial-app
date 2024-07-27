@@ -125,7 +125,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                     image: DecorationImage(
                       image: AssetImage("assets/images/back.jpg"),
                       fit: BoxFit.cover,
-                      opacity: 0.9,
+                      opacity: 0.5,
                     ),
                   ),
                   child: Column(
@@ -628,7 +628,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                           height: Constants.mediaQuery.height * 0.8,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Constants.theme.primaryColor.withOpacity(0.4),
+                            color: Constants.theme.primaryColor.withOpacity(0.6),
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: ListView.builder(

@@ -440,7 +440,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                   image: DecorationImage(
                     image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 0.7,
+                    opacity: 0.4,
                   ),
                 ),
                 child: Column(
@@ -581,6 +581,8 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                                 sessionComment: session.comments,
                                                 sessionDate: session.date,
                                                 consultationService: session.consultationService,
+                                                isAttend: session.isAttended,
+
                                               ),
                                             ),
                                           );

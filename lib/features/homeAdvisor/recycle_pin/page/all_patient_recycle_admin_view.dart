@@ -49,7 +49,7 @@ class _AllPatientRecycleAdminViewState extends State<AllPatientRecycleAdminView>
               image: DecorationImage(
                 image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
-                opacity: 0.7
+                opacity: 0.4
               )
             ),
             child: Padding(

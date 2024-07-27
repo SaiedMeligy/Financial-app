@@ -37,103 +37,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return
-    //   ResponsiveBuilder(
-    //   builder: (context, sizingInformation) {
-    //     return ListView(
-    //       children: [
-    //         DataTable(
-    //           decoration: const BoxDecoration(
-    //             borderRadius: BorderRadius.all(Radius.circular(10)),
-    //           ),
-    //           border: TableBorder.all(
-    //             color: Constants.theme.primaryColor,
-    //             width: 2,
-    //           ),
-    //           columnSpacing: 20,
-    //           columns: [
-    //             DataColumn(
-    //               label: Expanded(
-    //                 child: SizedBox(
-    //                   width: Constants.mediaQuery.width * 0.5,
-    //                   child: Text(
-    //                     widget.label1,
-    //                     textAlign: TextAlign.center,
-    //                     style: Constants.theme.textTheme.titleLarge?.copyWith(
-    //                       color: Colors.white,
-    //                       fontSize: 20,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //             DataColumn(
-    //               label: Expanded(
-    //                 child: SizedBox(
-    //                   width: Constants.mediaQuery.width * 0.001,
-    //                   child: Text(
-    //                     widget.label2,
-    //                     textAlign: TextAlign.center,
-    //                     style: Constants.theme.textTheme.titleLarge?.copyWith(
-    //                       color: Colors.white,
-    //                       fontSize: 20,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //             DataColumn(
-    //               label: Expanded(
-    //                 child: SizedBox(
-    //                   width: Constants.mediaQuery.width * 0.001,
-    //                   child: Text(
-    //                     widget.label3,
-    //                     textAlign: TextAlign.center,
-    //                     style: Constants.theme.textTheme.titleLarge?.copyWith(
-    //                       fontSize: 20,
-    //                       color: Colors.white,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //           rows: List<DataRow>.generate(
-    //             widget.items.length,
-    //                 (index) => DataRow(
-    //               cells: [
-    //                 DataCell(
-    //                   Container(
-    //                     alignment: Alignment.center,
-    //                     child: Text(
-    //                       widget.itemNameBuilder(widget.items[index]),
-    //                       style: Constants.theme.textTheme.bodyLarge?.copyWith(
-    //                         color: Colors.white,
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //                 DataCell(
-    //                   Container(
-    //                     alignment: Alignment.center,
-    //                     child: widget.itemEditWidgetBuilder(widget.items[index]),
-    //                   ),
-    //                 ),
-    //                 DataCell(
-    //                   Container(
-    //                     alignment: Alignment.center,
-    //                     child: widget.itemDeleteWidgetBuilder != null
-    //                         ? widget.itemDeleteWidgetBuilder!(widget.items[index])
-    //                         : Container(),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ).setVerticalPadding(context, enableMediaQuery: false, 20).setHorizontalPadding(context, enableMediaQuery: false, 30),
-    //       ],
-    //     );
-    //   },
-    // );
+
       ResponsiveBuilder(
         builder: (context, sizingInformation) {
           return ListView(
@@ -158,7 +62,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                                 widget.label1,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -173,7 +77,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                                 widget.label2,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -188,7 +92,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                                 widget.label3,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -209,7 +113,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                               child: Center(
                                 child: Text(
                                   widget.itemNameBuilder(widget.items[index]),
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: Colors.white,
                                   ),
                                 ),
@@ -235,102 +139,6 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                   ]
                 ],
               ),
-              // DataTable(
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.all(Radius.circular(10)),
-              //     color: Colors.black
-              //   ),
-              //   columnSpacing: 20,
-              //   columns: [
-              //     DataColumn(
-              //       label: Expanded(
-              //         child: SizedBox(
-              //           width: Constants.mediaQuery.width*0.45,
-              //           child: Text(
-              //             widget.label1,
-              //             textAlign: TextAlign.center,
-              //             style: Constants.theme.textTheme.titleLarge?.copyWith(
-              //               color: Colors.white,
-              //               fontSize: 20,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     DataColumn(
-              //       label: Expanded(
-              //         child: SizedBox(
-              //           width: MediaQuery.of(context).size.width * 0.001,
-              //           child: Text(
-              //             widget.label2,
-              //             textAlign: TextAlign.center,
-              //             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              //               color: Colors.white,
-              //               fontSize: 20,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     DataColumn(
-              //       label: Expanded(
-              //         child: SizedBox(
-              //           width: MediaQuery.of(context).size.width * 0.001,
-              //           child: Text(
-              //             widget.label3,
-              //             textAlign: TextAlign.center,
-              //             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              //               fontSize: 20,
-              //               color: Colors.white,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              //   rows: List<DataRow>.generate( widget.items.length, (index) =>
-              //     DataRow(
-              //       color: MaterialStateProperty.all(Colors.black26) ,
-              //       cells: [
-              //         DataCell(
-              //           GestureDetector(
-              //             onTap: () {
-              //               Navigator.push(
-              //                 context,
-              //                 MaterialPageRoute(
-              //                   builder: (context) => PatientDetailsView(pationt_data: widget.items[index]),
-              //                 ),
-              //               );
-              //             },
-              //             child: Container(
-              //               alignment: Alignment.center,
-              //               child: Text(
-              //                 widget.itemNameBuilder(widget.items[index]),
-              //                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              //                   color: Colors.white,
-              //                 ),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //         DataCell(
-              //           Container(
-              //             alignment: Alignment.center,
-              //             child: widget.itemEditWidgetBuilder(widget.items[index]),
-              //           ),
-              //         ),
-              //         DataCell(
-              //           Container(
-              //             alignment: Alignment.center,
-              //             child: widget.itemDeleteWidgetBuilder != null
-              //                 ? widget.itemDeleteWidgetBuilder!(widget.items[index])
-              //                 : Container(),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ).setVerticalPadding(context, enableMediaQuery: false, 20).setHorizontalPadding(context, enableMediaQuery: false, 30),
             ],
           );
         },

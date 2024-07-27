@@ -19,13 +19,14 @@ class SessionDetailsViewHome extends StatefulWidget {
   final dynamic pationt_data;
   final int sessionId;
   final int isFinished;
+  final int? isAttend;
   String? sessionCaseManager;
   String? sessionComment;
   String? sessionDate;
   dynamic consultationService;
 
 
-  SessionDetailsViewHome({super.key, required this.pationt_data,required this.sessionId,required this.isFinished,required this.sessionCaseManager,required this.sessionComment,required this.sessionDate,required this.consultationService});
+  SessionDetailsViewHome({super.key, required this.pationt_data,required this.sessionId,required this.isFinished,required this.sessionCaseManager,required this.isAttend, required this.sessionComment,required this.sessionDate,required this.consultationService});
 
   @override
   State<SessionDetailsViewHome> createState() => _SessionDetailsViewHomeState();
@@ -69,7 +70,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
           image: DecorationImage(
             image: AssetImage("assets/images/back.jpg"),
             fit: BoxFit.cover,
-            opacity: 0.8
+            opacity: 0.4
           )
         ),
         child: Directionality(
@@ -523,6 +524,19 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                             ),
                             Text(
                               "مدير الحالة : " + (session["case_manager"] ?? ""),
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                            widget.isAttend==1?
+                            Text(
+                              "الحالة حضرت الجلسة",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ):
+                            Text(
+                              "الحالة لم تحضر الجلسة",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),

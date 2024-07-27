@@ -59,7 +59,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             widget.label1,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: 20,
+                              fontSize: 22,
                               color: Colors.white,
                             ),
                           ),
@@ -74,7 +74,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             widget.label2,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: 20,
+                              fontSize: 22,
                               color: Colors.white,
                             ),
                           ),
@@ -89,7 +89,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             widget.label3,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: 20,
+                              fontSize: 22,
                               color: Colors.white,
                             ),
                           ),
@@ -119,7 +119,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             child: Center(
                               child: Text(
                                 widget.itemNameBuilder(widget.items[index]),
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Colors.white,
                                 ),
                               ),

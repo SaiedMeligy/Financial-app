@@ -49,7 +49,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
               image: DecorationImage(
                 image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
-                opacity: 0.8
+                opacity: 0.4
               )
             ),
             child: Scaffold(
@@ -57,7 +57,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
               appBar: AppBar(
                 automaticallyImplyLeading: true,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back,color: Colors.white),
+                    icon: Icon(Icons.arrow_back,color: Colors.black),
                     onPressed: () {
                       Navigator.pop(context);
                     }
@@ -85,7 +85,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                                 "اسم الجلسة",
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -100,7 +100,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                                 "تاريخ الجلسة",
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -119,7 +119,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SessionDetailsViewHomeAdmin(
+                                    builder: (context) => SessionDetailsViewAdmin(
                                       pationt_data: widget.pationt_data,
                                       sessionId: session[index]["id"],
                                       isFinished: session[index]["is_finished"],
@@ -127,6 +127,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                                       sessionComment: session[index]["comments"],
                                       sessionDate: session[index]["date"],
                                       consultationService: session[index]["consultation_service"],
+                                      isAttend: session[index]["is_attended"],
                                     ),
                                   ),
                                 );
@@ -135,8 +136,9 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                                 alignment: Alignment.center,
                                 child: Text(
                                   "الجلسة " + session[index]["session_number"].toString(),
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: Colors.white,
+                                    fontSize: 20
                                   ),
                                 ),
                               ),
@@ -147,8 +149,9 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                               alignment: Alignment.center,
                               child: Text(
                                 session[index]["date"],
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Colors.white,
+                                  fontSize: 20
                                 ),
                               ),
                             ),

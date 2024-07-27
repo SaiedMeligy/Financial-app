@@ -51,6 +51,7 @@ class _DialogEditPatientWithAdminState extends State<DialogEditPatientWithAdmin>
               context: context,
               builder: (context) {
                 return AlertDialog(
+                  backgroundColor: Constants.theme.primaryColor,
                   content: Form(
                     key: formKey,
                     child: SizedBox(
@@ -58,39 +59,42 @@ class _DialogEditPatientWithAdminState extends State<DialogEditPatientWithAdmin>
                       Constants.mediaQuery.height * 0.6,
                       width:
                       Constants.mediaQuery.width * 0.45,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CustomTextField(
-                            controller: titleController,
-                            onValidate: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "Please enter the service name";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 10,),
-                          CustomTextField(
-                            controller: emailController,
-                            onValidate: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "Please enter the service name";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          CustomTextField(
-                            controller: phoneController,
-                            onValidate: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "Please enter the service name";
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomTextField(
+                              controller: titleController,
+                              onValidate: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Please enter the service name";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 10,),
+                            CustomTextField(
+                              controller: emailController,
+                              onValidate: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Please enter the service name";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            CustomTextField(
+                              controller: phoneController,
+                              onValidate: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Please enter the service name";
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -116,13 +120,13 @@ class _DialogEditPatientWithAdminState extends State<DialogEditPatientWithAdmin>
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: Constants.theme.primaryColor,
+                            color: Colors.black,
                             width: 2.5,
                           ),
                         ),
                         child: Text(
                           "موافق",
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
                         ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       ),
                     ),

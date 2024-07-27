@@ -129,7 +129,7 @@ class _StaticScreenState extends State<StaticScreen> {
                           image: DecorationImage(
                             image: AssetImage("assets/images/back.jpg"),
                             fit: BoxFit.cover,
-                            opacity: 0.7
+                            opacity: 0.4
                           )
                       ),
                       child: Column(
@@ -199,7 +199,9 @@ class _StaticScreenState extends State<StaticScreen> {
                                     children: [
                                       Text(
                                         "اكثر استشارين لديهم حالات",
-                                        style: Constants.theme.textTheme.bodyLarge,
+                                        style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                          color:  Colors.black
+                                        ),
                                       ),
                                       Divider(
                                         color: Constants.theme.primaryColor,
@@ -214,11 +216,11 @@ class _StaticScreenState extends State<StaticScreen> {
                                           children: [
                                             Text(
                                               "الاسم: ${advisor.advicor?.name ?? ""}",
-                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18),
+                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
                                             ),
                                             Text(
                                               "العدد: ${advisor.pationtCount}",
-                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18),
+                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
                                             ),
                                           ],
                                         );

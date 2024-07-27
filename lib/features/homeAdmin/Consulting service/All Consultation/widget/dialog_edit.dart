@@ -54,7 +54,7 @@ class _DialogEditState extends State<DialogEdit> {
                 return Directionality(
                   textDirection: TextDirection.rtl,
                   child: AlertDialog(
-                    backgroundColor: Constants.theme.primaryColor.withOpacity(0.8),
+                    backgroundColor: Constants.theme.primaryColor,
                     // backgroundColor: Colors.black87,
                     content: Form(
                       key: formKey,

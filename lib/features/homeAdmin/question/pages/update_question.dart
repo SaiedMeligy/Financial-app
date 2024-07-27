@@ -94,7 +94,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
               image: DecorationImage(
                 image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
-                opacity: 0.8
+                opacity: 0.4
               )
             ),
             child: Scaffold(
@@ -517,6 +517,17 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
     selectedQuestions.removeAt(index);
     _checkBoxValues.removeAt(index);
   }
+  void _addAnswer() {
+    answerControllers.add(TextEditingController());
+    _answerTypes.add(1);
+    selectedAdvices.add([]);
+    selectedPointers1.add([]);
+    selectedPointers2.add([]);
+    selectedPointers3.add([]);
+    selectedQuestions.add([]);
+    _checkBoxValues.add(false);
+  }
+
   void _clearAnswer() {
     titleController.clear();
     answerControllers.clear();
@@ -530,16 +541,6 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
 
   }
 
-  void _addAnswer() {
-    answerControllers.add(TextEditingController());
-    _answerTypes.add(1);
-    selectedAdvices.add([]);
-    selectedPointers1.add([]);
-    selectedPointers2.add([]);
-    selectedPointers3.add([]);
-    selectedQuestions.add([]);
-    _checkBoxValues.add(false);
-  }
 
   void _addSpecificAnswers(Questions question) {
     question.questionOptions?.forEach((element) {

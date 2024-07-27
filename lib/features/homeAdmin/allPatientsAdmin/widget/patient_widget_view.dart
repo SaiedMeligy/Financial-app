@@ -204,7 +204,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
               ),
               for (int index = 0; index < widget.items.length; index++)
                 TableRow(
-                  decoration: const BoxDecoration(color: Colors.black38),
+                  decoration: const BoxDecoration(color: Colors.black45),
                   children: [
                     _buildNameCell(widget.items[index], context),
                     _buildEditCell(widget.items[index], context),
@@ -251,7 +251,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
           padding: const EdgeInsets.all(8.0),
           child: Text(
             widget.itemNameBuilder(item),
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Colors.white,
             ),
           ),

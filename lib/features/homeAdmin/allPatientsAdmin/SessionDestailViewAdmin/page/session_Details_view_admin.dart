@@ -20,6 +20,7 @@ class SessionDetailsViewAdmin extends StatefulWidget {
   final dynamic pationt_data;
   final int sessionId;
   final int isFinished;
+  final int? isAttend;
   final String? sessionCaseManager;
   final String? sessionComment;
   final String? sessionDate;
@@ -29,6 +30,7 @@ class SessionDetailsViewAdmin extends StatefulWidget {
     super.key,
     required this.pationt_data,
     required this.sessionId,
+    required this.isAttend,
     required this.isFinished,
     this.sessionCaseManager,
     this.sessionComment,
@@ -77,7 +79,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
           image: DecorationImage(
             image: AssetImage("assets/images/back.jpg"),
             fit: BoxFit.cover,
-            opacity: 0.6,
+            opacity: 0.4,
           ),
         ),
         child: Directionality(
@@ -318,6 +320,21 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                 color: Colors.black,
                               ),
                             ),
+                            ///
+                            widget.isAttend==1?
+                            Text(
+                             "الحالة حضرت الجلسة",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ):
+                            Text(
+                             "الحالة لم تحضر الجلسة",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                            ///
                             Text(
                               "الخدمة الأستشارية :${patient["form"]["consultation_service"]["name"]??""}",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(

@@ -34,7 +34,7 @@ class _AddRecommendState extends State<AddRecommend> {
               image: DecorationImage(
                 image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
-                opacity: 0.8
+                opacity: 0.4
 
               ),
             ),
@@ -79,10 +79,8 @@ class _AddRecommendState extends State<AddRecommend> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Constants.theme.primaryColor
-                                .withOpacity(0.5)
                         ),
-                        child: Text("اضافة التوصية", style: Constants.theme
-                            .textTheme.bodyLarge),
+                        child: Text("اضافة التوصية", style: Constants.theme.textTheme.bodyLarge),
                         onPressed: () {
                           if (formKey.currentState!.validate())
                           {
@@ -144,7 +142,7 @@ class _AddRecommendState extends State<AddRecommend> {
                     ]
                 ),
               )
-                  .setVerticalPadding(enableMediaQuery: false, context, 20)
+                  .setVerticalPadding(enableMediaQuery: false, context, 10)
                   .setHorizontalPadding(context, enableMediaQuery: false, 10),
 
             ).setVerticalPadding(context, enableMediaQuery: false, 30),

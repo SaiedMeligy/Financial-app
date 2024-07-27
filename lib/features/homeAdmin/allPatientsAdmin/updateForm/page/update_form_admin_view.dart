@@ -100,7 +100,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                   image: DecorationImage(
                     image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 0.8,
+                    opacity: 0.5,
                   ),
                 ),
                 child: Column(
@@ -133,7 +133,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                         height: Constants.mediaQuery.height * 0.8,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Constants.theme.primaryColor.withOpacity(0.3),
+                          color: Constants.theme.primaryColor.withOpacity(0.6),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: ListView.builder(

@@ -4,6 +4,8 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/page/session_detials.dart';
 
+import '../../../../session dates/page/session_data_view_home.dart';
+
 class PatientSessionView extends StatefulWidget {
   final dynamic pationt_data;
 
@@ -46,7 +48,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
               image: DecorationImage(
                 image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
-                opacity: 0.8
+                opacity: 0.4
               )
             ),
             child: Scaffold(
@@ -81,7 +83,6 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                 "اسم الجلسة",
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  fontSize: 20,
                                   color: Colors.white,
                                 ),
                               ),
@@ -95,8 +96,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                               child: Text(
                                 "تاريخ الجلسة",
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontSize: 20,
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Colors.white,
                                 ),
                               ),
@@ -115,7 +115,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SessionDetailsView(
+                                    builder: (context) => SessionDetailsViewHome(
                                       pationt_data: widget.pationt_data,
                                       sessionId: session[index]["id"],
                                       isFinished: session[index]["is_finished"],
@@ -123,6 +123,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                       sessionComment: session[index]["comments"],
                                       sessionDate: session[index]["date"],
                                       consultationService: session[index]["consultation_service"],
+                                      isAttend: session[index]["is_attended"],
                                     ),
                                   ),
                                 );
@@ -131,8 +132,9 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   "الجلسة " + session[index]["session_number"].toString(),
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: Colors.white,
+                                    fontSize: 20
                                   ),
                                 ),
                               ),
@@ -143,8 +145,9 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                               alignment: Alignment.center,
                               child: Text(
                                 session[index]["date"],
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Colors.white,
+                                  fontSize: 20
                                 ),
                               ),
                             ),

@@ -73,7 +73,7 @@ class _SessionDateState extends State<SessionDate> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("assets/images/back.jpg"),
-                          opacity: 0.7,
+                          opacity: 0.4,
                           fit: BoxFit.cover,
                         )
                       ),
@@ -217,6 +217,7 @@ class _SessionDateState extends State<SessionDate> {
                                                     sessionComment:session.comments,
                                                     sessionDate:session.date,
                                                     consultationService: session.consultationService,
+                                                    isAttend: session.isAttended,
                                                   ),
                                                 ),
                             
