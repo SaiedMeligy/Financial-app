@@ -36,7 +36,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
 
   Future<void> setRefresh(String nationalId) async {
     emit(LoadingAddSessionState());
-    getSessionDetails(nationalId);
+    getPatientDetails(nationalId);
   }
   Future<void> getPatientDetails(String nationalId) async {
     WebServices service = WebServices();

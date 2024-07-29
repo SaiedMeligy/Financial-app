@@ -559,11 +559,14 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               ),
                                               actions: [
                                                 TextButton(
-                                                  onPressed: () {
+                                                  onPressed: () async {
                                                     if (selectedAdviceIds.isNotEmpty) {
                                                       for (var adviceId in selectedAdviceIds) {
-                                                        addAdvices(adviceId, patient["id"]);
+                                                        await addAdvices(adviceId, patient["id"]);
+
                                                       }
+                                                      addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                      // addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
                                                     }
                                                     Navigator.of(context).pop();
                                                   },
@@ -690,29 +693,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
         }
       );
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data["pointers"];
-        List<Pointers> pointers = [];
-        List<Pointers> pointers1Temp = [];
-        List<Pointers> pointers2Temp = [];
-        List<Pointers> pointers3Temp = [];
-
-        pointers = data.map((json) => Pointers.fromJson(json)).toList();
-        pointers.forEach(
-              (pointer) {
-            if (pointer.senarioId == 1) {
-              pointers1Temp.add(pointer);
-            } else if (pointer.senarioId == 2) {
-              pointers2Temp.add(pointer);
-            } else if (pointer.senarioId == 3) {
-              pointers3Temp.add(pointer);
-            }
-          },
-        );
-        setState(() {
-          pointers1 = pointers1Temp;
-          pointers2 = pointers2Temp;
-          pointers3 = pointers3Temp;
-        });
+        print('${response.data["message"]}');
       } else {
         print('Failed to load users. Status code: ${response.statusCode}');
       }
@@ -759,16 +740,10 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
           "advice_id": adviceId,
         },
       );
-
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
-          return response.data;
-
-          // final List<Advices> data = response.data["advices"];
-          // List<Advices> advicesdata = data.map((json) => Advices.fromJson(json)).toList();
-          // setState(() {
-          //   addAdvicesList = advicesdata;
-          // });
+          print('${response.data["message"]}');
+          
         } else {
           print('Error: ${response.data["message"]}');
         }
