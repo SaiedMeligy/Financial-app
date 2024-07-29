@@ -91,6 +91,8 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
             var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString();
             var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
             var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
+            List<int> selectedAdviceIds = [];
+
 
             if (pointers1Temp.isNotEmpty) {
               print("----------->>>${calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString()}%");
@@ -436,10 +438,89 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       textAlign: TextAlign.center,
                                       style: Constants.theme.textTheme.titleLarge?.copyWith(
                                         color: Colors.black,
-
                                       ),
                                     ),
                                     Spacer(),
+                                    // IconButton(
+                                    //   onPressed: () {
+                                    //     showDialog(
+                                    //       context: context,
+                                    //       builder: (context) {
+                                    //         return AlertDialog(
+                                    //           backgroundColor: Colors.black,
+                                    //           content: SizedBox(height: Constants.mediaQuery.height * 0.6,
+                                    //               width: Constants.mediaQuery.width * 0.45,
+                                    //               child: Column(
+                                    //                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    //                 children: [
+                                    //                   Container(
+                                    //                     alignment: Alignment.center,
+                                    //                     decoration: BoxDecoration(
+                                    //                       borderRadius: BorderRadius.circular(10),
+                                    //                       border: Border.all(color: Constants.theme.primaryColor, width: 2.5,
+                                    //                       ),
+                                    //                     ),
+                                    //                     child: Text(
+                                    //                         "اختر من التوصيات",
+                                    //                         style: Constants.theme.textTheme.titleLarge
+                                    //                     ),
+                                    //                   ),
+                                    //                   //for(int index = 0; index <selectedAdvices.length; index++)
+                                    //                   CheckBoxQuestion(
+                                    //                     previous: selectedAdvices.isNotEmpty ? selectedAdvices[0] : [],
+                                    //                     items: advicesList,
+                                    //                     onChanged: (value) {
+                                    //                       setState(() {
+                                    //                         if (selectedAdvices.isEmpty) {
+                                    //                           selectedAdvices.add(value!);
+                                    //                           print("------------->>"+selectedAdvices.toString());
+                                    //                         } else {
+                                    //                           selectedAdvices[0] = value!;
+                                    //                         }
+                                    //                       });
+                                    //                     },
+                                    //                   ),
+                                    //
+                                    //
+                                    //                   // Expanded(
+                                    //                   //   child: ListView.builder(
+                                    //                   //     itemCount: advicesList.length,
+                                    //                   //     itemBuilder: (context, index) {
+                                    //                   //       return CheckBoxQuestion(
+                                    //                   //         previous: selectedAdvices[index],
+                                    //                   //         items: advicesList,
+                                    //                   //         onChanged: (value) {
+                                    //                   //           setState(() {
+                                    //                   //             selectedAdvices[index] = value!;
+                                    //                   //           });
+                                    //                   //         },
+                                    //                   //       );
+                                    //                   //     },
+                                    //                   //   ),
+                                    //                   // )
+                                    //                 ],
+                                    //               )),
+                                    //           actions: [
+                                    //             TextButton(
+                                    //               onPressed: () {
+                                    //                 Navigator.of(context).pop();
+                                    //                 addAdvices(adviceId, patient["id"]);
+                                    //
+                                    //               },
+                                    //               child: Container(
+                                    //                   decoration: BoxDecoration(
+                                    //                     borderRadius: BorderRadius.circular(10),
+                                    //                     border: Border.all(color: Constants.theme.primaryColor, width: 2.5,),
+                                    //                   ),
+                                    //                   child: Text(
+                                    //                       "موافق", style: Constants.theme.textTheme.bodyMedium
+                                    //                   ).setHorizontalPadding(context, enableMediaQuery: false, 20)),
+                                    //             ),],);
+                                    //       },
+                                    //     );
+                                    //   },
+                                    //   icon: Icon(Icons.add_circle_rounded),
+                                    // )
                                     IconButton(
                                       onPressed: () {
                                         showDialog(
@@ -447,84 +528,62 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                           builder: (context) {
                                             return AlertDialog(
                                               backgroundColor: Colors.black,
-                                              content: SizedBox(height: Constants.mediaQuery.height * 0.6,
-                                                  width: Constants.mediaQuery.width * 0.45,
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                    children: [
-                                                      Container(
-                                                        alignment: Alignment.center,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          border: Border.all(color: Constants.theme.primaryColor, width: 2.5,
-                                                          ),
-                                                        ),
-                                                        child: Text(
-                                                            "اختر من التوصيات",
-                                                            style: Constants.theme.textTheme.titleLarge
-                                                        ),
+                                              content: SizedBox(
+                                                height: Constants.mediaQuery.height * 0.6,
+                                                width: Constants.mediaQuery.width * 0.45,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                  children: [
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        border: Border.all(color: Constants.theme.primaryColor, width: 2.5),
                                                       ),
-                                                      //for(int index = 0; index <selectedAdvices.length; index++)
-                                                      CheckBoxQuestion(
-                                                        previous: selectedAdvices.isNotEmpty ? selectedAdvices[0] : [],
-                                                        items: advicesList,
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            if (selectedAdvices.isEmpty) {
-                                                              selectedAdvices.add(value!);
-                                                              print("------------->>"+selectedAdvices.toString());
-                                                            } else {
-                                                              selectedAdvices[0] = value!;
-                                                            }
-                                                          });
-                                                        },
+                                                      child: Text(
+                                                        "اختر من التوصيات",
+                                                        style: Constants.theme.textTheme.titleLarge,
                                                       ),
-
-
-                                                      // Expanded(
-                                                      //   child: ListView.builder(
-                                                      //     itemCount: advicesList.length,
-                                                      //     itemBuilder: (context, index) {
-                                                      //       return CheckBoxQuestion(
-                                                      //         previous: selectedAdvices[index],
-                                                      //         items: advicesList,
-                                                      //         onChanged: (value) {
-                                                      //           setState(() {
-                                                      //             selectedAdvices[index] = value!;
-                                                      //           });
-                                                      //         },
-                                                      //       );
-                                                      //     },
-                                                      //   ),
-                                                      // )
-
-
-                                                    ],
-                                                  )),
+                                                    ),
+                                                    CheckBoxQuestion(
+                                                      previous: selectedAdviceIds,
+                                                      items: advicesList,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          selectedAdviceIds = value ?? [];
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    for (int i = 0; i < selectedAdvices.length; i++) {
-                                                      for (int adviceId in selectedAdvices[i]) {
+                                                    if (selectedAdviceIds.isNotEmpty) {
+                                                      for (var adviceId in selectedAdviceIds) {
                                                         addAdvices(adviceId, patient["id"]);
                                                       }
                                                     }
+                                                    Navigator.of(context).pop();
                                                   },
                                                   child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
-                                                        border: Border.all(color: Constants.theme.primaryColor, width: 2.5,),
-                                                      ),
-                                                      child: Text(
-                                                          "موافق", style: Constants.theme.textTheme.bodyMedium
-                                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20)),
-                                                ),],);
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(color: Constants.theme.primaryColor, width: 2.5),
+                                                    ),
+                                                    child: Text(
+                                                      "موافق", style: Constants.theme.textTheme.bodyMedium,
+                                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
                                           },
                                         );
                                       },
                                       icon: Icon(Icons.add_circle_rounded),
-                                    )
+                                    ),
 
                                   ],
                                 ).setVerticalPadding(context,enableMediaQuery: false, 3),
@@ -616,6 +675,51 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
       print('Error occurred: $e');
     }
   }
+  Future<void> addPointers(int patientId, int pointerId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.get(
+        '${Constants.baseUrl}/api/pationt/add-patient-pointer',
+        options: Options(headers: {
+          "api-password": Constants.apiPassword,
+          "token": CacheHelper.getData(key: "token")
+        }),
+        data: {
+          "patient_id": patientId,
+          "pointer_id": pointerId,
+        }
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data["pointers"];
+        List<Pointers> pointers = [];
+        List<Pointers> pointers1Temp = [];
+        List<Pointers> pointers2Temp = [];
+        List<Pointers> pointers3Temp = [];
+
+        pointers = data.map((json) => Pointers.fromJson(json)).toList();
+        pointers.forEach(
+              (pointer) {
+            if (pointer.senarioId == 1) {
+              pointers1Temp.add(pointer);
+            } else if (pointer.senarioId == 2) {
+              pointers2Temp.add(pointer);
+            } else if (pointer.senarioId == 3) {
+              pointers3Temp.add(pointer);
+            }
+          },
+        );
+        setState(() {
+          pointers1 = pointers1Temp;
+          pointers2 = pointers2Temp;
+          pointers3 = pointers3Temp;
+        });
+      } else {
+        print('Failed to load users. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
   Future<void> fetchAdvices() async {
     final dio = Dio();
     try {
@@ -658,11 +762,13 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
 
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
-          final List<dynamic> data = response.data["advices"];
-          List<Advices> advicesdata = data.map((json) => Advices.fromJson(json)).toList();
-          setState(() {
-            addAdvicesList = advicesdata;
-          });
+          return response.data;
+
+          // final List<Advices> data = response.data["advices"];
+          // List<Advices> advicesdata = data.map((json) => Advices.fromJson(json)).toList();
+          // setState(() {
+          //   addAdvicesList = advicesdata;
+          // });
         } else {
           print('Error: ${response.data["message"]}');
         }
@@ -673,6 +779,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
       print('Error occurred: $e');
     }
   }
+
 
 
 
