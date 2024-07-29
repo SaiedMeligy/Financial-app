@@ -1,10 +1,9 @@
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:html'as html;
+import 'dart:html' as html;
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/ReportChartWithAdmin/page/report_chart_with_admin.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/patientSessionViewWithAdmin/page/patient_session_view_with_admin.dart';
@@ -13,11 +12,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printing/printing.dart';
 
-import '../../../homeAdvisor/viewQuestion/page/update_form.dart';
 import '../replace_advisor/page/replace_advisor_view.dart';
-import 'manager/cubit.dart';
-import 'manager/states.dart';
 
 class PatientDetailsAdminView extends StatefulWidget {
   PatientDetailsAdminView({super.key, required this.pationt_data});
@@ -56,41 +53,42 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
       });
     }).toList();
   }
-  Future<void> _printPDF() async {
-    try {
-      final font = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-      final ttf = pw.Font.ttf(font);
-      final pdf = pw.Document();
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Text(
-                "Example PDF Content",
-                style: pw.TextStyle(
-                  fontSize: 30,
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.red,
-                  font: ttf,
+    Future<void> _printPDF() async {
+      try {
+        final font = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
+        final ttf = pw.Font.ttf(font);
+        final pdf = pw.Document();
+        pdf.addPage(
+          pw.Page(
+            build: (pw.Context context) {
+              return pw.Center(
+                child: pw.Text(
+                  "Example PDF Content",
+                  style: pw.TextStyle(
+                    fontSize: 30,
+                    fontWeight: pw.FontWeight.bold,
+                    color: PdfColors.red,
+                    font: ttf,
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-      );
+              );
+            },
+          ),
+        );
 
-      // Save the PDF as bytes
-      final pdfBytes = await pdf.save();
+        // Save the PDF as bytes
+        final pdfBytes = await pdf.save();
 
-      // Create a blob and open in a new tab
-      final blob = html.Blob([pdfBytes], 'application/pdf');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      html.window.open(url, '_blank');
-      html.Url.revokeObjectUrl(url);
-    } catch (e) {
-      print('Error: $e');
+        // Create a blob and open in a new tab
+        final blob = html.Blob([pdfBytes], 'application/pdf');
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        html.window.open(url, '_blank');
+        html.Url.revokeObjectUrl(url);
+      } catch (e) {
+        print('Error: $e');
+      }
     }
-  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -186,11 +184,9 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     onPressed: () async {
                                       print('sssssssssssssssssssssssss');
                                       final pdf = pw.Document();
-
                                       final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-
                                       final ttfSans = pw.Font.ttf(notoSans);
-
+                                      await Future.delayed(Duration(seconds: 1));
                                       pdf.addPage(
                                         pw.Page(
                                           build: (pw.Context context) {
@@ -200,7 +196,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                 children: [
 
                                                   pw.Container(
-                                                      margin: pw.EdgeInsets.all(5),
+                                                      // margin: pw.EdgeInsets.all(5),
                                                       decoration: pw.BoxDecoration(
                                                           color: PdfColors.black,
                                                           border: pw.Border.all(
@@ -221,7 +217,6 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                             ),
-
                                                             pw.Container(
                                                               alignment: pw.Alignment.centerRight,
                                                               child: pw.Text(
@@ -296,7 +291,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                             pw.Container(
                                                               alignment: pw.Alignment.centerRight,
                                                               child: pw.Text(
-                                                                "اسم الاستشاري" ,
+                                                                "اسم الاستشارى" ,
                                                                 style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
@@ -334,7 +329,9 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                   mainAxisAlignment: pw.MainAxisAlignment.start,
                                                   children: [
                                                     for(int i = 0 ; i < answe[y].length ; i++) ...[
+
                                                       pw.Container(
+                                                        height:110,
                                                           margin: pw.EdgeInsets.all(5),
                                                           decoration: pw.BoxDecoration(
                                                               border: pw.Border.all(
@@ -344,9 +341,12 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                               borderRadius: pw.BorderRadius.circular(10)
                                                           ),
                                                           child: pw.Column(
+                                                            mainAxisAlignment: pw.MainAxisAlignment.start,
                                                               children: [
                                                                 pw.Container(
+                                                                  height:answe[y][i]["title"].toString().split(" ").length>10?100:50,
                                                                   decoration: pw.BoxDecoration(
+
                                                                       color: PdfColors.black ,
                                                                       borderRadius: pw.BorderRadius.circular(10)
                                                                   ),
@@ -354,9 +354,12 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                       mainAxisAlignment: pw.MainAxisAlignment.end ,
                                                                       children: [
                                                                         pw.Text(
-                                                                          "${answe[y][i]['title']}" ,
-                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
+                                                                          DividText("${answe[y][i]['title']}"),
+                                                                          textScaleFactor: 0.8,
+
+                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
                                                                           textDirection: pw.TextDirection.rtl,
+                                                                          maxLines:5,
                                                                         ),
                                                                         pw.SizedBox(width: 5)
                                                                       ]
@@ -366,7 +369,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                   pw.Row(
                                                                       mainAxisAlignment: pw.MainAxisAlignment.end ,
                                                                       children: [
-                                                                        if(answe[y][i]["question_options"][x]['answer'] == "1")...[
+                                                                        if(answe[y][i]["question_options"][x]['type'] == 1&&answe[y][i]["question_options"][x]['answer'] == "1")...[
                                                                           pw.Text(
                                                                             "${answe[y][i]["question_options"][x]['title']}",
                                                                             style: pw.TextStyle(font: ttfSans, fontSize: 13),
@@ -379,7 +382,51 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                               color: PdfColors.black
                                                                           ),
                                                                           pw.SizedBox(width: 20),
+                                                                        ],
+                                                                        if(answe[y][i]["question_options"][x]['type'] == 2&&answe[y][i]["question_options"][x]['answer'] == "1")...[
+                                                                          pw.Text(
+                                                                            "${answe[y][i]["question_options"][x]['title']}",
+                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                            textDirection: pw.TextDirection.rtl,
+                                                                          ),
+                                                                          pw.SizedBox(width: 10),
+                                                                          pw.Container(
+                                                                              width: 8 ,
+                                                                              height: 8 ,
+                                                                              color: PdfColors.black
+                                                                          ),
+                                                                          pw.SizedBox(width: 20),
+                                                                        ],
+
+                                                                        if(answe[y][i]["question_options"][x]['type'] == 3&&answe[y][i]["question_options"][x]['answer']!=null)...[
+                                                                          pw.Directionality(
+                                                                            textDirection: pw.TextDirection.rtl,
+                                                                          child:
+                                                                          pw.Row(
+                                                                              mainAxisAlignment: pw.MainAxisAlignment.end ,
+                                                                              children: [
+                                                                          pw.Text(
+                                                                            "${answe[y][i]["question_options"][x]['title']} : ",
+                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                            textDirection: pw.TextDirection.rtl,
+                                                                          ),
+                                                                                pw.Text(
+                                                                                  "${answe[y][i]["question_options"][x]['answer']}",
+                                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                                  textDirection: pw.TextDirection.rtl,
+                                                                                ),
+                                                                          ]
+                                                                          ),
+                                                                          ),
+                                                                          pw.SizedBox(width: 10),
+                                                                          pw.Container(
+                                                                              width: 8 ,
+                                                                              height: 8 ,
+                                                                              color: PdfColors.black
+                                                                          ),
+                                                                          pw.SizedBox(width: 20),
                                                                         ]
+
                                                                       ]
                                                                   )
                                                                 ]
@@ -394,6 +441,24 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                             },
                                           ),
                                         );
+                                      }
+                                      try {
+                                        // Save the PDF as bytes
+                                        final pdfBytes = await pdf.save();
+
+                                        // Create a blob and open in a new tab
+                                        final blob = html.Blob([pdfBytes], 'application/pdf');
+                                        final url = html.Url.createObjectUrlFromBlob(blob);
+                                        html.window.open(url, '_blank');
+                                        html.Url.revokeObjectUrl(url);
+
+                                        // Use the printing package to handle printing
+                                        await Printing.layoutPdf(
+                                          onLayout: (PdfPageFormat format) async => pdf.save(),
+                                        );
+
+                                      } catch (e) {
+                                        print('Error: $e');
                                       }
                                       final pdfBytes = await pdf.save();
 
@@ -421,7 +486,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                   ),
                                 ),
                                 Text(
-                                  "الاستشاري : ${advicor["name"]}  ",
+                                  "الاستشارى : ${advicor["name"]}  ",
                                   style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -814,5 +879,23 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
     } catch (e) {
       print('Error: $e');
     }
+  }
+  String DividText (String text){
+    String temp = "" ;
+    List<String> Words = text.split(" ") ;
+   if(Words.length > 10){
+     for(int i=0; i<(Words.length/2).ceil();i++){
+       temp += Words[i] + " " ;
+     }
+     temp = temp + "\n" ;
+     for(int i=(Words.length/2).ceil(); i<Words.length;i++){
+       temp += Words[i] + " " ;
+     }
+     return temp ;
+   }
+
+
+    return text ;
+
   }
 }

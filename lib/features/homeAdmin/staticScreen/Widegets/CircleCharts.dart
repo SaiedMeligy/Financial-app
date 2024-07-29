@@ -29,14 +29,13 @@ class CircleCharts extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Expanded(
+               Expanded(
                 child: Text(
                   "الاستشارين",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
+                  style:Constants.theme.textTheme.bodyLarge?.copyWith(
+                    color: Colors.black
+
+                  )
                 ),
               ),
               // Expanded(

@@ -295,7 +295,6 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-
                             Text(
                               "اسم الحالة : " + (session["pationt"]["name"] ?? ""),
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
@@ -321,15 +320,41 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                               ),
                             ),
                             ///
-                            widget.isAttend==1?
+                            session["is_attended"]==1?
                             Text(
-                             "الحالة حضرت الجلسة",
+                              "الحالة حضرت الجلسة",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
                             ):
                             Text(
-                             "الحالة لم تحضر الجلسة",
+                              "الحالة لم تحضر الجلسة",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                            session["need_other_session"]==1?
+                            Text(
+                              "الحالة بحاجه الي جلسة اخرى",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ):
+                            Text(
+                              "الحالة غير بحاجه الي جلسة اخرى",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                            session["is_success_story"]==1?
+                            Text(
+                              "الحالة قصة نجاح",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ):
+                            Text(
+                              "الحالة ليست قصة نجاح",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
@@ -400,7 +425,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                         child: Container(
-                                          height: Constants.mediaQuery.height * 0.3,
+                                          height: Constants.mediaQuery.height * 0.28,
                                           alignment: Alignment.center,
                                           child: SingleChildScrollView(
                                             child: Column(
@@ -459,7 +484,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                 controller: commentController,
                                                 onValidate: (value) {
                                                   if (value == null || value.trim().isEmpty) {
-                                                    return "Please enter the service name";
+                                                    return "من فضلك ادخل الملاحظة";
                                                   }
                                                   return null;
                                                 },
@@ -503,7 +528,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                               },
                             ),
                           ],
-                        ),
+                        ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                       );
                     }
                     return Container();

@@ -270,216 +270,6 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                   ),
                 )
                     :
-                // BlocBuilder<AddSessionCubit, AddSessionStates>(
-                //   bloc: _patientSessionCubit,
-                //   builder: (context, state) {
-                //     if (state is LoadingAddSessionState) {
-                //       return Center(child: CircularProgressIndicator());
-                //     } else if (state is ErrorAddSessionState) {
-                //       return Center(child: Text(state.errorMessage));
-                //     } else if (state is SuccessAddSessionState) {
-                //       var sessions = state.result.data["pationt"]["sessions"];
-                //       var patient = state.result.data["pationt"];
-                //
-                //       // Fetching case manager from the first session
-                //       var caseManager = sessions.isNotEmpty ? sessions[0]["case_manager"] : '';
-                //
-                //       return Directionality(
-                //         textDirection: TextDirection.rtl,
-                //         child: Column(
-                //           crossAxisAlignment: CrossAxisAlignment.stretch,
-                //           children: [
-                //             // Displaying patient information
-                //             Text(
-                //               "اسم الحالة : " + patient["name"],
-                //               style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                //                 color: Colors.black,
-                //               ),
-                //             ),
-                //             Text(
-                //               "اسم الاستشاري : " + patient["form"]["advicor"]["name"],
-                //               style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                //                 color: Colors.black,
-                //               ),
-                //             ),
-                //             Text(
-                //               "رقم الهوية : " + patient["national_id"],
-                //               style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                //                 color: Colors.black,
-                //               ),
-                //             ),
-                //             Text(
-                //               "مدير الحالة : " + widget.sessionCaseManager!??"",
-                //               style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                //                 color: Colors.black,
-                //               ),
-                //             ),
-                //             Text(
-                //               "الخدمة الاستشارية : " + (widget.consultationService.name??"no found"),
-                //               style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                //                 color: Colors.black,
-                //               ),
-                //             ),
-                //             Text(
-                //               "وصف الخدمة الاستشارية : " + (widget.consultationService.description??"no found"),
-                //               style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                //                 color: Colors.black,
-                //               ),
-                //             ),
-                //             SizedBox(height: 20), // Adding space between case manager and table
-                //
-                //
-                //             // Displaying session details table
-                //             Table(
-                //               columnWidths: {
-                //                 0: FlexColumnWidth(4),
-                //                 1: FlexColumnWidth(1),
-                //                 2: FlexColumnWidth(1),
-                //               },
-                //               children: [
-                //                 TableRow(
-                //                   decoration: BoxDecoration(
-                //                     color: Colors.black,
-                //                   ),
-                //                   children: [
-                //                     TableCell(
-                //                       child: Container(
-                //                         height: 50,
-                //                         child: Center(
-                //                           child: Text(
-                //                             "الملاحظة",
-                //                             textAlign: TextAlign.center,
-                //                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                //                               fontSize: 20,
-                //                               color: Colors.white,
-                //                             ),
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     TableCell(
-                //                       child: Container(
-                //                         height: 50,
-                //                         child: Center(
-                //                           child: Text(
-                //                             "تاريخ الجلسة",
-                //                             textAlign: TextAlign.center,
-                //                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                //                               fontSize: 20,
-                //                               color: Colors.white,
-                //                             ),
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ),
-                //                   ],
-                //                 ),
-                //                 // Displaying each session row
-                //                 TableRow(
-                //                   decoration: BoxDecoration(
-                //                     color:  Colors.black38 ,
-                //                   ),
-                //                   children: [
-                //                     TableCell(
-                //                       child: Container(
-                //                         alignment: Alignment.center,
-                //                         child: Text(
-                //                           widget.sessionComment!??"",
-                //                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                //                             color: Colors.white,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     TableCell(
-                //                       child: Container(
-                //                         alignment: Alignment.center,
-                //                         child: Text(
-                //                           widget.sessionDate!??"",
-                //                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                //                             color: Colors.white,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ),
-                //                   ],
-                //                 ),
-                //
-                //
-                //               ],
-                //             ),
-                //             SizedBox(height: 20,),
-                //
-                //             BorderRoundedButton(
-                //               title: "تعديل",
-                //               onPressed: () {
-                //                 showDialog(
-                //                   context: context,
-                //                   builder: (context) {
-                //                     return AlertDialog(
-                //                       content: Form(
-                //                         key: formKey,
-                //                         child: SizedBox(
-                //                           height: Constants.mediaQuery.height * 0.6,
-                //                           width: Constants.mediaQuery.width * 0.45,
-                //                           child: Column(
-                //                             mainAxisSize: MainAxisSize.min,
-                //                             children: [
-                //                               CustomTextField(
-                //                                 controller: advisorComment,
-                //                                 onValidate: (value) {
-                //                                   if (value == null || value.trim().isEmpty) {
-                //                                     return "Please enter the service name";
-                //                                   }
-                //                                   return null;
-                //                                 },
-                //                               ),
-                //                             ],
-                //                           ),
-                //                         ),
-                //                       ),
-                //                       actions: [
-                //                         TextButton(
-                //                           onPressed: () {
-                //                             if (formKey.currentState!.validate()) {
-                //                               var data = SessionsUpdateModel(
-                //                                 sessionId: widget.sessionId,
-                //                                 comments: advisorComment.text,);
-                //                               updateSessionCubit.updateSession(data).then((_) {
-                //                                 _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
-                //                                 Navigator.of(context).pop();
-                //                               });
-                //
-                //                             }
-                //                           },
-                //                           child: Container(
-                //                             decoration: BoxDecoration(
-                //                               borderRadius: BorderRadius.circular(10),
-                //                               border: Border.all(
-                //                                 color: Colors.grey,
-                //                                 width: 2.5,
-                //                               ),
-                //                             ),
-                //                             child: Text(
-                //                               "موافق",
-                //                               style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                //                             ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     );
-                //                   },
-                //                 );
-                //               },
-                //             ),
-                //
-                //           ],
-                //         ),
-                //       );
-                //     }
-                //     return Container();
-                //   },
-                // );
                  BlocBuilder<AddSessionCubit, AddSessionStates>(
                   bloc: _patientSessionCubit,
                   builder: (context, state) {
@@ -528,7 +318,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                 color: Colors.black,
                               ),
                             ),
-                            widget.isAttend==1?
+                            session["is_attended."]==1?
                             Text(
                               "الحالة حضرت الجلسة",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
@@ -537,6 +327,32 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                             ):
                             Text(
                               "الحالة لم تحضر الجلسة",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                            session["need_other_session"]==1?
+                            Text(
+                              "الحالة بحاجه الي جلسة اخرى",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ):
+                            Text(
+                              "الحالة غير بحاجه الي جلسة اخرى",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                            session["is_success_story"]==1?
+                            Text(
+                              "الحالة قصة نجاح",
+                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ):
+                            Text(
+                              "الحالة ليست قصة نجاح",
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
@@ -665,7 +481,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                 controller: commentController,
                                                 onValidate: (value) {
                                                   if (value == null || value.trim().isEmpty) {
-                                                    return "Please enter the service name";
+                                                    return "من فضلك ادخل الملاحظة";
                                                   }
                                                   return null;
                                                 },

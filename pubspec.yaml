@@ -20,7 +20,6 @@ dependencies:
   multiselect_formfield: ^0.1.7
   syncfusion_flutter_charts: ^25.1.42+1
   screenshot: any
-  pdf: any
   flutter_screenutil: ^5.9.0
   responsive_builder: ^0.4.0
   animate_do: ^3.3.4
@@ -35,7 +34,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   multi_circular_slider: ^1.1.0
   excel: ^4.0.3
-  flutter_riverpod: ^2.0.0 
+  flutter_riverpod: ^2.0.0
+  pdf: ^3.5.0
+  printing: ^5.9.0
 
 dev_dependencies:
   flutter_test:

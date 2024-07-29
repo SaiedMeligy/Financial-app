@@ -95,12 +95,11 @@ class _AddConsultingState extends State<AddConsulting> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Constants.theme.primaryColor
-                                    .withOpacity(0.5)
                             ),
                             child: Text("اضافة خدمة استشارية",
                               style: Constants.theme.textTheme.titleLarge
                                   ?.copyWith(
-                                  color: Colors.black
+                                  color: Colors.white
                               ),),
                             onPressed: () {
                               if (formKey.currentState!.validate()) {

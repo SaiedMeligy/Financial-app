@@ -32,6 +32,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
   List<Pointers> pointers2 = [];
   List<Pointers> pointers3 = [];
   List<Advices> advicesList = [];
+  List<Advices> addAdvicesList = [];
   List<List<int>> selectedPointers1 = [];
   List<List<int>> selectedPointers2 = [];
   List<List<int>> selectedPointers3 = [];
@@ -71,6 +72,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
           }
           if (state is SuccessPatientNationalIdState) {
             var pointers = state.result.data["pationt"]["pointers"] ?? [];
+            var patient = state.result.data["pationt"] ?? [];
             var advices = state.result.data["pationt"]["advices"] ?? [];
 
             List<dynamic> pointers1Temp = [];
@@ -221,7 +223,6 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       textAlign: TextAlign.center,
                                       style: Constants.theme.textTheme.titleLarge?.copyWith(
                                         color: Colors.black,
-
                                       ),
                                     ),
                                     Spacer(),
@@ -463,8 +464,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                             style: Constants.theme.textTheme.titleLarge
                                                         ),
                                                       ),
-                                                      // for(int index = 0; index <selectedAdvices.length; index++)
-
+                                                      //for(int index = 0; index <selectedAdvices.length; index++)
                                                       CheckBoxQuestion(
                                                         previous: selectedAdvices.isNotEmpty ? selectedAdvices[0] : [],
                                                         items: advicesList,
@@ -472,18 +472,44 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                           setState(() {
                                                             if (selectedAdvices.isEmpty) {
                                                               selectedAdvices.add(value!);
+                                                              print("------------->>"+selectedAdvices.toString());
                                                             } else {
                                                               selectedAdvices[0] = value!;
                                                             }
                                                           });
                                                         },
                                                       ),
+
+
+                                                      // Expanded(
+                                                      //   child: ListView.builder(
+                                                      //     itemCount: advicesList.length,
+                                                      //     itemBuilder: (context, index) {
+                                                      //       return CheckBoxQuestion(
+                                                      //         previous: selectedAdvices[index],
+                                                      //         items: advicesList,
+                                                      //         onChanged: (value) {
+                                                      //           setState(() {
+                                                      //             selectedAdvices[index] = value!;
+                                                      //           });
+                                                      //         },
+                                                      //       );
+                                                      //     },
+                                                      //   ),
+                                                      // )
+
+
                                                     ],
                                                   )),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
+                                                    for (int i = 0; i < selectedAdvices.length; i++) {
+                                                      for (int adviceId in selectedAdvices[i]) {
+                                                        addAdvices(adviceId, patient["id"]);
+                                                      }
+                                                    }
                                                   },
                                                   child: Container(
                                                       decoration: BoxDecoration(
@@ -615,6 +641,39 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
       print('Error occurred: $e');
     }
   }
+  Future<void> addAdvices(int adviceId, int patientId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+        '${Constants.baseUrl}/api/pationt/add-patient-advice',
+        options: Options(headers: {
+          "api-password": Constants.apiPassword,
+          "token": CacheHelper.getData(key: "token"),
+        }),
+        data: {
+          "patient_id": patientId,
+          "advice_id": adviceId,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        if (response.data["status"] == true) {
+          final List<dynamic> data = response.data["advices"];
+          List<Advices> advicesdata = data.map((json) => Advices.fromJson(json)).toList();
+          setState(() {
+            addAdvicesList = advicesdata;
+          });
+        } else {
+          print('Error: ${response.data["message"]}');
+        }
+      } else {
+        print('Failed to load advices. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+
 
 
 }
