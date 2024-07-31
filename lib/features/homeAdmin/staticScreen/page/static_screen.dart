@@ -185,6 +185,7 @@ class _StaticScreenState extends State<StaticScreen> {
                           SenarioWadget(),
                           Row(
                             children: [
+                              
                               Container(
                                 width: Constants.mediaQuery.width * 0.3,
                                 height: Constants.mediaQuery.height * 0.57,
@@ -198,7 +199,7 @@ class _StaticScreenState extends State<StaticScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "اكثر استشارين لديهم حالات",
+                                        "اكثر استشاريين لديهم حالات",
                                         style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                           color:  Colors.black
                                         ),

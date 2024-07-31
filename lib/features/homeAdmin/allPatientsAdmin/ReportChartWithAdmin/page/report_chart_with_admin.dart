@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:experts_app/core/Services/snack_bar_service.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/tab_item_widget.dart';
@@ -92,6 +93,8 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
             var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
             var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
             List<int> selectedAdviceIds = [];
+            List<int> selectedPointersIds = [];
+
 
 
             if (pointers1Temp.isNotEmpty) {
@@ -126,7 +129,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                     image: DecorationImage(
                       image: AssetImage("assets/images/back.jpg"),
                       fit: BoxFit.cover,
-                      opacity: 0.4  ,
+                      opacity: 0.1  ,
                     ),
                   ),
                   child: ListView(
@@ -219,6 +222,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
+
                                     Spacer(),
                                     Text(
                                       "المؤشرات",
@@ -228,110 +232,125 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       ),
                                     ),
                                     Spacer(),
-                                    IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              backgroundColor: Colors.black,
-                                              title: Container(
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                    color: Constants.theme.primaryColor,
-                                                    width: 2.5,
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "اختر من المؤشرات",
-                                                  style: Constants.theme.textTheme.titleLarge,
-                                                ),
-                                              ),
-                                              content: SizedBox(
-                                                height: Constants.mediaQuery.height * 0.6,
-                                                width: Constants.mediaQuery.width * 0.45,
-                                                child: TabItemWidget(
-                                                  item1: "السيناريو الاول",
-                                                  item2: "السيناريو التاني",
-                                                  item3: "السيناريو التالت",
-                                                  firstWidget: CheckBoxQuestion(
-                                                    items: pointers1,
-                                                    previous: selectedPointers1.isNotEmpty ? selectedPointers1[0] : [],
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        if (selectedPointers1.isEmpty) {
-                                                          selectedPointers1.add(value!);
-                                                        } else {
-                                                          selectedPointers1[0] = value!;
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                  secondWidget: CheckBoxQuestion(
-                                                    previous: selectedPointers2.isNotEmpty ? selectedPointers2[0] : [],
-                                                    items: pointers2,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        if (selectedPointers2.isEmpty) {
-                                                          selectedPointers2.add(value!);
-                                                        } else {
-                                                          selectedPointers2[0] = value!;
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                  thirdWidget: CheckBoxQuestion(
-                                                    previous: selectedPointers3.isNotEmpty ? selectedPointers3[0] : [],
-                                                    items: pointers3,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        if (selectedPointers3.isEmpty) {
-                                                          selectedPointers3.add(value!);
-                                                        } else {
-                                                          selectedPointers3[0] = value!;
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
+                            IconButton(
+                              onPressed: () {
+                                selectedPointers1.clear();
+                                selectedPointers2.clear();
+                                selectedPointers3.clear();
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      backgroundColor: Colors.black,
+                                      title: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(
+                                            color: Constants.theme.primaryColor,
+                                            width: 2.5,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "اختر من المؤشرات",
+                                          style: Constants.theme.textTheme.titleLarge,
+                                        ),
+                                      ),
+                                      content: SizedBox(
+                                        height: Constants.mediaQuery.height * 0.6,
+                                        width: Constants.mediaQuery.width * 0.45,
+                                        child: TabItemWidget(
+                                          item1: "السيناريو الاول",
+                                          item2: "السيناريو التاني",
+                                          item3: "السيناريو التالت",
+                                          firstWidget: CheckBoxQuestion(
+                                            items: pointers1,
+                                            previous: selectedPointers1.isNotEmpty ? selectedPointers1[0] : [],
+                                            onChanged: (value) {
+                                              setState(() {
+                                                if (selectedPointers1.isEmpty) {
+                                                  selectedPointers1.add(value!);
+                                                } else {
+                                                  selectedPointers1[0] = value!;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                          secondWidget: CheckBoxQuestion(
+                                            previous: selectedPointers2.isNotEmpty ? selectedPointers2[0] : [],
+                                            items: pointers2,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                if (selectedPointers2.isEmpty) {
+                                                  selectedPointers2.add(value!);
+                                                } else {
+                                                  selectedPointers2[0] = value!;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                          thirdWidget: CheckBoxQuestion(
+                                            previous: selectedPointers3.isNotEmpty ? selectedPointers3[0] : [],
+                                            items: pointers3,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                if (selectedPointers3.isEmpty) {
+                                                  selectedPointers3.add(value!);
+                                                } else {
+                                                  selectedPointers3[0] = value!;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () async {
+                                            List<int> selectedPointersIds = [];
+                                            if (selectedPointers1.isNotEmpty) {
+                                              selectedPointersIds.addAll(selectedPointers1.expand((x) => x));
+                                            }
+                                            if (selectedPointers2.isNotEmpty) {
+                                              selectedPointersIds.addAll(selectedPointers2.expand((x) => x));
+                                            }
+                                            if (selectedPointers3.isNotEmpty) {
+                                              selectedPointersIds.addAll(selectedPointers3.expand((x) => x));
+                                            }
 
-
-
-
-                                                    //TODO:semsem check this concatination
-                                                    // List<int> list1 =[1];
-                                                    // List<int> list2 =[2];
-                                                    // List<int> list3 =[3];
-                                                    // List<int> listFinal =list1+list2+list3; //= [1,2,3]  
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      border: Border.all(
-                                                        color: Constants.theme.primaryColor,
-                                                        width: 2.5,
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "موافق",
-                                                      style: Constants.theme.textTheme.bodyMedium,
-                                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
+                                            if (selectedPointersIds.isNotEmpty) {
+                                              for (var pointerId in selectedPointersIds) {
+                                                try {
+                                                  await addPointers(pointerId, patient["id"]);
+                                                } catch (e) {
+                                                  print('Error adding pointerId $pointerId: $e');
+                                                }
+                                              }
+                                              addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                            }
+                                            Navigator.of(context).pop();
                                           },
-                                        );
-                                      },
-                                      icon: Icon(Icons.add_circle_rounded),
-                                    )
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: Constants.theme.primaryColor,
+                                                width: 2.5,
+                                              ),
+                                            ),
+                                            child: Text(
+                                              "موافق",
+                                              style: Constants.theme.textTheme.bodyMedium,
+                                            ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              icon: Icon(Icons.add_circle_rounded),
+                            ),
 
                                   ],
                                 ).setVerticalPadding(context,enableMediaQuery: false, 3),
@@ -359,7 +378,10 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 color: Colors.black,
                                               ),
                                             ),
-                                            IconButton(onPressed: (){}, icon: Icon(Icons.delete))
+                                            IconButton(onPressed: (){
+                                              deletePointers(patient["id"], pointer["id"]);
+                                              addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                            }, icon: Icon(Icons.delete))
                                           ],
                                         ),
                                           ],
@@ -385,7 +407,12 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                       color: Colors.black,
                                                     ),
                                                   ),
-                                                  IconButton(onPressed: (){}, icon: Icon(Icons.delete))
+                                                  IconButton(onPressed: (){
+                                                    deletePointers(patient["id"], pointer["id"]);
+                                                    addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+
+
+                                                  }, icon: Icon(Icons.delete))
                                                 ],
                                               ),
                                           ],
@@ -411,7 +438,10 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                       color: Colors.black,
                                                     ),
                                                   ),
-                                                  IconButton(onPressed: (){}, icon: Icon(Icons.delete))
+                                                  IconButton(onPressed: (){
+                                                    deletePointers(patient["id"], pointer["id"]);
+                                                    addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                  }, icon: Icon(Icons.delete))
                                                 ],
                                               ),
 
@@ -450,88 +480,9 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       ),
                                     ),
                                     Spacer(),
-                                    // IconButton(
-                                    //   onPressed: () {
-                                    //     showDialog(
-                                    //       context: context,
-                                    //       builder: (context) {
-                                    //         return AlertDialog(
-                                    //           backgroundColor: Colors.black,
-                                    //           content: SizedBox(height: Constants.mediaQuery.height * 0.6,
-                                    //               width: Constants.mediaQuery.width * 0.45,
-                                    //               child: Column(
-                                    //                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    //                 children: [
-                                    //                   Container(
-                                    //                     alignment: Alignment.center,
-                                    //                     decoration: BoxDecoration(
-                                    //                       borderRadius: BorderRadius.circular(10),
-                                    //                       border: Border.all(color: Constants.theme.primaryColor, width: 2.5,
-                                    //                       ),
-                                    //                     ),
-                                    //                     child: Text(
-                                    //                         "اختر من التوصيات",
-                                    //                         style: Constants.theme.textTheme.titleLarge
-                                    //                     ),
-                                    //                   ),
-                                    //                   //for(int index = 0; index <selectedAdvices.length; index++)
-                                    //                   CheckBoxQuestion(
-                                    //                     previous: selectedAdvices.isNotEmpty ? selectedAdvices[0] : [],
-                                    //                     items: advicesList,
-                                    //                     onChanged: (value) {
-                                    //                       setState(() {
-                                    //                         if (selectedAdvices.isEmpty) {
-                                    //                           selectedAdvices.add(value!);
-                                    //                           print("------------->>"+selectedAdvices.toString());
-                                    //                         } else {
-                                    //                           selectedAdvices[0] = value!;
-                                    //                         }
-                                    //                       });
-                                    //                     },
-                                    //                   ),
-                                    //
-                                    //
-                                    //                   // Expanded(
-                                    //                   //   child: ListView.builder(
-                                    //                   //     itemCount: advicesList.length,
-                                    //                   //     itemBuilder: (context, index) {
-                                    //                   //       return CheckBoxQuestion(
-                                    //                   //         previous: selectedAdvices[index],
-                                    //                   //         items: advicesList,
-                                    //                   //         onChanged: (value) {
-                                    //                   //           setState(() {
-                                    //                   //             selectedAdvices[index] = value!;
-                                    //                   //           });
-                                    //                   //         },
-                                    //                   //       );
-                                    //                   //     },
-                                    //                   //   ),
-                                    //                   // )
-                                    //                 ],
-                                    //               )),
-                                    //           actions: [
-                                    //             TextButton(
-                                    //               onPressed: () {
-                                    //                 Navigator.of(context).pop();
-                                    //                 addAdvices(adviceId, patient["id"]);
-                                    //
-                                    //               },
-                                    //               child: Container(
-                                    //                   decoration: BoxDecoration(
-                                    //                     borderRadius: BorderRadius.circular(10),
-                                    //                     border: Border.all(color: Constants.theme.primaryColor, width: 2.5,),
-                                    //                   ),
-                                    //                   child: Text(
-                                    //                       "موافق", style: Constants.theme.textTheme.bodyMedium
-                                    //                   ).setHorizontalPadding(context, enableMediaQuery: false, 20)),
-                                    //             ),],);
-                                    //       },
-                                    //     );
-                                    //   },
-                                    //   icon: Icon(Icons.add_circle_rounded),
-                                    // )
                                     IconButton(
                                       onPressed: () {
+                                        selectedAdviceIds.clear();
                                         showDialog(
                                           context: context,
                                           builder: (context) {
@@ -569,15 +520,20 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               actions: [
                                                 TextButton(
                                                   onPressed: () async {
+
                                                     if (selectedAdviceIds.isNotEmpty) {
                                                       for (var adviceId in selectedAdviceIds) {
-                                                        await addAdvices(adviceId, patient["id"]);
-
+                                                        await addAdvices(adviceId, patient["id"]).then((value){
+                                                          addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                        });
                                                       }
-                                                      addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+
+
                                                       // addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
                                                     }
+
                                                     Navigator.of(context).pop();
+
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
@@ -622,7 +578,10 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                   fontSize: isMobile?16:20
                                                 ),
                                               ),
-                                              IconButton(onPressed: (){}, icon: Icon(Icons.delete))
+                                              IconButton(onPressed: ()async{
+                                                await deleteAdvices(patient["id"], advices[index]["id"]);
+                                                addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                              }, icon: Icon(Icons.delete))
                                             ],
                                           ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
                                         ],
@@ -687,11 +646,38 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
       print('Error occurred: $e');
     }
   }
-  Future<void> addPointers(int patientId, int pointerId) async {
+  Future<void> addPointers(int pointerId, int patientId) async {
     final dio = Dio();
     try {
-      final response = await dio.get(
-        '${Constants.baseUrl}/api/pationt/add-patient-pointer',
+      final response = await dio.post(
+          '${Constants.baseUrl}/api/pationt/add-patient-pointer',
+          options: Options(headers: {
+            "api-password": Constants.apiPassword,
+            "token": CacheHelper.getData(key: "token")
+          }),
+          data: {
+            "patient_id": patientId,
+            "pointer_id": pointerId,
+          }
+      );
+      if (response.statusCode == 200) {
+        print('Success: ${response.data["message"]}');
+        SnackBarService.showSuccessMessage(response.data["message"]);
+
+      } else {
+        print('Failed to add pointer. Status code: ${response.statusCode}');
+        SnackBarService.showErrorMessage(response.data["message"]);
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
+    }
+  }
+  Future<void> deletePointers(int patientId, int pointerId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+        '${Constants.baseUrl}/api/pationt/delete-patient-pointer',
         options: Options(headers: {
           "api-password": Constants.apiPassword,
           "token": CacheHelper.getData(key: "token")
@@ -702,12 +688,16 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
         }
       );
       if (response.statusCode == 200) {
-        print('${response.data["message"]}');
+        print('------------------>>>${response.data["message"]}');
+        SnackBarService.showSuccessMessage(response.data["message"]);
+
       } else {
         print('Failed to load users. Status code: ${response.statusCode}');
       }
     } catch (e) {
       print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
+
     }
   }
   Future<void> fetchAdvices() async {
@@ -752,17 +742,48 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           print('${response.data["message"]}');
-          
+          SnackBarService.showSuccessMessage(response.data["message"]);
+
+
         } else {
           print('Error: ${response.data["message"]}');
+          SnackBarService.showErrorMessage(response.data["message"]);
         }
       } else {
         print('Failed to load advices. Status code: ${response.statusCode}');
       }
     } catch (e) {
       print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
+
     }
   }
+  Future<void> deleteAdvices(int patientId, int adviceId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+          '${Constants.baseUrl}/api/pationt/delete-patient-advice',
+          options: Options(headers: {
+            "api-password": Constants.apiPassword,
+            "token": CacheHelper.getData(key: "token")
+          }),
+          data: {
+            "patient_id": patientId,
+            "advice_id": adviceId,
+          }
+      );
+      if (response.statusCode == 200) {
+        print('mmmmmmmmmmmmm${response.data["message"]}');
+        SnackBarService.showSuccessMessage(response.data["message"]);
+      } else {
+        print('Failed to load users. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
+    }
+  }
+
 
 
 

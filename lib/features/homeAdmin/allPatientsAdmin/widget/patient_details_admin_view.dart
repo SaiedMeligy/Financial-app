@@ -53,6 +53,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
       });
     }).toList();
   }
+
     Future<void> _printPDF() async {
       try {
         final font = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
@@ -331,7 +332,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                     for(int i = 0 ; i < answe[y].length ; i++) ...[
 
                                                       pw.Container(
-                                                        height:110,
+                                                        height:answe[y][i]["question_options"].length>2?150:100,
                                                           margin: pw.EdgeInsets.all(5),
                                                           decoration: pw.BoxDecoration(
                                                               border: pw.Border.all(
@@ -344,22 +345,24 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                             mainAxisAlignment: pw.MainAxisAlignment.start,
                                                               children: [
                                                                 pw.Container(
-                                                                  height:answe[y][i]["title"].toString().split(" ").length>10?100:50,
+                                                                  height:answe[y][i]["title"].toString().split(" ").length>10?80:50,
                                                                   decoration: pw.BoxDecoration(
-
                                                                       color: PdfColors.black ,
                                                                       borderRadius: pw.BorderRadius.circular(10)
                                                                   ),
                                                                   child: pw.Row(
                                                                       mainAxisAlignment: pw.MainAxisAlignment.end ,
                                                                       children: [
+                                                                        pw.SizedBox(width:5),
+                                                                        pw.Container(
+                                                                          margin: pw.EdgeInsets.all(5),
+                                                                          child:
                                                                         pw.Text(
                                                                           DividText("${answe[y][i]['title']}"),
-                                                                          textScaleFactor: 0.8,
-
-                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
+                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 10, color: PdfColors.white),
                                                                           textDirection: pw.TextDirection.rtl,
                                                                           maxLines:5,
+                                                                        ),
                                                                         ),
                                                                         pw.SizedBox(width: 5)
                                                                       ]
@@ -372,7 +375,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                         if(answe[y][i]["question_options"][x]['type'] == 1&&answe[y][i]["question_options"][x]['answer'] == "1")...[
                                                                           pw.Text(
                                                                             "${answe[y][i]["question_options"][x]['title']}",
-                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 10),
                                                                             textDirection: pw.TextDirection.rtl,
                                                                           ),
                                                                           pw.SizedBox(width: 10),
@@ -386,7 +389,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                         if(answe[y][i]["question_options"][x]['type'] == 2&&answe[y][i]["question_options"][x]['answer'] == "1")...[
                                                                           pw.Text(
                                                                             "${answe[y][i]["question_options"][x]['title']}",
-                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 10),
                                                                             textDirection: pw.TextDirection.rtl,
                                                                           ),
                                                                           pw.SizedBox(width: 10),
@@ -397,7 +400,21 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                           ),
                                                                           pw.SizedBox(width: 20),
                                                                         ],
-
+                                                                        // if (answe[y][i]["question_options"][x]['answer'] == "1" ||
+                                                                        //     answe[y][i]["question_options"][x]['answer'] == 1) ...[
+                                                                        //   pw.Text(
+                                                                        //     "${answe[y][i]["question_options"][x]['title']}",
+                                                                        //     style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                        //     textDirection: pw.TextDirection.rtl,
+                                                                        //   ),
+                                                                        //   pw.SizedBox(width: 10),
+                                                                        //   pw.Container(
+                                                                        //     width: 8,
+                                                                        //     height: 8,
+                                                                        //     color: PdfColors.black,
+                                                                        //   ),
+                                                                        //   pw.SizedBox(width: 20),
+                                                                        // ],
                                                                         if(answe[y][i]["question_options"][x]['type'] == 3&&answe[y][i]["question_options"][x]['answer']!=null)...[
                                                                           pw.Directionality(
                                                                             textDirection: pw.TextDirection.rtl,
@@ -407,12 +424,12 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                               children: [
                                                                           pw.Text(
                                                                             "${answe[y][i]["question_options"][x]['title']} : ",
-                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 10),
                                                                             textDirection: pw.TextDirection.rtl,
                                                                           ),
                                                                                 pw.Text(
                                                                                   "${answe[y][i]["question_options"][x]['answer']}",
-                                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 10),
                                                                                   textDirection: pw.TextDirection.rtl,
                                                                                 ),
                                                                           ]
@@ -460,16 +477,16 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       } catch (e) {
                                         print('Error: $e');
                                       }
-                                      final pdfBytes = await pdf.save();
-
-                                      final blob = html.Blob([pdfBytes], 'application/pdf');
-                                      final url = html.Url.createObjectUrlFromBlob(blob);
-
-                                      // Open the PDF in a new tab
-                                      html.window.open(url, '_blank');
-
-                                      // Release the blob URL
-                                      html.Url.revokeObjectUrl(url);
+                                      // final pdfBytes = await pdf.save();
+                                      //
+                                      // final blob = html.Blob([pdfBytes], 'application/pdf');
+                                      // final url = html.Url.createObjectUrlFromBlob(blob);
+                                      //
+                                      // // Open the PDF in a new tab
+                                      // html.window.open(url, '_blank');
+                                      //
+                                      // // Release the blob URL
+                                      // html.Url.revokeObjectUrl(url);
                                     },
                                   ),
                                 ),

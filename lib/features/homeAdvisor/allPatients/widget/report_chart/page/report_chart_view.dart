@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_circular_slider/multi_circular_slider.dart';
 
+import '../../../../../../core/Services/snack_bar_service.dart';
 import '../../../../../../core/config/cash_helper.dart';
 import '../../../../../../core/widget/check_box_question.dart';
 import '../../../../../../domain/entities/AdviceMode.dart';
@@ -58,396 +59,437 @@ class _ReportChartViewState extends State<ReportChartView> {
         isMobile = constraints.maxWidth < 600;
 
         return BlocBuilder<AddSessionCubit, AddSessionStates>(
-        bloc: addSessionCubit,
-        builder: (context, state) {
-          if (state is LoadingAddSessionState) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is ErrorAddSessionState) {
-            return Center(
-              child: Text(state.errorMessage),
-            );
-          }
-          if (state is SuccessAddSessionState) {
-            var pointers = state.result.data["pationt"]["pointers"] ?? [];
-            var advices = state.result.data["pationt"]["advices"] ?? [];
-
-            List<dynamic> pointers1Temp = [];
-            List<dynamic> pointers2Temp = [];
-            List<dynamic> pointers3Temp = [];
-
-            for (var pointer in pointers) {
-              if (pointer["id"] == 1) {
-                pointers1Temp.add(pointer);
-              } else if (pointer["id"] == 2) {
-                pointers2Temp.add(pointer);
-              } else if (pointer["id"] == 3) {
-                pointers3Temp.add(pointer);
-              }
-            }
-            var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString();
-            var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
-            var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
-
-            if (pointers1Temp.isNotEmpty) {
-              print("----------->>>${calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString()}%");
-            }
-            if (pointers2Temp.isNotEmpty) {
-              print("----------->>>${calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString()}%");
-            }
-            if (pointers3Temp.isNotEmpty) {
-              print("----------->>>${calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString()}%");
-            }
-
-            if (pointers.isEmpty && advices.isEmpty) {
+          bloc: addSessionCubit,
+          builder: (context, state) {
+            if (state is LoadingAddSessionState) {
               return Center(
-                child: Text("No data available"),
+                child: CircularProgressIndicator(),
               );
             }
+            if (state is ErrorAddSessionState) {
+              return Center(
+                child: Text(state.errorMessage),
+              );
+            }
+            if (state is SuccessAddSessionState) {
+              var pointers = state.result.data["pationt"]["pointers"] ?? [];
+              var patient = state.result.data["pationt"] ?? [];
+              var advices = state.result.data["pationt"]["advices"] ?? [];
 
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("تفاصيل الحالة"),
-                centerTitle: true,
-                titleTextStyle: Constants.theme.textTheme.titleLarge,
-                backgroundColor: Constants.theme.primaryColor,
-                elevation: 0,
-                automaticallyImplyLeading: true,
-              ),
-              body: Directionality(
-                textDirection: TextDirection.rtl,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/back.jpg"),
-                      fit: BoxFit.cover,
-                      opacity: 0.4,
+              List<dynamic> pointers1Temp = [];
+              List<dynamic> pointers2Temp = [];
+              List<dynamic> pointers3Temp = [];
+
+              for (var pointer in pointers) {
+                if (pointer["id"] == 1) {
+                  pointers1Temp.add(pointer);
+                } else if (pointer["id"] == 2) {
+                  pointers2Temp.add(pointer);
+                } else if (pointer["id"] == 3) {
+                  pointers3Temp.add(pointer);
+                }
+              }
+              var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString();
+              var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
+              var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
+              List<int> selectedAdviceIds = [];
+              List<int> selectedPointersIds = [];
+
+
+
+              if (pointers1Temp.isNotEmpty) {
+                print("----------->>>${calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString()}%");
+              }
+              if (pointers2Temp.isNotEmpty) {
+                print("----------->>>${calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString()}%");
+              }
+              if (pointers3Temp.isNotEmpty) {
+                print("----------->>>${calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString()}%");
+              }
+
+              if (pointers.isEmpty && advices.isEmpty) {
+                return Center(
+                  child: Text("No data available"),
+                );
+              }
+
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text("تفاصيل الحالة"),
+                  centerTitle: true,
+                  titleTextStyle: Constants.theme.textTheme.titleLarge,
+                  backgroundColor: Colors.black87,
+                  elevation: 0,
+                  automaticallyImplyLeading: true,
+                ),
+                body: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/back.jpg"),
+                        fit: BoxFit.cover,
+                        opacity: 0.1  ,
+                      ),
                     ),
-                  ),
-                  child: ListView(
-                    children: [
-                      Column(
-                        children: [
-                          SizedBox(height: 10),
-                          Container(
-                            height: isMobile?Constants.mediaQuery.height * 0.35:Constants.mediaQuery.height * 0.4,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 2,
-                                color: Colors.black,
+                    child: ListView(
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Container(
+                              height: isMobile?Constants.mediaQuery.height * 0.35:Constants.mediaQuery.height * 0.4,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: Colors.black,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                ),
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                              child: Container(
+                                margin: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.black87,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                            "السيناريو الاول : " + double.parse(senario1).toStringAsFixed(2) + "%",
+                                            style:isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
+                                                fontSize: isMobile?20:24
+                                            ):Constants.theme.textTheme.titleLarge
+                                        ),
+                                        Text(
+                                          "السيناريو الثاني : " + double.parse(senario2).toStringAsFixed(2) + "%",
+                                          style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
+                                              fontSize: isMobile?20:24
+                                          ):Constants.theme.textTheme.titleLarge,
+                                        ),
+                                        Text(
+                                          "السيناريو الثالث : " + double.parse(senario3).toStringAsFixed(2) + "%",
+                                          style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
+                                              fontSize: isMobile?20:24
+                                          ):Constants.theme.textTheme.titleLarge,
+                                        ),
+                                      ],
+                                    ),
+                                    MultiCircularSlider(
+                                      size: isMobile?120:200,
+                                      progressBarType: MultiCircularSliderType.circular,
+                                      // values: countData,
+                                      values: [
+                                        pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                        pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                        pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                      ],
+                                      colors: [Colors.red, Colors.orange, Colors.green],
+                                      showTotalPercentage: true,
+                                      // label: 'This is label text',
+                                      animationDuration: const Duration(milliseconds: 500),
+                                      animationCurve: Curves.easeIn,
+                                      trackColor: Colors.white,
+                                      progressBarWidth: 52.0,
+                                      trackWidth: 40,
+                                      //labelTextStyle: TextStyle(color: Colors.black),
+                                      percentageTextStyle: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            child: Container(
-                              margin: EdgeInsets.all(10),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: Constants.mediaQuery.height*0.4,
                               decoration: BoxDecoration(
-                                color: Colors.black87,
-                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: 2,
+                                  color: Colors.black,
+                                ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              child: Column(
                                 children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
+
+                                      Spacer(),
                                       Text(
-                                          "السيناريو الاول : " + double.parse(senario1).toStringAsFixed(2) + "%",
-                                          style:isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
-                                              fontSize: isMobile?20:24
-                                          ):Constants.theme.textTheme.titleLarge
+                                        "المؤشرات",
+                                        textAlign: TextAlign.center,
+                                        style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                      Text(
-                                        "السيناريو الثاني : " + double.parse(senario2).toStringAsFixed(2) + "%",
-                                        style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile?20:24
-                                        ):Constants.theme.textTheme.titleLarge,
+                                      Spacer(),
+                                      IconButton(
+                                        onPressed: () {
+                                          selectedPointers1.clear();
+                                          selectedPointers2.clear();
+                                          selectedPointers3.clear();
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                backgroundColor: Colors.black,
+                                                title: Container(
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    border: Border.all(
+                                                      color: Constants.theme.primaryColor,
+                                                      width: 2.5,
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    "اختر من المؤشرات",
+                                                    style: Constants.theme.textTheme.titleLarge,
+                                                  ),
+                                                ),
+                                                content: SizedBox(
+                                                  height: Constants.mediaQuery.height * 0.6,
+                                                  width: Constants.mediaQuery.width * 0.45,
+                                                  child: TabItemWidget(
+                                                    item1: "السيناريو الاول",
+                                                    item2: "السيناريو التاني",
+                                                    item3: "السيناريو التالت",
+                                                    firstWidget: CheckBoxQuestion(
+                                                      items: pointers1,
+                                                      previous: selectedPointers1.isNotEmpty ? selectedPointers1[0] : [],
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          if (selectedPointers1.isEmpty) {
+                                                            selectedPointers1.add(value!);
+                                                          } else {
+                                                            selectedPointers1[0] = value!;
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                    secondWidget: CheckBoxQuestion(
+                                                      previous: selectedPointers2.isNotEmpty ? selectedPointers2[0] : [],
+                                                      items: pointers2,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          if (selectedPointers2.isEmpty) {
+                                                            selectedPointers2.add(value!);
+                                                          } else {
+                                                            selectedPointers2[0] = value!;
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                    thirdWidget: CheckBoxQuestion(
+                                                      previous: selectedPointers3.isNotEmpty ? selectedPointers3[0] : [],
+                                                      items: pointers3,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          if (selectedPointers3.isEmpty) {
+                                                            selectedPointers3.add(value!);
+                                                          } else {
+                                                            selectedPointers3[0] = value!;
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      List<int> selectedPointersIds = [];
+                                                      if (selectedPointers1.isNotEmpty) {
+                                                        selectedPointersIds.addAll(selectedPointers1.expand((x) => x));
+                                                      }
+                                                      if (selectedPointers2.isNotEmpty) {
+                                                        selectedPointersIds.addAll(selectedPointers2.expand((x) => x));
+                                                      }
+                                                      if (selectedPointers3.isNotEmpty) {
+                                                        selectedPointersIds.addAll(selectedPointers3.expand((x) => x));
+                                                      }
+
+                                                      if (selectedPointersIds.isNotEmpty) {
+                                                        for (var pointerId in selectedPointersIds) {
+                                                          try {
+                                                            await addPointers(pointerId, patient["id"]);
+                                                          } catch (e) {
+                                                            print('Error adding pointerId $pointerId: $e');
+                                                          }
+                                                        }
+                                                        addSessionCubit.setRefreshAdvicor(widget.pationt_data.nationalId);
+                                                      }
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        border: Border.all(
+                                                          color: Constants.theme.primaryColor,
+                                                          width: 2.5,
+                                                        ),
+                                                      ),
+                                                      child: Text(
+                                                        "موافق",
+                                                        style: Constants.theme.textTheme.bodyMedium,
+                                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        icon: Icon(Icons.add_circle_rounded),
                                       ),
-                                      Text(
-                                        "السيناريو الثالث : " + double.parse(senario3).toStringAsFixed(2) + "%",
-                                        style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile?20:24
-                                        ):Constants.theme.textTheme.titleLarge,
-                                      ),
+
                                     ],
-                                  ),
-                                  MultiCircularSlider(
-                                    size: isMobile?120:200,
-                                    progressBarType: MultiCircularSliderType.circular,
-                                    // values: countData,
-                                    values: [
-                                      pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                    ],
-                                    colors: [Colors.red, Colors.orange, Colors.green],
-                                    showTotalPercentage: true,
-                                    // label: 'This is label text',
-                                    animationDuration: const Duration(milliseconds: 500),
-                                    animationCurve: Curves.easeIn,
-                                    trackColor: Colors.white,
-                                    progressBarWidth: 52.0,
-                                    trackWidth: 40,
-                                    //labelTextStyle: TextStyle(color: Colors.black),
-                                    percentageTextStyle: TextStyle(color: Colors.black),
+                                  ).setVerticalPadding(context,enableMediaQuery: false, 3),
+                                  Expanded(
+                                    child: TabItemWidget(
+                                      item1: "السيناريوالأول(الحالات المتوازنة نسبيا)",
+                                      item2: "السيناريوالثاني(للحالات الغير متوازنة في الصرف)",
+                                      item3: "السيناريوالثالث(للحالات المتعثرة ماليا)",
+                                      firstWidget: ListView.builder(
+                                        itemCount: pointers1Temp.length,
+                                        itemBuilder: (context, index) {
+                                          var pationtPointers = pointers1Temp[index]["pationt_pointers"] ?? [];
+                                          return Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              for (var pointer in pationtPointers)
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      pointer["text"],
+                                                      style: TextStyle(
+                                                        fontSize: isMobile?16:20,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    IconButton(onPressed: (){
+                                                      deletePointers(patient["id"], pointer["id"]);
+                                                      addSessionCubit.setRefreshAdvicor(widget.pationt_data.nationalId);
+                                                    }, icon: Icon(Icons.delete))
+                                                  ],
+                                                ),
+                                            ],
+                                          ).setHorizontalPadding(context,enableMediaQuery: false,10 );
+                                        },
+                                      ),
+                                      secondWidget: ListView.builder(
+                                        itemCount: pointers2Temp.length,
+                                        itemBuilder: (context, index) {
+                                          var pationtPointers = pointers2Temp[index]["pationt_pointers"] ?? [];
+                                          return Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              for (var pointer in pationtPointers)
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      pointer["text"],
+                                                      style: TextStyle(
+                                                        fontSize: isMobile?16:20,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    IconButton(onPressed: (){
+                                                      deletePointers(patient["id"], pointer["id"]);
+                                                      addSessionCubit.setRefreshAdvicor(widget.pationt_data.nationalId);
+
+
+                                                    }, icon: Icon(Icons.delete))
+                                                  ],
+                                                ),
+                                            ],
+                                          ).setHorizontalPadding(context,enableMediaQuery: false,10 );
+                                        },
+                                      ),
+                                      thirdWidget: ListView.builder(
+                                        itemCount: pointers3Temp.length,
+                                        itemBuilder: (context, index) {
+                                          var pationtPointers = pointers3Temp[index]["pationt_pointers"] ?? [];
+                                          return Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              for (var pointer in pationtPointers)
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      pointer["text"],
+                                                      style: TextStyle(
+                                                        fontSize: isMobile?16:20,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    IconButton(onPressed: (){
+                                                      deletePointers(patient["id"], pointer["id"]);
+                                                      addSessionCubit.setRefreshAdvicor(widget.pationt_data.nationalId);
+                                                    }, icon: Icon(Icons.delete))
+                                                  ],
+                                                ),
+
+                                            ],
+                                          ).setHorizontalPadding(context,enableMediaQuery: false,10 );
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            height: Constants.mediaQuery.height*0.4,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 2,
-                                color: Colors.black,
-                              ),
+                            SizedBox(
+                              height: 20,
                             ),
-                            child: Column(
-                              children: [
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Spacer(),
-                                    Text(
-                                      "المؤشرات",
-                                      textAlign: TextAlign.center,
-                                      style: Constants.theme.textTheme.titleLarge?.copyWith(
-                                        color: Colors.black,
-
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              backgroundColor: Colors.black,
-                                              title: Container(
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                    color: Constants.theme.primaryColor,
-                                                    width: 2.5,
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "اختر من المؤشرات",
-                                                  style: Constants.theme.textTheme.titleLarge,
-                                                ),
-                                              ),
-                                              content: SizedBox(
-                                                height: Constants.mediaQuery.height * 0.6,
-                                                width: Constants.mediaQuery.width * 0.45,
-                                                child: TabItemWidget(
-                                                  item1: "السيناريو الاول",
-                                                  item2: "السيناريو التاني",
-                                                  item3: "السيناريو التالت",
-                                                  firstWidget: CheckBoxQuestion(
-                                                    items: pointers1,
-                                                    previous: selectedPointers1.isNotEmpty ? selectedPointers1[0] : [],
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        if (selectedPointers1.isEmpty) {
-                                                          selectedPointers1.add(value!);
-                                                        } else {
-                                                          selectedPointers1[0] = value!;
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                  secondWidget: CheckBoxQuestion(
-                                                    previous: selectedPointers2.isNotEmpty ? selectedPointers2[0] : [],
-                                                    items: pointers2,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        if (selectedPointers2.isEmpty) {
-                                                          selectedPointers2.add(value!);
-                                                        } else {
-                                                          selectedPointers2[0] = value!;
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                  thirdWidget: CheckBoxQuestion(
-                                                    previous: selectedPointers3.isNotEmpty ? selectedPointers3[0] : [],
-                                                    items: pointers3,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        if (selectedPointers3.isEmpty) {
-                                                          selectedPointers3.add(value!);
-                                                        } else {
-                                                          selectedPointers3[0] = value!;
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      border: Border.all(
-                                                        color: Constants.theme.primaryColor,
-                                                        width: 2.5,
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "موافق",
-                                                      style: Constants.theme.textTheme.bodyMedium,
-                                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      icon: Icon(Icons.add_circle_rounded),
-                                    )
-
-                                  ],
-                                ).setVerticalPadding(context,enableMediaQuery: false, 3),
-                                Expanded(
-                                  child: TabItemWidget(
-                                    item1: "السيناريوالأول(الحالات المتوازنة نسبيا)",
-                                    item2: "السيناريوالثاني(للحالات الغير متوازنة في الصرف)",
-                                    item3: "السيناريوالثالث(للحالات المتعثرة ماليا)",
-                                    firstWidget: ListView.builder(
-                                      itemCount: pointers1Temp.length,
-                                      itemBuilder: (context, index) {
-                                        var pationtPointers = pointers1Temp[index]["pationt_pointers"] ?? [];
-                                        return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            for (var pointer in pationtPointers)
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    pointer["text"],
-                                                    style: TextStyle(
-                                                      fontSize: isMobile?16:20,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                  IconButton(onPressed: (){}, icon: Icon(Icons.delete))
-                                                ],
-                                              ),
-                                          ],
-                                        ).setHorizontalPadding(context,enableMediaQuery: false,10 );
-                                      },
-                                    ),
-                                    secondWidget: ListView.builder(
-                                      itemCount: pointers2Temp.length,
-                                      itemBuilder: (context, index) {
-                                        var pationtPointers = pointers2Temp[index]["pationt_pointers"] ?? [];
-                                        return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            for (var pointer in pationtPointers)
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    pointer["text"],
-                                                    style: TextStyle(
-                                                      fontSize: isMobile?16:20,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                  IconButton(onPressed: (){}, icon: Icon(Icons.delete))
-                                                ],
-                                              ),
-                                          ],
-                                        ).setHorizontalPadding(context,enableMediaQuery: false,10 );
-                                      },
-                                    ),
-                                    thirdWidget: ListView.builder(
-                                      itemCount: pointers3Temp.length,
-                                      itemBuilder: (context, index) {
-                                        var pationtPointers = pointers3Temp[index]["pationt_pointers"] ?? [];
-                                        return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            for (var pointer in pationtPointers)
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    pointer["text"],
-                                                    style: TextStyle(
-                                                      fontSize: isMobile?16:20,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                  IconButton(onPressed: (){}, icon: Icon(Icons.delete))
-                                                ],
-                                              ),
-
-                                          ],
-                                        ).setHorizontalPadding(context,enableMediaQuery: false,10 );
-                                      },
-                                    ),
-                                  ),
+                            Container(
+                              height: Constants.mediaQuery.height*0.4,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            height: Constants.mediaQuery.height*0.4,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 2,
-                                color: Colors.black,
                               ),
-                            ),
-                            child: Column(
-                              children: [
+                              child: Column(
+                                children: [
 
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Spacer(),
-                                    Text(
-                                      "التوصيات",
-                                      textAlign: TextAlign.center,
-                                      style: Constants.theme.textTheme.titleLarge?.copyWith(
-                                        color: Colors.black,
-
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Spacer(),
+                                      Text(
+                                        "التوصيات",
+                                        textAlign: TextAlign.center,
+                                        style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                    Spacer(),
-                                    IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              backgroundColor: Colors.black,
-                                              content: SizedBox(height: Constants.mediaQuery.height * 0.6,
+                                      Spacer(),
+                                      IconButton(
+                                        onPressed: () {
+                                          selectedAdviceIds.clear();
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                backgroundColor: Colors.black,
+                                                content: SizedBox(
+                                                  height: Constants.mediaQuery.height * 0.6,
                                                   width: Constants.mediaQuery.width * 0.45,
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -456,98 +498,112 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                         alignment: Alignment.center,
                                                         decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(10),
-                                                          border: Border.all(color: Constants.theme.primaryColor, width: 2.5,
-                                                          ),
+                                                          border: Border.all(color: Constants.theme.primaryColor, width: 2.5),
                                                         ),
                                                         child: Text(
-                                                            "اختر من التوصيات",
-                                                            style: Constants.theme.textTheme.titleLarge
+                                                          "اختر من التوصيات",
+                                                          style: Constants.theme.textTheme.titleLarge,
                                                         ),
                                                       ),
-                                                      // for(int index = 0; index <selectedAdvices.length; index++)
-
                                                       CheckBoxQuestion(
-                                                        previous: selectedAdvices.isNotEmpty ? selectedAdvices[0] : [],
+                                                        previous: selectedAdviceIds,
                                                         items: advicesList,
                                                         onChanged: (value) {
                                                           setState(() {
-                                                            if (selectedAdvices.isEmpty) {
-                                                              selectedAdvices.add(value!);
-                                                            } else {
-                                                              selectedAdvices[0] = value!;
-                                                            }
+                                                            selectedAdviceIds = value ?? [];
                                                           });
                                                         },
                                                       ),
                                                     ],
-                                                  )),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Container(
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () async {
+
+                                                      if (selectedAdviceIds.isNotEmpty) {
+                                                        for (var adviceId in selectedAdviceIds) {
+                                                          await addAdvices(adviceId, patient["id"]).then((value){
+                                                            addSessionCubit.setRefreshAdvicor(widget.pationt_data.nationalId);
+                                                          });
+                                                        }
+
+
+                                                        // addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+                                                      }
+
+                                                      Navigator.of(context).pop();
+
+                                                    },
+                                                    child: Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius: BorderRadius.circular(10),
-                                                        border: Border.all(color: Constants.theme.primaryColor, width: 2.5,),
+                                                        border: Border.all(color: Constants.theme.primaryColor, width: 2.5),
                                                       ),
                                                       child: Text(
-                                                          "موافق", style: Constants.theme.textTheme.bodyMedium
-                                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20)),
-                                                ),],);
-                                          },
+                                                        "موافق", style: Constants.theme.textTheme.bodyMedium,
+                                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        icon: Icon(Icons.add_circle_rounded),
+                                      ),
+
+                                    ],
+                                  ).setVerticalPadding(context,enableMediaQuery: false, 3),
+
+                                  Divider(
+                                    thickness: 2,
+                                    color: Colors.black,
+
+                                  ),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: advices.length,
+                                      itemBuilder: (context, index) {
+                                        return Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  advices[index]["text"],
+                                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: isMobile?16:20
+                                                  ),
+                                                ),
+                                                IconButton(onPressed: ()async{
+                                                  await deleteAdvices(patient["id"], advices[index]["id"]);
+                                                  addSessionCubit.setRefreshAdvicor(widget.pationt_data.nationalId);
+                                                }, icon: Icon(Icons.delete))
+                                              ],
+                                            ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
+                                          ],
                                         );
                                       },
-                                      icon: Icon(Icons.add_circle_rounded),
-                                    )
-
-                                  ],
-                                ).setVerticalPadding(context,enableMediaQuery: false, 3),
-
-                                Divider(
-                                  thickness: 2,
-                                  color: Colors.black,
-
-                                ),
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: advices.length,
-                                    itemBuilder: (context, index) {
-                                      return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                advices[index]["text"],
-                                                style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                                    color: Colors.black,
-                                                    fontSize: isMobile?16:20
-                                                ),
-                                              ),
-                                              IconButton(onPressed: (){}, icon: Icon(Icons.delete))
-                                            ],
-                                          ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
-                                        ],
-                                      );
-                                    },
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ).setVerticalPadding(context,enableMediaQuery: false, 5),
-                        ],
-                      ).setHorizontalPadding(context,enableMediaQuery: false, 20),
-                    ],
+                                ],
+                              ),
+                            ).setVerticalPadding(context,enableMediaQuery: false, 5),
+                          ],
+                        ).setHorizontalPadding(context,enableMediaQuery: false, 20),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          }
-          return Text("Something went wrong");
-        },
-      );}
+              );
+            }
+            return Text("Something went wrong");
+          },
+        );
+      }
     );
   }
   Future<void> fetchPointers() async {
@@ -591,6 +647,60 @@ class _ReportChartViewState extends State<ReportChartView> {
       print('Error occurred: $e');
     }
   }
+  Future<void> addPointers(int pointerId, int patientId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+          '${Constants.baseUrl}/api/advicor/pationt/add-patient-pointer',
+          options: Options(headers: {
+            "api-password": Constants.apiPassword,
+            "token": CacheHelper.getData(key: "token")
+          }),
+          data: {
+            "patient_id": patientId,
+            "pointer_id": pointerId,
+          }
+      );
+      if (response.statusCode == 200) {
+        print('Success: ${response.data["message"]}');
+        SnackBarService.showSuccessMessage(response.data["message"]);
+
+      } else {
+        print('Failed to add pointer. Status code: ${response.statusCode}');
+        SnackBarService.showErrorMessage(response.data["message"]);
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
+    }
+  }
+  Future<void> deletePointers(int patientId, int pointerId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+          '${Constants.baseUrl}/api/advicor/pationt/delete-patient-pointer',
+          options: Options(headers: {
+            "api-password": Constants.apiPassword,
+            "token": CacheHelper.getData(key: "token")
+          }),
+          data: {
+            "patient_id": patientId,
+            "pointer_id": pointerId,
+          }
+      );
+      if (response.statusCode == 200) {
+        print('------------------>>>${response.data["message"]}');
+        SnackBarService.showSuccessMessage(response.data["message"]);
+
+      } else {
+        print('Failed to load users. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
+
+    }
+  }
   Future<void> fetchAdvices() async {
     final dio = Dio();
     try {
@@ -614,6 +724,64 @@ class _ReportChartViewState extends State<ReportChartView> {
       }
     } catch (e) {
       print('Error occurred: $e');
+    }
+  }
+  Future<void> addAdvices(int adviceId, int patientId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+        '${Constants.baseUrl}/api/advicor/pationt/add-patient-advice',
+        options: Options(headers: {
+          "api-password": Constants.apiPassword,
+          "token": CacheHelper.getData(key: "token"),
+        }),
+        data: {
+          "patient_id": patientId,
+          "advice_id": adviceId,
+        },
+      );
+      if (response.statusCode == 200) {
+        if (response.data["status"] == true) {
+          print('${response.data["message"]}');
+          SnackBarService.showSuccessMessage(response.data["message"]);
+
+
+        } else {
+          print('Error: ${response.data["message"]}');
+          SnackBarService.showErrorMessage(response.data["message"]);
+        }
+      } else {
+        print('Failed to load advices. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
+
+    }
+  }
+  Future<void> deleteAdvices(int patientId, int adviceId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+          '${Constants.baseUrl}/api/advicor/pationt/delete-patient-advice',
+          options: Options(headers: {
+            "api-password": Constants.apiPassword,
+            "token": CacheHelper.getData(key: "token")
+          }),
+          data: {
+            "patient_id": patientId,
+            "advice_id": adviceId,
+          }
+      );
+      if (response.statusCode == 200) {
+        print('mmmmmmmmmmmmm${response.data["message"]}');
+        SnackBarService.showSuccessMessage(response.data["message"]);
+      } else {
+        print('Failed to load users. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      SnackBarService.showErrorMessage(e.toString());
     }
   }
 }

@@ -12,6 +12,16 @@ class SuccessAddSessionState extends AddSessionStates{
   SuccessAddSessionState(this.result);
 
 }
+class SuccessShowSession extends AddSessionStates{
+  final Response result;
+  SuccessShowSession(this.result);
+
+}
+class SuccessShowSessionWithAdmin extends AddSessionStates{
+  final Response result;
+  SuccessShowSessionWithAdmin(this.result);
+
+}
 
 class ErrorAddSessionState extends AddSessionStates{
   final String errorMessage;

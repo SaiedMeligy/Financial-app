@@ -46,7 +46,7 @@ class _DropdownButtonAdvisorState extends State<DropdownButtonAdvisor> {
             child: DropdownButton<String>(
               dropdownColor: Constants.theme.primaryColor.withOpacity(0.8),
               value: selectedValue,
-              hint: Text('اختر الاستشاري',
+              hint: Text('اختر الاستشارى',
                 style: Constants.theme.textTheme.bodyLarge?.copyWith(
                   color: Colors.black
                 ),

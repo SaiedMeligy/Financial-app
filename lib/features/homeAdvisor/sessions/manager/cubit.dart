@@ -25,8 +25,7 @@ class UpdateSessionCubit extends Cubit<UpdateSessionStates> {
 
     WebServices services = WebServices();
     UpdateSessionDataSource updateSessionDataSource = UpdateSessionDataSourceImp(services.freeDio);
-    UpdateSessionRepository updateRepository =
-    UpdateSessionRepositoryImp(updateSessionDataSource);
+    UpdateSessionRepository updateRepository = UpdateSessionRepositoryImp(updateSessionDataSource);
     updateSessionUseCase = UpdateSessionUseCase(updateRepository);
 
     return await updateSessionUseCase.execute(data);

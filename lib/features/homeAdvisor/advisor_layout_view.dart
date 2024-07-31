@@ -73,7 +73,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
           title: Column(
             children: [
               Text(
-                "العيادات المالية",
+                "العيادة المالية",
                 style: Constants.theme.textTheme.titleLarge,
               ),
               SizedBox(height: 15,),

@@ -48,12 +48,12 @@ class _HomeAdminViewState extends State<HomeAdminView> {
       SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: "الحالات", icon: Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete,color: Colors.black87)),
-      SideBarModel(title: "تقارير المؤاشرات", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "تقارير المؤشرات", icon: Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "تقارير التوصيات", icon: Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة الأسئلة", icon: Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: "عرض الأسئلة", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "اضافة المؤاشرات", icon: Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: "المؤاشرات", icon: Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة المؤشرات", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "المؤشرات", icon: Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة التوصيات", icon: Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: " التوصيات", icon: Icon(Icons.list,color: Colors.black87)),
       // SideBarModel(title: "اضافة الحالات من مصدر خارجي", icon: Icon(Icons.add,color: Colors.black87)),
@@ -109,7 +109,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
             title: Column(
               children: [
                 Text(
-                  "العيادات المالية",
+                  "العيادة المالية",
                   style: Constants.theme.textTheme.titleLarge,
                 ),
                 SizedBox(height: 15,),

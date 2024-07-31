@@ -8,11 +8,8 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/drop_down_with_admin.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/manager/cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../core/widget/border_rounded_button.dart';
 import '../../../../homeAdvisor/sessions/manager/states.dart';
 
@@ -52,15 +49,20 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
   late UpdateSessionCubit updateSessionCubit;
   var formKey = GlobalKey<FormState>();
    late var caseManager;
-   late var session;
+  List<dynamic> sessionList = [];
+
+  // late var session;
 
 
   @override
   void initState() {
     super.initState();
     _patientSessionCubit = AddSessionCubit();
-    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+      // _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+     _patientSessionCubit.showSessionWithAdmin(widget.sessionId);
     updateSessionCubit = UpdateSessionCubit();
+    // print("ssssssssssssssssss>>"+widget.sessionComment.toString());
+
   }
 
   @override
@@ -112,6 +114,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                           controller: advisorComment,
                         ),
                       ),
+                      widget.sessionComment!=null?
+                      FadeInRight(
+                        duration: Duration(milliseconds: 300),
+                        child: Text(
+                          " ملاحظات اثناء حجز الجلسة :" + widget.sessionComment.toString(),
+                          style: Constants.theme.textTheme.titleLarge?.copyWith(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ):Container(),
                       SizedBox(height: 10),
                       FadeInRight(
                         duration: Duration(milliseconds: 700),
@@ -279,261 +291,217 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                       return Center(child: CircularProgressIndicator());
                     } else if (state is ErrorAddSessionState) {
                       return Center(child: Text(state.errorMessage));
-                    } else if (state is SuccessPatientNationalIdState) {
-                      // print("ssssssssssssssssssss->"+state.result.data.toString());
-                      var sessions = state.result.data["pationt"]["sessions"];
-                      var patient = state.result.data["pationt"];
-                      for(int i = 0; i < sessions.length; i++) {
-                         session = sessions[i];
+                    } else if (state is SuccessShowSessionWithAdmin) {
+                      var session = state.result.data["session"];
+                      if (session == null) {
+                        return Center(child: Text("No session data available."));
                       }
-                      print("mmmmmmmmmmmmmmm->"+session.toString());
+                      var patientName = session["pationt"]["name"] ?? "";
+                      var advisorName = session["advicor"]["name"] ?? "";
+                      var nationalId = session["pationt"]["national_id"] ?? "";
+                      var caseManager = session["case_manager"] ?? "";
+                      var isAttended = session["is_attended"] == 1;
+                      var needOtherSession = session["need_other_session"] == 1;
+                      var isSuccessStory = session["is_success_story"] == 1;
+                      var serviceName = session["consultation_service"]!=null?session["consultation_service"]["name"]:"";
+                      var serviceDescription = session["consultation_service"]!=null ? session["consultation_service"]["description"]:"";
+                      var advisorComments = session["advicor_comments"] ?? "";
+                      var sessionDate = session["date"] ?? "";
+                      TextEditingController commentController = TextEditingController(text: advisorComments);
 
-                      // print("dddddddddddddddd->"+sessions.toString());
-                      TextEditingController commentController =TextEditingController(text: session["advicor_comments"]) ;//TextEditingController(text: widget.sessionComment);
-                      return Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "اسم الحالة : " + (session["pationt"]["name"] ?? ""),
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              "اسم الاستشاري : " + (session["advicor"]["name"] ?? ""),
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              "رقم الهوية : " + (session["pationt"]["national_id"] ?? ""),
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              "مدير الحالة : " + (session["case_manager"] ?? ""),
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            ///
-                            session["is_attended"]==1?
-                            Text(
-                              "الحالة حضرت الجلسة",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ):
-                            Text(
-                              "الحالة لم تحضر الجلسة",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            session["need_other_session"]==1?
-                            Text(
-                              "الحالة بحاجه الي جلسة اخرى",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ):
-                            Text(
-                              "الحالة غير بحاجه الي جلسة اخرى",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            session["is_success_story"]==1?
-                            Text(
-                              "الحالة قصة نجاح",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ):
-                            Text(
-                              "الحالة ليست قصة نجاح",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            ///
-                            Text(
-                              "الخدمة الأستشارية :${patient["form"]["consultation_service"]["name"]??""}",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              "وصف الخدمة الاستشارية : ${patient["form"]["consultation_service"]["description"]??""}",
-                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Table(
-                              columnWidths: {
-                                0: FlexColumnWidth(4),
-                                1: FlexColumnWidth(1),
-                              },
+                      return ListView(
+                        children: [
+                          Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                TableRow(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                  ),
-                                  children: [
-                                    TableCell(
-                                      child: SizedBox(
-                                        height: 50,
-                                        child: Center(
-                                          child: Text(
-                                            "الملاحظة",
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TableCell(
-                                      child: SizedBox(
-                                        height: 50,
-                                        child: Center(
-                                          child: Text(
-                                            "تاريخ الجلسة",
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                Text(
+                                  "اسم الحالة : $patientName",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
                                 ),
-                                TableRow(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black54,
-                                  ),
-                                  children: [
-                                    TableCell(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                        child: Container(
-                                          height: Constants.mediaQuery.height * 0.28,
-                                          alignment: Alignment.center,
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  session["advicor_comments"] ?? "",
-                                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TableCell(
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          session["date"] ?? "",
-                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                Text(
+                                  "اسم الاستشاري : $advisorName",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
                                 ),
-                              ],
-                            ),
-
-
-                            SizedBox(height: 20),
-                            BorderRoundedButton(
-                              title: "تعديل",
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      backgroundColor: Constants.theme.primaryColor,
-                                      content: Form(
-                                        key: formKey,
-                                        child: SizedBox(
-                                          height: Constants.mediaQuery.height * 0.6,
-                                          width: Constants.mediaQuery.width * 0.45,
-                                          child: Column(
-                                             mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              CustomTextField(
-                                                maxLines: 8,
-                                                minLines: 1,
-                                                fillColor: Colors.white70,
-                                                controller: commentController,
-                                                onValidate: (value) {
-                                                  if (value == null || value.trim().isEmpty) {
-                                                    return "من فضلك ادخل الملاحظة";
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            if (formKey.currentState!.validate()) {
-                                              var data = SessionsUpdateModel(
-                                                sessionId: widget.sessionId,
-                                                comments: commentController.text,
-                                              );
-                                              updateSessionCubit.updateSessionWithAdmin(data).then((_) {
-                                                _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
-                                                Navigator.of(context).pop();
-                                              });
-                                            }
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              border: Border.all(
-                                                color: Colors.grey,
-                                                width: 2.5,
+                                Text(
+                                  "رقم الهوية : $nationalId",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  "مدير الحالة : $caseManager",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  isAttended ? "الحالة حضرت الجلسة" : "الحالة لم تحضر الجلسة",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  needOtherSession ? "الحالة بحاجه الي جلسة اخرى" : "الحالة غير بحاجه الي جلسة اخرى",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  isSuccessStory ? "الحالة قصة نجاح" : "الحالة ليست قصة نجاح",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  "الخدمة الاستشارية : $serviceName",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  "وصف الخدمة الاستشارية : $serviceDescription",
+                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                ),
+                                SizedBox(height: 20),
+                                Table(
+                                  columnWidths: {
+                                    0: FlexColumnWidth(4),
+                                    1: FlexColumnWidth(1),
+                                  },
+                                  children: [
+                                    TableRow(
+                                      decoration: BoxDecoration(color: Colors.black),
+                                      children: [
+                                        TableCell(
+                                          child: SizedBox(
+                                            height: 50,
+                                            child: Center(
+                                              child: Text(
+                                                "الملاحظة",
+                                                textAlign: TextAlign.center,
+                                                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20, color: Colors.white),
                                               ),
                                             ),
-                                            child: Text(
-                                              "موافق",
-                                              style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
-                                            ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: SizedBox(
+                                            height: 50,
+                                            child: Center(
+                                              child: Text(
+                                                "تاريخ الجلسة",
+                                                textAlign: TextAlign.center,
+                                                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
+                                    ),
+                                    TableRow(
+                                      decoration: BoxDecoration(color: Colors.black54),
+                                      children: [
+                                        TableCell(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      advisorComments,
+                                                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              sessionDate,
+                                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                BorderRoundedButton(
+                                  title: "تعديل",
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          backgroundColor: Constants.theme.primaryColor,
+                                          content: Form(
+                                            key: formKey,
+                                            child: SizedBox(
+                                              height: Constants.mediaQuery.height * 0.6,
+                                              width: Constants.mediaQuery.width * 0.45,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  CustomTextField(
+                                                    maxLines: 8,
+                                                    minLines: 1,
+                                                    fillColor: Colors.white70,
+                                                    controller: commentController,
+                                                    onValidate: (value) {
+                                                      if (value == null || value.trim().isEmpty) {
+                                                        return "من فضلك ادخل الملاحظة";
+                                                      }
+                                                      return null;
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                if (formKey.currentState!.validate()) {
+                                                  var data = SessionsUpdateModel(
+                                                    sessionId: widget.sessionId,
+                                                    comments: commentController.text,
+                                                  );
+                                                  updateSessionCubit.updateSessionWithAdmin(data).then((_) {
+                                                     // _patientSessionCubit.showSession(widget.sessionId);
+                                                    Navigator.of(context).pop();
+                                                    _patientSessionCubit.setRefreshSessionAdmin(widget.sessionId);
+                                                  });
+                                                }
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Colors.grey,
+                                                    width: 2.5,
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  "موافق",
+                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
+                                                ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
                                   },
-                                );
-                              },
+                                ),
+                              ],
                             ),
-                          ],
-                        ).setHorizontalPadding(context,enableMediaQuery: false, 20),
+                          ),
+                        ],
                       );
                     }
+
                     return Container();
                   },
                 );
+
               }
             },
           ),
@@ -541,4 +509,41 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
       ),
     );
   }
+  // Future<void> sessionShow(int id,) async {
+  //   final dio = Dio();
+  //   try {
+  //     final response = await dio.get(
+  //         '${Constants.baseUrl}/api/session/show',
+  //         options: Options(headers: {
+  //           "api-password": Constants.apiPassword,
+  //           "token": CacheHelper.getData(key: "token")
+  //         }),
+  //         queryParameters: {
+  //           "id": id,
+  //
+  //         }
+  //     );
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> data = response.data["session"];
+  //       print(data);
+  //       List<dynamic> sessiondata = [];
+  //       sessiondata = data.map((json) => Sessions.fromJson(json)).toList();
+  //       setState(() {
+  //         sessionList = sessiondata;
+  //       });
+  //
+  //       print('Success: ${response.data["message"]}');
+  //       SnackBarService.showSuccessMessage(response.data["message"]);
+  //
+  //     } else {
+  //       print('Failed to add pointer. Status code: ${response.statusCode}');
+  //       SnackBarService.showErrorMessage(response.data["message"]);
+  //     }
+  //   } catch (e) {
+  //     print('Error occurred: $e');
+  //     SnackBarService.showErrorMessage(e.toString());
+  //   }
+  // }
+
+
 }

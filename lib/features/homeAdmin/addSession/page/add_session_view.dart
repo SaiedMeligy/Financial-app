@@ -146,7 +146,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                         ),
                         Row(
                           children: [
-                            Text("استشاري المرحلة التانية", style: Constants.theme.textTheme.titleLarge?.copyWith(
+                            Text("استشارى المرحلة التانية", style: Constants.theme.textTheme.titleLarge?.copyWith(
                               color: Colors.black
                             )),
                             SizedBox(width: 15),
@@ -209,16 +209,16 @@ class _AddSessionViewState extends State<AddSessionView> {
                         ),
 
                         SizedBox(height: 10),
-                        Text("اسم استشاري المرحلة الاولي", style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                        Text("اسم استشارى المرحلة الاولى", style: Constants.theme.textTheme.bodyLarge?.copyWith(
                           color: Colors.black
                         )),
                         SizedBox(height: 5),
                         CustomTextField(
                           controller: _nameAdvisorController,
-                          hint: "اسم استشاري المرحلة الاولي",
+                          hint: "اسم استشارى المرحلة الاولى",
                             onValidate: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return "من فضلك ادخل اسم استشاري المرحلة الاولي";
+                                return "من فضلك ادخل اسم استشارى المرحلة الاولي";
                               }
                               return null;
                             }
@@ -285,11 +285,11 @@ class _AddSessionViewState extends State<AddSessionView> {
                           children: [
                             IconButton(
                               onPressed: () => _selectDate(context),
-                              icon: Icon(Icons.date_range_outlined, size: 40, color: Colors.white),
+                              icon: Icon(Icons.date_range_outlined, size: 40, color: Colors.black),
                             ),
                             IconButton(
                               onPressed: () => _selectTime(context),
-                              icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
+                              icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.black),
                             ),
                           ],
                         ),
@@ -307,13 +307,13 @@ class _AddSessionViewState extends State<AddSessionView> {
                         ),
                          SizedBox(height: 20,),
                          Text(
-                            "ملاحظات الاستشاري",
+                            "ملاحظات الاستشارى",
                             style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black)
                           ),
                         SizedBox(height: 10,),
                          CustomTextField(
                             maxLines: 4,
-                            hint: "ملاحظات الاستشاري",
+                            hint: "ملاحظات الاستشارى",
                             controller: advisorComment,
                           ),
                         SizedBox(height: 16),
