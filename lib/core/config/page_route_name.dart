@@ -5,4 +5,5 @@ class PageRouteName{
   static const String homeAdvisor = "/homeAdvisor";
   static const String quetionView = "/questionView";
   static const String patientDetailView = "/patientDetailsView";
+  static const String layoutAboZaby = "/layoutAboZaby";
 }

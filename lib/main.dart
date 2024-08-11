@@ -13,7 +13,6 @@ GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   CacheHelper.init();
   runApp(const MyApp());
 }

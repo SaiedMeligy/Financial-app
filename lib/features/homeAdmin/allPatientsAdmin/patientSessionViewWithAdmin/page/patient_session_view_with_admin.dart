@@ -1,11 +1,10 @@
-import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/page/session_Details_view_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
-import 'package:experts_app/features/homeAdvisor/sessions/page/session_detials.dart';
 
-import '../../SessionDestailViewAdmin/page/session_Details_view_home_admin.dart';
+import '../../SessionDestailViewAdmin/page/session_Details_view_admin.dart';
+
 
 class PatientSessionViewWithAdmin extends StatefulWidget {
   final dynamic pationt_data;
@@ -18,7 +17,7 @@ class PatientSessionViewWithAdmin extends StatefulWidget {
 
 class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmin> {
   late AddSessionCubit _patientSessionCubit;
-
+bool isMobile = false;
   @override
   void initState() {
     super.initState();
@@ -65,103 +64,125 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                 leadingWidth: 40,
 
               ),
-              body: Directionality(
-                textDirection: TextDirection.rtl,
-                child: Table(
-                  columnWidths: {
-                    0: FlexColumnWidth(4),
-                    1: FlexColumnWidth(2),
-                  },
-                  border: TableBorder.all(color: Colors.black),
-                  children: [
-                    TableRow(
-                      decoration: BoxDecoration(color: Colors.black),
+              body: LayoutBuilder(
+                builder: (context, constraints) {
+                  isMobile = constraints.maxWidth < 600;
+                  return Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Table(
+                      columnWidths: {
+                        0: FlexColumnWidth(4),
+                        1: FlexColumnWidth(2),
+                      },
+                      border: TableBorder.all(color: Colors.black),
                       children: [
-                        TableCell(
-                          child: Container(
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                "اسم الجلسة",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  fontSize: 22,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Container(
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                "تاريخ الجلسة",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  fontSize: 22,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    for (int index = 0; index < session.length; index++) ...[
-                      TableRow(
-                        decoration: BoxDecoration(color: Colors.black38),
-                        children: [
-                          TableCell(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SessionDetailsViewAdmin(
-                                      pationt_data: widget.pationt_data,
-                                      sessionId: session[index]["id"],
-                                      isFinished: session[index]["is_finished"],
-                                      sessionCaseManager: session[index]["case_manager"],
-                                      sessionComment: session[index]["comments"],
-                                      sessionDate: session[index]["date"],
-                                      consultationService: session[index]["consultation_service"],
-                                      isAttend: session[index]["is_attended"],
+                        TableRow(
+                          decoration: BoxDecoration(color: Colors.black),
+                          children: [
+                            TableCell(
+                              child: Container(
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                    "اسم الجلسة",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                      fontSize: isMobile?18:22,
+                                      color: Colors.white,
                                     ),
                                   ),
-                                );
-                              },
+                                ),
+                              ),
+                            ),
+                            TableCell(
                               child: Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "الجلسة " + session[index]["session_number"].toString(),
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 20
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                    "تاريخ الجلسة",
+                                    textAlign: TextAlign.center,
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                      fontSize: isMobile?18:22,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          TableCell(
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                session[index]["date"],
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 20
+                          ],
+                        ),
+                        for (int index = 0; index <
+                            session.length; index++) ...[
+                          TableRow(
+                            decoration: BoxDecoration(color: Colors.black38),
+                            children: [
+                              TableCell(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            SessionDetailsViewAdmin(
+                                              pationt_data: widget.pationt_data,
+                                              sessionId: session[index]["id"],
+                                              isFinished: session[index]["is_finished"],
+                                              sessionCaseManager: session[index]["case_manager"],
+                                              sessionComment: session[index]["comments"],
+                                              sessionDate: session[index]["date"],
+                                              consultationService: session[index]["consultation_services"],
+                                              isAttend: session[index]["is_attended"],
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "الجلسة " +
+                                          session[index]["session_number"]
+                                              .toString(),
+                                      style: Theme
+                                          .of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                          color: Colors.white,
+                                          fontSize: isMobile?16:20
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              TableCell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    session[index]["date"],
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                        color: Colors.white,
+                                        fontSize: isMobile?16:20
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                    ],
-                  ],
-                ),
-              ),
+                      ],
+                    ),
+                  );
+                }),
             ),
           );
         }

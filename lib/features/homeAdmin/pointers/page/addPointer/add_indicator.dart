@@ -34,7 +34,7 @@ class _AddIndicatorState extends State<AddIndicator> {
                 image: DecorationImage(
                     image: AssetImage("assets/images/back.jpg"),
                     fit: BoxFit.cover,
-                    opacity: 0.4
+                    opacity: 0.2
                 )
 
             ),
@@ -62,9 +62,9 @@ class _AddIndicatorState extends State<AddIndicator> {
                               titleRadio: "اختر السيناريو",
                               items: const [
                                 MapEntry("اختر السيناريو  ", 0),
-                                MapEntry("السيناريوالأول(الحالات المتوازنة نسبيا)", 1),
-                                MapEntry("السيناريوالثاني(للحالات الغير متوازنة في الصرف)", 2),
-                                MapEntry("السيناريوالثالث(للحالات المتعثرة ماليا)", 3)
+                                MapEntry("السيناريوالأول", 1),
+                                MapEntry("السيناريوالثاني", 2),
+                                MapEntry("السيناريوالثالث", 3)
                               ],
                               onChanged: (value) {
                                 setState(() {

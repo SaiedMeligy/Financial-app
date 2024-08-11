@@ -1,4 +1,4 @@
-import 'package:experts_app/core/config/constants.dart';
+  import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class _EditIndicatorState extends State<EditIndicator> {
                       image: DecorationImage(
                           image: AssetImage("assets/images/back.jpg"),
                           fit: BoxFit.cover,
-                        opacity: 0.4
+                        opacity: 0.2
                       ),
                   ),
 

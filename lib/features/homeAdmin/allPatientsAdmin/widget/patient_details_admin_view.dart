@@ -1,6 +1,7 @@
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
+import 'package:flutter/rendering.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
@@ -493,27 +494,28 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                               ],
                             ),
                             Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "الحالة : ${patient["name"]}  ",
-                                  style: const TextStyle(
-                                    fontSize: 24,
+                                  style:  TextStyle(
+                                    fontSize: isMobile?18:24,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
                                 Text(
                                   "الاستشارى : ${advicor["name"]}  ",
-                                  style: const TextStyle(
-                                    fontSize: 24,
+                                  style:  TextStyle(
+                                    fontSize: isMobile?18:24,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
                                 Text(
                                   "تاريخ الجلسة : ${formData["date"]}  ",
-                                  style: const TextStyle(
-                                    fontSize: 24,
+                                  style:  TextStyle(
+                                    fontSize: isMobile?18:24,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
@@ -581,129 +583,6 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Expanded(
-                      //   child: Container(
-                      //     height: Constants.mediaQuery.height * 0.8,
-                      //     width: double.infinity,
-                      //     decoration: BoxDecoration(
-                      //       color: Constants.theme.primaryColor.withOpacity(0.3),
-                      //       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      //     ),
-                      //     child: ListView.builder(
-                      //       itemCount: answers.length+1,
-                      //       itemBuilder: (context, index) {
-                      //         var answer = answers[index];
-                      //
-                      //         return Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             if (answers.length != index ) ...[
-                      //               Center(
-                      //                 child: Text(
-                      //                   answer["title"],
-                      //                   style: Constants.theme.textTheme.titleLarge?.copyWith(
-                      //                     fontWeight: FontWeight.bold,
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Container(
-                      //                 width: double.infinity,
-                      //                 height: answers[index]["question_options"].where((option) => option["answer"] == "1").length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
-                      //                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      //                 decoration: BoxDecoration(
-                      //                   color: Colors.grey.shade300,
-                      //                   borderRadius: BorderRadius.only(
-                      //                     topLeft: Radius.circular(20),
-                      //                     topRight: Radius.circular(20),
-                      //                   ),
-                      //                 ),
-                      //                 child: ListView(
-                      //                   children: [
-                      //                     Column(
-                      //                       children: answer["question_options"].map<Widget>((option) {
-                      //                         bool isAnswered = (option['answer'] is String && option['answer'] == "1") ||
-                      //                             (option['answer'] is int && option['answer'] == 1);
-                      //                         return Row(
-                      //                           children: [
-                      //                             if (isAnswered)
-                      //                               Expanded(
-                      //                                 child: Text(
-                      //                                   option["title"].toString(),
-                      //                                   style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                      //                                     color: Colors.black,
-                      //                                   ),
-                      //                                 ),
-                      //                               ),
-                      //                             if (option["type"] == 1 && isAnswered)
-                      //                               Expanded(
-                      //                                 child: Radio<bool>(
-                      //                                   value: true,
-                      //                                   groupValue: true,
-                      //                                   onChanged: (value) {},
-                      //                                 ),
-                      //                               ),
-                      //                             if (option["type"] == 2 && isAnswered)
-                      //                               Expanded(
-                      //                                 child: Checkbox(
-                      //                                   value: true,
-                      //                                   onChanged: (value) {},
-                      //                                 ),
-                      //                               ),
-                      //                             if (option["type"] == 3 && option["answer"] != null)
-                      //                               Expanded(
-                      //                                 child: Text(
-                      //                                   option["answer"].toString(),
-                      //                                   style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                      //                                     color: Colors.black,
-                      //                                   ),
-                      //                                 ),
-                      //                               ),
-                      //                           ],
-                      //                         );
-                      //                       }).toList(),
-                      //                     ),
-                      //                   ],
-                      //                 ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                      //               ),
-                      //               Divider(
-                      //                 thickness: 2,
-                      //                 height: 3,
-                      //                 indent: 20,
-                      //                 endIndent: 20,
-                      //                 color: Colors.grey.shade600,
-                      //               ),
-                      //               SizedBox(height: 10),
-                      //             ] else ...[
-                      //               Column(
-                      //                 children: [
-                      //                   Text(consultation["name"]),
-                      //                   SizedBox(height: 10),
-                      //                   Container(
-                      //                     height: Constants.mediaQuery.height * 0.15,
-                      //                     width: double.infinity,
-                      //                     decoration: BoxDecoration(
-                      //                       color: Colors.grey.shade300,
-                      //                       borderRadius: BorderRadius.only(
-                      //                         topLeft: Radius.circular(20),
-                      //                         topRight: Radius.circular(20),
-                      //                       ),
-                      //                     ),
-                      //                     child: Text(
-                      //                       consultation["description"],
-                      //                       style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                      //                         color: Colors.black,
-                      //                       ),
-                      //                     ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                      //                   ),
-                      //                 ],
-                      //               ).setVerticalPadding(context, enableMediaQuery: false, 20),
-                      //             ],
-                      //           ],
-                      //         );
-                      //       },
-                      //     ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                      //   ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                      // ),
                       formData==null?Container():
                       Expanded(
                         child: Container(
@@ -731,7 +610,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     ),
                                     Container(
                                       width: double.infinity,
-                                      height: answer["question_options"].length * 40,
+                                      height: answer["question_options"].length * 50,
                                       // height: answer["question_options"].where((option) => option["answer"] == "1").length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
                                       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                                       decoration: BoxDecoration(
@@ -832,12 +711,14 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                           topRight: Radius.circular(20),
                                         ),
                                       ),
-                                      child: Text(
-                                        formData["comments"],
-                                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                          color: Colors.black,
-                                        ),
-                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                      child: SingleChildScrollView(
+                                        child: Text(
+                                          formData["comments"],
+                                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,
+                                          ),
+                                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                      ),
                                     ),
                                   ],
                                 ).setVerticalPadding(context, enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 20);

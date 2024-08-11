@@ -39,7 +39,7 @@ class _AddUserViewState extends State<AddUserView> {
                 image: DecorationImage(
                   image: AssetImage("assets/images/back.jpg"),
                   fit: BoxFit.cover,
-                  opacity: 0.4
+                  opacity: 0.2
                 )
               ),
               child: Center(

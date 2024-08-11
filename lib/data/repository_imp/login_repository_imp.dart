@@ -33,6 +33,10 @@ LoginRepositoryImp(this.loginDataSource);
           }
           else if(response.data["user"]["rule"]==1){
             navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdmin);
+            //navigatorKey.currentState!.pushReplacementNamed(PageRouteName.layoutAboZaby);
+          }
+          else if(response.data["user"]["rule"]==2){
+            navigatorKey.currentState!.pushReplacementNamed(PageRouteName.layoutAboZaby);
           }
           return Right(true);
         }

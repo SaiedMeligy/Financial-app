@@ -20,6 +20,7 @@ class CheckBoxQuestion extends StatefulWidget {
 class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
   late List<bool> checked;
   List<int> selected = [];
+  bool isMobile = false;
 
   @override
   void initState() {
@@ -36,34 +37,44 @@ class _CheckBoxQuestionState extends State<CheckBoxQuestion> {
   @override
   Widget build(BuildContext context) {
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: SizedBox(
-        height: Constants.mediaQuery.height * 0.5,
-        width: Constants.mediaQuery.height * 0.5,
-        child: ListView.builder(
-          itemCount: widget.items.length,
-          itemBuilder: (context, index) {
-            return CheckboxListTile(
-              checkColor: Colors.white,
-              title: Text(widget.items[index].runtimeType.toString() == "Questions" ? widget.items[index].title : widget.items[index].text ,style: Constants.theme.textTheme.bodyMedium,),
-              value: checked[index],
-              selected: checked[index],
-              onChanged: (bool? value) {
-                setState(() {
-                  checked[index] = value!;
-                  if (value) {
-                    selected.add(widget.items[index].id);
-                  } else {
-                    selected.remove(widget.items[index].id);
-                  }
-                  widget.onChanged(selected);
-                });
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        isMobile = constraints.maxWidth < 600;
+
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: SizedBox(
+            height: Constants.mediaQuery.height * 0.5,
+            width: Constants.mediaQuery.height * 0.5,
+            child: ListView.builder(
+              itemCount: widget.items.length,
+              itemBuilder: (context, index) {
+                return CheckboxListTile(
+                  checkColor: Colors.white,
+                  title: Text(
+                    widget.items[index].runtimeType.toString() == "Questions"
+                        ? widget.items[index].title
+                        : widget.items[index].text,
+                    style: isMobile?Constants.theme.textTheme.bodySmall:Constants.theme.textTheme.bodyMedium,),
+                  value: checked[index],
+                  selected: checked[index],
+                  onChanged: (bool? value) {
+                    setState(() {
+                      checked[index] = value!;
+                      if (value) {
+                        selected.add(widget.items[index].id);
+                      } else {
+                        selected.remove(widget.items[index].id);
+                      }
+                      widget.onChanged(selected);
+                    });
+                  },
+                );
               },
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      }
     );
   }
 }

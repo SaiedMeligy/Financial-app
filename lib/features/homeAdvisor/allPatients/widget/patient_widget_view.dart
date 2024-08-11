@@ -32,11 +32,13 @@ class PatientWidgetView<T> extends StatefulWidget {
 }
 
 class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
+  bool isMobile = false;
   @override
   Widget build(BuildContext context) {
     return
-      ResponsiveBuilder(
-      builder: (context, sizingInformation) {
+      LayoutBuilder(
+      builder: (context, constraints) {
+        isMobile = constraints.maxWidth < 600;
         return ListView(
           children: [
             Table(
@@ -59,7 +61,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             widget.label1,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: 22,
+                              fontSize: isMobile?18:22,
                               color: Colors.white,
                             ),
                           ),
@@ -74,7 +76,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             widget.label2,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: 22,
+                              fontSize: isMobile?18:22,
                               color: Colors.white,
                             ),
                           ),
@@ -89,7 +91,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             widget.label3,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: 22,
+                              fontSize: isMobile?18:22,
                               color: Colors.white,
                             ),
                           ),
@@ -119,9 +121,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                             child: Center(
                               child: Text(
                                 widget.itemNameBuilder(widget.items[index]),
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: Colors.white,
-                                ),
+                                style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge
                               ),
                             ),
                           ),

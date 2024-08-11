@@ -1,4 +1,4 @@
-// import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/patient_details_admin_view.dart';
+// import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/patient_details_abozaby_view.dart';
 // import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_details_view.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
@@ -151,6 +151,7 @@
 //        );
 //   }
 // }
+import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/widget/patient_details_admin_view.dart';
 import 'package:flutter/material.dart';
 
@@ -182,38 +183,44 @@ class PatientWidgetViewWithAdmin<T> extends StatefulWidget {
 }
 
 class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdmin<T>> {
+  bool isMobile = false;
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView(
-        children: [
-          Table(
-            columnWidths: const {
-              0: FlexColumnWidth(4),
-              1: FlexColumnWidth(1),
-              2: FlexColumnWidth(1),
-            },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          isMobile = constraints.maxWidth < 600;
+          return ListView(
             children: [
-              TableRow(
-                decoration: const BoxDecoration(color: Colors.black),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(4),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                },
                 children: [
-                  _buildTableHeaderCell(widget.label1, context),
-                  _buildTableHeaderCell(widget.label2, context),
-                  _buildTableHeaderCell(widget.label3, context),
+                  TableRow(
+                    decoration: const BoxDecoration(color: Colors.black),
+                    children: [
+                      _buildTableHeaderCell(widget.label1, context),
+                      _buildTableHeaderCell(widget.label2, context),
+                      _buildTableHeaderCell(widget.label3, context),
+                    ],
+                  ),
+                  for (int index = 0; index < widget.items.length; index++)
+                    TableRow(
+                      decoration: const BoxDecoration(color: Colors.black45),
+                      children: [
+                        _buildNameCell(widget.items[index], context),
+                        _buildEditCell(widget.items[index], context),
+                        _buildDeleteCell(widget.items[index], context),
+                      ],
+                    ),
                 ],
               ),
-              for (int index = 0; index < widget.items.length; index++)
-                TableRow(
-                  decoration: const BoxDecoration(color: Colors.black45),
-                  children: [
-                    _buildNameCell(widget.items[index], context),
-                    _buildEditCell(widget.items[index], context),
-                    _buildDeleteCell(widget.items[index], context),
-                  ],
-                ),
             ],
-          ),
-        ],
+          );
+        }
       ),
     );
   }
@@ -227,7 +234,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
           label,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontSize: 20,
+            fontSize: isMobile?16:20,
             color: Colors.white,
           ),
         ),
@@ -251,9 +258,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
           padding: const EdgeInsets.all(8.0),
           child: Text(
             widget.itemNameBuilder(item),
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.white,
-            ),
+            style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge
           ),
         ),
       ),

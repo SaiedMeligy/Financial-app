@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
-import 'package:experts_app/data/repository_imp/delete_consultation_repository_imp.dart';
 
 import '../../../../../../../core/Services/web_services.dart';
 import '../../../../../../../data/dataSource/Advices/deleteAdvice/delete_advice_data_source.dart';
@@ -13,7 +11,6 @@ import '../../../../../../../domain/repository/advices/deleteAdvice/delete_advic
 import '../../../../../../../domain/repository/advices/updateAdvice/update_advice_repository.dart';
 import '../../../../../../../domain/useCase/advices/deleteAdvice/delete_advice_use_case.dart';
 import '../../../../../../../domain/useCase/advices/updateAdvice/update_advice_use_case.dart';
-import '../../manager/states.dart';
 import 'dialog_state.dart';
 
 class UpdateAdviceCubit extends Cubit<UpdateAdviceStates>{

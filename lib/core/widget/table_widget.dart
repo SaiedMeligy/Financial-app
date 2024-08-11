@@ -34,12 +34,15 @@ class TableWidget<T> extends StatefulWidget {
 }
 
 class _TableWidgetState<T> extends State<TableWidget<T>> {
+  bool isMobile = false;
   @override
   Widget build(BuildContext context) {
     return
 
-      ResponsiveBuilder(
-        builder: (context, sizingInformation) {
+      LayoutBuilder(
+        builder: (context, constraints) {
+          isMobile = constraints.maxWidth < 600;
+
           return ListView(
             children: [
               Table(
@@ -62,7 +65,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                                 widget.label1,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontSize: 22,
+                                  fontSize: isMobile?18:22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -77,7 +80,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                                 widget.label2,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontSize: 22,
+                                  fontSize: isMobile?18:22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -92,7 +95,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                                 widget.label3,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontSize: 22,
+                                  fontSize: isMobile?18:22,
                                   color: Colors.white,
                                 ),
                               ),
@@ -113,9 +116,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
                               child: Center(
                                 child: Text(
                                   widget.itemNameBuilder(widget.items[index]),
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Colors.white,
-                                  ),
+                                  style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge
                                 ),
                               ),
                             ),

@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/custom_text_field.dart';
+import 'package:experts_app/domain/entities/AllSessionModel.dart';
 import 'package:experts_app/domain/entities/SessionUpdateModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
@@ -22,10 +23,10 @@ class SessionDetailsView extends StatefulWidget {
    String? sessionCaseManager;
    String? sessionComment;
    String? sessionDate;
-   dynamic consultationService;
+   ConsultationService? consultationService;
 
 
-   SessionDetailsView({super.key, required this.pationt_data,required this.sessionId,required this.isFinished,required this.sessionCaseManager,required this.sessionComment,required this.sessionDate,required this.consultationService});
+   SessionDetailsView({super.key, required this.pationt_data,required this.sessionId,required this.isFinished,required this.sessionCaseManager,required this.sessionComment,required this.sessionDate, this.consultationService});
 
   @override
   State<SessionDetailsView> createState() => _SessionDetailsViewState();
@@ -318,13 +319,13 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                               ),
                             ),
                             Text(
-                              "الخدمة الاستشارية : " + (widget.consultationService?["name"]??"no found"),
+                              "الخدمة الاستشارية : " + (widget.consultationService?.name??"no found"),
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              "وصف الخدمة الاستشارية : " + (widget.consultationService?["description"]??"no found"),
+                              "وصف الخدمة الاستشارية : " + (widget.consultationService?.description??"no found"),
                               style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                 color: Colors.black,
                               ),

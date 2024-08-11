@@ -4,6 +4,7 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/page/session_detials.dart';
 
+import '../../../../../../core/config/constants.dart';
 import '../../../../session dates/page/session_data_view_home.dart';
 
 class PatientSessionView extends StatefulWidget {
@@ -17,6 +18,7 @@ class PatientSessionView extends StatefulWidget {
 
 class _PatientSessionViewState extends State<PatientSessionView> {
   late AddSessionCubit _patientSessionCubit;
+  bool isMobile =false;
 
   @override
   void initState() {
@@ -63,101 +65,113 @@ class _PatientSessionViewState extends State<PatientSessionView> {
               ),
                 leadingWidth: 40,
               ),
-              body: Directionality(
-                textDirection: TextDirection.rtl,
-                child: Table(
-                  columnWidths: {
-                    0: FlexColumnWidth(4),
-                    1: FlexColumnWidth(1),
-                  },
-                  border: TableBorder.all(color: Colors.black),
-                  children: [
-                    TableRow(
-                      decoration: BoxDecoration(color: Colors.black),
+              body: LayoutBuilder(
+                builder: (context, constraints) {
+                  isMobile = constraints.maxWidth < 600;
+                  return Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Table(
+                      columnWidths: {
+                        0: FlexColumnWidth(4),
+                        1: FlexColumnWidth(1),
+                      },
+                      border: TableBorder.all(color: Colors.black),
                       children: [
-                        TableCell(
-                          child: Container(
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                "اسم الجلسة",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: Colors.white,
+                        TableRow(
+                          decoration: BoxDecoration(color: Colors.black),
+                          children: [
+                            TableCell(
+                              child: Container(
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                      "اسم الجلسة",
+                                      textAlign: TextAlign.center,
+                                      style: isMobile ? Constants.theme.textTheme.bodyMedium : Theme
+                                          .of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Container(
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                "تاريخ الجلسة",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    for (int index = 0; index < session.length; index++) ...[
-                      TableRow(
-                        decoration: BoxDecoration(color: Colors.black38),
-                        children: [
-                          TableCell(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SessionDetailsViewHome(
-                                      pationt_data: widget.pationt_data,
-                                      sessionId: session[index]["id"],
-                                      isFinished: session[index]["is_finished"],
-                                      sessionCaseManager: session[index]["case_manager"],
-                                      sessionComment: session[index]["comments"],
-                                      sessionDate: session[index]["date"],
-                                      consultationService: session[index]["consultation_service"],
-                                      isAttend: session[index]["is_attended"],
+                            TableCell(
+                              child: Container(
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                    "تاريخ الجلسة",
+                                    textAlign: TextAlign.center,
+                                    style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                      color: Colors.white,
                                     ),
                                   ),
-                                );
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "الجلسة " + session[index]["session_number"].toString(),
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 20
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        for (int index = 0; index <
+                            session.length; index++) ...[
+                          TableRow(
+                            decoration: BoxDecoration(color: Colors.black38),
+                            children: [
+                              TableCell(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            SessionDetailsViewHome(
+                                              pationt_data: widget.pationt_data,
+                                              sessionId: session[index]["id"],
+                                              isFinished: session[index]["is_finished"],
+                                              sessionCaseManager: session[index]["case_manager"],
+                                              sessionComment: session[index]["comments"],
+                                              sessionDate: session[index]["date"],
+                                              consultationService: session[index]["consultation_service"],
+                                              isAttend: session[index]["is_attended"],
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "الجلسة " +
+                                          session[index]["session_number"]
+                                              .toString(),
+                                      style: isMobile?Constants.theme.textTheme.bodyMedium:Theme.of(context).textTheme.bodyLarge
+
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                session[index]["date"],
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 20
+                              TableCell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    session[index]["date"],
+                                    style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyLarge
+
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
-                      ),
-                    ],
-                  ],
-                ),
-              ),
+                      ],
+                    ),
+                  );
+                }),
             ),
           );
         }

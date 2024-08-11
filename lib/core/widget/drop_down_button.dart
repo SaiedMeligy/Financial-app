@@ -1,4 +1,5 @@
 import 'package:experts_app/core/config/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DropDownButton extends StatefulWidget {
@@ -39,11 +40,12 @@ class _DropDownButtonState extends State<DropDownButton> {
               ),
             ),
             child: SizedBox(
-              width: Constants.mediaQuery.width * 0.09,
+              width: Constants.mediaQuery.width * 0.13,
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  widget.titleRadio,
-                  SizedBox(width: 10),
+                  Flexible(child: widget.titleRadio),
+                  SizedBox(width: 5),
                   Icon(Icons.arrow_drop_down),
                 ],
               )

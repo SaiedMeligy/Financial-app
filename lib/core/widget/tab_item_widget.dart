@@ -56,11 +56,11 @@ class _TabItemWidgetState extends State<TabItemWidget> {
                 labelStyle: Constants.theme.textTheme.bodyLarge?.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: isMobile? 12 : 17,
+                  fontSize: isMobile? 10 : 17,
 
                 ),
                 unselectedLabelStyle:Constants.theme.textTheme.bodyLarge?.copyWith(
-                  fontSize: isMobile? 12 : 15,
+                  fontSize: isMobile? 10 : 15,
                 ),
                 unselectedLabelColor: Colors.white,
                 tabs: myTabs,

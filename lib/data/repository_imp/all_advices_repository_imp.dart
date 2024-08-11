@@ -12,8 +12,7 @@ class AllAdvicesRepositoryImp implements AllAdvicesRepository{
   @override
   Future<Response> getAllAdvices(AdviceModel adviceModel) async {
     try {
-      final response = await dataSource.getAllAdvices(
-          adviceModel);
+      final response = await dataSource.getAllAdvices(adviceModel);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

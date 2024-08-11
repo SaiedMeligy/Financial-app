@@ -49,7 +49,7 @@ class _RadioAnswerWidgetState extends State<RadioAnswerWidget> {
               GestureDetector(
                 onTap: toggleDropdown,
                 child: Container(
-                  padding: EdgeInsets.only(right: 10,top: 5,bottom: 5),
+                  padding: isMobile?EdgeInsets.zero:EdgeInsets.only(right: 5,top: 5,bottom: 5),
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(10),
@@ -58,8 +58,9 @@ class _RadioAnswerWidgetState extends State<RadioAnswerWidget> {
                       width: 2.5,
                     ),
                   ),
-                  child: SizedBox(
-                    width: Constants.mediaQuery.width * 0.15,
+                  child:
+                  SizedBox(
+                    width:  Constants.mediaQuery.width * 0.22,
                     child: DropdownButton<int>(
                       value: selectedValue,
                       dropdownColor: Constants.theme.primaryColor.withOpacity(0.9),
@@ -70,9 +71,9 @@ class _RadioAnswerWidgetState extends State<RadioAnswerWidget> {
                           value: item.value,
                           child: Text(
                             item.key,
-                            style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.white,
-                            ),
+                            style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(
+                              fontSize: 12
+                            ):Constants.theme.textTheme.bodyMedium
                           ),
                         );
                       }).toList(),
@@ -83,7 +84,8 @@ class _RadioAnswerWidgetState extends State<RadioAnswerWidget> {
                         widget.onChanged(newValue);
                       },
                     ),
-                  ),
+                  )
+
                 ),
               ),
               if (widget.errorMessage != null && selectedValue == widget.items.first.value)

@@ -2,6 +2,7 @@
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/features/homeAdvisor/home/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/home/manager/states.dart';
+import 'package:experts_app/features/homeAdvisor/session%20dates/page/session_data_view_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -53,7 +54,7 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                 image: DecorationImage(
                   image: AssetImage("assets/images/back.jpg"),
                   fit: BoxFit.cover,
-                  opacity: 0.4
+                  opacity: 0.2
                 )
               ),
               child: Column(
@@ -231,14 +232,17 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => SessionDetailsView(
+                                                    builder: (context) =>
+                                                        SessionDetailsViewHome(
                                                       pationt_data:home.upCommingSession?.pationt,
                                                       sessionId:home.upCommingSession!.id!,
                                                       isFinished:home.upCommingSession!.isFinished!,
                                                       sessionCaseManager:home.upCommingSession?.caseManager,
                                                       sessionComment:home.upCommingSession?.comments,
                                                       sessionDate:home.upCommingSession?.date,
-                                                      consultationService: home.upCommingSession?.consultationServiceId,
+                                                          isAttend: home.upCommingSession?.isAttended,
+
+                                                          consultationService: home.upCommingSession?.consultationServiceId,
                                                     ),
                                                   ),
 

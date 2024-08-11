@@ -20,13 +20,11 @@ class AllAdvicesCubit extends Cubit<AllAdvicesStates> {
   Future<void> getAllAdvices() async {
     WebServices service = WebServices();
     allAdvicesDataSource = AllAdvicesDataSourceImp(service.freeDio);
-    allAdvicesRepository =
-        AllAdvicesRepositoryImp(allAdvicesDataSource);
+    allAdvicesRepository = AllAdvicesRepositoryImp(allAdvicesDataSource);
     allAdvicesUseCase = AllAdvicesUseCase(allAdvicesRepository);
     emit(LoadingAllAdvices());
     try {
-      var result = await allAdvicesUseCase.execute(
-          AdviceModel());
+      var result = await allAdvicesUseCase.execute(AdviceModel());
       print('API Response: ${result.data}');
 
       final data = AdviceModel.fromJson(result.data);

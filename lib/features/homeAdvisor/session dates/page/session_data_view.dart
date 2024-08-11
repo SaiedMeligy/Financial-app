@@ -73,7 +73,7 @@ class _SessionDateState extends State<SessionDate> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("assets/images/back.jpg"),
-                          opacity: 0.4,
+                          opacity: 0.2,
                           fit: BoxFit.cover,
                         )
                       ),

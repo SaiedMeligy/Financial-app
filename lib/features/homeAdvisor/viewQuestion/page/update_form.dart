@@ -485,6 +485,7 @@ import 'package:experts_app/core/config/cash_helper.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart';
+import 'package:flutter/cupertino.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/widget/Question_text_field.dart';
 import '../../../../../domain/entities/ConsultationViewModel.dart';
@@ -515,6 +516,7 @@ class _UpdateFormState extends State<UpdateForm> {
   Map<dynamic, bool> checkboxValues = {};
   ConsultationServices? selected_consultation;
   late List<dynamic> answers = [];
+  bool isMobile = false;
 
 
   @override
@@ -573,357 +575,401 @@ class _UpdateFormState extends State<UpdateForm> {
           _initializeTextControllers(answers);
           TextEditingController commentController =
           TextEditingController(text: formData["comments"]);
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              body: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/back.jpg"),
-                    fit: BoxFit.cover,
-                    opacity: 0.5,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      height: Constants.mediaQuery.height * 0.2,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Constants.theme.primaryColor,
-                      ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_forward,color: Colors.white,),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                        ],
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              isMobile = constraints.maxWidth < 600;
+              return Directionality(
+                textDirection: TextDirection.rtl,
+                child: Scaffold(
+                  body: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/back.jpg"),
+                        fit: BoxFit.cover,
+                        opacity: 0.5,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Expanded(
-                      child: Container(
-                        height: Constants.mediaQuery.height * 0.8,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Constants.theme.primaryColor.withOpacity(0.6),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: Constants.mediaQuery.height * 0.2,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Constants.theme.primaryColor,
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_forward, color: Colors.white,),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: ListView.builder(
-                          itemCount: answers.length + 1,
-                          itemBuilder: (context, index) {
-                            if (index < answers.length) {
-                              var answer = answers[index];
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      answer["title"],
-                                      style: Constants
-                                          .theme.textTheme.titleLarge
-                                          ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: answer["question_options"].length > 1 ? answer["question_options"].length * 60 : 70,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 20),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade300,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        topRight: Radius.circular(20),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: answer["question_options"]
-                                          .map<Widget>((option) {
-                                        bool isAnswered =
-                                            option['answer'] == "1";
-                                        if (option["type"] == 3) {
-                                          return Expanded(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    option["title"].toString(),
-                                                    style: Constants.theme
-                                                        .textTheme.bodyMedium
-                                                        ?.copyWith(
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: QuestionTextField(
-                                                    hint: "ادخل النص",
-                                                    maxLines: 1,
-                                                    controller: textControllers[
-                                                    int.parse(option["id"]
-                                                        .toString())],
-                                                    onChanged: (value) {
-                                                      // setState(() {
-                                                      option["answer"] = value;
-                                                      // });
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ).setVerticalPadding(context,enableMediaQuery: false, 2),
-                                          );
-                                        } else if (option["type"] == 1) {
-                                          return Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  option["title"].toString(),
-                                                  style: Constants.theme
-                                                      .textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Radio<String>(
-                                                  value:
-                                                  option["id"].toString(),
-                                                  groupValue: selectedAnswers[
-                                                  int.parse(answer["id"]
-                                                      .toString())],
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      selectedAnswers[int.parse(
-                                                          answer["id"]
-                                                              .toString())] =
-                                                      value!;
-                                                      for (var opt in answer[
-                                                      "question_options"]) {
-                                                        if (opt["type"] == 1) {
-                                                          opt["answer"] = opt[
-                                                          "id"]
-                                                              .toString() ==
-                                                              value
-                                                              ? "1"
-                                                              : "0";
-                                                        }
-                                                      }
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else if (option["type"] == 2) {
-                                          return Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  option["title"].toString(),
-                                                  style: Constants.theme
-                                                      .textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Checkbox(
-                                                  value: checkboxValues[
-                                                  int.parse(option["id"]
-                                                      .toString())] ??
-                                                      false,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      checkboxValues[int.parse(
-                                                          option["id"]
-                                                              .toString())] =
-                                                      value!;
-                                                      option["answer"] =
-                                                      value ? "1" : "0";
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        }
-                                        return Container();
-                                      }).toList(),
-                                    ).setHorizontalPadding(
-                                        context, enableMediaQuery: false, 20),
-                                  ),
-                                  Divider(
-                                    thickness: 2,
-                                    height: 3,
-                                    indent: 20,
-                                    endIndent: 20,
-                                    color: Colors.black54,
-                                  ),
-                                  SizedBox(height: 10),
-                                ],
-                              );
-                            } else {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  DropDownButtonConsultaionWidget(
-                                    onChange: (value) {
-                                      setState(() {
-                                        selected_consultation = value;
-                                        print("=============>" +
-                                            selected_consultation!.description
-                                                .toString());
-                                      });
-                                    },
-                                    selectedValue:
-                                    selected_consultation ?? consultation,
-                                  ),
-                                  SizedBox(height: 15),
-                                  Container(
-                                    height: Constants.mediaQuery.height * 0.15,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade300,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        topRight: Radius.circular(20),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      selected_consultation?.description ?? '',
-                                      style: Constants
-                                          .theme.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: Colors.black,
-                                      ),
-                                    ).setHorizontalPadding(
-                                        context, enableMediaQuery: false, 20),
-                                  ).setHorizontalPadding(
-                                      context, enableMediaQuery: false, 20),
-
-                                  SizedBox(height: 20),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: Container(
+                            height: Constants.mediaQuery.height * 0.8,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Constants.theme.primaryColor.withOpacity(
+                                  0.6),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            child: ListView.builder(
+                              itemCount: answers.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index < answers.length) {
+                                  var answer = answers[index];
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
                                     children: [
-                                      Text(
-                                        "ملاحظات الاستشاري",
-                                        style:
-                                        Constants.theme.textTheme.bodyLarge,
+                                      Center(
+                                        child: Text(
+                                          answer["title"],
+                                          style: Constants
+                                              .theme.textTheme.titleLarge
+                                              ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  SizedBox(
-                                    height: Constants.mediaQuery.height * 0.2,
-                                    child: TextField(
-                                      controller: commentController,
-                                      style: Constants
-                                          .theme.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: Colors.black,
-                                      ),
-                                      decoration: InputDecoration(
-                                        border: const OutlineInputBorder(
+                                      Container(
+                                        width: double.infinity,
+                                        height: isMobile
+                                            ? answer["question_options"]
+                                            .length > 1
+                                            ? answer["question_options"]
+                                            .length * 70
+                                            : 80
+                                            : answer["question_options"]
+                                            .length > 1
+                                            ? answer["question_options"]
+                                            .length * 60
+                                            : 70,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 20),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade300,
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(20),
                                             topRight: Radius.circular(20),
                                           ),
-                                          borderSide: BorderSide(
-                                            color: Colors.white,
-                                            width: 2,
+                                        ),
+                                        child: Column(
+                                          children: answer["question_options"]
+                                              .map<Widget>((option) {
+                                            bool isAnswered =
+                                                option['answer'] == "1";
+                                            if (option["type"] == 3) {
+                                              return Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        option["title"]
+                                                            .toString(),
+                                                        style: Constants.theme
+                                                            .textTheme
+                                                            .bodyMedium
+                                                            ?.copyWith(
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: QuestionTextField(
+                                                        hint: "ادخل النص",
+                                                        maxLines: 1,
+                                                        controller: textControllers[
+                                                        int.parse(option["id"]
+                                                            .toString())],
+                                                        onChanged: (value) {
+                                                          // setState(() {
+                                                          option["answer"] =
+                                                              value;
+                                                          // });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ).setVerticalPadding(context,
+                                                    enableMediaQuery: false, 2),
+                                              );
+                                            } else if (option["type"] == 1) {
+                                              return Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      option["title"]
+                                                          .toString(),
+                                                      style: Constants.theme
+                                                          .textTheme.bodyMedium
+                                                          ?.copyWith(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Radio<String>(
+                                                      value:
+                                                      option["id"].toString(),
+                                                      groupValue: selectedAnswers[
+                                                      int.parse(answer["id"]
+                                                          .toString())],
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          selectedAnswers[int
+                                                              .parse(
+                                                              answer["id"]
+                                                                  .toString())] =
+                                                          value!;
+                                                          for (var opt in answer[
+                                                          "question_options"]) {
+                                                            if (opt["type"] ==
+                                                                1) {
+                                                              opt["answer"] =
+                                                              opt[
+                                                              "id"]
+                                                                  .toString() ==
+                                                                  value
+                                                                  ? "1"
+                                                                  : "0";
+                                                            }
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            } else if (option["type"] == 2) {
+                                              return Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      option["title"]
+                                                          .toString(),
+                                                      style: Constants.theme
+                                                          .textTheme.bodyMedium
+                                                          ?.copyWith(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Checkbox(
+                                                      value: checkboxValues[
+                                                      int.parse(option["id"]
+                                                          .toString())] ??
+                                                          false,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          checkboxValues[int
+                                                              .parse(
+                                                              option["id"]
+                                                                  .toString())] =
+                                                          value!;
+                                                          option["answer"] =
+                                                          value ? "1" : "0";
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            }
+                                            return Container();
+                                          }).toList(),
+                                        ).setHorizontalPadding(
+                                            context, enableMediaQuery: false,
+                                            20),
+                                      ),
+                                      Divider(
+                                        thickness: 2,
+                                        height: 3,
+                                        indent: 20,
+                                        endIndent: 20,
+                                        color: Colors.black54,
+                                      ),
+                                      SizedBox(height: 10),
+                                    ],
+                                  );
+                                } else {
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .stretch,
+                                    children: [
+                                      DropDownButtonConsultaionWidget(
+                                        onChange: (value) {
+                                          setState(() {
+                                            selected_consultation = value;
+                                            print("=============>" +
+                                                selected_consultation!
+                                                    .description
+                                                    .toString());
+                                          });
+                                        },
+                                        selectedValue:
+                                        selected_consultation ?? consultation,
+                                      ),
+                                      SizedBox(height: 15),
+                                      Container(
+                                        height: Constants.mediaQuery.height *
+                                            0.15,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade300,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
                                           ),
                                         ),
-                                        fillColor: Colors.grey.shade300,
+                                        child: Text(
+                                          selected_consultation?.description ??
+                                              '',
+                                          style: Constants
+                                              .theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                          ),
+                                        ).setHorizontalPadding(
+                                            context, enableMediaQuery: false,
+                                            20),
+                                      ).setHorizontalPadding(
+                                          context, enableMediaQuery: false, 20),
 
-                                        filled: true,
-                                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                        hintText: "ادخل الملاحظات",
-                                        hintStyle: Constants
-                                            .theme.textTheme.bodyMedium
-                                            ?.copyWith(
-                                          color: Colors.black,
-                                        ),
+                                      SizedBox(height: 20),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          Text(
+                                            "ملاحظات الاستشاري",
+                                            style:
+                                            Constants.theme.textTheme.bodyLarge,
+                                          ),
+                                        ],
                                       ),
-                                      maxLines: 5,
-                                      minLines: 1,
-                                    ).setHorizontalPadding(
-                                        context, enableMediaQuery: false, 20),
-                                  ),
-                                  SizedBox(height: 20),
-                                  BorderRoundedButton(
-                                    title: "تعديل",
-                                    onPressed: () {
-                                      // textControllers.forEach((key1, val) {
-                                      //   answers[key1] = val.text;
-                                      // });
-                                      List<dynamic> lastAnswers = [];
-                                      for(int i = 0 ; i<answers.length ; i++) {
-                                        for(int j = 0 ; j<answers[i]["question_options"].length;j++){
-                                          lastAnswers.add({
-                                            // "question_id": key,
-                                            // "question_text": value,
-                                            "question_option_id": answers[i]["question_options"][j]["id"],
-                                            "pationt_answer": answers[i]["question_options"][j]["answer"]
+                                      SizedBox(height: 10),
+                                      SizedBox(
+                                        height: Constants.mediaQuery.height *
+                                            0.2,
+                                        child: TextField(
+                                          controller: commentController,
+                                          style: Constants
+                                              .theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                          ),
+                                          decoration: InputDecoration(
+                                            border: const OutlineInputBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                              ),
+                                              borderSide: BorderSide(
+                                                color: Colors.white,
+                                                width: 2,
+                                              ),
+                                            ),
+                                            fillColor: Colors.grey.shade300,
+
+                                            filled: true,
+                                            contentPadding: EdgeInsets
+                                                .symmetric(
+                                                vertical: 10, horizontal: 10),
+                                            hintText: "ادخل الملاحظات",
+                                            hintStyle: Constants
+                                                .theme.textTheme.bodyMedium
+                                                ?.copyWith(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          maxLines: 5,
+                                          minLines: 1,
+                                        ).setHorizontalPadding(
+                                            context, enableMediaQuery: false,
+                                            20),
+                                      ),
+                                      SizedBox(height: 20),
+                                      BorderRoundedButton(
+                                        title: "تعديل",
+                                        onPressed: () {
+                                          // textControllers.forEach((key1, val) {
+                                          //   answers[key1] = val.text;
+                                          // });
+                                          List<dynamic> lastAnswers = [];
+                                          for (int i = 0; i <
+                                              answers.length; i++) {
+                                            for (int j = 0; j <
+                                                answers[i]["question_options"]
+                                                    .length; j++) {
+                                              lastAnswers.add({
+                                                // "question_id": key,
+                                                // "question_text": value,
+                                                "question_option_id": answers[i]["question_options"][j]["id"],
+                                                "pationt_answer": answers[i]["question_options"][j]["answer"]
+                                              });
+                                            }
+                                          }
+                                          // answers.forEach((key, value) {
+
+                                          // });
+
+                                          Map<String, dynamic> updateDate = {
+                                            "id": formData["id"],
+                                            "advicor_id":
+                                            CacheHelper.getData(key: 'id'),
+                                            "pationt_id": formData["pationt_id"],
+                                            "need_other_session":
+                                            formData["need_other_session"],
+                                            "consultation_service_id":
+                                            selected_consultation?.id ??
+                                                consultation.id,
+                                            "comments": commentController.text,
+                                            "date": formData["date"],
+                                            "answers": lastAnswers
+                                          };
+                                          setState(() {});
+
+                                          QuestionViewCubit().getUpdateForm(
+                                              updateDate).then((value) {
+                                            if (value != null) {
+                                              Navigator.pop(context);
+                                              SnackBarService
+                                                  .showSuccessMessage(
+                                                  "تم التعديل بنجاح");
+                                            }
                                           });
-                                        }
-                                      }
-                                      // answers.forEach((key, value) {
-
-                                      // });
-
-                                      Map<String, dynamic> updateDate = {
-                                        "id": formData["id"],
-                                        "advicor_id":
-                                        CacheHelper.getData(key: 'id'),
-                                        "pationt_id": formData["pationt_id"],
-                                        "need_other_session":
-                                        formData["need_other_session"],
-                                        "consultation_service_id":
-                                        selected_consultation?.id ??
-                                            consultation.id,
-                                        "comments": commentController.text,
-                                        "date": formData["date"],
-                                        "answers": lastAnswers
-                                      };
-                                      setState(() {});
-
-                                      QuestionViewCubit().getUpdateForm(updateDate).then((value) {
-                                        if (value != null) {
-                                          Navigator.pop(context);
-                                          SnackBarService.showSuccessMessage(
-                                              "تم التعديل بنجاح");
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ).setVerticalPadding(
-                                  context, enableMediaQuery: false, 20);
-                            }
-                          },
-                        ).setHorizontalPadding(
-                            context, enableMediaQuery: false, 20),
-                      ).setHorizontalPadding(
-                          context, enableMediaQuery: false, 20),
+                                        },
+                                      ),
+                                    ],
+                                  ).setVerticalPadding(
+                                      context, enableMediaQuery: false, 20);
+                                }
+                              },
+                            ).setHorizontalPadding(
+                                context, enableMediaQuery: false, 20),
+                          ).setHorizontalPadding(
+                              context, enableMediaQuery: false, 20),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          );
+              );
+            });
         } else {
           return Center(child: Text('Unexpected state'));
         }

@@ -491,8 +491,8 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                   children: [
                                     Text(
                                       "الحالة : ${patient["name"]}  ",
-                                      style: const TextStyle(
-                                        fontSize: 24,
+                                      style:  TextStyle(
+                                        fontSize: isMobile?18:24,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
@@ -500,8 +500,8 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                               // if (_currentAnimation == 2)
                                     Text(
                                       "الاستشاري : ${advicor["name"]}  ",
-                                      style: const TextStyle(
-                                        fontSize: 24,
+                                      style:  TextStyle(
+                                        fontSize: isMobile?18:24,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
@@ -509,8 +509,8 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                               // if (_currentAnimation == 3)
                                     Text(
                                       "تاريخ الجلسة : ${formData["date"]}  ",
-                                      style: const TextStyle(
-                                        fontSize: 24,
+                                      style:  TextStyle(
+                                        fontSize:isMobile?18:24,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
@@ -615,8 +615,8 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                       Container(
                                         width: double.infinity,
                                         // height: answer["question_options"].length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
-                                        
-                                        height: answer["question_options"].length * 40,
+
+                                        height: answer["question_options"].length * 50,
                                         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade300,
@@ -629,8 +629,6 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                           children: [
                                             Column(
                                               children: answer["question_options"].map<Widget>((option) {
-                                                // bool isAnswered = (option['answer'] is String && option['answer'] == "1") ||
-                                                //     (option['answer'] is int && option['answer'] == 1);
                                                 return Row(
                                                   children: [
                                                     // if (isAnswered)
@@ -718,7 +716,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                             topRight: Radius.circular(20),
                                           ),
                                         ),
-                                        child: Expanded(
+                                        child: SingleChildScrollView(
                                           child: Text(
                                             formData["comments"],
                                             style: Constants.theme.textTheme.bodyMedium?.copyWith(
@@ -726,7 +724,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                             ),
                                           ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                         ),
-                                      ),
+                                      ).setHorizontalPadding(context,enableMediaQuery: false, 10),
                                     ],
                                   ).setVerticalPadding(context, enableMediaQuery: false, 20);
                                 }

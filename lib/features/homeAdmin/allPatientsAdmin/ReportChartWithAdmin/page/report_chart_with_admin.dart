@@ -218,7 +218,6 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                             ),
                             child: Column(
                               children: [
-
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -241,6 +240,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
+
                                       backgroundColor: Colors.black,
                                       title: Container(
                                         alignment: Alignment.center,
@@ -253,7 +253,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                         ),
                                         child: Text(
                                           "اختر من المؤشرات",
-                                          style: Constants.theme.textTheme.titleLarge,
+                                          style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.titleLarge,
                                         ),
                                       ),
                                       content: SizedBox(
@@ -351,7 +351,6 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                               },
                               icon: Icon(Icons.add_circle_rounded),
                             ),
-
                                   ],
                                 ).setVerticalPadding(context,enableMediaQuery: false, 3),
                                 Expanded(
@@ -370,12 +369,14 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              pointer["text"],
-                                              style: TextStyle(
-                                                fontSize: isMobile?16:20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
+                                            Expanded(
+                                              child: Text(
+                                                pointer["text"],
+                                                style: TextStyle(
+                                                  fontSize: isMobile?14:20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
                                             IconButton(onPressed: (){
@@ -399,12 +400,14 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    pointer["text"],
-                                                    style: TextStyle(
-                                                      fontSize: isMobile?16:20,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.black,
+                                                  Expanded(
+                                                    child: Text(
+                                                      pointer["text"],
+                                                      style: TextStyle(
+                                                        fontSize: isMobile?14:20,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
                                                   ),
                                                   IconButton(onPressed: (){
@@ -430,12 +433,14 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    pointer["text"],
-                                                    style: TextStyle(
-                                                      fontSize: isMobile?16:20,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.black,
+                                                  Expanded(
+                                                    child: Text(
+                                                      pointer["text"],
+                                                      style: TextStyle(
+                                                        fontSize: isMobile?14:20,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
                                                   ),
                                                   IconButton(onPressed: (){
@@ -571,11 +576,13 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                advices[index]["text"],
-                                                style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                                  color: Colors.black,
-                                                  fontSize: isMobile?16:20
+                                              Expanded(
+                                                child: Text(
+                                                  advices[index]["text"],
+                                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                                    color: Colors.black,
+                                                    fontSize: isMobile?14:20
+                                                  ),
                                                 ),
                                               ),
                                               IconButton(onPressed: ()async{
