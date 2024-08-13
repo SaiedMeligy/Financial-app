@@ -3,6 +3,7 @@ import 'package:experts_app/domain/entities/SenarioModels.dart';
 
 import '../../../../domain/entities/HomeAdminModel.dart';
 
+
 abstract class HomeAdminStates {}
 
 class LoadingHomeAdmin extends HomeAdminStates {}

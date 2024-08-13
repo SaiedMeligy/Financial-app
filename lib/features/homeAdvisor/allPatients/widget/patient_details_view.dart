@@ -13,6 +13,7 @@ import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_Sess
 import 'package:experts_app/features/homeAdvisor/allPatients/widget/report_chart/page/report_chart_view.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/page/update_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../domain/entities/AllPatientModel.dart';
 import '../../../homeAdmin/addSession/manager/cubit.dart';
 
   class PatientDetailsView extends StatefulWidget {
@@ -119,6 +120,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
               var patient = formData["pationt"];
               var advicor = formData["advicor"];
               var answers = formData["answers"];
+              var comments = formData["comments"];
               var consultation = formData["consultationService"];
 
                var filteredAnswers = filterQuestionsWithAnswer(answers);
@@ -250,7 +252,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                                 pw.Container(
                                                                   alignment: pw.Alignment.centerRight,
                                                                   child: pw.Text(
-                                                                    "الرقم القومي" ,
+                                                                    "رقم الهوية الأماراتية" ,
                                                                     style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
                                                                     textDirection: pw.TextDirection.rtl,
                                                                   ),
@@ -304,14 +306,18 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                           );
 
                                           List<List<dynamic>> answe = [] ;
+                                          print("pppppppppppp"+filteredAnswers.length.toString());
+                                          print("fffffffffffff"+(widget.pationt_data as Pationts).toString());
 
-
-                                          for(int count = 0 ; count < (filteredAnswers.length/6).ceil() ; count++){
+                                          for(int count = 0 ; count < (filteredAnswers.length/3).ceil()+1 ; count++){
                                             answe.add([]);
-                                            for(int i = 0 ; i < 6 ; i++) {
+                                            for(int i = 0 ; i < 3 ; i++) {
                                               try{
-                                                answe[count].add(filteredAnswers[count*6+i]);
-                                              }catch(e){}
+                                                answe[count].add(filteredAnswers[count*3+i]);
+                                              }catch(e){
+                                                //answe[count].add(filteredAnswers[filteredAnswers.length-3]);
+                                                print("eeeeeeeeeeeeeee"+e.toString());
+                                              }
                                             }
                                           }
 
@@ -321,131 +327,130 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                 build: (pw.Context context) {
                                                   return pw.Center(
                                                     child: pw.Column(
-                                                      mainAxisAlignment: pw.MainAxisAlignment.start,
-                                                      children: [
-                                                        for(int i = 0 ; i < answe[y].length ; i++) ...[
-
-                                                          pw.Container(
-                                                              height:answe[y][i]["question_options"].length>2?150:100,
-                                                              margin: pw.EdgeInsets.all(5),
-                                                              decoration: pw.BoxDecoration(
-                                                                  border: pw.Border.all(
-                                                                      color: PdfColors.black,
-                                                                      width: 1
-                                                                  ),
-                                                                  borderRadius: pw.BorderRadius.circular(10)
-                                                              ),
-                                                              child: pw.Column(
-                                                                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                                                                  children: [
-                                                                    pw.Container(
-                                                                      height:answe[y][i]["title"].toString().split(" ").length>10?80:50,
-                                                                      decoration: pw.BoxDecoration(
-                                                                          color: PdfColors.black ,
-                                                                          borderRadius: pw.BorderRadius.circular(10)
-                                                                      ),
-                                                                      child: pw.Row(
-                                                                          mainAxisAlignment: pw.MainAxisAlignment.end ,
-                                                                          children: [
-                                                                            pw.SizedBox(width:5),
-                                                                            pw.Container(
-                                                                              margin: pw.EdgeInsets.all(5),
-                                                                              child:
-                                                                              pw.Text(
-                                                                                DividText("${answe[y][i]['title']}"),
-                                                                                style: pw.TextStyle(font: ttfSans, fontSize: 10, color: PdfColors.white),
-                                                                                textDirection: pw.TextDirection.rtl,
-                                                                                maxLines:5,
-                                                                              ),
-                                                                            ),
-                                                                            pw.SizedBox(width: 5)
-                                                                          ]
-                                                                      ),
+                                                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                        children: [
+                                                          for(int i = 0 ; i < answe[y].length ; i++) ...[
+                                                            pw.Container(
+                                                                height:answe[y][i]["question_options"].length>2?150:100,
+                                                                margin: pw.EdgeInsets.all(5),
+                                                                decoration: pw.BoxDecoration(
+                                                                    border: pw.Border.all(
+                                                                        color: PdfColors.black,
+                                                                        width: 1
                                                                     ),
-                                                                    for(int x = 0; x < answe[y][i]["question_options"].length ; x++) ...[
-                                                                      pw.Row(
-                                                                          mainAxisAlignment: pw.MainAxisAlignment.end ,
-                                                                          children: [
-                                                                            if(answe[y][i]["question_options"][x]['type'] == 1&&answe[y][i]["question_options"][x]['answer'] == "1")...[
-                                                                              pw.Text(
-                                                                                "${answe[y][i]["question_options"][x]['title']}",
-                                                                                style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                                textDirection: pw.TextDirection.rtl,
-                                                                              ),
-                                                                              pw.SizedBox(width: 10),
+                                                                    borderRadius: pw.BorderRadius.circular(10)
+                                                                ),
+                                                                child: pw.Column(
+                                                                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                    children: [
+                                                                      pw.Container(
+                                                                        height:answe[y][i]["title"].toString().split(" ").length>10?80:50,
+                                                                        decoration: pw.BoxDecoration(
+                                                                            color: PdfColors.black ,
+                                                                            borderRadius: pw.BorderRadius.circular(10)
+                                                                        ),
+                                                                        child: pw.Row(
+                                                                            mainAxisAlignment: pw.MainAxisAlignment.end ,
+                                                                            children: [
+                                                                              pw.SizedBox(width:5),
                                                                               pw.Container(
-                                                                                  width: 8 ,
-                                                                                  height: 8 ,
-                                                                                  color: PdfColors.black
-                                                                              ),
-                                                                              pw.SizedBox(width: 20),
-                                                                            ],
-                                                                            if(answe[y][i]["question_options"][x]['type'] == 2&&answe[y][i]["question_options"][x]['answer'] == "1")...[
-                                                                              pw.Text(
-                                                                                "${answe[y][i]["question_options"][x]['title']}",
-                                                                                style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                                textDirection: pw.TextDirection.rtl,
-                                                                              ),
-                                                                              pw.SizedBox(width: 10),
-                                                                              pw.Container(
-                                                                                  width: 8 ,
-                                                                                  height: 8 ,
-                                                                                  color: PdfColors.black
-                                                                              ),
-                                                                              pw.SizedBox(width: 20),
-                                                                            ],
-                                                                            // if (answe[y][i]["question_options"][x]['answer'] == "1" ||
-                                                                            //     answe[y][i]["question_options"][x]['answer'] == 1) ...[
-                                                                            //   pw.Text(
-                                                                            //     "${answe[y][i]["question_options"][x]['title']}",
-                                                                            //     style: pw.TextStyle(font: ttfSans, fontSize: 13),
-                                                                            //     textDirection: pw.TextDirection.rtl,
-                                                                            //   ),
-                                                                            //   pw.SizedBox(width: 10),
-                                                                            //   pw.Container(
-                                                                            //     width: 8,
-                                                                            //     height: 8,
-                                                                            //     color: PdfColors.black,
-                                                                            //   ),
-                                                                            //   pw.SizedBox(width: 20),
-                                                                            // ],
-                                                                            if(answe[y][i]["question_options"][x]['type'] == 3&&answe[y][i]["question_options"][x]['answer']!=null)...[
-                                                                              pw.Directionality(
-                                                                                textDirection: pw.TextDirection.rtl,
+                                                                                margin: pw.EdgeInsets.all(5),
                                                                                 child:
-                                                                                pw.Row(
-                                                                                    mainAxisAlignment: pw.MainAxisAlignment.end ,
-                                                                                    children: [
-                                                                                      pw.Text(
-                                                                                        "${answe[y][i]["question_options"][x]['title']} : ",
-                                                                                        style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                                        textDirection: pw.TextDirection.rtl,
-                                                                                      ),
-                                                                                      pw.Text(
-                                                                                        "${answe[y][i]["question_options"][x]['answer']}",
-                                                                                        style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                                        textDirection: pw.TextDirection.rtl,
-                                                                                      ),
-                                                                                    ]
+                                                                                pw.Text(
+                                                                                  DividText("${answe[y][i]['title']}"),
+                                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 10, color: PdfColors.white),
+                                                                                  textDirection: pw.TextDirection.rtl,
+                                                                                  maxLines:5,
                                                                                 ),
                                                                               ),
-                                                                              pw.SizedBox(width: 10),
-                                                                              pw.Container(
-                                                                                  width: 8 ,
-                                                                                  height: 8 ,
-                                                                                  color: PdfColors.black
-                                                                              ),
-                                                                              pw.SizedBox(width: 20),
+                                                                              pw.SizedBox(width: 5)
                                                                             ]
+                                                                        ),
+                                                                      ),
+                                                                      for(int x = 0; x < answe[y][i]["question_options"].length ; x++) ...[
+                                                                        pw.Row(
+                                                                            mainAxisAlignment: pw.MainAxisAlignment.end ,
+                                                                            children: [
+                                                                              if(answe[y][i]["question_options"][x]['type'] == 1&&answe[y][i]["question_options"][x]['answer'] == "1")...[
+                                                                                pw.Text(
+                                                                                  "${answe[y][i]["question_options"][x]['title']}",
+                                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 10),
+                                                                                  textDirection: pw.TextDirection.rtl,
+                                                                                ),
+                                                                                pw.SizedBox(width: 10),
+                                                                                pw.Container(
+                                                                                    width: 8 ,
+                                                                                    height: 8 ,
+                                                                                    color: PdfColors.black
+                                                                                ),
+                                                                                pw.SizedBox(width: 20),
+                                                                              ],
+                                                                              if(answe[y][i]["question_options"][x]['type'] == 2&&answe[y][i]["question_options"][x]['answer'] == "1")...[
+                                                                                pw.Text(
+                                                                                  "${answe[y][i]["question_options"][x]['title']}",
+                                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 10),
+                                                                                  textDirection: pw.TextDirection.rtl,
+                                                                                ),
+                                                                                pw.SizedBox(width: 10),
+                                                                                pw.Container(
+                                                                                    width: 8 ,
+                                                                                    height: 8 ,
+                                                                                    color: PdfColors.black
+                                                                                ),
+                                                                                pw.SizedBox(width: 20),
+                                                                              ],
+                                                                              // if (answe[y][i]["question_options"][x]['answer'] == "1" ||
+                                                                              //     answe[y][i]["question_options"][x]['answer'] == 1) ...[
+                                                                              //   pw.Text(
+                                                                              //     "${answe[y][i]["question_options"][x]['title']}",
+                                                                              //     style: pw.TextStyle(font: ttfSans, fontSize: 13),
+                                                                              //     textDirection: pw.TextDirection.rtl,
+                                                                              //   ),
+                                                                              //   pw.SizedBox(width: 10),
+                                                                              //   pw.Container(
+                                                                              //     width: 8,
+                                                                              //     height: 8,
+                                                                              //     color: PdfColors.black,
+                                                                              //   ),
+                                                                              //   pw.SizedBox(width: 20),
+                                                                              // ],
+                                                                              if(answe[y][i]["question_options"][x]['type'] == 3&&answe[y][i]["question_options"][x]['answer']!=null)...[
+                                                                                pw.Directionality(
+                                                                                  textDirection: pw.TextDirection.rtl,
+                                                                                  child:
+                                                                                  pw.Row(
+                                                                                      mainAxisAlignment: pw.MainAxisAlignment.end ,
+                                                                                      children: [
+                                                                                        pw.Text(
+                                                                                          "${answe[y][i]["question_options"][x]['title']} : ",
+                                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 10),
+                                                                                          textDirection: pw.TextDirection.rtl,
+                                                                                        ),
+                                                                                        pw.Text(
+                                                                                          "${answe[y][i]["question_options"][x]['answer']}",
+                                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 10),
+                                                                                          textDirection: pw.TextDirection.rtl,
+                                                                                        ),
+                                                                                      ]
+                                                                                  ),
+                                                                                ),
+                                                                                pw.SizedBox(width: 10),
+                                                                                pw.Container(
+                                                                                    width: 8 ,
+                                                                                    height: 8 ,
+                                                                                    color: PdfColors.black
+                                                                                ),
+                                                                                pw.SizedBox(width: 20),
+                                                                              ]
 
-                                                                          ]
-                                                                      )
+                                                                            ]
+                                                                        )
+                                                                      ]
                                                                     ]
-                                                                  ]
-                                                              )
-                                                          )
-                                                        ],
-                                                      ],
+                                                                )
+                                                            ),
+                                                          ]
+                                                        ]
                                                     ),
                                                   );
 
@@ -453,6 +458,155 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                               ),
                                             );
                                           }
+                                          pdf.addPage(
+                                            pw.Page(
+                                              build: (pw.Context context) {
+                                                return  pw.Column(
+                                                    children: [
+                                                      pw.Container(
+                                                        width: 350,
+                                                        alignment: pw.Alignment.center,
+                                                        decoration: pw.BoxDecoration(
+                                                            border: pw.Border.all(color: PdfColors.black,width: 1),
+                                                            borderRadius: pw.BorderRadius.all(pw.Radius.circular(10))
+                                                        ),
+                                                        child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه الى جلسة اخرى ":" الحالة ليست بحاجه الى جلسة اخرى  ",
+                                                          style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
+                                                          textDirection: pw.TextDirection.rtl,
+                                                        ),
+
+                                                      ),
+                                                      pw.SizedBox(height: 20,),
+                                                      pw.Container(
+                                                        width: 350,
+                                                        alignment: pw.Alignment.center,
+                                                        decoration: pw.BoxDecoration(
+                                                            border: pw.Border.all(color: PdfColors.black,width: 1),
+                                                            borderRadius: pw.BorderRadius.all(pw.Radius.circular(10))
+
+                                                        ),
+                                                        child: pw.Text(" ملاحظات الاستشارى ",
+                                                          style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
+                                                          textDirection: pw.TextDirection.rtl,
+                                                        ),
+
+                                                      ),
+                                                      pw.Container(
+                                                          height:Constants.mediaQuery.height*0.35,
+                                                          margin: pw.EdgeInsets.all(5),
+                                                          decoration: pw.BoxDecoration(
+                                                              color: PdfColors.black,
+                                                              border: pw.Border.all(
+                                                                  color: PdfColors.black,
+                                                                  width: 1
+                                                              ),
+                                                              borderRadius: pw.BorderRadius.circular(10)
+                                                          ),
+                                                          child: pw.Row(
+                                                              children: [
+                                                                pw.SizedBox(width: 20,),
+                                                                pw.Container(
+                                                                  alignment: pw.Alignment.centerRight,
+                                                                  child: pw.Text(
+                                                                    DividCommentsText("${comments}"),
+                                                                    style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
+                                                                    textDirection: pw.TextDirection.rtl,
+                                                                  ),
+                                                                ),
+                                                                pw.SizedBox(width: 20,),
+                                                              ]
+                                                          )
+                                                      ),
+
+                                                    ]
+                                                );
+                                              },
+                                            ),
+                                          );
+
+                                          pdf.addPage(
+                                              pw.Page(
+                                                  build: (pw.Context context) {
+                                                    return
+                                                      pw.Column(
+                                                          children: [
+                                                            pw.Container(
+                                                                height: Constants.mediaQuery.height * 0.10,
+                                                                margin: pw.EdgeInsets.all(5),
+                                                                decoration: pw.BoxDecoration(
+                                                                  //color: PdfColors.black,
+                                                                    border: pw.Border.all(
+                                                                        color: PdfColors.black, width: 1),
+                                                                    borderRadius: pw.BorderRadius.circular(10)
+                                                                ),
+                                                                child: pw.Row(
+                                                                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                                                                    children: [
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          DividCommentsText(
+                                                                              "${consultation["name"]}"),
+                                                                          style: pw.TextStyle(
+                                                                              font: ttfSans,
+                                                                              fontSize: 14,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw
+                                                                              .TextDirection
+                                                                              .rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          "الخدمة الاستشارية: ",
+                                                                          style: pw.TextStyle(
+                                                                              font: ttfSans,
+                                                                              fontSize: 16,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw
+                                                                              .TextDirection
+                                                                              .rtl,
+                                                                        ),
+                                                                      ),
+                                                                    ]
+                                                                )
+                                                            ),
+                                                            pw.Container(
+                                                                height:Constants.mediaQuery.height*0.35,
+                                                                margin: pw.EdgeInsets.all(5),
+                                                                decoration: pw.BoxDecoration(
+                                                                    color: PdfColors.black,
+                                                                    border: pw.Border.all(
+                                                                        color: PdfColors.black,
+                                                                        width: 1
+                                                                    ),
+                                                                    borderRadius: pw.BorderRadius.circular(10)
+                                                                ),
+                                                                child: pw.Row(
+                                                                    children: [
+                                                                      pw.SizedBox(width: 20,),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          DividCommentsText("وصف الخدمة الاستشارية :${consultation["description"]}"),
+                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.SizedBox(width: 20,),
+                                                                    ]
+                                                                )
+                                                            ),
+
+
+                                                          ]
+                                                      );
+                                                  }
+                                              )
+                                          );
+
+
                                           try {
                                             // Save the PDF as bytes
                                             final pdfBytes = await pdf.save();
@@ -684,6 +838,16 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                 } else {
                                   return Column(
                                     children: [
+                                      Text(formData["need_other_session"]==1?"الحالة بحاجه الى جلسة اخرى":"الحالة ليست بحاجه الي جلسة اخرى",style: Constants.theme.textTheme.bodyLarge,),
+                                      SizedBox(height: 10),
+                                      Divider(
+                                        thickness: 2,
+                                        height: 3,
+                                        indent: 20,
+                                        endIndent: 20,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      SizedBox(height: 10),
                                       Text(consultation["name"],style: Constants.theme.textTheme.bodyLarge,),
                                       SizedBox(height: 10),
                                       Container(
@@ -704,7 +868,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                         ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                       ),
                                       SizedBox(height: 20),
-                                      Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
+                                      Text("ملاحظات الاستشارى",style: Constants.theme.textTheme.bodyLarge,),
                                       SizedBox(height: 10),
                                       Container(
                                         height: Constants.mediaQuery.height * 0.2,
@@ -801,6 +965,19 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
       return text ;
 
     }
+    String DividCommentsText(String text) {
+      String temp = "";
+      List<String> Words = text.split(" ");
+      int wordsPerLine = 10;
+
+      for (int i = 0; i < Words.length; i += wordsPerLine) {
+        int end = (i + wordsPerLine < Words.length) ? i + wordsPerLine : Words.length;
+        temp += Words.sublist(i, end).join(" ") + "\n";
+      }
+
+      return temp.trim();
+    }
+
 
   }
 

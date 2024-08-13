@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_circular_slider/multi_circular_slider.dart';
 
 import '../../../../core/config/constants.dart';
-import '../../../../domain/entities/HomeAdminModel.dart';
+import '../../../../domain/entities/HomeAdmin.dart';
+import '../../../../domain/entities/SenarioModels.dart';
 import '../../../homeAdmin/staticScreen/Widegets/CircleCharts.dart';
 import '../../../homeAdmin/staticScreen/manager/cubit.dart';
 import '../../../homeAdmin/staticScreen/manager/states.dart';
@@ -103,6 +104,22 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                               ),
                             ],
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              _buildInfoCardPatient(
+                                title: "عدد الحالات التى بحاجه الى جلسة اخرى",
+                                count: homeAdmin?.needOtherSession.toString() ?? "",
+                                icon: Icons.back_hand_rounded,
+                              ),
+                              _buildInfoCardPatient(
+                                  title: "عدد الحالات الغير بحاجه الى جلسة اخرى",
+                                  count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                  icon:  Icons.back_hand_rounded
+                              ),
+
+                            ],
+                          ),
                           // _buildScenarioReport(senario1, senario2, senario3, senarioReport),
                           Row(
                             children: [
@@ -143,6 +160,22 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                                   count: homeAdmin?.sessionsCount.toString() ?? "",
                                   icon: Icons.bookmark_added_rounded
                               ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              _buildInfoCardPatient(
+                                title: "عدد الحالات التى بحاجه الى جلسة اخرى",
+                                count: homeAdmin?.needOtherSession.toString() ?? "",
+                                icon: Icons.back_hand_rounded,
+                              ),
+                              _buildInfoCardPatient(
+                                  title: "عدد الحالات الغير بحاجه الى جلسة اخرى",
+                                  count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                  icon:  Icons.back_hand_rounded
+                              ),
+
                             ],
                           ),
                           SizedBox(height: 10),
@@ -220,6 +253,54 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
       ),
     );
   }
+  Widget _buildInfoCardPatient({required String title, required String count, required IconData icon}) {
+    return Container(
+      width: isMobile ? Constants.mediaQuery.width * 0.3 : Constants.mediaQuery.width * 0.2,
+      height:isMobile? Constants.mediaQuery.height * 0.20:Constants.mediaQuery.height * 0.25,
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        border: Border.all(
+          color: Colors.black54,
+          width: 2.5,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          Icon(icon,size: isMobile?20:30,),
+          Expanded(
+            child: Center(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                    color: Colors.black,
+                    fontSize:isMobile? 16:22
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                count,
+                textAlign: TextAlign.center,
+                style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                  color: Colors.black,
+                  fontSize:isMobile? 16:22,
+
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   Widget _buildScenarioReport(String senario1, String senario2, String senario3, List<SenariosReport> senarioReport) {
     return Container(

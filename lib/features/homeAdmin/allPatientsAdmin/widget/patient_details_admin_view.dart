@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printing/printing.dart';
 
+import '../../../../domain/entities/AllPatientModel.dart';
 import '../replace_advisor/page/replace_advisor_view.dart';
 
 class PatientDetailsAdminView extends StatefulWidget {
@@ -43,16 +44,17 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
   }
 
   List<dynamic> filterQuestionsWithAnswer(List<dynamic> answers) {
-    return answers.where((answer) {
-      return answer['question_options'].any((option) {
-        if (option['answer'] is String) {
-          return option['answer'] == "1";
-        } else if (option['answer'] is int) {
-          return option['answer'] == 1;
-        }
-        return false;
-      });
-    }).toList();
+    return answers;
+    // where((answer) {
+    //   return answer['question_options'].any((option) {
+    //     if (option['answer'] is String) {
+    //       return option['answer'] == "1";
+    //     } else if (option['answer'] is int) {
+    //       return option['answer'] == 1;
+    //     }
+    //     return false;
+    //   });
+    // }).toList();
   }
 
     Future<void> _printPDF() async {
@@ -114,8 +116,10 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
             var patient = formData["pationt"];
             var advicor = formData["advicor"];
             var answers = formData["answers"];
+            var comments = formData["comments"];
             var consultation = formData["consultationService"];
             var filteredAnswers = filterQuestionsWithAnswer(answers);
+            print("mmmmmmmm"+formData.toString());
 
             return Directionality(
               textDirection: TextDirection.rtl,
@@ -257,7 +261,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                             pw.Container(
                                                               alignment: pw.Alignment.centerRight,
                                                               child: pw.Text(
-                                                                "الرقم القومي" ,
+                                                                "رقم الهوية الأماراتية" ,
                                                                 style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
@@ -311,14 +315,18 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       );
 
                                       List<List<dynamic>> answe = [] ;
+                                      print("pppppppppppp"+filteredAnswers.length.toString());
+                                      print("fffffffffffff"+(widget.pationt_data as Pationts).toString());
 
-
-                                      for(int count = 0 ; count < (filteredAnswers.length/6).ceil() ; count++){
+                                      for(int count = 0 ; count < (filteredAnswers.length/3).ceil()+1 ; count++){
                                         answe.add([]);
-                                        for(int i = 0 ; i < 6 ; i++) {
+                                        for(int i = 0 ; i < 3 ; i++) {
                                           try{
-                                            answe[count].add(filteredAnswers[count*6+i]);
-                                          }catch(e){}
+                                            answe[count].add(filteredAnswers[count*3+i]);
+                                          }catch(e){
+                                            //answe[count].add(filteredAnswers[filteredAnswers.length-3]);
+                                            print("eeeeeeeeeeeeeee"+e.toString());
+                                          }
                                         }
                                       }
 
@@ -331,7 +339,6 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                   mainAxisAlignment: pw.MainAxisAlignment.start,
                                                   children: [
                                                     for(int i = 0 ; i < answe[y].length ; i++) ...[
-
                                                       pw.Container(
                                                         height:answe[y][i]["question_options"].length>2?150:100,
                                                           margin: pw.EdgeInsets.all(5),
@@ -450,16 +457,165 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                 ]
                                                               ]
                                                           )
-                                                      )
-                                                    ],
-                                                  ],
-                                                ),
+                                                      ),
+                                              ]
+                                              ]
+                                              ),
                                               );
 
                                             },
                                           ),
                                         );
                                       }
+                                      pdf.addPage(
+                                        pw.Page(
+                                          build: (pw.Context context) {
+                                            return  pw.Column(
+                                                children: [
+                                                  pw.Container(
+                                                    width: 350,
+                                                    alignment: pw.Alignment.center,
+                                                    decoration: pw.BoxDecoration(
+                                                      border: pw.Border.all(color: PdfColors.black,width: 1),
+                                                      borderRadius: pw.BorderRadius.all(pw.Radius.circular(10))
+                                                    ),
+                                                    child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه الى جلسة اخرى ":" الحالة ليست بحاجه الى جلسة اخرى  ",
+                                                      style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
+                                                      textDirection: pw.TextDirection.rtl,
+                                                    ),
+
+                                                  ),
+                                                  pw.SizedBox(height: 20,),
+                                                  pw.Container(
+                                                    width: 350,
+                                                    alignment: pw.Alignment.center,
+                                                    decoration: pw.BoxDecoration(
+                                                      border: pw.Border.all(color: PdfColors.black,width: 1),
+                                                        borderRadius: pw.BorderRadius.all(pw.Radius.circular(10))
+
+                                                    ),
+                                                    child: pw.Text(" ملاحظات الاستشارى ",
+                                                      style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
+                                                      textDirection: pw.TextDirection.rtl,
+                                                    ),
+
+                                                  ),
+                                                  pw.Container(
+                                                      height:Constants.mediaQuery.height*0.35,
+                                                      margin: pw.EdgeInsets.all(5),
+                                                      decoration: pw.BoxDecoration(
+                                                          color: PdfColors.black,
+                                                          border: pw.Border.all(
+                                                              color: PdfColors.black,
+                                                              width: 1
+                                                          ),
+                                                          borderRadius: pw.BorderRadius.circular(10)
+                                                      ),
+                                                      child: pw.Row(
+                                                          children: [
+                                                            pw.SizedBox(width: 20,),
+                                                            pw.Container(
+                                                              alignment: pw.Alignment.centerRight,
+                                                              child: pw.Text(
+                                                                DividCommentsText("${comments}"),
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                            ),
+                                                            pw.SizedBox(width: 20,),
+                                                          ]
+                                                      )
+                                                  ),
+
+                                                ]
+                                            );
+                                          },
+                                        ),
+                                      );
+
+                                      pdf.addPage(
+                                        pw.Page(
+                                          build: (pw.Context context) {
+                                            return
+                                              pw.Column(
+                                                  children: [
+                                                    pw.Container(
+                                                        height: Constants.mediaQuery.height * 0.10,
+                                                        margin: pw.EdgeInsets.all(5),
+                                                        decoration: pw.BoxDecoration(
+                                                          //color: PdfColors.black,
+                                                            border: pw.Border.all(
+                                                                color: PdfColors.black, width: 1),
+                                                            borderRadius: pw.BorderRadius.circular(10)
+                                                        ),
+                                                        child: pw.Row(
+                                                          mainAxisAlignment: pw.MainAxisAlignment.center,
+                                                            children: [
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  DividCommentsText(
+                                                                      "${consultation["name"]}"),
+                                                                  style: pw.TextStyle(
+                                                                      font: ttfSans,
+                                                                      fontSize: 14,
+                                                                      color: PdfColors.black),
+                                                                  textDirection: pw
+                                                                      .TextDirection
+                                                                      .rtl,
+                                                                ),
+                                                              ),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  "الخدمة الاستشارية: ",
+                                                                  style: pw.TextStyle(
+                                                                      font: ttfSans,
+                                                                      fontSize: 16,
+                                                                      color: PdfColors.black),
+                                                                  textDirection: pw
+                                                                      .TextDirection
+                                                                      .rtl,
+                                                                ),
+                                                              ),
+                                                            ]
+                                                        )
+                                                    ),
+                                                    pw.Container(
+                                                        height:Constants.mediaQuery.height*0.35,
+                                                        margin: pw.EdgeInsets.all(5),
+                                                        decoration: pw.BoxDecoration(
+                                                            color: PdfColors.black,
+                                                            border: pw.Border.all(
+                                                                color: PdfColors.black,
+                                                                width: 1
+                                                            ),
+                                                            borderRadius: pw.BorderRadius.circular(10)
+                                                        ),
+                                                        child: pw.Row(
+                                                            children: [
+                                                              pw.SizedBox(width: 20,),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  DividCommentsText("وصف الخدمة الاستشارية :${consultation["description"]}"),
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                ),
+                                                              ),
+                                                              pw.SizedBox(width: 20,),
+                                                            ]
+                                                        )
+                                                    ),
+
+
+                                                  ]
+                                              );
+                                          }
+                                      )
+                                      );
+
+
                                       try {
                                         // Save the PDF as bytes
                                         final pdfBytes = await pdf.save();
@@ -679,6 +835,17 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                               } else {
                                 return Column(
                                   children: [
+                                    Text(formData["need_other_session"]==1?"الحالة بحاجه الى جلسة اخرى":"الحالة ليست بحاجه الي جلسة اخرى",style: Constants.theme.textTheme.bodyLarge,),
+                                    SizedBox(height: 10),
+                                    Divider(
+                                      thickness: 2,
+                                      height: 3,
+                                      indent: 20,
+                                      endIndent: 20,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                    SizedBox(height: 10),
+
                                     Text(consultation["name"],style: Constants.theme.textTheme.bodyLarge,),
                                     SizedBox(height: 10),
                                     Container(
@@ -699,7 +866,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                     ),
                                     SizedBox(height: 20),
-                                    Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
+                                    Text("ملاحظات الاستشارى",style: Constants.theme.textTheme.bodyLarge,),
                                     SizedBox(height: 10),
                                     Container(
                                       height: Constants.mediaQuery.height * 0.2,
@@ -796,4 +963,36 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
     return text ;
 
   }
+  // String DividCommentsText (String text){
+  //   String temp = "" ;
+  //   List<String> Words = text.split(" ") ;
+  //  if(Words.length > 10) {
+  //    for (int i = 0; i < (Words.length / 10).ceil(); i++) {
+  //      for(int j = i*10; j < i*10+10;j++){
+  //          temp += Words[j] + " " ;
+  //      }
+  //      temp = temp + "\n";
+  //    }
+  //    return temp;
+  //  }
+  //
+  //
+  //
+  //   return text ;
+  //
+  // }
+
+  String DividCommentsText(String text) {
+    String temp = "";
+    List<String> Words = text.split(" ");
+    int wordsPerLine = 10;
+
+    for (int i = 0; i < Words.length; i += wordsPerLine) {
+      int end = (i + wordsPerLine < Words.length) ? i + wordsPerLine : Words.length;
+      temp += Words.sublist(i, end).join(" ") + "\n";
+    }
+
+    return temp.trim();
+  }
+
 }

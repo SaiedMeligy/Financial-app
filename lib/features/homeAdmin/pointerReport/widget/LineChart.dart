@@ -64,20 +64,22 @@ class _LineChartsState extends State<LineCharts> {
               ),
               child: ListView(
                 children: [
+
                   Column(
                     children: [
                       SizedBox(
-                        height: Constants.mediaQuery.height*1.2,
+                        height: Constants.mediaQuery.height*1.9,
                         child: SfCartesianChart(
-
                           primaryXAxis: CategoryAxis(
                             labelStyle: Constants.theme.textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.bold,
+                              fontSize: 12
                             ),
                             labelRotation: 90,
-
-
-
+                            labelIntersectAction: AxisLabelIntersectAction.multipleRows, // Try multiple rows
+                            maximumLabels: 10,
+                            edgeLabelPlacement: EdgeLabelPlacement.shift, // This should avoid overflow at edges
+                            autoScrollingMode: AutoScrollingMode.end,
                           ),
                           primaryYAxis: NumericAxis(
                             labelStyle: Constants.theme.textTheme.bodySmall,
@@ -100,10 +102,10 @@ class _LineChartsState extends State<LineCharts> {
                                 y: data.percentage,
                                 widget: Column(
                                   children: [
-                                    Text(
-                                      '${data.percentage.toStringAsFixed(2)}%',
-                                      style: Constants.theme.textTheme.bodyMedium,
-                                    ),
+                                    // Text(
+                                    //   '${data.percentage.toStringAsFixed(2)}%',
+                                    //   style: Constants.theme.textTheme.bodyMedium,
+                                    // ),
                                   ],
                                 ),
                                 coordinateUnit: CoordinateUnit.point,

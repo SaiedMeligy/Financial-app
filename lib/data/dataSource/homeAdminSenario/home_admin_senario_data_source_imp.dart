@@ -4,7 +4,7 @@ import 'package:experts_app/domain/entities/SenarioModels.dart';
 
 import '../../../core/config/cash_helper.dart';
 import '../../../core/config/constants.dart';
-import '../../../domain/entities/HomeAdminModel.dart';
+import '../../../domain/entities/HomeAdmin.dart';
 import 'home_admin_senario_data_Source.dart';
 
 class HomeAdminSenarioDataSourceImp implements HomeAdminSenarioDataSource{
