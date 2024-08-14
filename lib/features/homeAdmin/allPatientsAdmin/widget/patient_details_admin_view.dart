@@ -594,16 +594,16 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                         ),
                                                         child: pw.Row(
                                                             children: [
-                                                              pw.SizedBox(width: 20,),
+                                                              pw.SizedBox(width: 10,),
                                                               pw.Container(
                                                                 alignment: pw.Alignment.centerRight,
                                                                 child: pw.Text(
-                                                                  DividCommentsText("وصف الخدمة الاستشارية :${consultation["description"]}"),
+                                                                  DividCommentsText(" وصف الخدمة الاستشارية :${consultation["description"]} "),
                                                                   style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
                                                                   textDirection: pw.TextDirection.rtl,
                                                                 ),
                                                               ),
-                                                              pw.SizedBox(width: 20,),
+                                                              pw.SizedBox(width: 10,),
                                                             ]
                                                         )
                                                     ),
