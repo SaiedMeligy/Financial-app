@@ -807,6 +807,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                       ),
                                                     ),
                                                   if (option["type"] == 3 && option["answer"] != null)
+
                                                     Expanded(
                                                       child: Text(
                                                         option["answer"].toString(),

@@ -1,5 +1,6 @@
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/features/aboZaby/allPatientsWithAbozaby/ReportChartWithAbozaby/page/report_chart_with_abozaby.dart';
+import 'package:experts_app/features/aboZaby/allPatientsWithAbozaby/widget/ptientSessionWithAboZaby.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/cupertino.dart';
@@ -663,7 +664,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                       icon: const Icon(Icons.list, color: Colors.black),
                                       onPressed: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                          return PatientSessionViewWithAdmin(
+                                          return PatientSessionViewWithAbouzabi(
                                             pationt_data: widget.pationt_data,
                                           );
                                         }));

@@ -245,6 +245,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                   updateSessionCubit.updateSession(data).then((
                                       response) {
                                     if (response.data["status"] == true) {
+
                                       setState(() {
                                         advisorComment.clear();
                                         needOtherSession = 0;
@@ -269,6 +270,9 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
+                                                    _patientSessionCubit
+                                                        .setRefreshSession(
+                                                        widget.sessionId);
                                                     setState(() {});
                                                   },
                                                   child: Container(

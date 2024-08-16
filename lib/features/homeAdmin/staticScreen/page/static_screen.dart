@@ -117,12 +117,12 @@ class _StaticScreenState extends State<StaticScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات التى بحاجه الى جلسة اخرى",
+                                title: "عدد الحالات بحاجه الى جلسات اخرى",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات الغير بحاجه الى جلسة اخرى",
+                                  title: "عدد الحالات ليس بحاجه الى جلسات اخرى",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),
@@ -176,12 +176,12 @@ class _StaticScreenState extends State<StaticScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات التى بحاجه الى جلسة اخرى",
+                                title: "عدد الحالات  بحاجه الى جلسات اخرى",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات الغير بحاجه الى جلسة اخرى",
+                                  title: "عدد الحالات ليس بحاجه الى جلسات اخرى",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),
@@ -189,33 +189,7 @@ class _StaticScreenState extends State<StaticScreen> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          // BlocBuilder<HomeAdminCubit,HomeAdminStates>(
-                          //   bloc: homeAdminCubit,
-                          //   builder: (context, state) {
-                          //     if (state is LoadingHomeAdmin) {}
-                          //     if (state is ErrorHomeAdmin) {
-                          //       return Text(state.errorMessage);
-                          //     }
-                          //     if(state is SuccessHomeAdminSenario){
-                          //       var senarioReport = state.senario?.senariosReport??[];
-                          //       print('------------->'+);
-                          //             print("------------>"+senarioReport.toString());
-                          //
-                          //       // var senario1 = calculatePercentage(senarioReport[0].pationtsPointersCount ?? 0, senarioReport?[0].pointersCount ?? 0).toString();
-                          //       // var senario2 = calculatePercentage(senarioReport[1].pationtsPointersCount ?? 0, senarioReport?[1].pointersCount ?? 0).toString();
-                          //       // var senario3 = calculatePercentage(senarioReport[2].pationtsPointersCount ?? 0, senarioReport?[2].pointersCount ?? 0).toString();
-                          //       //
-                          //       //
-                          //       //
-                          //       //   return _buildScenarioReport(senario1, senario2, senario3, senarioReport.cast<SenariosReport>());
-                          //     }
-                          //     else {
-                          //       Text("wrong");
-                          //     }
-                          //     return SizedBox.shrink();
-                          //   },
-                          //
-                          // ),
+
                           SenarioWadget(),
                           Row(
                             children: [
@@ -345,7 +319,7 @@ class _StaticScreenState extends State<StaticScreen> {
   Widget _buildInfoCardPatient({required String title, required String count, required IconData icon}) {
     return Container(
       width: isMobile ? Constants.mediaQuery.width * 0.3 : Constants.mediaQuery.width * 0.2,
-      height:isMobile? Constants.mediaQuery.height * 0.20:Constants.mediaQuery.height * 0.25,
+      height:isMobile? Constants.mediaQuery.height * 0.20:Constants.mediaQuery.height * 0.27,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey,

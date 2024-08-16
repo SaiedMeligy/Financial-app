@@ -383,8 +383,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                           var advisorComments = session["advicor_comments"] ??
                               "";
                           var sessionDate = session["date"] ?? "";
-                          TextEditingController commentController = TextEditingController(
-                              text: advisorComments);
+                          TextEditingController commentController = TextEditingController(text: advisorComments);
 
                           return ListView(
                             children: [
@@ -592,6 +591,72 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                       ],
                                     ),
                                     SizedBox(height: 20),
+                                    BorderRoundedButton(
+                                      title: "تعديل",
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor: Constants.theme.primaryColor.withOpacity(0.9),
+                                              content: Form(
+                                                key: formKey,
+                                                child: SizedBox(
+                                                  height: Constants.mediaQuery.height * 0.6,
+                                                  width: Constants.mediaQuery.width * 0.45,
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      CustomTextField(
+                                                        controller: commentController ,
+                                                        onValidate: (value) {
+                                                          if (value == null || value.trim().isEmpty) {
+                                                            return "Please enter the service name";
+                                                          }
+                                                          return null;
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    if (formKey.currentState!.validate()) {
+                                                      var data = SessionsUpdateModel(
+                                                        sessionId: widget.sessionId,
+                                                        comments: commentController.text,);
+                                                      updateSessionCubit.updateSessionWithAdmin(data).then((_) {
+                                                        Navigator.pop(context);
+                                                        _patientSessionCubit.setRefreshSessionAdmin(widget.pationt_data.id);
+
+                                                        // _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+                                                      });
+
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(
+                                                        color: Colors.grey,
+                                                        width: 2.5,
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      "موافق",
+                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+
                                   ],
                                 ),
                               ),

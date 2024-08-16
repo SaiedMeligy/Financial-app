@@ -270,12 +270,12 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                         CustomTextField(
                           controller: _secondPhoneNumber,
                           hint: "رقم بديل للهاتف",
-                            onValidate: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "من فضلك ادخل رقم الهاتف البديل";
-                              }
-                              return null;
-                            }
+                            // onValidate: (value) {
+                            //   if (value == null || value.trim().isEmpty) {
+                            //     return "من فضلك ادخل رقم الهاتف البديل";
+                            //   }
+                            //   return null;
+                            // }
                         ),
                         SizedBox(height: 10),
                         Row(
