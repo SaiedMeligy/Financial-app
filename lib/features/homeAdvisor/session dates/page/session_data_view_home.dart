@@ -311,7 +311,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                 context, enableMediaQuery: false, 10),
                           ),
                         ],
-                      ),
+                      ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                     )
                         :
                     BlocBuilder<AddSessionCubit, AddSessionStates>(
@@ -597,7 +597,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                       },
                                     ),
                                   ],
-                                ),
+                                ).setHorizontalPadding(context,enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 10),
                               ),
                             ],
                           );

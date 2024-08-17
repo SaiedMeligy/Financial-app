@@ -121,7 +121,6 @@ class _LogViewState extends State<LogView> {
                                       return null;
                                     },
 
-
                                   ),
                                 ),
                                 SizedBox(height: 15),
@@ -134,6 +133,7 @@ class _LogViewState extends State<LogView> {
                                       fontSize: 20
 
                                     ),),
+
                                 ),
                                 SizedBox(height: 10,),
                                 FadeInRight(

@@ -347,7 +347,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                 context, enableMediaQuery: false, 10),
                           ),
                         ],
-                      ),
+                      ).setVerticalPadding(context,enableMediaQuery: false, 20),
                     );
                   } else {
                     return BlocBuilder<AddSessionCubit, AddSessionStates>(
@@ -658,7 +658,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                     ),
 
                                   ],
-                                ),
+                                ).setHorizontalPadding(context,enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 10),
                               ),
                             ],
                           );
