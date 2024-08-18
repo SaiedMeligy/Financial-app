@@ -441,7 +441,7 @@ class _StoreFormState extends State<StoreForm> {
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                 ),
-                                              ),
+                                              ).setHorizontalPadding(context,enableMediaQuery: false, 10),
                                               const SizedBox(height: 5),
                                               Container(
                                                 height: 3,
@@ -464,7 +464,7 @@ class _StoreFormState extends State<StoreForm> {
                                           height: 10,
                                         ),
                                       ],
-                                    );
+                                    ).setHorizontalPadding(context,enableMediaQuery: false, 10);
                                   } else {
                                     return Column(
                                       children: [

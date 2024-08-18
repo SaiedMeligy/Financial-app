@@ -154,7 +154,7 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                               color: Colors.black
                             )),
                             SizedBox(width: 15),
-                            Text('${advisor_name}')
+                            Text('${advisor_name}',style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),)
                           ],
                         ),
                         Text("ادخل رقم الهوية الأماراتية", style: Constants.theme.textTheme.bodyLarge?.copyWith(

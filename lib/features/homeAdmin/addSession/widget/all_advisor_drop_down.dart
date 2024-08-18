@@ -69,7 +69,9 @@ class _DropdownButtonAdvisorState extends State<DropdownButtonAdvisor> {
                   child: Text(
                     advisor.name.toString(),
                     textAlign: TextAlign.center,
-                    style: Constants.theme.textTheme.bodyLarge
+                    style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                      color: Colors.black
+                    )
                   ),
                 );
               }).toList(),
