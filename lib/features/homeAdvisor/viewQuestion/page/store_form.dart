@@ -298,7 +298,7 @@ class _StoreFormState extends State<StoreForm> {
                     image: DecorationImage(
                       image: AssetImage('assets/images/back.jpg'),
                       fit: BoxFit.cover,
-                      opacity: .8,
+                      opacity: .2,
                     ),
                   ),
                   child: Row(

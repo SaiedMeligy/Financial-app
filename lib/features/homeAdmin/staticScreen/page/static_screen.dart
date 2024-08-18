@@ -271,7 +271,7 @@ class _StaticScreenState extends State<StaticScreen> {
   Widget _buildInfoCard({required String title, required String count, required IconData icon}) {
     return Container(
       width: isMobile ? Constants.mediaQuery.width * 0.3 : Constants.mediaQuery.width * 0.16,
-      height:isMobile? Constants.mediaQuery.height * 0.17:Constants.mediaQuery.height * 0.16,
+      height:isMobile? Constants.mediaQuery.height * 0.20:Constants.mediaQuery.height * 0.16,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey,
@@ -424,7 +424,7 @@ class _StaticScreenState extends State<StaticScreen> {
   Widget _buildTopAdvisors(List<TopAdvicors> topAdvisors) {
     return Container(
       width: MediaQuery.of(context).size.width*0.35,
-      height: isMobile?Constants.mediaQuery.height * 0.63:Constants.mediaQuery.height * 0.57,
+      height: isMobile?Constants.mediaQuery.height * 0.67:Constants.mediaQuery.height * 0.57,
       decoration: BoxDecoration(
         color: Constants.theme.primaryColor.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
