@@ -117,12 +117,12 @@ class _StaticScreenState extends State<StaticScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات بحاجه الى جلسات اخرى",
+                                title: "عدد الحالات التى بحاجه الى جلسات اخرى",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات ليس بحاجه الى جلسات اخرى",
+                                  title: "عدد الحالات التى ليس بحاجه الى جلسات اخرى",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),
@@ -176,12 +176,12 @@ class _StaticScreenState extends State<StaticScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات  بحاجه الى جلسات اخرى",
+                                title: "عدد الحالات التى بحاجه الى جلسات اخرى",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات ليس بحاجه الى جلسات اخرى",
+                                  title: "عدد الحالات التى ليس بحاجه الى جلسات اخرى",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),
