@@ -216,7 +216,10 @@ import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -281,17 +284,9 @@ class _InitialPageState extends State<InitialPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "We think extraordinary \n people deserve \n extraordinary care",
-                          style: Constants.theme.textTheme.titleLarge?.copyWith(
-                            fontSize: isMobile ? 25 : 35,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        Text(
                           "Empowering our community to live with hope \n throughout the journey with better life",
                           style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                            fontSize: isMobile ? 14 : 16,
+                            fontSize: isMobile ? 14 : 18,
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -334,32 +329,52 @@ class _InitialPageState extends State<InitialPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Image.asset("assets/images/youtube.png", fit: BoxFit.cover, height: 24, width: 24),
+                            //Image.asset("assets/images/youtube.png", fit: BoxFit.cover, height: 24, width: 24),
+                            IconButton(onPressed: (){
+                              final Uri _url = Uri.parse('https://ssa.gov.ae/');
+                              _launchURL(_url);
+                            }, icon: Icon(Icons.home,size: 30,color:Colors.black)),
+                            GestureDetector(
+                              onTap: (){
+                                final Uri _url = Uri.parse('https://www.instagram.com/abudhabissa?igsh=MTV5bjhpdnJ2YXdjNw==');
+                                _launchURL(_url);
+                              },
+                                child: Image.asset("assets/images/instagram.jpg", fit: BoxFit.cover, height: 30, width: 30)),
                             const SizedBox(width: 10),
-                            Image.asset("assets/images/instagram.jpg", fit: BoxFit.cover, height: 20, width: 20),
+                            GestureDetector(
+                              onTap: () {
+                                final Uri _url = Uri.parse('https://www.youtube.com/channel/UCrxFgacyJ9CYpgiujg1HQUg');
+                                _launchURL(_url);
+                              },
+                                child: Image.asset("assets/images/youtube.png", fit: BoxFit.cover, height: 25, width: 20)),
                             const SizedBox(width: 10),
-                            Image.asset("assets/images/twitter.png", fit: BoxFit.cover, height: 20, width: 20),
-                            const SizedBox(width: 10),
-                            Image.asset("assets/images/linkedin.png", fit: BoxFit.cover, height: 20, width: 20),
-                            const SizedBox(width: 10),
-                            Image.asset("assets/images/fasebook.png", fit: BoxFit.cover, height: 20, width: 20),
+                            //Image.asset("assets/images/linkedin.png", fit: BoxFit.cover, height: 20, width: 20),
                             const SizedBox(width: 10),
                             Container(
                               height: 25,
                               width: 1,
                               color: Colors.grey,
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.search),
+                            TextButton(
+                              onPressed: () {
+                                final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
+                                _launchURL(_url);
+                              },
+                              child: Text(
+                                "خدماتنا",
+                                style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                              ),
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                _launchWhatsApp();
+                              },
                               child: Text(
                                 "اتصل بنا",
                                 style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
                               ),
                             ),
+
                           ],
                         ),
                       ],
@@ -375,4 +390,28 @@ class _InitialPageState extends State<InitialPage> {
       },
     );
   }
+  void _launchURL(Uri url) async {
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+    }
+  }
+  void _launchWhatsApp() async {
+    final String phoneNumber = '0509414031';
+    final Uri whatsappUri = Uri.parse('https://wa.me/$phoneNumber');
+
+    if (await canLaunchUrl(whatsappUri)) {
+      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $whatsappUri';
+    }
+  }
+
+
+
 }

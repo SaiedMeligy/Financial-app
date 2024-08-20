@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_circular_slider/multi_circular_slider.dart';
 
 import '../../../../core/config/constants.dart';
-import '../../../../domain/entities/HomeAdmin.dart';
 import '../../../../domain/entities/HomeAdminModel.dart';
 import '../../../../domain/entities/SenarioModels.dart';
 import '../Widegets/CircleCharts.dart';
