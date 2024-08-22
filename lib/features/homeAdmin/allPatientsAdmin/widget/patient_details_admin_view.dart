@@ -150,7 +150,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     Container(
                                       margin: EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                        color: Colors.grey,
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: IconButton(
@@ -165,7 +165,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     Container(
                                       margin: EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                        color: Colors.grey,
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: IconButton(
@@ -182,7 +182,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                 Container(
                                   margin: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey,
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: IconButton(
@@ -684,7 +684,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                   child: Container(
                                     margin: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                        color:  Colors.grey,
+                                        color:  Colors.white,
                                         borderRadius: BorderRadius.circular(20)
                                     ),
                                     child: IconButton(
@@ -699,7 +699,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                   child: Container(
                                     margin: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      color: Colors.grey,
+                                      color: Colors.white,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: IconButton(
@@ -718,7 +718,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                   child: Container(
                                     margin: EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      color: Colors.grey,
+                                      color: Colors.white,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: IconButton(
@@ -745,7 +745,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                           height: Constants.mediaQuery.height * 0.8,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Constants.theme.primaryColor.withOpacity(0.6),
+                            color: Constants.theme.primaryColor.withOpacity(0.5),
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: ListView.builder(
@@ -770,7 +770,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       // height: answer["question_options"].where((option) => option["answer"] == "1").length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
                                       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(20),
                                           topRight: Radius.circular(20),
@@ -828,7 +828,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       height: 3,
                                       indent: 20,
                                       endIndent: 20,
-                                      color: Colors.grey.shade600,
+                                      color: Colors.black45,
                                     ),
                                     SizedBox(height: 10),
                                   ],
@@ -843,7 +843,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       height: 3,
                                       indent: 20,
                                       endIndent: 20,
-                                      color: Colors.grey.shade600,
+                                      color: Colors.black54,
                                     ),
                                     SizedBox(height: 10),
 
@@ -853,7 +853,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       height: Constants.mediaQuery.height * 0.15,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(20),
                                           topRight: Radius.circular(20),
@@ -873,7 +873,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       height: Constants.mediaQuery.height * 0.2,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
+                                        color: Colors.white,
                                         borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(20),
                                           topRight: Radius.circular(20),

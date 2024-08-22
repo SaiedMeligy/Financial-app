@@ -96,7 +96,7 @@ class _StaticScreenState extends State<StaticScreen> {
                           Row(
                             children: [
                               _buildInfoCard(
-                                title: "عدد الحالات",
+                                title: "عدد الأسر",
                                 count: homeAdmin?.pationtsCount.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
@@ -116,12 +116,12 @@ class _StaticScreenState extends State<StaticScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات التى بحاجه الى جلسات اخرى",
+                                title: "عدد الأسر التى تتطلب جلسة إضافية",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات التى ليس بحاجه الى جلسات اخرى",
+                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),
@@ -155,7 +155,7 @@ class _StaticScreenState extends State<StaticScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCard(
-                                title: "عدد الحالات",
+                                title: "عدد الأسر",
                                 count: homeAdmin?.pationtsCount.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
@@ -175,12 +175,12 @@ class _StaticScreenState extends State<StaticScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات التى بحاجه الى جلسات اخرى",
+                                title: "عدد الأسر التى تتطلب جلسة إضافية",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات التى ليس بحاجه الى جلسات اخرى",
+                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),
@@ -199,6 +199,7 @@ class _StaticScreenState extends State<StaticScreen> {
                                 decoration: BoxDecoration(
                                   color: Constants.theme.primaryColor.withOpacity(0.5),
                                   borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.black26),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -206,7 +207,7 @@ class _StaticScreenState extends State<StaticScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "اكثر استشاريين لديهم حالات",
+                                        "اكثر استشاريين لديهم أسر",
                                         style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                           color:  Colors.black
                                         ),

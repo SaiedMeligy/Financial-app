@@ -155,7 +155,7 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
                                   });
                                 },
                                 child: Container(
-                                  color: currentIndex == index ? Colors.grey.shade400 : Constants.theme.primaryColor.withOpacity(0.5),
+                                  color: currentIndex == index ? Colors.black54 : Constants.theme.primaryColor.withOpacity(0.5),
                                   child: ListTile(
                                     title: Row(
                                       children: [
@@ -165,8 +165,8 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
                                           child: Text(
                                             titles[index].title,
                                             style: currentIndex == index
-                                                ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Constants.theme.primaryColor, fontSize: 24)
-                                                : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20),
+                                                ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 24)
+                                                : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20,color: Colors.black),
                                             textAlign: TextAlign.start,
                                           ),
                                         ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../features/homeAdmin/home_admin_view.dart';
 import '../../features/homeAdvisor/viewQuestion/page/store_form.dart';
-import '../../features/initialPage/initial_page.dart';
+import '../../features/initialPage/page/initial_page.dart';
 import '../../features/login/page/log_view.dart';
 
 

@@ -88,7 +88,7 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                           Row(
                             children: [
                               _buildInfoCard(
-                                title: "عدد الحالات",
+                                title: "عدد الأسر",
                                 count: homeAdmin?.pationtsCount.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
@@ -108,12 +108,12 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات التى بحاجه الى جلسات اخرى",
+                                title: "عدد الأسر التى تتطلب جلسة إضافية",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات التى ليس بحاجه الى جلسات اخرى",
+                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),
@@ -146,7 +146,7 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCard(
-                                title: "عدد الحالات",
+                                title: "عدد الأسر",
                                 count: homeAdmin?.pationtsCount.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
@@ -166,12 +166,12 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _buildInfoCardPatient(
-                                title: "عدد الحالات التى بحاجه الى جلسات اخرى",
+                                title: "عدد الأسر التى تتطلب جلسة إضافية",
                                 count: homeAdmin?.needOtherSession.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
                               _buildInfoCardPatient(
-                                  title: "عدد الحالات التى ليس بحاجه الى جلسات اخرى",
+                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
                                   count: homeAdmin?.noNeedOtherSession.toString() ?? "",
                                   icon:  Icons.back_hand_rounded
                               ),

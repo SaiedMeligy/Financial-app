@@ -213,6 +213,7 @@
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/config/page_route_name.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/features/initialPage/Services/page/services_view.dart';
 import 'package:experts_app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -246,7 +247,7 @@ class _InitialPageState extends State<InitialPage> {
         child: Center(
           child: ElevatedButton(
             onPressed: () {
-              navigatorKey.currentState!.pushReplacementNamed(PageRouteName.login);
+              navigatorKey.currentState!.pushNamed(PageRouteName.login);
             },
             child: Text(
               "Get Started",
@@ -357,8 +358,9 @@ class _InitialPageState extends State<InitialPage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
-                                _launchURL(_url);
+                                // final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
+                                // _launchURL(_url);
+                                Navigator.push(context, MaterialPageRoute(builder:(context) =>ServicesView()));
                               },
                               child: Text(
                                 "خدماتنا",

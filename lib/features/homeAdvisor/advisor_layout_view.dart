@@ -73,7 +73,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
           title: Column(
             children: [
               Text(
-                "العيادة المالية",
+                "العيادات المالية",
                 style: Constants.theme.textTheme.titleLarge,
               ),
               SizedBox(height: 15,),
@@ -140,8 +140,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
                                 });
                               },
                               child: Container(
-                                color:
-                                    currentIndex == index ? Colors.grey :  Constants.theme.primaryColor.withOpacity(0.3),
+                                color: currentIndex == index ? Colors.black54 : Constants.theme.primaryColor.withOpacity(0.5),
+
                                 child: ListTile(
                                   title:
                                   Row(
@@ -154,8 +154,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
                                       Text(
                                         titles[index].title,
                                         style: currentIndex == index
-                                            ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Constants.theme.primaryColor, fontSize: 24)
-                                            : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20),
+                                            ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 24)
+                                            : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20,color: Colors.black),
                                         textAlign: TextAlign.start,
                                       ),
                                     ],
