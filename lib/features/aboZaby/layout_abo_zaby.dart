@@ -81,7 +81,20 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
               ],
             ),
             actions: [
-              LogoutView(),
+              Container(
+                height: Constants.mediaQuery.height*0.6,
+                width: Constants.mediaQuery.width*0.27,
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/لوجو الهيئة.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
+              LogoutView()
             ],
             centerTitle: true,
           ),

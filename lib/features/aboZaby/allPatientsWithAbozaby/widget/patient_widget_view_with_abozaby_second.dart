@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 typedef ItemTextBuilder<T> = String Function(T item);
 typedef ItemWidgetBuilder<T> = Widget Function(T item);
 
-class PatientWidgetViewWithAbozaby<T> extends StatefulWidget {
+class PatientWidgetViewWithAbozabySecond<T> extends StatefulWidget {
   final String label1;
   final List<T> items;
   final ItemTextBuilder<T> itemNameBuilder;
 
 
-  const PatientWidgetViewWithAbozaby({
+  const PatientWidgetViewWithAbozabySecond({
     Key? key,
     required this.label1,
     required this.items,
@@ -20,10 +20,10 @@ class PatientWidgetViewWithAbozaby<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<PatientWidgetViewWithAbozaby<T>> createState() => _PatientWidgetViewWithAbozabyState<T>();
+  State<PatientWidgetViewWithAbozabySecond<T>> createState() => _PatientWidgetViewWithAbozabySecondState<T>();
 }
 
-class _PatientWidgetViewWithAbozabyState<T> extends State<PatientWidgetViewWithAbozaby<T>> {
+class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetViewWithAbozabySecond<T>> {
   bool isMobile = false;
   @override
   Widget build(BuildContext context) {
@@ -40,14 +40,14 @@ class _PatientWidgetViewWithAbozabyState<T> extends State<PatientWidgetViewWithA
                 },
                 children: [
                   TableRow(
-                    decoration:  BoxDecoration(color: Constants.theme.primaryColor),
+                    decoration:  BoxDecoration(color: Colors.black),
                     children: [
                       _buildTableHeaderCell(widget.label1, context),
                     ],
                   ),
                   for (int index = 0; index < widget.items.length; index++)
                     TableRow(
-                      decoration:  BoxDecoration(color: Constants.theme.primaryColor.withOpacity(0.3)),
+                      decoration:  BoxDecoration(color: Colors.black45),
                       children: [
                         _buildNameCell(widget.items[index], context),
                       ],
@@ -71,7 +71,7 @@ class _PatientWidgetViewWithAbozabyState<T> extends State<PatientWidgetViewWithA
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontSize: isMobile?16:20,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),

@@ -1,7 +1,12 @@
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/features/aboZaby/home/page/patient_need_other_session_view.dart';
+import 'package:experts_app/features/aboZaby/home/page/patient_no_need_other_session_view.dart';
+import 'package:experts_app/features/aboZaby/home/page/patient_success_story_view.dart';
 import 'package:experts_app/features/homeAdmin/staticScreen/Widegets/SenarioWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_circular_slider/multi_circular_slider.dart';
 
@@ -92,10 +97,15 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                                 count: homeAdmin?.pationtsCount.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
-                              _buildInfoCard(
-                                title: "عدد قصص النجاح",
-                                count: homeAdmin?.successStoryCount.toString() ?? "",
-                                icon: Icons.emoji_events,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
+                                },
+                                child: _buildInfoCard(
+                                  title: "عدد قصص النجاح",
+                                  count: homeAdmin?.successStoryCount.toString() ?? "",
+                                  icon: Icons.emoji_events,
+                                ),
                               ),
                               _buildInfoCard(
                                 title: "عدد الجلسات",
@@ -107,15 +117,28 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              _buildInfoCardPatient(
-                                title: "عدد الأسر التى تتطلب جلسة إضافية",
-                                count: homeAdmin?.needOtherSession.toString() ?? "",
-                                icon: Icons.back_hand_rounded,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView()));
+
+                  },
+                                child: _buildInfoCardPatient(
+                                  title: "عدد الأسر التى تتطلب جلسة إضافية",
+                                  count: homeAdmin?.needOtherSession.toString() ?? "",
+                                  icon: Icons.back_hand_rounded,
+                                ),
                               ),
-                              _buildInfoCardPatient(
-                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
-                                  count: homeAdmin?.noNeedOtherSession.toString() ?? "",
-                                  icon:  Icons.back_hand_rounded
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView()));
+
+
+                                },
+                                child: _buildInfoCardPatient(
+                                    title: "عدد الأسر التى لا تتطلب جلسة إضافية",
+                                    count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                    icon:  Icons.back_hand_rounded
+                                ),
                               ),
 
                             ],
@@ -150,10 +173,15 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                                 count: homeAdmin?.pationtsCount.toString() ?? "",
                                 icon: Icons.back_hand_rounded,
                               ),
-                              _buildInfoCard(
-                                  title: "عدد قصص النجاح",
-                                  count: homeAdmin?.successStoryCount.toString() ?? "",
-                                  icon: Icons.emoji_events
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
+                                },
+                                child: _buildInfoCard(
+                                    title: "عدد قصص النجاح",
+                                    count: homeAdmin?.successStoryCount.toString() ?? "",
+                                    icon: Icons.emoji_events
+                                ),
                               ),
                               _buildInfoCard(
                                   title: "عدد الجلسات",
@@ -165,15 +193,25 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              _buildInfoCardPatient(
-                                title: "عدد الأسر التى تتطلب جلسة إضافية",
-                                count: homeAdmin?.needOtherSession.toString() ?? "",
-                                icon: Icons.back_hand_rounded,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView()));
+                                  },
+                                child: _buildInfoCardPatient(
+                                  title: "عدد الأسر التى تتطلب جلسة إضافية",
+                                  count: homeAdmin?.needOtherSession.toString() ?? "",
+                                  icon: Icons.back_hand_rounded,
+                                ),
                               ),
-                              _buildInfoCardPatient(
-                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
-                                  count: homeAdmin?.noNeedOtherSession.toString() ?? "",
-                                  icon:  Icons.back_hand_rounded
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView(),));
+                                },
+                                child: _buildInfoCardPatient(
+                                    title: "عدد الأسر التى لا تتطلب جلسة إضافية",
+                                    count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                    icon:  Icons.back_hand_rounded
+                                ),
                               ),
 
                             ],

@@ -41,7 +41,7 @@ class LoginWithPatient extends StatelessWidget {
           title: Column(
             children: [
               Text(
-                "العيادات المالية",
+                "العيادة المالية",
                 style: Constants.theme.textTheme.titleLarge,
               ),
               SizedBox(height: 15,),
