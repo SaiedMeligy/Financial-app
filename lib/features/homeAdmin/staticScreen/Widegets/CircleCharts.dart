@@ -20,7 +20,7 @@ class CircleCharts extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       width: Constants.mediaQuery.width * 0.55,
       decoration: BoxDecoration(
-        color: Constants.theme.primaryColor.withOpacity(0.6),
+        color: Constants.theme.primaryColor.withOpacity(0.4),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black26),
       ),

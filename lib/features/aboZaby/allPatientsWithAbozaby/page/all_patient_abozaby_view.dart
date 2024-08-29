@@ -10,6 +10,7 @@ import '../../../../domain/entities/AllPatientModel.dart';
 import '../../../homeAdmin/allPatientsAdmin/manager/cubit.dart';
 import '../../../homeAdmin/allPatientsAdmin/manager/states.dart';
 import '../widget/patient_widget_view_with_abozaby.dart';
+import '../widget/patient_widget_view_with_abozaby_second.dart';
 
 class AllPatientAbozabyView extends StatefulWidget {
   const AllPatientAbozabyView({super.key});
@@ -74,7 +75,7 @@ class _AllPatientAbozabyViewState extends State<AllPatientAbozabyView> {
                     icon: Icons.search,
                   ),
                   const SizedBox(height: 10),
-                  PatientWidgetViewWithAbozaby<Pationts>(
+                  PatientWidgetViewWithAbozabySecond<Pationts>(
                     label1: "اسم الحالة",
                     items: filteredPatients,
                     itemNameBuilder: (item) => item.name ?? 'No Name',

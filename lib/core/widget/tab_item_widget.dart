@@ -51,8 +51,10 @@ class _TabItemWidgetState extends State<TabItemWidget> {
               elevation: 0.0,
               titleSpacing: 0.0,
               leadingWidth: 0,
-              backgroundColor: Colors.black87,
+              //backgroundColor: Colors.black87,
+              backgroundColor: Constants.theme.primaryColor,
               bottom: TabBar(
+                indicatorColor: Colors.black87,
                 labelStyle: Constants.theme.textTheme.bodyLarge?.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

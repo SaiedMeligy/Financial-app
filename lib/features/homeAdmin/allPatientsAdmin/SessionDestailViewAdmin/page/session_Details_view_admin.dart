@@ -9,9 +9,15 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/drop_down_with_admin.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/manager/cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdf/pdf.dart';
 import '../../../../../core/widget/border_rounded_button.dart';
 import '../../../../homeAdvisor/sessions/manager/states.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'dart:html' as html;
+
 
 class SessionDetailsViewAdmin extends StatefulWidget {
   final dynamic pationt_data;
@@ -22,6 +28,7 @@ class SessionDetailsViewAdmin extends StatefulWidget {
   final String? sessionComment;
   final String? sessionDate;
   final ConsultationService? consultationService;
+
 
   SessionDetailsViewAdmin({
     super.key,
@@ -73,7 +80,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
         title: Text("استمارة برنامج الارشاد المالي"),
         centerTitle: true,
         titleTextStyle: Constants.theme.textTheme.titleLarge,
-        backgroundColor: Color(0xff000000),
+        backgroundColor: Constants.theme.primaryColor,
         elevation: 0.0,
         automaticallyImplyLeading: true,
       ),
@@ -349,7 +356,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                         ],
                       ).setVerticalPadding(context,enableMediaQuery: false, 20),
                     );
-                  } else {
+                  }
+                  else {
                     return BlocBuilder<AddSessionCubit, AddSessionStates>(
                       bloc: _patientSessionCubit,
                       builder: (context, state) {
@@ -385,282 +393,450 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                           var sessionDate = session["date"] ?? "";
                           TextEditingController commentController = TextEditingController(text: advisorComments);
 
-                          return ListView(
-                            children: [
-                              Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .stretch,
-                                  children: [
-                                    Text(
-                                      "اسم الحالة : $patientName",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
+                          return Scaffold(
+
+                            body: ListView(
+                              children: [
+                                Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage("assets/images/back.jpg"),
+                                        fit: BoxFit.cover,
+                                        opacity: 0.2,
+                                      )
                                     ),
-                                    Text(
-                                      "اسم الاستشاري : $advisorName",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      "رقم الهوية : $nationalId",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      "مدير الحالة : $caseManager",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      isAttended
-                                          ? "الحالة حضرت الجلسة"
-                                          : "الحالة لم تحضر الجلسة",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      needOtherSession
-                                          ? "الحالة بحاجه الي جلسة اخرى"
-                                          : "الحالة غير بحاجه الي جلسة اخرى",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      isSuccessStory
-                                          ? "الحالة قصة نجاح"
-                                          : "الحالة ليست قصة نجاح",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      "الخدمة الاستشارية : $serviceName",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      "وصف الخدمة الاستشارية : $serviceDescription",
-                                      style: isMobile ? Constants.theme
-                                          .textTheme.bodyMedium?.copyWith(
-                                        color: Colors.black,) : Constants.theme
-                                          .textTheme.bodyLarge?.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Table(
-                                      columnWidths: {
-                                        0: FlexColumnWidth(4),
-                                        1: FlexColumnWidth(1),
-                                      },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
-                                        TableRow(
+                                        Container(
+                                          height: 50,
+                                          width: 50,
+                                          margin: EdgeInsets.all(10),
                                           decoration: BoxDecoration(
+                                            color: Colors.white54,
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Center(
+                                            child: IconButton(
+                                              icon: Icon(Icons.print, color: Colors.black,size: 40,),
+                                              onPressed: () async {
+                                                print('sssssssssssssssssssssssss');
+                                                final pdf = pw.Document();
+                                                final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
+                                                final ttfSans = pw.Font.ttf(notoSans);
+                                                // final image = pw.MemoryImage(
+                                                //   (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
+                                                // );
+                                                await Future.delayed(Duration(seconds: 1));
+                                                pdf.addPage(
+                                                  pw.Page(
+                                                    build: (pw.Context context) {
+                                                      return
+                                                        pw.Column(
+                                                            crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                                            children: [
+                                                              pw.Text(
+                                                                "اسم الحالة :${patientName}" ,
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                "اسم الاستشارى :${advisorName}",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                "رقم الهوية :${nationalId}",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                "مدير الحالة : ${caseManager}",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                isAttended
+                                                                    ? "الحالة حضرت الجلسة"
+                                                                    : "الحالة لم تحضر الجلسة",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                needOtherSession
+                                                                    ? "الحالة بحاجه الي جلسة اخرى"
+                                                                    : "الحالة غير بحاجه الي جلسة اخرى",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                isSuccessStory
+                                                                    ? "الحالة قصة نجاح"
+                                                                    : "الحالة ليست قصة نجاح",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text("الخدمة الاستشارية : ${serviceName}",
+
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                "وصف الخدمة الاستشارية : ${serviceDescription}",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Table(
+                                                                border: pw.TableBorder.all(
+                                                                  color: PdfColors.black,
+                                                                  width: 1,
+                                                                ),
+                                                                children: [
+                                                                  pw.TableRow(
+                                                                    children: [
+                                                                      pw.Padding(
+                                                                        padding: const pw.EdgeInsets.all(8.0),
+                                                                        child: pw.Center(child:pw.Text(
+                                                                          "الملاحظة",
+                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                        ),
+                                                                      ),
+                                                                      pw.Padding(
+                                                                          padding: const pw.EdgeInsets.all(8.0),
+                                                                          child: pw.Container(
+                                                                            width:400,
+                                                                            child:pw.Center(child:pw.Text(
+                                                                              "تاريخ الجلسة",
+                                                                              style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                                              textDirection: pw.TextDirection.rtl,
+                                                                            ),
+                                                                            ),
+                                                                          )
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                  // Add more rows as needed
+                                                                  pw.TableRow(
+                                                                    children: [
+                                                                      pw.Padding(
+                                                                        padding: const pw.EdgeInsets.all(8.0),
+                                                                        child:pw.Text(
+                                                                          advisorComments,
+                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.Expanded( // Expands this column to take up more space
+                                                                        child: pw.Center(child:pw.Text(
+                                                                          sessionDate,
+                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              )
+
+
+                                                            ]
+                                                        );
+                                                    },
+                                                  ),
+                                                );
+
+                                                try {
+                                                  final pdfBytes = await pdf.save();
+                                                  final blob = html.Blob([pdfBytes], 'application/pdf');
+                                                  final url = html.Url.createObjectUrlFromBlob(blob);
+                                                  html.window.open(url, '_blank');
+                                                  html.Url.revokeObjectUrl(url);
+
+                                                  // Use the printing package to handle printing
+                                                  await Printing.layoutPdf(
+                                                    onLayout: (PdfPageFormat format) async => pdf.save(),
+                                                  );
+
+                                                } catch (e) {
+                                                  print('Error: $e');
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          "اسم الحالة : $patientName",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
                                               color: Colors.black),
-                                          children: [
-                                            TableCell(
-                                              child: SizedBox(
-                                                height: 50,
-                                                child: Center(
-                                                  child: Text(
-                                                    "الملاحظة",
-                                                    textAlign: TextAlign.center,
-                                                    style: isMobile
-                                                        ? Constants.theme
-                                                        .textTheme.bodyMedium
-                                                        ?.copyWith(
-                                                      color: Colors.black,)
-                                                        : Theme
-                                                        .of(context)
-                                                        .textTheme
-                                                        .titleLarge
-                                                        ?.copyWith(fontSize: 20,
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            TableCell(
-                                              child: SizedBox(
-                                                height: 50,
-                                                child: Center(
-                                                  child: Text(
-                                                    "تاريخ الجلسة",
-                                                    textAlign: TextAlign.center,
-                                                    style: isMobile
-                                                        ? Constants.theme
-                                                        .textTheme.bodyMedium
-                                                        ?.copyWith(
-                                                      color: Colors.black,)
-                                                        : Theme
-                                                        .of(context)
-                                                        .textTheme
-                                                        .titleLarge
-                                                        ?.copyWith(fontSize: 20,
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
                                         ),
-                                        TableRow(
-                                          decoration: BoxDecoration(
-                                              color: Colors.black54),
-                                          children: [
-                                            TableCell(
-                                              child: Padding(
-                                                padding: const EdgeInsets
-                                                    .symmetric(
-                                                    horizontal: 10.0),
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: SingleChildScrollView(
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment
-                                                          .center,
-                                                      children: [
-                                                        Text(
-                                                          advisorComments,
-                                                          style: isMobile
-                                                              ? Constants.theme
-                                                              .textTheme
-                                                              .bodyMedium
-                                                              ?.copyWith(
-                                                            color: Colors
-                                                                .black,)
-                                                              : Theme
-                                                              .of(context)
-                                                              .textTheme
-                                                              .bodyLarge
-                                                              ?.copyWith(
-                                                              color: Colors
-                                                                  .white),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            TableCell(
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  sessionDate,
-                                                  style: isMobile
-                                                      ? Constants.theme
-                                                      .textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    color: Colors.black,)
-                                                      : Theme
-                                                      .of(context)
-                                                      .textTheme
-                                                      .bodyLarge
-                                                      ?.copyWith(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        Text(
+                                          "اسم الاستشاري : $advisorName",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20),
-                                    BorderRoundedButton(
-                                      title: "تعديل",
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              backgroundColor: Constants.theme.primaryColor.withOpacity(0.9),
-                                              content: Form(
-                                                key: formKey,
-                                                child: SizedBox(
-                                                  height: Constants.mediaQuery.height * 0.6,
-                                                  width: Constants.mediaQuery.width * 0.45,
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      CustomTextField(
-                                                        controller: commentController ,
-                                                        onValidate: (value) {
-                                                          if (value == null || value.trim().isEmpty) {
-                                                            return "Please enter the service name";
-                                                          }
-                                                          return null;
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    if (formKey.currentState!.validate()) {
-                                                      var data = SessionsUpdateModel(
-                                                        sessionId: widget.sessionId,
-                                                        comments: commentController.text,);
-                                                      updateSessionCubit.updateSessionWithAdmin(data).then((_) {
-                                                        Navigator.pop(context);
-                                                        _patientSessionCubit.setRefreshSessionAdmin(widget.pationt_data.id);
-
-                                                        // _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
-                                                      });
-
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      border: Border.all(
-                                                        color: Colors.grey,
-                                                        width: 2.5,
+                                        Text(
+                                          "رقم الهوية : $nationalId",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          "مدير الحالة : $caseManager",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          isAttended
+                                              ? "الحالة حضرت الجلسة"
+                                              : "الحالة لم تحضر الجلسة",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          needOtherSession
+                                              ? "الحالة بحاجه الي جلسة اخرى"
+                                              : "الحالة غير بحاجه الي جلسة اخرى",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          isSuccessStory
+                                              ? "الحالة قصة نجاح"
+                                              : "الحالة ليست قصة نجاح",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          "الخدمة الاستشارية : $serviceName",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          "وصف الخدمة الاستشارية : $serviceDescription",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        SizedBox(height: 20),
+                                        Table(
+                                          columnWidths: {
+                                            0: FlexColumnWidth(4),
+                                            1: FlexColumnWidth(1),
+                                          },
+                                          children: [
+                                            TableRow(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black),
+                                              children: [
+                                                TableCell(
+                                                  child: SizedBox(
+                                                    height: 50,
+                                                    child: Center(
+                                                      child: Text(
+                                                        "الملاحظة",
+                                                        textAlign: TextAlign.center,
+                                                        style: isMobile
+                                                            ? Constants.theme
+                                                            .textTheme.bodyMedium
+                                                            ?.copyWith(
+                                                          color: Colors.black,)
+                                                            : Theme
+                                                            .of(context)
+                                                            .textTheme
+                                                            .titleLarge
+                                                            ?.copyWith(fontSize: 20,
+                                                            color: Colors.white),
                                                       ),
                                                     ),
-                                                    child: Text(
-                                                      "موافق",
-                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                  ),
+                                                ),
+                                                TableCell(
+                                                  child: SizedBox(
+                                                    height: 50,
+                                                    child: Center(
+                                                      child: Text(
+                                                        "تاريخ الجلسة",
+                                                        textAlign: TextAlign.center,
+                                                        style: isMobile
+                                                            ? Constants.theme
+                                                            .textTheme.bodyMedium
+                                                            ?.copyWith(
+                                                          color: Colors.black,)
+                                                            : Theme
+                                                            .of(context)
+                                                            .textTheme
+                                                            .titleLarge
+                                                            ?.copyWith(fontSize: 20,
+                                                            color: Colors.white),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
+                                            ),
+                                            TableRow(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black54),
+                                              children: [
+                                                TableCell(
+                                                  child: Padding(padding: const EdgeInsets.symmetric(
+                                                        horizontal: 10.0),
+                                                    child: Container(
+                                                      alignment: Alignment.center,
+                                                      child: SingleChildScrollView(
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment
+                                                              .center,
+                                                          children: [
+                                                            Text(
+                                                              advisorComments,
+                                                              style: isMobile
+                                                                  ? Constants.theme
+                                                                  .textTheme
+                                                                  .bodyMedium
+                                                                  ?.copyWith(
+                                                                color: Colors
+                                                                    .black,)
+                                                                  : Theme
+                                                                  .of(context)
+                                                                  .textTheme
+                                                                  .bodyLarge
+                                                                  ?.copyWith(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                TableCell(
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      sessionDate,
+                                                      style: isMobile
+                                                          ? Constants.theme
+                                                          .textTheme.bodyMedium
+                                                          ?.copyWith(
+                                                        color: Colors.black,)
+                                                          : Theme
+                                                          .of(context)
+                                                          .textTheme
+                                                          .bodyLarge
+                                                          ?.copyWith(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 20),
+                                        BorderRoundedButton(
+                                          title: "تعديل",
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  backgroundColor: Constants.theme.primaryColor.withOpacity(0.9),
+                                                  content: Form(
+                                                    key: formKey,
+                                                    child: SizedBox(
+                                                      height: Constants.mediaQuery.height * 0.6,
+                                                      width: Constants.mediaQuery.width * 0.45,
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          CustomTextField(
+                                                            controller: commentController ,
+                                                            onValidate: (value) {
+                                                              if (value == null || value.trim().isEmpty) {
+                                                                return "Please enter the service name";
+                                                              }
+                                                              return null;
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        if (formKey.currentState!.validate()) {
+                                                          var data = SessionsUpdateModel(
+                                                            sessionId: widget.sessionId,
+                                                            comments: commentController.text,);
+                                                          updateSessionCubit.updateSessionWithAdmin(data).then((_) {
+                                                            Navigator.pop(context);
+                                                            _patientSessionCubit.setRefreshSessionAdmin(widget.pationt_data.id);
+
+                                                            // _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+                                                          });
+
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          border: Border.all(
+                                                            color: Colors.grey,
+                                                            width: 2.5,
+                                                          ),
+                                                        ),
+                                                        child: Text(
+                                                          "موافق",
+                                                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
                                             );
                                           },
-                                        );
-                                      },
-                                    ),
+                                        ).setVerticalPadding(context,enableMediaQuery: false, 20),
 
-                                  ],
-                                ).setHorizontalPadding(context,enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 10),
-                              ),
-                            ],
+                                      ],
+                                    ).setHorizontalPadding(context,enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 10),
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }
 
@@ -675,41 +851,6 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
       ),
     );
   }
-  // Future<void> sessionShow(int id,) async {
-  //   final dio = Dio();
-  //   try {
-  //     final response = await dio.get(
-  //         '${Constants.baseUrl}/api/session/show',
-  //         options: Options(headers: {
-  //           "api-password": Constants.apiPassword,
-  //           "token": CacheHelper.getData(key: "token")
-  //         }),
-  //         queryParameters: {
-  //           "id": id,
-  //
-  //         }
-  //     );
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> data = response.data["session"];
-  //       print(data);
-  //       List<dynamic> sessiondata = [];
-  //       sessiondata = data.map((json) => Sessions.fromJson(json)).toList();
-  //       setState(() {
-  //         sessionList = sessiondata;
-  //       });
-  //
-  //       print('Success: ${response.data["message"]}');
-  //       SnackBarService.showSuccessMessage(response.data["message"]);
-  //
-  //     } else {
-  //       print('Failed to add pointer. Status code: ${response.statusCode}');
-  //       SnackBarService.showErrorMessage(response.data["message"]);
-  //     }
-  //   } catch (e) {
-  //     print('Error occurred: $e');
-  //     SnackBarService.showErrorMessage(e.toString());
-  //   }
-  // }
 
 
 }

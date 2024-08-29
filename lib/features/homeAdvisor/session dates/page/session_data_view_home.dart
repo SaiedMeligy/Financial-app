@@ -8,12 +8,18 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/manager/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 
 import '../../../../core/widget/border_rounded_button.dart';
 import '../../sessions/manager/states.dart';
 import '../../viewQuestion/widget/drop_down.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'dart:html' as html;
+
 
 class SessionDetailsViewHome extends StatefulWidget {
   final dynamic pationt_data;
@@ -63,7 +69,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
         ),
         centerTitle: true,
         titleTextStyle: Constants.theme.textTheme.titleLarge,
-        backgroundColor: Color(0xff000000),
+        backgroundColor: Constants.theme.primaryColor ,
         elevation: 0.0,
         automaticallyImplyLeading: true,
       ),
@@ -357,6 +363,166 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                   crossAxisAlignment: CrossAxisAlignment
                                       .stretch,
                                   children: [
+                                    Container(
+                                      height: 50,
+                                      width: 50,
+                                      margin: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white54,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Center(
+                                        child: IconButton(
+                                          icon: Icon(Icons.print, color: Colors.black,size: 40,),
+                                          onPressed: () async {
+                                            print('sssssssssssssssssssssssss');
+                                            final pdf = pw.Document();
+                                            final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
+                                            final ttfSans = pw.Font.ttf(notoSans);
+                                            // final image = pw.MemoryImage(
+                                            //   (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
+                                            // );
+                                            await Future.delayed(Duration(seconds: 1));
+                                            pdf.addPage(
+                                              pw.Page(
+                                                build: (pw.Context context) {
+                                                  return
+                                                    pw.Column(
+                                                        crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                                        children: [
+                                                          pw.Text(
+                                                            "اسم الحالة :${patientName}" ,
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            "اسم الاستشارى :${advisorName}",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            "رقم الهوية :${nationalId}",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            "مدير الحالة : ${caseManager}",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            isAttended
+                                                                ? "الحالة حضرت الجلسة"
+                                                                : "الحالة لم تحضر الجلسة",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            needOtherSession
+                                                                ? "الحالة بحاجه الي جلسة اخرى"
+                                                                : "الحالة غير بحاجه الي جلسة اخرى",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            isSuccessStory
+                                                                ? "الحالة قصة نجاح"
+                                                                : "الحالة ليست قصة نجاح",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text("الخدمة الاستشارية : ${serviceName}",
+
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            "وصف الخدمة الاستشارية : ${serviceDescription}",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Table(
+                                                            border: pw.TableBorder.all(
+                                                              color: PdfColors.black,
+                                                              width: 1,
+                                                            ),
+                                                            children: [
+                                                              pw.TableRow(
+                                                                children: [
+                                                                  pw.Padding(
+                                                                    padding: const pw.EdgeInsets.all(8.0),
+                                                                    child: pw.Center(child:pw.Text(
+                                                                      "الملاحظة",
+                                                                      style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    ),
+                                                                  ),
+                                                                  pw.Padding(
+                                                                      padding: const pw.EdgeInsets.all(8.0),
+                                                                      child: pw.Container(
+                                                                        width:400,
+                                                                        child:pw.Center(child:pw.Text(
+                                                                          "تاريخ الجلسة",
+                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                        ),
+                                                                      )
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              // Add more rows as needed
+                                                              pw.TableRow(
+                                                                children: [
+                                                                  pw.Padding(
+                                                                    padding: const pw.EdgeInsets.all(8.0),
+                                                                    child:pw.Text(
+                                                                      advisorComments,
+                                                                      style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                  ),
+                                                                  pw.Expanded( // Expands this column to take up more space
+                                                                    child: pw.Center(child:pw.Text(
+                                                                      sessionDate,
+                                                                      style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          )
+
+
+                                                        ]
+                                                    );
+                                                },
+                                              ),
+                                            );
+
+                                            try {
+                                              final pdfBytes = await pdf.save();
+                                              final blob = html.Blob([pdfBytes], 'application/pdf');
+                                              final url = html.Url.createObjectUrlFromBlob(blob);
+                                              html.window.open(url, '_blank');
+                                              html.Url.revokeObjectUrl(url);
+
+                                              // Use the printing package to handle printing
+                                              await Printing.layoutPdf(
+                                                onLayout: (PdfPageFormat format) async => pdf.save(),
+                                              );
+
+                                            } catch (e) {
+                                              print('Error: $e');
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
                                     Text(
                                       "اسم الحالة : $patientName",
                                       style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
@@ -595,7 +761,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                           },
                                         );
                                       },
-                                    ),
+                                    ).setVerticalPadding(context,enableMediaQuery: false, 20),
                                   ],
                                 ).setHorizontalPadding(context,enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 10),
                               ),

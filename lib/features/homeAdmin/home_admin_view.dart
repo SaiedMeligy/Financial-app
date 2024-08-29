@@ -91,20 +91,28 @@ class _HomeAdminViewState extends State<HomeAdminView> {
 
         return Scaffold(
           appBar: AppBar(
-            automaticallyImplyLeading: isMobile,
             backgroundColor: Constants.theme.primaryColor,
             toolbarHeight: Constants.mediaQuery.height * 0.24,
             leadingWidth: Constants.mediaQuery.width * 0.3,
-            leading: isMobile
-                ? null
-                : Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/logo2.png"),
-                  fit: BoxFit.cover,
+            leading: Row(
+              children: [
+                IconButton(onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(Icons.arrow_back)),
+                Expanded(
+                  child: Container(
+                    height: Constants.mediaQuery.height*0.65,
+                    width: Constants.mediaQuery.width*0.4,
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/logo2.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
             title: Column(
               children: [
@@ -119,10 +127,23 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                 ),
               ],
             ),
-            actions: [
-              LogoutView(),
-            ],
             centerTitle: true,
+            actions: [
+              Container(
+                height: Constants.mediaQuery.height*0.6,
+                width: Constants.mediaQuery.width*0.27,
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/لوجو الهيئة.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
+              LogoutView()
+            ],
           ),
           drawer: isMobile
               ? Drawer(
@@ -194,7 +215,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                                   });
                                 },
                                 child: Container(
-                                  color: currentIndex == index ? Colors.grey.shade400 : Constants.theme.primaryColor.withOpacity(0.5),
+                                  color: currentIndex == index ? Colors.black54 : Constants.theme.primaryColor.withOpacity(0.5),
                                   child: ListTile(
                                     title: Row(
                                       children: [
@@ -204,8 +225,8 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                                           child: Text(
                                             titles[index].title,
                                             style: currentIndex == index
-                                                ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Constants.theme.primaryColor, fontSize: 24)
-                                                : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20),
+                                                ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 24)
+                                                : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20,color: Colors.black),
                                             textAlign: TextAlign.start,
                                           ),
                                         ),

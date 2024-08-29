@@ -100,7 +100,7 @@ class _DialogEditState extends State<DialogEdit> {
                               descriptionController.text,
                             ).
                             then((_) {
-                              widget.allConsultationCubit.getAllConsultations();
+                              widget.allConsultationCubit.getAllConsultationsAdmin();
                               Navigator.of(context).pop();
                             });
                           }

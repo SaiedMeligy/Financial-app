@@ -45,7 +45,7 @@ class AllPatientWithAdminRepositoryImp implements AllPatientWithAdminRepository{
 // import 'package:experts_app/domain/entities/AllPatientModel.dart';
 //
 // import '../../../../domain/repository/admin repository/patiens/AllPatientWithAdmin/all_patient_repository.dart';
-// import '../../../dataSource/admin/Patients/allPatientAdmin/all_patients_admin_data_source.dart';
+// import '../../../dataSource/admin/Patients/allPatientAdmin/all_patients_admin_no_need_other_Session_data_source.dart';
 //
 // class AllPatientWithAdminRepositoryImp implements AllPatientWithAdminRepository {
 //   final AllPatientsWithAdminDataSource dataSource;

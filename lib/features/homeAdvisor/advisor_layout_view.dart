@@ -54,40 +54,61 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
       builder: (context, constraints) {
         isMobile = constraints.maxWidth < 600;
         return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile,
-          backgroundColor: Constants.theme.primaryColor,
-          toolbarHeight: Constants.mediaQuery.height * 0.24,
-          leadingWidth: Constants.mediaQuery.width * 0.3,
-          leading: isMobile
-              ? null
-              : Container(
-            padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/logo2.png"),
-                fit: BoxFit.cover,
-              ),
+          appBar: AppBar(
+            backgroundColor: Constants.theme.primaryColor,
+            toolbarHeight: Constants.mediaQuery.height * 0.24,
+            leadingWidth: Constants.mediaQuery.width * 0.3,
+            leading: Row(
+              children: [
+                IconButton(onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(Icons.arrow_back)),
+                Expanded(
+                  child: Container(
+                    height: Constants.mediaQuery.height*0.65,
+                    width: Constants.mediaQuery.width*0.4,
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/logo2.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
+            title: Column(
+              children: [
+                Text(
+                  "العيادة المالية",
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+                SizedBox(height: 15,),
+                Text(
+                  "$advisor_name",
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+              ],
             ),
-          ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
-          title: Column(
-            children: [
-              Text(
-                "العيادة المالية",
-                style: Constants.theme.textTheme.titleLarge,
-              ),
-              SizedBox(height: 15,),
-              Text(
-                "$advisor_name",
-                style: Constants.theme.textTheme.titleLarge,
-              ),
+            centerTitle: true,
+            actions: [
+              Container(
+                height: Constants.mediaQuery.height*0.6,
+                width: Constants.mediaQuery.width*0.27,
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/لوجو الهيئة.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
+              LogoutView()
             ],
           ),
-          actions: [
-            LogoutView(),
-          ],
-          centerTitle: true,
-        ),
         drawer: isMobile ?
         Drawer(
           backgroundColor: Constants.theme.primaryColor,
@@ -140,8 +161,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
                                 });
                               },
                               child: Container(
-                                color:
-                                    currentIndex == index ? Colors.grey :  Constants.theme.primaryColor.withOpacity(0.3),
+                                color: currentIndex == index ? Colors.black54 : Constants.theme.primaryColor.withOpacity(0.5),
+
                                 child: ListTile(
                                   title:
                                   Row(
@@ -154,8 +175,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
                                       Text(
                                         titles[index].title,
                                         style: currentIndex == index
-                                            ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Constants.theme.primaryColor, fontSize: 24)
-                                            : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20),
+                                            ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 24)
+                                            : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20,color: Colors.black),
                                         textAlign: TextAlign.start,
                                       ),
                                     ],

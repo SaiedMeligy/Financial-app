@@ -40,14 +40,14 @@ class _PatientWidgetViewWithAbozabyState<T> extends State<PatientWidgetViewWithA
                 },
                 children: [
                   TableRow(
-                    decoration: const BoxDecoration(color: Colors.black),
+                    decoration:  BoxDecoration(color: Constants.theme.primaryColor),
                     children: [
                       _buildTableHeaderCell(widget.label1, context),
                     ],
                   ),
                   for (int index = 0; index < widget.items.length; index++)
                     TableRow(
-                      decoration: const BoxDecoration(color: Colors.black45),
+                      decoration:  BoxDecoration(color: Constants.theme.primaryColor.withOpacity(0.3)),
                       children: [
                         _buildNameCell(widget.items[index], context),
                       ],
@@ -71,7 +71,7 @@ class _PatientWidgetViewWithAbozabyState<T> extends State<PatientWidgetViewWithA
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontSize: isMobile?16:20,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),
@@ -94,7 +94,9 @@ class _PatientWidgetViewWithAbozabyState<T> extends State<PatientWidgetViewWithA
           padding: const EdgeInsets.all(8.0),
           child: Text(
             widget.itemNameBuilder(item),
-            style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge
+            style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge?.copyWith(
+              color: Colors.black
+            )
           ),
         ),
       ),
