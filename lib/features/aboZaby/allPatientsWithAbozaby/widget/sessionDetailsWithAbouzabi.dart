@@ -388,6 +388,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                             var advisorComments = session["advicor_comments"] ??
                                 "";
                             var sessionDate = session["date"] ?? "";
+                            var phoneNumber = session["phone_number"] ?? "";
+                            var otherPhoneNumber = session["other_phone_number"] ?? "";
                             TextEditingController commentController = TextEditingController(
                                 text: advisorComments);
 
@@ -433,6 +435,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                             ),
                                                             pw.Text(
                                                               "رقم الهوية :${nationalId}",
+                                                              style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                              textDirection: pw.TextDirection.rtl,
+                                                            ),
+                                                            pw.Text(
+                                                              "رقم الهاتف :${phoneNumber}",
+                                                              style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                              textDirection: pw.TextDirection.rtl,
+                                                            ),
+                                                            pw.Text(
+                                                              "رقم بديل للهاتف :${otherPhoneNumber}",
                                                               style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
                                                               textDirection: pw.TextDirection.rtl,
                                                             ),
@@ -563,6 +575,22 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                       ),
                                       Text(
                                         "رقم الهوية : $nationalId",
+                                        style: isMobile ? Constants.theme
+                                            .textTheme.bodyMedium?.copyWith(
+                                          color: Colors.black,) : Constants.theme
+                                            .textTheme.bodyLarge?.copyWith(
+                                            color: Colors.black),
+                                      ),
+                                      Text(
+                                        "رقم الهاتف : $phoneNumber",
+                                        style: isMobile ? Constants.theme
+                                            .textTheme.bodyMedium?.copyWith(
+                                          color: Colors.black,) : Constants.theme
+                                            .textTheme.bodyLarge?.copyWith(
+                                            color: Colors.black),
+                                      ),
+                                      Text(
+                                        "رقم بديل للهاتف : $otherPhoneNumber",
                                         style: isMobile ? Constants.theme
                                             .textTheme.bodyMedium?.copyWith(
                                           color: Colors.black,) : Constants.theme
