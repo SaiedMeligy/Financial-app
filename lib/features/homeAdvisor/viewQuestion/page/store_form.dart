@@ -160,35 +160,6 @@ class _StoreFormState extends State<StoreForm> {
     );
     setState(() {});
   }
-  // void _updateRelatedQuestions(int optionId, List<Questions>? relatedQuestions) {
-  //   // Remove existing related questions
-  //   if (relatedQuestionsMap.isNotEmpty) {
-  //     relatedQuestionsMap.forEach((key, value) {
-  //       value.forEach((q) {
-  //         questionsWidget.entries.forEach((entry) {
-  //           if (entry.key.id == q.id) {
-  //             entry.key.isRelatedQuestion = 0;
-  //           }
-  //         });
-  //       });
-  //     });
-  //     relatedQuestionsMap.clear();
-  //   }
-  //
-  //   // Add new related questions if available
-  //   if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
-  //     relatedQuestionsMap[optionId] = relatedQuestions;
-  //     relatedQuestions.forEach((q) {
-  //       questionsWidget.entries.forEach((entry) {
-  //         if (entry.key.id == q.id) {
-  //           entry.key.isRelatedQuestion = 1;
-  //         }
-  //       });
-  //     });
-  //   }
-  //
-  //   setState(() {});
-  // }
 
   @override
   void initState() {

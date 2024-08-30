@@ -384,10 +384,10 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                       print("pppppppppppp"+filteredAnswers.length.toString());
                                       print("fffffffffffff"+(widget.pationt_data as Pationts).toString());
 
-                                      for(int count = 0 ; count < (filteredAnswers.length/10).ceil()+1 ; count++){
+                                      for(int count = 0 ; count < (filteredAnswers.length/9).ceil()+1 ; count++){
                                         answe.add([]);
-                                        for(int i = 0 ; i < 10 ; i++) {
-                                          int index = count * 10 + i;
+                                        for(int i = 0 ; i < 9 ; i++) {
+                                          int index = count * 9 + i;
                                           try{
                                             if (index < filteredAnswers.length) {
                                               answe[count].add(filteredAnswers[index]);
@@ -410,14 +410,10 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                 children: [
                                                   for (int i = 0; i < answe[y].length; i++) ...[
                                                     pw.Container(
-                                                      height: answe[y][i]["question_options"]
-                                                          .where((option) =>
-                                                      (option['type'] == 1 || option['type'] == 2) &&
-                                                          option['answer'] == "1" ||
-                                                          (option['type'] == 3 && option['answer'] != null))
-                                                          .length *
-                                                          ((answe[y][i]["question_options"]
-                                                              .where((option) =>
+                                                      height: answe[y][i]["question_options"].where((option) =>
+                                                      (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
+                                                          (option['type'] == 3 && option['answer'] != null)).length *
+                                                          ((answe[y][i]["question_options"].where((option) =>
                                                           (option['type'] == 1 || option['type'] == 2) &&
                                                               option['answer'] == "1" ||
                                                               (option['type'] == 3 && option['answer'] != null))

@@ -335,8 +335,9 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                           }
                           var patientName = session["pationt"]["name"] ?? "";
                           var advisorName = session["advicor"]["name"] ?? "";
-                          var nationalId = session["pationt"]["national_id"] ??
-                              "";
+                          var nationalId = session["pationt"]["national_id"] ?? "";
+                          var phoneNumber = session["phone_number"] ?? "";
+                          var otherPhoneNumber = session["other_phone_number"] ?? "";
                           var caseManager = session["case_manager"] ?? "";
                           var isAttended = session["is_attended"] == 1;
                           var needOtherSession = session["need_other_session"] ==
@@ -402,6 +403,15 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                           ),
                                                           pw.Text(
                                                             "رقم الهوية :${nationalId}",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),
+                                                          pw.Text(
+                                                            "رقم الهاتف :${phoneNumber}",
+                                                            style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                            textDirection: pw.TextDirection.rtl,
+                                                          ),pw.Text(
+                                                            "رقم بديل للهاتف :${otherPhoneNumber}",
                                                             style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
                                                             textDirection: pw.TextDirection.rtl,
                                                           ),
@@ -539,6 +549,16 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                           ?.copyWith(color: Colors.black),
                                     ),
                                     Text(
+                                      "رقم الهاتف : $phoneNumber",
+                                      style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
+                                          ?.copyWith(color: Colors.black),
+                                    ),
+                                    Text(
+                                      "رقم بديل للهاتف : $otherPhoneNumber",
+                                      style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
+                                          ?.copyWith(color: Colors.black),
+                                    ),
+                                    Text(
                                       "مدير الحالة : $caseManager",
                                       style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
                                           ?.copyWith(color: Colors.black),
@@ -574,7 +594,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                       style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
                                           ?.copyWith(color: Colors.black),
                                     ),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
                                     Table(
                                       columnWidths: {
                                         0: FlexColumnWidth(4),
@@ -671,7 +691,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
                                     BorderRoundedButton(
                                       title: "تعديل",
                                       onPressed: () {

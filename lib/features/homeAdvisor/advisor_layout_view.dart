@@ -56,8 +56,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Constants.theme.primaryColor,
-            toolbarHeight: Constants.mediaQuery.height * 0.24,
-            leadingWidth: Constants.mediaQuery.width * 0.3,
+            toolbarHeight: Constants.mediaQuery.height * 0.26,
+            leadingWidth: Constants.mediaQuery.width * 0.35,
             leading: Row(
               children: [
                 IconButton(onPressed: (){
@@ -65,12 +65,13 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
                 }, icon: Icon(Icons.arrow_back)),
                 Expanded(
                   child: Container(
-                    height: Constants.mediaQuery.height*0.65,
-                    width: Constants.mediaQuery.width*0.4,
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10)
+                      ),
                       image: DecorationImage(
-                        image: AssetImage("assets/images/logo2.png"),
+                        image: AssetImage("assets/images/AEI Logo.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -95,7 +96,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
             actions: [
               Container(
                 height: Constants.mediaQuery.height*0.6,
-                width: Constants.mediaQuery.width*0.27,
+                width: Constants.mediaQuery.width*0.29,
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   color: Colors.white,
