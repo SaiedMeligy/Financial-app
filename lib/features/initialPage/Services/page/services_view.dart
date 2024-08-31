@@ -31,11 +31,12 @@ class _ServicesViewState extends State<ServicesView> {
   TextEditingController descriptionController = TextEditingController();
   String searchQuery = '';
   var formKey = GlobalKey<FormState>();
-
+  bool isLogged = false;
 
   @override
   void initState() {
     super.initState();
+    isLogged=CacheHelper.isPationtLoggedIn();
      allConsultationCubit.getAllConsultationsPatient();
     searchController.addListener(() {
       setState(() {
@@ -81,9 +82,15 @@ class _ServicesViewState extends State<ServicesView> {
                           borderRadius: BorderRadius.circular(20),
 
                         ),
-                        child: TextButton(onPressed: (){
+                        child: 
+                        (!isLogged)?TextButton(onPressed: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => LoginWithPatient()));
-                        }, child: Text("تسجيل الدخول",style: Constants.theme.textTheme.bodyLarge)),
+                        }, child: Text("تسجيل الدخول",style: Constants.theme.textTheme.bodyLarge)
+                        ):TextButton(onPressed: (){
+                          CacheHelper.clearAllData();
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginWithPatient()));
+                        }, child: Text("تسجيل الخروج",style: Constants.theme.textTheme.bodyLarge)
+                        ),
                       ),
                       Row(
                         children: [

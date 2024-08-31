@@ -35,7 +35,14 @@ class CacheHelper {
     }
     return false;
   }
-
+  static bool isPationtLoggedIn() {
+    dynamic nationalId = sharedPreferences.get('national_id');
+    if(nationalId != null){
+      return true;
+    }
+    return false;
+  }
+  
   static Future<bool> saveData({
     required String key,
     required dynamic value,
