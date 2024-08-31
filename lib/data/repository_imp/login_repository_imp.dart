@@ -27,13 +27,13 @@ LoginRepositoryImp(this.loginDataSource);
           CacheHelper.saveData(key: "token", value: response.data["user"]["token"]);
           CacheHelper.saveData(key: "email", value: response.data["user"]["email"]);
           CacheHelper.saveData(key: "name", value: response.data["user"]["name"]);
+          CacheHelper.saveData(key: "rule", value: response.data["user"]["rule"]);
           CacheHelper.saveData(key: "id", value: response.data["user"]["id"]);
           if(response.data["user"]["rule"]==0){
             navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdvisor);
           }
           else if(response.data["user"]["rule"]==1){
             navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdmin);
-            //navigatorKey.currentState!.pushReplacementNamed(PageRouteName.layoutAboZaby);
           }
           else if(response.data["user"]["rule"]==2){
             navigatorKey.currentState!.pushReplacementNamed(PageRouteName.layoutAboZaby);

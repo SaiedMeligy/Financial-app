@@ -28,7 +28,7 @@ class _LogViewState extends State<LogView> {
   @override
   void initState() {
     super.initState();
-
+    CacheHelper.isLoggedInAndNavigate();
   }
   @override
   Widget build(BuildContext context) {
