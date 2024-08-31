@@ -73,12 +73,14 @@ class _InitialPageState extends State<InitialPage> {
                       color: Constants.theme.primaryColor.withOpacity(0.6),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          "Empowering our community to live with hope \n throughout the journey with better life",
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                            fontSize: isMobile ? 14 : 18,
+                        Center(
+                          child: Text(
+                            "Empowering our community to live with hope \n throughout the journey with better life",
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                              fontSize: isMobile ? 14 : 18,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 15),

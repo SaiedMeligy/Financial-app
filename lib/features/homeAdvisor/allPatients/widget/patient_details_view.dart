@@ -884,7 +884,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
     String DividCommentsText(String text) {
       String temp = "";
       List<String> Words = text.split(" ");
-      int wordsPerLine = 12;
+      int wordsPerLine = 12 ;
 
       for (int i = 0; i < Words.length; i += wordsPerLine) {
         int end = (i + wordsPerLine < Words.length) ? i + wordsPerLine : Words.length;

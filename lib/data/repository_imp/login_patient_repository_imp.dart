@@ -22,21 +22,11 @@ LoginPatientRepositoryImp(this.loginDataSource);
       if (response.statusCode == 200) {
         if(response.data["status"]==true){
           print("data true");
+          CacheHelper.clearAllData();
           CacheHelper.saveData(key: "email", value: response.data["pationt"]["email"]);
           CacheHelper.saveData(key: "name", value: response.data["pationt"]["name"]);
           CacheHelper.saveData(key: "id", value: response.data["pationt"]["id"]);
           CacheHelper.saveData(key: "national_id", value: response.data["pationt"]["national_id"]);
-
-          // if(response.data["user"]["rule"]==0){
-          //   navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdvisor);
-          // }
-          // else if(response.data["user"]["rule"]==1){
-          //   navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdmin);
-          //   //navigatorKey.currentState!.pushReplacementNamed(PageRouteName.layoutAboZaby);
-          // }
-          // else if(response.data["user"]["rule"]==2){
-          //   navigatorKey.currentState!.pushReplacementNamed(PageRouteName.layoutAboZaby);
-          // }
           return Right(true);
         }
         else{
