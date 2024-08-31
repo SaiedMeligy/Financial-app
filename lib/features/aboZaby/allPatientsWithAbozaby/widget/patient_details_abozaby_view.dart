@@ -45,16 +45,18 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
   }
 
   List<dynamic> filterQuestionsWithAnswer(List<dynamic> answers) {
-    return answers.where((answer) {
-      return answer['question_options'].any((option) {
-        if (option['answer'] is String) {
-          return option['answer'] == "1";
-        } else if (option['answer'] is int) {
-          return option['answer'] == 1;
-        }
-        return false;
-      });
-    }).toList();
+    return
+    //   answers.where((answer) {
+    //   return answer['question_options'].any((option) {
+    //     if (option['answer'] is String) {
+    //       return option['answer'] == "1";
+    //     } else if (option['answer'] is int) {
+    //       return option['answer'] == 1;
+    //     }
+    //     return false;
+    //   });
+    // }).toList();
+    answers;
   }
 
     Future<void> _printPDF() async {
@@ -298,25 +300,21 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                             ),
 
                                             ),
-                                                  pw.Container(
-                                                      height:Constants.mediaQuery.height*0.20,
-                                                      margin: pw.EdgeInsets.all(5),
-                                                      child: pw.Row(
+                                                  pw.SizedBox(width:40),
+                                                  pw.Column(
+                                                        mainAxisAlignment: pw.MainAxisAlignment.start,
                                                           children: [
-                                                            pw.SizedBox(width: 20,),
                                                             pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
+                                                              alignment: pw.Alignment.center,
                                                               child: pw.Text(
                                                                 DividCommentsText("${comments}"),
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),),
-                                                            pw.SizedBox(width: 10,),
                                                           ]
-                                            )
                                             ),
-                                                  pw.SizedBox(height: 10,),
-                                                  pw.Divider(
+
+                                                pw.Divider(
                                                     thickness: 1,
                                                     color: PdfColors.grey,
                                                   ),
@@ -360,10 +358,10 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                           children: [
                                                             pw.SizedBox(width: 10,),
                                                             pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
+                                                              alignment: pw.Alignment.center,
                                                               child: pw.Text(
                                                                 DividCommentsText(" وصف الخدمة الاستشارية :${consultation["description"]}"),
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                             ),
@@ -384,20 +382,20 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                       print("pppppppppppp"+filteredAnswers.length.toString());
                                       print("fffffffffffff"+(widget.pationt_data as Pationts).toString());
 
-                                      for(int count = 0 ; count < (filteredAnswers.length/9).ceil()+1 ; count++){
-                                        answe.add([]);
-                                        for(int i = 0 ; i < 9 ; i++) {
+                                      for (int count = 0; count < (filteredAnswers.length / 9).ceil(); count++) {
+                                        List currentList = [];
+
+                                        for (int i = 0; i < 9; i++) {
                                           int index = count * 9 + i;
-                                          try{
-                                            if (index < filteredAnswers.length) {
-                                              answe[count].add(filteredAnswers[index]);
-                                            } else {
-                                              break;  // No more items to add, break out of the loop
-                                      }
-                                          }catch(e){
-                                            //answe[count].add(filteredAnswers[filteredAnswers.length-3]);
-                                            print("eeeeeeeeeeeeeee"+e.toString());
+                                          if (index < filteredAnswers.length) {
+                                            currentList.add(filteredAnswers[index]);
+                                          } else {
+                                            break;
                                           }
+                                        }
+
+                                        if (currentList.isNotEmpty) {
+                                          answe.add(currentList);
                                         }
                                       }
 
@@ -410,32 +408,29 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                 children: [
                                                   for (int i = 0; i < answe[y].length; i++) ...[
                                                     pw.Container(
-                                                      height: answe[y][i]["question_options"].where((option) =>
+                                                      height: answe[y][i]["question_options"]
+                                                          .where((option) =>
                                                       (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
-                                                          (option['type'] == 3 && option['answer'] != null)).length *
+                                                          (option['type'] == 3 && option['answer'] != null))
+                                                          .length *
                                                           ((answe[y][i]["question_options"].where((option) =>
-                                                          (option['type'] == 1 || option['type'] == 2) &&
-                                                              option['answer'] == "1" ||
+                                                          (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
                                                               (option['type'] == 3 && option['answer'] != null))
                                                               .length > 3)
                                                               ? 20 // Height when length > 3
                                                               : (answe[y][i]["question_options"]
                                                               .where((option) =>
-                                                          (option['type'] == 1 || option['type'] == 2) &&
-                                                              option['answer'] == "1" ||
+                                                          (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
                                                               (option['type'] == 3 && option['answer'] != null))
                                                               .length > 2)
                                                               ? 40 // Height when length is 3
                                                               : 45 // Height when length is 2 or less
-                                                          ),
-                                                      margin: pw.EdgeInsets.all(5),
+                                               ),
                                                       child: pw.Column(
                                                         mainAxisAlignment: pw.MainAxisAlignment.start,
                                                         children: [
                                                           pw.Container(
-                                                            height: answe[y][i]["title"].toString().split(" ").length > 15
-                                                                ? 30
-                                                                : 15,
+                                                            height: answe[y][i]["title"].toString().split(" ").length > 15 ? 30 : 15,
                                                             margin: pw.EdgeInsets.only(left: 10),
                                                             child: pw.Row(
                                                               mainAxisAlignment: pw.MainAxisAlignment.end,
@@ -443,10 +438,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                                 pw.SizedBox(width: 5),
                                                                 pw.Text(
                                                                   DividText("${answe[y][i]['title']}"),
-                                                                  style: pw.TextStyle(
-                                                                      font: ttfSans,
-                                                                      fontSize: 8,
-                                                                      color: PdfColors.black),
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 8, color: PdfColors.black),
                                                                   textDirection: pw.TextDirection.rtl,
                                                                   maxLines: 5,
                                                                 ),
@@ -455,8 +447,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                             ),
                                                           ),
                                                           for (int x = 0; x < answe[y][i]["question_options"].length; x++) ...[
-                                                            if (answe[y][i]["question_options"][x]['type'] == 1 &&
-                                                                answe[y][i]["question_options"][x]['answer'] == "1") ...[
+                                                            if (answe[y][i]["question_options"][x]['type'] == 1 && answe[y][i]["question_options"][x]['answer'] == "1") ...[
                                                               pw.Row(
                                                                 mainAxisAlignment: pw.MainAxisAlignment.end,
                                                                 children: [
@@ -469,8 +460,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                                 ],
                                                               ),
                                                             ],
-                                                            if (answe[y][i]["question_options"][x]['type'] == 2 &&
-                                                                answe[y][i]["question_options"][x]['answer'] == "1") ...[
+                                                            if (answe[y][i]["question_options"][x]['type'] == 2 && answe[y][i]["question_options"][x]['answer'] == "1") ...[
                                                               pw.Row(
                                                                 mainAxisAlignment: pw.MainAxisAlignment.end,
                                                                 children: [
@@ -483,8 +473,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                                 ],
                                                               ),
                                                             ],
-                                                            if (answe[y][i]["question_options"][x]['type'] == 3 &&
-                                                                answe[y][i]["question_options"][x]['answer'] != null) ...[
+                                                            if (answe[y][i]["question_options"][x]['type'] == 3 && answe[y][i]["question_options"][x]['answer'] != null) ...[
                                                               pw.Directionality(
                                                                 textDirection: pw.TextDirection.rtl,
                                                                 child: pw.Row(
@@ -520,6 +509,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                           ),
                                         );
                                       }
+
                                       try {
                                         // Save the PDF as bytes
                                         final pdfBytes = await pdf.save();
@@ -854,7 +844,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
   String DividCommentsText(String text) {
     String temp = "";
     List<String> Words = text.split(" ");
-    int wordsPerLine = 10;
+    int wordsPerLine = 12;
 
     for (int i = 0; i < Words.length; i += wordsPerLine) {
       int end = (i + wordsPerLine < Words.length) ? i + wordsPerLine : Words.length;
