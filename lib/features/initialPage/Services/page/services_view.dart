@@ -13,6 +13,7 @@ import '../../../../core/config/cash_helper.dart';
 import '../../../../core/widget/custom_text_field.dart';
 import '../../../homeAdmin/Consulting service/All Consultation/manager/cubit.dart';
 import '../../../homeAdmin/Consulting service/All Consultation/manager/states.dart';
+import '../../page/initial_page.dart';
 import '../manager/states.dart';
 import 'login_with_patient.dart';
 
@@ -104,7 +105,7 @@ class _ServicesViewState extends State<ServicesView> {
                             ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                           ),
                           IconButton(onPressed: (){
-                            Navigator.pop(context);
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => InitialPage(),));
                           }, icon: Icon(Icons.arrow_forward,size: 40,))
 
                         ],

@@ -23,11 +23,11 @@ LoginRepositoryImp(this.loginDataSource);
         if(response.data["status"]==true){
           print("data true");
           print(response.data["user"]["token"]);
+          CacheHelper.clearAllData();
           CacheHelper.saveData(key: "token", value: response.data["user"]["token"]);
           CacheHelper.saveData(key: "email", value: response.data["user"]["email"]);
           CacheHelper.saveData(key: "name", value: response.data["user"]["name"]);
           CacheHelper.saveData(key: "id", value: response.data["user"]["id"]);
-
           if(response.data["user"]["rule"]==0){
             navigatorKey.currentState!.pushReplacementNamed(PageRouteName.homeAdvisor);
           }

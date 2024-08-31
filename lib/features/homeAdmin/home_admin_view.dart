@@ -96,9 +96,6 @@ class _HomeAdminViewState extends State<HomeAdminView> {
             leadingWidth: Constants.mediaQuery.width * 0.35,
             leading: Row(
               children: [
-                IconButton(onPressed: (){
-                  Navigator.pop(context);
-                }, icon: Icon(Icons.arrow_back)),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(10),

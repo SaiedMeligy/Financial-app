@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../core/Services/snack_bar_service.dart';
+import '../../../core/config/cash_helper.dart';
 import '../../../core/config/constants.dart';
 import '../../../core/widget/second_text_field.dart';
 import '../manager/states.dart';
@@ -24,7 +25,11 @@ class _LogViewState extends State<LogView> {
   final _passwordController = TextEditingController();
   var loginCubit =LoginHomeCubit();
   bool isMobile = false;
+  @override
+  void initState() {
+    super.initState();
 
+  }
   @override
   Widget build(BuildContext context) {
     return  LayoutBuilder(
@@ -170,6 +175,7 @@ class _LogViewState extends State<LogView> {
                                         delay: Duration(microseconds: 1200),
                                         child: ElevatedButton(onPressed: () {
                                           if (formKey.currentState!.validate()) {
+
                                             loginCubit.login(_emailController.text, _passwordController.text).then((value) {
                                               if(value){
                                                 print("Done");
