@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/config/cash_helper.dart';
+
 
 
 class InitialPage extends StatefulWidget {
@@ -28,7 +30,7 @@ class _InitialPageState extends State<InitialPage> {
       return isMobile ?  Container(
         decoration: BoxDecoration(
           image: const DecorationImage(
-            image: AssetImage('assets/images/back.jpg'),
+            image: AssetImage('assets/images/clinic logo.jpg'),
             fit: BoxFit.cover,
             opacity: 0.9,
           ),
@@ -102,75 +104,80 @@ class _InitialPageState extends State<InitialPage> {
               ).setHorizontalPadding(context, enableMediaQuery: false, isMobile ? 20 : 40),
             ),
             Container(
-              height: isMobile ? 100 : Constants.mediaQuery.height * 0.15,
+              height: isMobile ? 100 : Constants.mediaQuery.height * 0.17,
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset("assets/images/logo.jpg", fit: BoxFit.cover),
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                  Image.asset("assets/images/clinic logo.jpg", fit: BoxFit.cover),
+                    Row(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            //Image.asset("assets/images/youtube.png", fit: BoxFit.cover, height: 24, width: 24),
-                            IconButton(onPressed: (){
-                              final Uri _url = Uri.parse('https://ssa.gov.ae/');
-                              _launchURL(_url);
-                            }, icon: Icon(Icons.home,size: 30,color:Colors.black)),
-                            GestureDetector(
-                              onTap: (){
-                                final Uri _url = Uri.parse('https://www.instagram.com/abudhabissa?igsh=MTV5bjhpdnJ2YXdjNw==');
-                                _launchURL(_url);
-                              },
-                                child: Image.asset("assets/images/instagram.jpg", fit: BoxFit.cover, height: 30, width: 30)),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                final Uri _url = Uri.parse('https://www.youtube.com/channel/UCrxFgacyJ9CYpgiujg1HQUg');
-                                _launchURL(_url);
-                              },
-                                child: Image.asset("assets/images/youtube.png", fit: BoxFit.cover, height: 25, width: 20)),
-                            const SizedBox(width: 10),
-                            //Image.asset("assets/images/linkedin.png", fit: BoxFit.cover, height: 20, width: 20),
-                            const SizedBox(width: 10),
-                            Container(
-                              height: 25,
-                              width: 1,
-                              color: Colors.grey,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                // final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
-                                // _launchURL(_url);
-                                Navigator.push(context, MaterialPageRoute(builder:(context) =>ServicesView()));
-                              },
-                              child: Text(
-                                "خدماتنا",
-                                style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                _launchWhatsApp();
-                              },
-                              child: Text(
-                                "اتصل بنا",
-                                style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
-                              ),
-                            ),
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  //Image.asset("assets/images/youtube.png", fit: BoxFit.cover, height: 24, width: 24),
+                                  IconButton(onPressed: (){
+                                    final Uri _url = Uri.parse('https://ssa.gov.ae/');
+                                    _launchURL(_url);
+                                  }, icon: Icon(Icons.home,size: 30,color:Colors.black)),
+                                  GestureDetector(
+                                    onTap: (){
+                                      final Uri _url = Uri.parse('https://www.instagram.com/abudhabissa?igsh=MTV5bjhpdnJ2YXdjNw==');
+                                      _launchURL(_url);
+                                    },
+                                      child: Image.asset("assets/images/instagram.jpg", fit: BoxFit.cover, height: 30, width: 30)),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      final Uri _url = Uri.parse('https://www.youtube.com/channel/UCrxFgacyJ9CYpgiujg1HQUg');
+                                      _launchURL(_url);
+                                    },
+                                      child: Image.asset("assets/images/youtube.png", fit: BoxFit.cover, height: 25, width: 20)),
+                                  const SizedBox(width: 10),
+                                  //Image.asset("assets/images/linkedin.png", fit: BoxFit.cover, height: 20, width: 20),
+                                  const SizedBox(width: 10),
+                                  Container(
+                                    height: 25,
+                                    width: 1,
+                                    color: Colors.grey,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
+                                      // _launchURL(_url);
+                                      Navigator.push(context, MaterialPageRoute(builder:(context) =>ServicesView()));
+                                    },
+                                    child: Text(
+                                      "خدماتنا",
+                                      style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      _launchWhatsApp();
+                                    },
+                                    child: Text(
+                                      "اتصل بنا",
+                                      style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                    ),
+                                  ),
 
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
+                        Image.asset("assets/images/لوجو الهيئة.png", fit: BoxFit.cover),
                       ],
                     ),
-                  ),
                 ],
               ),
             ),

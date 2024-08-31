@@ -4,6 +4,8 @@ import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_deta
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import '../../../homeAdmin/allPatientsAdmin/widget/patient_details_admin_view.dart';
+
 typedef ItemTextBuilder<T> = String Function(T item);
 typedef ItemWidgetBuilder<T> = Widget Function(T item);
 
@@ -81,7 +83,7 @@ class _PatientCyclebinState<T> extends State<PatientCyclebin<T>> {
                   ),
                   for(int index = 0; index < widget.items.length ; index++)...[
                     TableRow(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.black38 ,
                         ),
                         children: [

@@ -376,6 +376,9 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                           var nationalId = session["pationt"]["national_id"] ??
                               "";
                           var caseManager = session["case_manager"] ?? "";
+                          var phoneNumber = session["phone_number"] ?? "";
+                          var otherPhoneNumber = session["other_phone_number"] ?? "";
+
                           var isAttended = session["is_attended"] == 1;
                           var needOtherSession = session["need_other_session"] ==
                               1;
@@ -449,6 +452,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                               ),
                                                               pw.Text(
                                                                 "رقم الهوية :${nationalId}",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                "رقم الهاتف :${phoneNumber}",
+                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                textDirection: pw.TextDirection.rtl,
+                                                              ),
+                                                              pw.Text(
+                                                                "رقم بديل للهاتف :${otherPhoneNumber}",
                                                                 style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
@@ -587,6 +600,22 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                         ),
                                         Text(
                                           "رقم الهوية : $nationalId",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          "رقم الهاتف : $phoneNumber",
+                                          style: isMobile ? Constants.theme
+                                              .textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,) : Constants.theme
+                                              .textTheme.bodyLarge?.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                        Text(
+                                          "رقم بديل للهاتف : $otherPhoneNumber",
                                           style: isMobile ? Constants.theme
                                               .textTheme.bodyMedium?.copyWith(
                                             color: Colors.black,) : Constants.theme

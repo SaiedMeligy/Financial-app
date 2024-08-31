@@ -1,18 +1,18 @@
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/border_rounded_button.dart';
-import 'package:experts_app/domain/entities/AllSessionModel.dart';
-import 'package:experts_app/features/homeAdmin/bookingSession/page/booking_session_view.dart';
 import 'package:experts_app/features/initialPage/Services/page/booking_Service_View.dart';
-import 'package:experts_app/features/initialPage/Services/page/login_with_patient.dart';
+import 'package:experts_app/features/initialPage/Services/page/services_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/constants.dart';
+import '../../../../domain/entities/ConsultationViewModel.dart';
 
 class DetailsServiceView extends StatefulWidget {
-  final String consultationName;
-  final String consultationDescription;
-   const DetailsServiceView({super.key,required this.consultationName,required this.consultationDescription});
+  // final String consultationName;
+  // final String consultationDescription;
+  final ConsultationServices consultation;
+   const DetailsServiceView({super.key,required this.consultation});
 
   @override
   State<DetailsServiceView> createState() => _DetailsServiceViewState();
@@ -24,22 +24,23 @@ class _DetailsServiceViewState extends State<DetailsServiceView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.theme.primaryColor,
-        toolbarHeight: Constants.mediaQuery.height * 0.24,
-        leadingWidth: Constants.mediaQuery.width * 0.3,
+        toolbarHeight: Constants.mediaQuery.height * 0.26,
+        leadingWidth: Constants.mediaQuery.width * 0.35,
         leading:
         Row(
           children: [
             IconButton(onPressed: (){
-              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ServicesView(),),  (Route<dynamic> route) => false,);
             }, icon: Icon(Icons.arrow_back)),
             Expanded(
               child: Container(
-                height: Constants.mediaQuery.height*0.65,
-                width: Constants.mediaQuery.width*0.4,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(15),
                 decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(10)
+                  ),
                   image: DecorationImage(
-                    image: AssetImage("assets/images/logo2.png"),
+                    image: AssetImage("assets/images/AEI Logo.png"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -60,8 +61,8 @@ class _DetailsServiceViewState extends State<DetailsServiceView> {
         actions: [
           Container(
             height: Constants.mediaQuery.height*0.6,
-            width: Constants.mediaQuery.width*0.27,
-            padding: const EdgeInsets.all(10),
+            width: Constants.mediaQuery.width*0.29,
+            padding: const EdgeInsets.all(15),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -116,15 +117,15 @@ class _DetailsServiceViewState extends State<DetailsServiceView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("الخدمة الاستشارية : ${widget.consultationName}",style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black,fontSize: 25),),
-                          Text("وصف الخدمة الاستشارية : ${widget.consultationDescription }",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontSize: 24),),
+                          Text("الخدمة الاستشارية : ${widget.consultation.name}",style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black,fontSize: 25),),
+                          Text("وصف الخدمة الاستشارية : ${widget.consultation.description }",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontSize: 24),),
                         ],
                       ),
                     ).setHorizontalPadding(context,enableMediaQuery: false, 20),
                     SizedBox( height:100),
                     BorderRoundedButton(title: "ابدأ الخدمة",onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                       return BookingServiceView(consultationName: widget.consultationName, consultationDescription: widget.consultationDescription);
+                       return BookingServiceView(consultation:widget.consultation);
 
                          //LoginWithPatient();
                       },));

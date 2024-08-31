@@ -192,364 +192,167 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       final pdf = pw.Document();
                                       final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
                                       final ttfSans = pw.Font.ttf(notoSans);
+                                      final image = pw.MemoryImage(
+                                        (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
+                                      );
                                       await Future.delayed(Duration(seconds: 1));
                                       pdf.addPage(
                                         pw.Page(
                                           build: (pw.Context context) {
-                                            return pw.Center(
-                                              child: pw.Column(
-                                                mainAxisAlignment: pw.MainAxisAlignment.center,
-                                                children: [
+                                            return pw.Container(
+                                              // decoration: pw.BoxDecoration(
+                                              //
+                                              //   image: pw.DecorationImage(image: image,fit: pw.BoxFit.cover,
+                                              //   ),
 
-                                                  pw.Container(
-                                                      // margin: pw.EdgeInsets.all(5),
-                                                      decoration: pw.BoxDecoration(
-                                                          color: PdfColors.black,
-                                                          border: pw.Border.all(
-                                                              color: PdfColors.black,
-                                                              width: 1
-                                                          ),
-                                                          borderRadius: pw.BorderRadius.circular(10)
-                                                      ),
-                                                      child: pw.Row(
-                                                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            pw.SizedBox(width: 20,),
-                                                            pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
-                                                              child: pw.Text(
-                                                                "${patient["name"]}" ,
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
-                                                                textDirection: pw.TextDirection.rtl,
-                                                              ),
-                                                            ),
-                                                            pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
-                                                              child: pw.Text(
-                                                                "اسم الحالة" ,
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
-                                                                textDirection: pw.TextDirection.rtl,
-                                                              ),
-                                                            ),
-                                                            pw.SizedBox(width: 20,),
-                                                          ]
-                                                      )
-                                                  ),
-
-                                                  pw.Container(
-                                                      margin: pw.EdgeInsets.all(5),
-                                                      decoration: pw.BoxDecoration(
-                                                          color: PdfColors.black,
-                                                          border: pw.Border.all(
-                                                              color: PdfColors.black,
-                                                              width: 1
-                                                          ),
-                                                          borderRadius: pw.BorderRadius.circular(10)
-                                                      ),
-                                                      child: pw.Row(
-                                                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            pw.SizedBox(width: 20,),
-                                                            pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
-                                                              child: pw.Text(
-                                                                "${patient["national_id"]}" ,
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
-                                                                textDirection: pw.TextDirection.rtl,
-                                                              ),
-                                                            ),
-                                                            pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
-                                                              child: pw.Text(
-                                                                "رقم الهوية الأماراتية" ,
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
-                                                                textDirection: pw.TextDirection.rtl,
-                                                              ),
-                                                            ),
-                                                            pw.SizedBox(width: 20,),
-                                                          ]
-                                                      )
-                                                  ),
-
-                                                  pw.Container(
-                                                      margin: pw.EdgeInsets.all(5),
-                                                      decoration: pw.BoxDecoration(
-                                                          color: PdfColors.black,
-                                                          border: pw.Border.all(
-                                                              color: PdfColors.black,
-                                                              width: 1
-                                                          ),
-                                                          borderRadius: pw.BorderRadius.circular(10)
-                                                      ),
-                                                      child: pw.Row(
-                                                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            pw.SizedBox(width: 20,),
-                                                            pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
-                                                              child: pw.Text(
-                                                                "${advicor["name"]}" ,
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
-                                                                textDirection: pw.TextDirection.rtl,
-                                                              ),
-                                                            ),
-
-                                                            pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
-                                                              child: pw.Text(
-                                                                "اسم الاستشارى" ,
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 16, color: PdfColors.white),
-                                                                textDirection: pw.TextDirection.rtl,
-                                                              ),
-                                                            ),
-                                                            pw.SizedBox(width: 20,),
-                                                          ]
-                                                      )
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-
-                                          },
-                                        ),
-                                      );
-
-                                      List<List<dynamic>> answe = [] ;
-                                      print("pppppppppppp"+filteredAnswers.length.toString());
-                                      print("fffffffffffff"+(widget.pationt_data as Pationts).toString());
-
-                                      for(int count = 0 ; count < (filteredAnswers.length/3).ceil()+1 ; count++){
-                                        answe.add([]);
-                                        for(int i = 0 ; i < 3 ; i++) {
-                                          try{
-                                            answe[count].add(filteredAnswers[count*3+i]);
-                                          }catch(e){
-                                            //answe[count].add(filteredAnswers[filteredAnswers.length-3]);
-                                            print("eeeeeeeeeeeeeee"+e.toString());
-                                          }
-                                        }
-                                      }
-
-                                      for(int y = 0 ; y < answe.length ; y++) {
-                                        pdf.addPage(
-                                          pw.Page(
-                                            build: (pw.Context context) {
-                                              return pw.Center(
+                                              //),
+                                              child:pw.Center(
                                                 child: pw.Column(
                                                   mainAxisAlignment: pw.MainAxisAlignment.start,
                                                   children: [
-                                                    for(int i = 0 ; i < answe[y].length ; i++) ...[
-                                                      pw.Container(
-                                                        height:answe[y][i]["question_options"].length>2?150:100,
-                                                          margin: pw.EdgeInsets.all(5),
-                                                          decoration: pw.BoxDecoration(
-                                                              border: pw.Border.all(
-                                                                  color: PdfColors.black,
-                                                                  width: 1
-                                                              ),
-                                                              borderRadius: pw.BorderRadius.circular(10)
-                                                          ),
-                                                          child: pw.Column(
-                                                            mainAxisAlignment: pw.MainAxisAlignment.start,
-                                                              children: [
-                                                                pw.Container(
-                                                                  height:answe[y][i]["title"].toString().split(" ").length>10?80:50,
-                                                                  decoration: pw.BoxDecoration(
-                                                                      color: PdfColors.black ,
-                                                                      borderRadius: pw.BorderRadius.circular(10)
-                                                                  ),
-                                                                  child: pw.Row(
-                                                                      mainAxisAlignment: pw.MainAxisAlignment.end ,
-                                                                      children: [
-                                                                        pw.SizedBox(width:5),
-                                                                        pw.Container(
-                                                                          margin: pw.EdgeInsets.all(5),
-                                                                          child:
-                                                                        pw.Text(
-                                                                          DividText("${answe[y][i]['title']}"),
-                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 10, color: PdfColors.white),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                          maxLines:5,
-                                                                        ),
-                                                                        ),
-                                                                        pw.SizedBox(width: 5)
-                                                                      ]
-                                                                  ),
-                                                                ),
-                                                                for(int x = 0; x < answe[y][i]["question_options"].length ; x++) ...[
-                                                                  pw.Row(
-                                                                      mainAxisAlignment: pw.MainAxisAlignment.end ,
-                                                                      children: [
-                                                                        if(answe[y][i]["question_options"][x]['type'] == 1&&answe[y][i]["question_options"][x]['answer'] == "1")...[
-                                                                          pw.Text(
-                                                                            "${answe[y][i]["question_options"][x]['title']}",
-                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                            textDirection: pw.TextDirection.rtl,
-                                                                          ),
-                                                                          pw.SizedBox(width: 10),
-                                                                          pw.Container(
-                                                                              width: 8 ,
-                                                                              height: 8 ,
-                                                                              color: PdfColors.black
-                                                                          ),
-                                                                          pw.SizedBox(width: 20),
-                                                                        ],
-                                                                        if(answe[y][i]["question_options"][x]['type'] == 2&&answe[y][i]["question_options"][x]['answer'] == "1")...[
-                                                                          pw.Text(
-                                                                            "${answe[y][i]["question_options"][x]['title']}",
-                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                            textDirection: pw.TextDirection.rtl,
-                                                                          ),
-                                                                          pw.SizedBox(width: 10),
-                                                                          pw.Container(
-                                                                              width: 8 ,
-                                                                              height: 8 ,
-                                                                              color: PdfColors.black
-                                                                          ),
-                                                                          pw.SizedBox(width: 20),
-                                                                        ],
-                                                                        // if (answe[y][i]["question_options"][x]['answer'] == "1" ||
-                                                                        //     answe[y][i]["question_options"][x]['answer'] == 1) ...[
-                                                                        //   pw.Text(
-                                                                        //     "${answe[y][i]["question_options"][x]['title']}",
-                                                                        //     style: pw.TextStyle(font: ttfSans, fontSize: 13),
-                                                                        //     textDirection: pw.TextDirection.rtl,
-                                                                        //   ),
-                                                                        //   pw.SizedBox(width: 10),
-                                                                        //   pw.Container(
-                                                                        //     width: 8,
-                                                                        //     height: 8,
-                                                                        //     color: PdfColors.black,
-                                                                        //   ),
-                                                                        //   pw.SizedBox(width: 20),
-                                                                        // ],
-                                                                        if(answe[y][i]["question_options"][x]['type'] == 3&&answe[y][i]["question_options"][x]['answer']!=null)...[
-                                                                          pw.Directionality(
-                                                                            textDirection: pw.TextDirection.rtl,
-                                                                          child:
-                                                                          pw.Row(
-                                                                              mainAxisAlignment: pw.MainAxisAlignment.end ,
-                                                                              children: [
-                                                                          pw.Text(
-                                                                            "${answe[y][i]["question_options"][x]['title']} : ",
-                                                                            style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                            textDirection: pw.TextDirection.rtl,
-                                                                          ),
-                                                                                pw.Text(
-                                                                                  "${answe[y][i]["question_options"][x]['answer']}",
-                                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 10),
-                                                                                  textDirection: pw.TextDirection.rtl,
-                                                                                ),
-                                                                          ]
-                                                                          ),
-                                                                          ),
-                                                                          pw.SizedBox(width: 10),
-                                                                          pw.Container(
-                                                                              width: 8 ,
-                                                                              height: 8 ,
-                                                                              color: PdfColors.black
-                                                                          ),
-                                                                          pw.SizedBox(width: 20),
-                                                                        ]
-
-                                                                      ]
-                                                                  )
-                                                                ]
-                                                              ]
-                                                          )
-                                                      ),
-                                              ]
-                                              ]
-                                              ),
-                                              );
-
-                                            },
-                                          ),
-                                        );
-                                      }
-                                      pdf.addPage(
-                                        pw.Page(
-                                          build: (pw.Context context) {
-                                            return  pw.Column(
-                                                children: [
-                                                  pw.Container(
-                                                    width: 350,
-                                                    alignment: pw.Alignment.center,
-                                                    decoration: pw.BoxDecoration(
-                                                      border: pw.Border.all(color: PdfColors.black,width: 1),
-                                                      borderRadius: pw.BorderRadius.all(pw.Radius.circular(10))
-                                                    ),
-                                                    child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه الى جلسة اخرى ":" الحالة ليست بحاجه الى جلسة اخرى  ",
-                                                      style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
-                                                      textDirection: pw.TextDirection.rtl,
-                                                    ),
-
-                                                  ),
-                                                  pw.SizedBox(height: 20,),
-                                                  pw.Container(
-                                                    width: 350,
-                                                    alignment: pw.Alignment.center,
-                                                    decoration: pw.BoxDecoration(
-                                                      border: pw.Border.all(color: PdfColors.black,width: 1),
-                                                        borderRadius: pw.BorderRadius.all(pw.Radius.circular(10))
-
-                                                    ),
-                                                    child: pw.Text(" ملاحظات الاستشارى ",
-                                                      style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
-                                                      textDirection: pw.TextDirection.rtl,
-                                                    ),
-
-                                                  ),
-                                                  pw.Container(
-                                                      height:Constants.mediaQuery.height*0.35,
-                                                      margin: pw.EdgeInsets.all(5),
-                                                      decoration: pw.BoxDecoration(
-                                                          color: PdfColors.black,
-                                                          border: pw.Border.all(
-                                                              color: PdfColors.black,
-                                                              width: 1
-                                                          ),
-                                                          borderRadius: pw.BorderRadius.circular(10)
-                                                      ),
-                                                      child: pw.Row(
-                                                          children: [
-                                                            pw.SizedBox(width: 20,),
-                                                            pw.Container(
-                                                              alignment: pw.Alignment.centerRight,
-                                                              child: pw.Text(
-                                                                DividCommentsText("${comments}"),
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
-                                                                textDirection: pw.TextDirection.rtl,
-                                                              ),
-                                                            ),
-                                                            pw.SizedBox(width: 20,),
-                                                          ]
-                                                      )
-                                                  ),
-
-                                                ]
-                                            );
-                                          },
-                                        ),
-                                      );
-
-                                      pdf.addPage(
-                                        pw.Page(
-                                          build: (pw.Context context) {
-                                            return
-                                              pw.Column(
-                                                  children: [
                                                     pw.Container(
-                                                        height: Constants.mediaQuery.height * 0.10,
-                                                        margin: pw.EdgeInsets.all(5),
                                                         decoration: pw.BoxDecoration(
-                                                          //color: PdfColors.black,
                                                             border: pw.Border.all(
-                                                                color: PdfColors.black, width: 1),
+                                                                color: PdfColors.black,
+                                                                width: 1
+                                                            ),
                                                             borderRadius: pw.BorderRadius.circular(10)
                                                         ),
                                                         child: pw.Row(
-                                                          mainAxisAlignment: pw.MainAxisAlignment.center,
+                                                            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              pw.SizedBox(width: 20,),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  "${patient["name"]}" ,
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black ),
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                ),
+                                                              ),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  "اسم الحالة" ,
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black ),
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                ),
+                                                              ),
+                                                              pw.SizedBox(width: 20,),
+                                                            ]
+                                                        )
+                                                    ),
+
+                                                    pw.Container(
+                                                        margin: pw.EdgeInsets.all(5),
+                                                        decoration: pw.BoxDecoration(
+                                                            border: pw.Border.all(
+                                                                color: PdfColors.black,
+                                                                width: 1
+                                                            ),
+                                                            borderRadius: pw.BorderRadius.circular(10)
+                                                        ),
+                                                        child: pw.Row(
+                                                            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              pw.SizedBox(width: 20,),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  "${patient["national_id"]}" ,
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black ),
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                ),
+                                                              ),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  "رقم الهوية الأماراتية" ,
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                ),
+                                                              ),
+                                                              pw.SizedBox(width: 20,),
+                                                            ]
+                                                        )
+                                                    ),
+
+                                                    pw.Container(
+                                                        margin: pw.EdgeInsets.all(5),
+                                                        decoration: pw.BoxDecoration(
+                                                            color: PdfColors.white,
+                                                            border: pw.Border.all(
+                                                                width: 1
+                                                            ),
+                                                            borderRadius: pw.BorderRadius.circular(10)
+                                                        ),
+                                                        child: pw.Row(
+                                                            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              pw.SizedBox(width: 20,),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  "${advicor["name"]}" ,
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                ),
+                                                              ),
+                                                              pw.Container(
+                                                                alignment: pw.Alignment.centerRight,
+                                                                child: pw.Text(
+                                                                  "اسم الاستشارى" ,
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                ),
+                                                              ),
+                                                              pw.SizedBox(width: 20,),
+                                                            ]
+                                                        )
+                                                    ),
+                                                    pw.Container(
+                                                      width: 350,
+                                                      alignment: pw.Alignment.center,
+                                                      child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه الى جلسة اخرى ":" الحالة ليست بحاجه الى جلسة اخرى  ",
+                                                        style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
+                                                        textDirection: pw.TextDirection.rtl,
+                                                      ),
+
+                                                    ),
+                                                    pw.SizedBox(height: 5,),
+                                                    pw.Container(
+                                                      width: 350,
+                                                      alignment: pw.Alignment.center,
+
+                                                      child: pw.Text(" ملاحظات الاستشارى ",
+                                                        style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
+                                                        textDirection: pw.TextDirection.rtl,
+                                                      ),
+
+                                                    ),
+                                                    pw.SizedBox(width:40),
+                                                    pw.Column(
+                                                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                        children: [
+                                                          pw.Container(
+                                                            alignment: pw.Alignment.center,
+                                                            child: pw.Text(
+                                                              DividCommentsText("${comments}"),
+                                                              style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                              textDirection: pw.TextDirection.rtl,
+                                                            ),),
+                                                        ]
+                                                    ),
+
+                                                    pw.Divider(
+                                                      thickness: 1,
+                                                      color: PdfColors.grey,
+                                                    ),
+                                                    pw.Container(
+                                                        height: Constants.mediaQuery.height * 0.10,
+                                                        margin: pw.EdgeInsets.all(5),
+                                                        child: pw.Row(
+                                                            mainAxisAlignment: pw.MainAxisAlignment.center,
                                                             children: [
                                                               pw.Container(
                                                                 alignment: pw.Alignment.centerRight,
@@ -581,40 +384,161 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                             ]
                                                         )
                                                     ),
-                                                    pw.Container(
-                                                        height:Constants.mediaQuery.height*0.35,
-                                                        margin: pw.EdgeInsets.all(5),
-                                                        decoration: pw.BoxDecoration(
-                                                            color: PdfColors.black,
-                                                            border: pw.Border.all(
-                                                                color: PdfColors.black,
-                                                                width: 1
+                                                    pw.Row(
+                                                        children: [
+                                                          pw.SizedBox(width: 10,),
+                                                          pw.Container(
+                                                            alignment: pw.Alignment.center,
+                                                            child: pw.Text(
+                                                              DividCommentsText(" وصف الخدمة الاستشارية :${consultation["description"]}"),
+                                                              style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                              textDirection: pw.TextDirection.rtl,
                                                             ),
-                                                            borderRadius: pw.BorderRadius.circular(10)
-                                                        ),
-                                                        child: pw.Row(
-                                                            children: [
-                                                              pw.SizedBox(width: 10,),
-                                                              pw.Container(
-                                                                alignment: pw.Alignment.centerRight,
-                                                                child: pw.Text(
-                                                                  DividCommentsText(" وصف الخدمة الاستشارية :${consultation["description"]} "),
-                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.white),
+                                                          ),
+                                                          pw.SizedBox(width: 10,),
+                                                        ]
+                                                    )
+
+
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+
+                                          },
+                                        ),
+                                      );
+                                      List<List<dynamic>> answe = [] ;
+                                      print("pppppppppppp"+filteredAnswers.length.toString());
+                                      print("fffffffffffff"+(widget.pationt_data as Pationts).toString());
+
+                                      for (int count = 0; count < (filteredAnswers.length / 9).ceil(); count++) {
+                                        List currentList = [];
+
+                                        for (int i = 0; i < 9; i++) {
+                                          int index = count * 9 + i;
+                                          if (index < filteredAnswers.length) {
+                                            currentList.add(filteredAnswers[index]);
+                                          } else {
+                                            break;
+                                          }
+                                        }
+
+                                        if (currentList.isNotEmpty) {
+                                          answe.add(currentList);
+                                        }
+                                      }
+
+                                      for (int y = 0; y < answe.length; y++) {
+                                        pdf.addPage(
+                                          pw.Page(
+                                            build: (pw.Context context) {
+                                              return pw.Column(
+                                                mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                children: [
+                                                  for (int i = 0; i < answe[y].length; i++) ...[
+                                                    pw.Container(
+                                                      height: answe[y][i]["question_options"]
+                                                          .where((option) =>
+                                                      (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
+                                                          (option['type'] == 3 && option['answer'] != null))
+                                                          .length *
+                                                          ((answe[y][i]["question_options"].where((option) =>
+                                                          (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
+                                                              (option['type'] == 3 && option['answer'] != null))
+                                                              .length > 3)
+                                                              ? 20 // Height when length > 3
+                                                              : (answe[y][i]["question_options"]
+                                                              .where((option) =>
+                                                          (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
+                                                              (option['type'] == 3 && option['answer'] != null))
+                                                              .length > 2)
+                                                              ? 40 // Height when length is 3
+                                                              : 45 // Height when length is 2 or less
+                                                          ),
+                                                      child: pw.Column(
+                                                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                        children: [
+                                                          pw.Container(
+                                                            height: answe[y][i]["title"].toString().split(" ").length > 15 ? 30 : 15,
+                                                            margin: pw.EdgeInsets.only(left: 10),
+                                                            child: pw.Row(
+                                                              mainAxisAlignment: pw.MainAxisAlignment.end,
+                                                              children: [
+                                                                pw.SizedBox(width: 5),
+                                                                pw.Text(
+                                                                  DividText("${answe[y][i]['title']}"),
+                                                                  style: pw.TextStyle(font: ttfSans, fontSize: 8, color: PdfColors.black),
                                                                   textDirection: pw.TextDirection.rtl,
+                                                                  maxLines: 5,
+                                                                ),
+                                                                pw.SizedBox(width: 5),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          for (int x = 0; x < answe[y][i]["question_options"].length; x++) ...[
+                                                            if (answe[y][i]["question_options"][x]['type'] == 1 && answe[y][i]["question_options"][x]['answer'] == "1") ...[
+                                                              pw.Row(
+                                                                mainAxisAlignment: pw.MainAxisAlignment.end,
+                                                                children: [
+                                                                  pw.Text(
+                                                                    "${answe[y][i]["question_options"][x]['title']}",
+                                                                    style: pw.TextStyle(font: ttfSans, fontSize: 8),
+                                                                    textDirection: pw.TextDirection.rtl,
+                                                                  ),
+                                                                  pw.SizedBox(width: 10),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                            if (answe[y][i]["question_options"][x]['type'] == 2 && answe[y][i]["question_options"][x]['answer'] == "1") ...[
+                                                              pw.Row(
+                                                                mainAxisAlignment: pw.MainAxisAlignment.end,
+                                                                children: [
+                                                                  pw.Text(
+                                                                    "${answe[y][i]["question_options"][x]['title']}",
+                                                                    style: pw.TextStyle(font: ttfSans, fontSize: 8),
+                                                                    textDirection: pw.TextDirection.rtl,
+                                                                  ),
+                                                                  pw.SizedBox(width: 10),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                            if (answe[y][i]["question_options"][x]['type'] == 3 && answe[y][i]["question_options"][x]['answer'] != null) ...[
+                                                              pw.Directionality(
+                                                                textDirection: pw.TextDirection.rtl,
+                                                                child: pw.Row(
+                                                                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                  children: [
+                                                                    pw.Text(
+                                                                      "${answe[y][i]["question_options"][x]['title']} : ",
+                                                                      style: pw.TextStyle(font: ttfSans, fontSize: 8),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      "${answe[y][i]["question_options"][x]['answer']}",
+                                                                      style: pw.TextStyle(font: ttfSans, fontSize: 8),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ),
-                                                              pw.SizedBox(width: 10,),
-                                                            ]
-                                                        )
+                                                              pw.SizedBox(width: 10),
+                                                            ],
+                                                          ],
+                                                        ],
+                                                      ),
                                                     ),
-
-
-                                                  ]
+                                                    pw.Divider(
+                                                      thickness: 1,
+                                                      color: PdfColors.grey,
+                                                    ),
+                                                  ],
+                                                ],
                                               );
-                                          }
-                                      )
-                                      );
-
+                                            },
+                                          ),
+                                        );
+                                      }
 
                                       try {
                                         // Save the PDF as bytes
@@ -634,18 +558,8 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                       } catch (e) {
                                         print('Error: $e');
                                       }
-                                      // final pdfBytes = await pdf.save();
-                                      //
-                                      // final blob = html.Blob([pdfBytes], 'application/pdf');
-                                      // final url = html.Url.createObjectUrlFromBlob(blob);
-                                      //
-                                      // // Open the PDF in a new tab
-                                      // html.window.open(url, '_blank');
-                                      //
-                                      // // Release the blob URL
-                                      // html.Url.revokeObjectUrl(url);
                                     },
-                                  ),
+                                  )
                                 ),
                               ],
                             ),
@@ -949,44 +863,26 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
   String DividText (String text){
     String temp = "" ;
     List<String> Words = text.split(" ") ;
-   if(Words.length > 10){
-     for(int i=0; i<(Words.length/2).ceil();i++){
-       temp += Words[i] + " " ;
-     }
-     temp = temp + "\n" ;
-     for(int i=(Words.length/2).ceil(); i<Words.length;i++){
-       temp += Words[i] + " " ;
-     }
-     return temp ;
-   }
+    if(Words.length > 18){
+      for(int i=0; i<(Words.length/2).ceil();i++){
+        temp += Words[i] + " " ;
+      }
+      temp = temp + "\n" ;
+      for(int i=(Words.length/2).ceil(); i<Words.length;i++){
+        temp += Words[i] + " " ;
+      }
+      return temp ;
+    }
 
 
     return text ;
 
   }
-  // String DividCommentsText (String text){
-  //   String temp = "" ;
-  //   List<String> Words = text.split(" ") ;
-  //  if(Words.length > 10) {
-  //    for (int i = 0; i < (Words.length / 10).ceil(); i++) {
-  //      for(int j = i*10; j < i*10+10;j++){
-  //          temp += Words[j] + " " ;
-  //      }
-  //      temp = temp + "\n";
-  //    }
-  //    return temp;
-  //  }
-  //
-  //
-  //
-  //   return text ;
-  //
-  // }
 
   String DividCommentsText(String text) {
     String temp = "";
     List<String> Words = text.split(" ");
-    int wordsPerLine = 10;
+    int wordsPerLine = 12;
 
     for (int i = 0; i < Words.length; i += wordsPerLine) {
       int end = (i + wordsPerLine < Words.length) ? i + wordsPerLine : Words.length;

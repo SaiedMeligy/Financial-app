@@ -52,15 +52,18 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
           appBar: AppBar(
             automaticallyImplyLeading: isMobile,
             backgroundColor: Constants.theme.primaryColor,
-            toolbarHeight: Constants.mediaQuery.height * 0.24,
-            leadingWidth: Constants.mediaQuery.width * 0.3,
+            toolbarHeight: Constants.mediaQuery.height * 0.26,
+            leadingWidth: Constants.mediaQuery.width * 0.35,
             leading: isMobile
                 ? null
                 : Container(
               padding: const EdgeInsets.all(10),
               decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10)
+                ),
                 image: DecorationImage(
-                  image: AssetImage("assets/images/logo2.png"),
+                  image: AssetImage("assets/images/AEI Logo.png"),
                   fit: BoxFit.cover,
                 ),
               ),
