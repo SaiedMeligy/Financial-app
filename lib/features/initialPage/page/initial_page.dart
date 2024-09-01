@@ -98,6 +98,24 @@ class _InitialPageState extends State<InitialPage> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 10,),
+                        SizedBox(
+                          width: isMobile ? double.infinity : Constants.mediaQuery.width * 0.2,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
+                              // _launchURL(_url);
+                              Navigator.push(context, MaterialPageRoute(builder:(context) =>ServicesView()));
+                            },
+                            child: Text(
+                              "خدمات المستفيد",
+                              style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+
+                        ),
                       ],
                     ).setHorizontalPadding(context, enableMediaQuery: false, isMobile ? 10 : 20)
                         .setVerticalPadding(context, enableMediaQuery: false, isMobile ? 10 : 20),
@@ -151,17 +169,17 @@ class _InitialPageState extends State<InitialPage> {
                                     width: 1,
                                     color: Colors.grey,
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      // final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
-                                      // _launchURL(_url);
-                                      Navigator.push(context, MaterialPageRoute(builder:(context) =>ServicesView()));
-                                    },
-                                    child: Text(
-                                      "خدماتنا",
-                                      style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
-                                    ),
-                                  ),
+                                  // TextButton(
+                                  //   onPressed: () {
+                                  //     // final Uri _url = Uri.parse('https://ssa.gov.ae/ar-AE/Services');
+                                  //     // _launchURL(_url);
+                                  //     Navigator.push(context, MaterialPageRoute(builder:(context) =>ServicesView()));
+                                  //   },
+                                  //   child: Text(
+                                  //     "خدماتنا",
+                                  //     style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                  //   ),
+                                  // ),
                                   TextButton(
                                     onPressed: () {
                                       _launchWhatsApp();

@@ -125,7 +125,7 @@ class _ServicesViewState extends State<ServicesView> {
                               Row(
                                 children: [
                                   Text(
-                                      'في حالة كانت الخدمة غير متوفرة يرجى توفير اسم الخدمة وسيتم التواصل خلال 24 ساعة',
+                                      'في حالة كانت الخدمة غير متوفرة يرجى كتابة اسم الخدمة وسيتم التواصل معك خلال 48 ساعة',
                                       style: Constants.theme.textTheme.titleLarge
                                           ?.copyWith(
                                           color: Colors.black,
