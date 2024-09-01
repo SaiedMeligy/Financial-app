@@ -263,7 +263,7 @@ class _InitialPageState extends State<InitialPage> {
     try {
       bool canLunch = await canLaunchUrl(url);
       if (canLunch) {
-        await launchUrl(url, mode: LaunchMode.externalApplication);
+        await launchUrl(url, mode: LaunchMode.platformDefault);
       } else {
         throw 'Could not launch $url';
       }
@@ -277,7 +277,7 @@ class _InitialPageState extends State<InitialPage> {
     final Uri whatsappUri = Uri.parse('https://wa.me/$phoneNumber');
     bool canLunch = await canLaunchUrl(whatsappUri);
     if (canLunch) {
-      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+      await launchUrl(whatsappUri, mode: LaunchMode.platformDefault);
     } else {
       throw 'Could not launch $whatsappUri';
     }
