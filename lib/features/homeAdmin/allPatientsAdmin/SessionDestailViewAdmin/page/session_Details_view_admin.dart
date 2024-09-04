@@ -377,7 +377,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                           var nationalId = session["pationt"]["national_id"] ??
                               "";
                           var caseManager = session["case_manager"] ?? "";
-                          var phoneNumber = session["phone_number"] ?? "";
+                          var phoneNumber = session["pationt"]["phone_number"] ?? "" ?? "";
                           var otherPhoneNumber = session["other_phone_number"] ?? "";
 
                           var isAttended = session["is_attended"] == 1;

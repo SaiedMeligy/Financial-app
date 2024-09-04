@@ -369,18 +369,6 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                               return Center(
                                   child: Text("No session data available."));
                             }
-                            String formatPhoneNumber(String phoneNumber) {
-                              // Remove any trailing '+' if present
-                              phoneNumber = phoneNumber.replaceAll(RegExp(r'\+$'), '');
-
-                              // Ensure that the number starts with '+'
-                              if (!phoneNumber.startsWith('+')) {
-                                phoneNumber = '$phoneNumber'"+";
-                              }
-
-                              return phoneNumber;
-                            }
-
                             var patientName = session["pationt"]["name"] ?? "";
                             var nationalId = session["pationt"]["national_id"] ??
                                 "";
@@ -400,8 +388,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                             var advisorComments = session["advicor_comments"] ??
                                 "";
                             var sessionDate = session["date"] ?? "";
-                            var phoneNumber =formatPhoneNumber(session["phone_number"] ?? "");
-                            var otherPhoneNumber = formatPhoneNumber(session["other_phone_number"] ?? "");
+                            var phoneNumber = session["pationt"]["phone_number"] ?? "";
+                            var otherPhoneNumber = session["other_phone_number"] ?? "";
                             TextEditingController commentController = TextEditingController(text: advisorComments);
 
                             return ListView(
