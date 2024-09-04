@@ -150,15 +150,12 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                         ),
                         Row(
                           children: [
-                            Text("استشارى المرحلة التانية", style: Constants.theme.textTheme.titleLarge?.copyWith(
-                              color: Colors.black
-                            )),
-                            SizedBox(width: 15),
-                            Text('${advisor_name}',style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),)
+                            Expanded(child: Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black))),
+                            isMobile?SizedBox(width: 5):SizedBox(width: 15),
                           ],
                         ),
                         Text("ادخل رقم الهوية الأماراتية", style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                          color: Colors.black
+                            color: Colors.black
                         )),
                         SizedBox(height: 5),
                         Row(
@@ -172,15 +169,18 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                                     return "من فضلك ادخل رقم الهوية الأماراتية";
                                   }
                                   return null;
-                                  },
+                                },
                               ),
                             ),
-                            SizedBox(width: 10),
-                            BorderRoundedButton(
-                              title: "Get",
-                              onPressed: () {
-                                addSessionCubit.getSessionDetails(_patientNationalIdController.text);
-                              },
+                            (Constants.mediaQuery.width>600)?SizedBox(width:2):SizedBox(width: 10),
+                            Container(
+                              width: 50,
+                              child: BorderRoundedButton(
+                                title: "Get",
+                                onPressed: () {
+                                  addSessionCubit.getSessionDetails(_patientNationalIdController.text);
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -188,24 +188,23 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                         Row(
                           children: [
                             Container(
-                              width: isMobile?Constants.mediaQuery.width*0.25:Constants.mediaQuery.width*0.09  ,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
+                                width: isMobile?Constants.mediaQuery.width*0.30:Constants.mediaQuery.width*0.09  ,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
                                 child: sessionNum==null?Text("الجلسة .... ",style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                  color: Colors.black
+                                    color: Colors.black
                                 ),):Text("الجلسة "+sessionNum.toString(),style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                  color: Colors.black
+                                    color: Colors.black
                                 ))).setOnlyPadding(context, 0, 0, 5, 0,enableMediaQuery: false)
                           ],
                         ),
-
                         SizedBox(height: 10),
                         Text("اسم استشارى المرحلة الاولى", style: Constants.theme.textTheme.bodyLarge?.copyWith(
                           color: Colors.black

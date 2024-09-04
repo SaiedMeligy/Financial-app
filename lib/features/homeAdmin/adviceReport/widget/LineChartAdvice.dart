@@ -92,10 +92,10 @@ class _LineChartsAdviceState extends State<LineChartsAdvice> {
                                 y: data.percentage,
                                 widget: Column(
                                   children: [
-                                    Text(
-                                      '${data.percentage.toStringAsFixed(2)}%',
-                                      style: Constants.theme.textTheme.bodyMedium,
-                                    ),
+                                    // Text(
+                                    //   '${data.percentage.toStringAsFixed(2)}%',
+                                    //   style: Constants.theme.textTheme.bodyMedium,
+                                    // ),
                                   ],
                                 ),
                                 coordinateUnit: CoordinateUnit.point,

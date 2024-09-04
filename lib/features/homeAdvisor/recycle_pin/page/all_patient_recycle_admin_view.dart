@@ -59,7 +59,7 @@ class _AllPatientRecycleAdminViewState extends State<AllPatientRecycleAdminView>
                 Expanded(
                   child: PatientCyclebin<Pationts>(
                             label1: "اسم الحالة",
-                            label2: "الحذف",
+                            label2: "استرجاع",
                             items: patients,
                             itemNameBuilder: (item) => item.name ?? 'No Name',
                           itemDeleteWidgetBuilder: (item){

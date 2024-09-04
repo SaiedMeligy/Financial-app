@@ -304,8 +304,8 @@ class _StaticScreenState extends State<StaticScreen> {
 
   Widget _buildInfoCard({required String title, required String count, required IconData icon}) {
     return Container(
-      width: isMobile ? Constants.mediaQuery.width * 0.3 : Constants.mediaQuery.width * 0.16,
-      height:isMobile? Constants.mediaQuery.height * 0.20:Constants.mediaQuery.height * 0.16,
+      width: isMobile ? Constants.mediaQuery.width * 0.28 : Constants.mediaQuery.width * 0.16,
+      height:isMobile? Constants.mediaQuery.height * 0.15:Constants.mediaQuery.height * 0.16,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey,

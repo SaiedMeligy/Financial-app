@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/constants.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/widget/custom_text_field.dart';
 import '../../../../core/Services/snack_bar_service.dart';
 import 'package:experts_app/core/config/cash_helper.dart';
@@ -94,43 +93,6 @@ class _StoreFormState extends State<StoreForm> {
 
   void _updateRelatedQuestions(
       Questions mainQuestion, int optionId, List<Questions>? relatedQuestions) {
-    // if (relatedQuestionsMap[optionId] != null) {
-    //   if (relatedQuestionsMap[optionId] != null) {
-    //     for (var q in relatedQuestionsMap[optionId]!) {
-    //       questionsWidget.entries.forEach((Q) {
-    //         if (Q.key.id == q.id) {
-    //           Q.key.isRelatedQuestion = 1;
-    //         }
-    //       });
-    //     }
-    //   }
-    //   relatedQuestionsMap.remove(optionId);
-    // }
-    // if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
-    //   relatedQuestionsMap[optionId] = relatedQuestions;
-    //   if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
-    //     for (var q in relatedQuestions) {
-    //       questionsWidget.entries.forEach((Q) {
-    //         if (Q.key.id == q.id) {
-    //           Q.key.isRelatedQuestion = 0;
-    //         }
-    //       });
-    //     }
-    //   }
-    // }
-    // if (relatedQuestionsMap[optionId] != null) {
-    //   for (var q in relatedQuestionsMap[optionId]!) {
-    //     questionsWidget.entries.forEach((Q) {
-    //       if (Q.key.id == q.id) {
-    //         Q.key.isRelatedQuestion = 1;
-    //       }
-    //     });
-    //   }
-
-    //   relatedQuestionsMap.remove(optionId);
-    // } else {
-
-    // }
     relatedQuestionsMap[optionId] = relatedQuestions ?? [];
     if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
       for (var q in relatedQuestions) {
@@ -397,15 +359,11 @@ class _StoreFormState extends State<StoreForm> {
                                   if (index < questionsList.length) {
                                     return Column(
                                       children: [
-                                        if (index < axisDisplay.length &&
-                                            axisDisplay[index] != 0)
+                                        if (index < axisDisplay.length && axisDisplay[index] != 0)
                                           Column(
                                             children: [
                                               Text(
-                                                questionsList[index]
-                                                    .axis!
-                                                    .name
-                                                    .toString(),
+                                                questionsList[index].axis!.name.toString(),
                                                 style: Constants
                                                     .theme.textTheme.titleLarge
                                                     ?.copyWith(
@@ -423,11 +381,9 @@ class _StoreFormState extends State<StoreForm> {
                                           ),
                                         const SizedBox(height: 10),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: questionsWidget.entries
-                                              .firstWhere((q) =>
-                                                  q.key.id ==
+                                          padding:  EdgeInsets.symmetric(
+                                              horizontal:isMobile? 2:20),
+                                          child: questionsWidget.entries.firstWhere((q) => q.key.id ==
                                                   questionsList[index].id)
                                               .value,
                                         ),
@@ -435,7 +391,7 @@ class _StoreFormState extends State<StoreForm> {
                                           height: 10,
                                         ),
                                       ],
-                                    ).setHorizontalPadding(context,enableMediaQuery: false, 10);
+                                    ).setHorizontalPadding(context,enableMediaQuery: false, (Constants.mediaQuery.width>600)?2:10);
                                   } else {
                                     return Column(
                                       children: [
@@ -487,7 +443,7 @@ class _StoreFormState extends State<StoreForm> {
                                                       ),
                                                     ],
                                                   ),
-                                                  Row(
+                                                    Column(
                                                     children: [
                                                       Text(
                                                         "الخدمة الاستشارية",
@@ -499,9 +455,6 @@ class _StoreFormState extends State<StoreForm> {
                                                           color: Colors.black,
                                                         ),
                                                       ),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
                                                       DropDown(
                                                         onChange: (value) {
                                                           setState(() {
@@ -510,14 +463,13 @@ class _StoreFormState extends State<StoreForm> {
                                                           });
                                                         },
                                                       ),
+
+
                                                     ],
                                                   ),
                                                 ],
                                               )
-                                            : SizedBox(
-                                                height: 10,
-                                              ),
-                                        Row(
+                                            : Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
@@ -525,11 +477,7 @@ class _StoreFormState extends State<StoreForm> {
                                               children: [
                                                 Text(
                                                   " هل يحتاج الي جلسة اخري",
-                                                  style: Constants.theme
-                                                      .textTheme.titleLarge
-                                                      ?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
+                                                  style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
                                                 ),
                                                 Checkbox(
                                                   value:
@@ -547,11 +495,7 @@ class _StoreFormState extends State<StoreForm> {
                                               children: [
                                                 Text(
                                                   "الخدمة الاستشارية",
-                                                  style: Constants.theme
-                                                      .textTheme.titleLarge
-                                                      ?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
+                                                  style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
                                                 ),
                                                 const SizedBox(
                                                   width: 10,
@@ -567,7 +511,7 @@ class _StoreFormState extends State<StoreForm> {
                                               ],
                                             ),
                                           ],
-                                        ),
+                                        ).setOnlyPadding(context,enableMediaQuery: false, 10, 0, 0, 0),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -896,10 +840,7 @@ class _StoreFormState extends State<StoreForm> {
                         Expanded(
                           child: Text(
                             question.questionOptions![i].title.toString(),
-                            style:
-                                Constants.theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.black,
-                            ),
+                            style:isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,): Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,),
                           ),
                         ),
                         if (question.questionOptions![i].type == 1)
@@ -964,20 +905,19 @@ class _StoreFormState extends State<StoreForm> {
 
 class LinePainter extends CustomPainter {
   final String text;
-  final double padding; // Add padding property
+  final double padding;
 
-  LinePainter(
-      {required this.text, this.padding = 15}); // Default padding is 10.0
+  LinePainter({required this.text, this.padding = 15});
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
       ..color = Constants.theme.primaryColor.withOpacity(0.8)
-      ..strokeWidth = 15;
+      ..strokeWidth = (Constants.mediaQuery.width > 600) ? 25 : 15;
 
     var path = Path();
 
-    double margin = padding; // Use padding for margin
+    double margin = padding;
 
     path.moveTo(margin, margin);
     path.lineTo(size.width * 0.30 - margin, margin);
@@ -987,10 +927,15 @@ class LinePainter extends CustomPainter {
 
     canvas.drawPath(path, paint);
 
+    // Determine the font size based on screen width
+    double fontSize = Constants.mediaQuery.width > 600 ? 20 : 20;
+
     var textPainter = TextPainter(
       text: TextSpan(
         text: text,
-        style: Constants.theme.textTheme.titleLarge?.copyWith(),
+        style: (Constants.mediaQuery.width > 600)
+            ? Constants.theme.textTheme.bodyMedium?.copyWith(fontSize: fontSize)
+            : Constants.theme.textTheme.titleLarge?.copyWith(fontSize: fontSize),
       ),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
@@ -998,14 +943,11 @@ class LinePainter extends CustomPainter {
 
     textPainter.layout(
       minWidth: 0,
-      maxWidth:
-          size.width * 0.30 - 2 * margin, // Subtract padding from maxWidth
+      maxWidth: size.width * 0.30 - 2 * margin,
     );
 
     var offset = Offset(
-      margin +
-          (size.width * 0.30 - 2 * margin - textPainter.width) /
-              2, // Adjust x position based on padding
+      margin + (size.width * 0.30 - 2 * margin - textPainter.width) / 2,
       (size.height - textPainter.height) / 2,
     );
 

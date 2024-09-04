@@ -89,14 +89,6 @@ class _PatientCyclebinState<T> extends State<PatientCyclebin<T>> {
                         children: [
                           TableCell(
                             child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PatientDetailsView(pationt_data: widget.items[index]),
-                                  ),
-                                );
-                              },
                               child: Container(
                                 alignment: Alignment.center,
                                 child: Center(

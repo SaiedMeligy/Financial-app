@@ -76,8 +76,9 @@ class _DropDownState extends State<DropDown> {
                     value: value,
                     child: Text(
                       value.name,
-                      style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.bodyMedium?.copyWith(
+                      style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,fontSize: 10):Constants.theme.textTheme.bodyMedium?.copyWith(
                         color: Colors.black,
+                        fontSize: 18
                       ),
                     ),
                   );

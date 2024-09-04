@@ -79,59 +79,65 @@ class _BookingServiceViewState extends State<BookingServiceView> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-      backgroundColor: Constants.theme.primaryColor,
-      toolbarHeight: Constants.mediaQuery.height * 0.26,
-      leadingWidth: Constants.mediaQuery.width * 0.35,
-      leading:
-      Row(
-        children: [
-          IconButton(onPressed: (){
-            Navigator.pop(context);
-          }, icon: Icon(Icons.arrow_back)),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(15),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(10)
-                ),
-                image: DecorationImage(
-                  image: AssetImage("assets/images/AEI Logo.png"),
-                  fit: BoxFit.cover,
+      appBar: AppBar(
+        backgroundColor: Constants.theme.primaryColor,
+        toolbarHeight: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.17:Constants.mediaQuery.height * 0.26,
+        leadingWidth: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.21:Constants.mediaQuery.width * 0.35,
+        leading:
+        Row(
+          children: [
+            IconButton(onPressed: (){
+              Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ServicesView(),),  (Route<dynamic> route) => false,);
+            }, icon: Icon(Icons.arrow_back,size: (Constants.mediaQuery.width < 600)?10:40,)),
+            // (Constants.mediaQuery.width < 600)?Container():IconButton(onPressed: (){
+            //   Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ServicesView(),),  (Route<dynamic> route) => false,);
+            // }, icon: Icon(Icons.arrow_back,size: (Constants.mediaQuery.width < 600)?10:40,)),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(10)
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/AEI Logo.png"),
+                    fit: (Constants.mediaQuery.width < 600)?BoxFit.fitWidth:BoxFit.cover,
+
+                  ),
                 ),
               ),
             ),
+          ],
+        ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
+        title: Expanded(
+          child: Column(
+            children: [
+              Text(
+                (Constants.mediaQuery.width < 600)?"العيادة \nالمالية":"العيادة المالية",
+                style: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.titleLarge,
+              ),
+              // SizedBox(height: 15,),
+            ],
           ),
-        ],
-      ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
-      title: Column(
-        children: [
-          Text(
-            "العيادة المالية",
-            style: Constants.theme.textTheme.titleLarge,
-          ),
-          SizedBox(height: 15,),
+        ),
+        centerTitle: true,
+        actions: [
+          Container(
+            height: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height*0.10:Constants.mediaQuery.height*0.6,
+            width: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.12:Constants.mediaQuery.width*0.29,
+            padding: const EdgeInsets.all(15),
+            decoration:  BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              image: DecorationImage(
+                image: AssetImage("assets/images/لوجو الهيئة.png"),
+                fit: (Constants.mediaQuery.width < 600)?BoxFit.fitWidth:BoxFit.cover,
+              ),
+            ),
+          ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
+
         ],
       ),
-      centerTitle: true,
-      actions: [
-        Container(
-          height: Constants.mediaQuery.height*0.6,
-          width: Constants.mediaQuery.width*0.29,
-          padding: const EdgeInsets.all(15),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            image: DecorationImage(
-              image: AssetImage("assets/images/لوجو الهيئة.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
-
-      ],
-    ),
       body: BlocBuilder<AddServiceCubit,AddServiceStates>(
         bloc: reserveServiceCubit,
         builder:(context, state) {
@@ -299,7 +305,6 @@ class _BookingServiceViewState extends State<BookingServiceView> {
                               ),
                             ),
                             SizedBox(height: 40),
-
                             BorderRoundedButton(title: "حجز الخدمة",onPressed: (){
                               reserveServiceCubit.reserveService(
                                 widget.consultation.id,

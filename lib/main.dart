@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'core/config/routes.dart';
 import 'core/config/cash_helper.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,17 @@ import 'features/initialPage/page/initial_page.dart';
 import 'package:experts_app/core/config/page_route_name.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'firebase_options.dart';
+
 
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   CacheHelper.init();
   runApp(const MyApp());
 }

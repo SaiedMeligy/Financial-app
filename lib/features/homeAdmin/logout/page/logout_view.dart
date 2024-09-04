@@ -43,10 +43,10 @@ class _LogoutViewState extends State<LogoutView> {
               children: [
                 Text(
                   "الخروج",
-                  style: Constants.theme.textTheme.bodyLarge,
+                  style: (Constants.mediaQuery.width>600)?Constants.theme.textTheme.bodySmall:Constants.theme.textTheme.bodyMedium,
                 ),
                 const SizedBox(
-                  width: 5,
+                  width: 2,
                 ),
                 IconButton(
                   icon: const Icon(Icons.logout_rounded),

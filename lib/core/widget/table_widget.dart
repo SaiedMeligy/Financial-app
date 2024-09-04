@@ -48,7 +48,7 @@ class _TableWidgetState<T> extends State<TableWidget<T>> {
               Table(
                 columnWidths: {
                   0 : FlexColumnWidth(4) ,
-                  1 : FlexColumnWidth(1) ,
+                  1 : FlexColumnWidth(1.2) ,
                   2 : FlexColumnWidth(1) ,
                 },
                 children: [

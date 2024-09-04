@@ -110,7 +110,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                  : widget.suffixWidget,
              prefixIcon: widget.prefixIcon,
              hintText: widget.hint,
-             hintStyle: Constants.theme.textTheme.bodyLarge?.copyWith(
+             hintStyle: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodySmall?.copyWith(
+                 color: Colors.black,
+               fontSize: 10
+             ):
+             Constants.theme.textTheme.bodyLarge?.copyWith(
                  color: Colors.black,
                  fontWeight: FontWeight.bold,
                  fontSize: 12

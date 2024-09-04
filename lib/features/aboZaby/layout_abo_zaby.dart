@@ -101,22 +101,20 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
             ],
             centerTitle: true,
           ),
-          drawer: isMobile
-              ? Drawer(
+          drawer: isMobile ? Drawer(
             backgroundColor: Constants.theme.primaryColor,
             child: ListView(
               children: [
                 DrawerHeader(
+                  margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Constants.theme.primaryColor,
                   ),
-
                   child: Container(
-
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/logo2.png",),
-                        fit: BoxFit.cover,
+                        image: AssetImage("assets/images/AEI Logo.png",),
+                        fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),
@@ -144,10 +142,24 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
                     },
                   );
                 }).toList(),
+                Divider(color: Colors.white70,),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10,top: 0,bottom: 10,left: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+
+                    ),
+                    child: Image.asset("assets/images/لوجو الهيئة.png",
+                      fit: BoxFit.fitWidth,
+                      height: 80,// Adjust height as needed
+                    ),
+                  ),
+                ).setVerticalPadding(context,enableMediaQuery: false, 10)
               ],
             ),
-          )
-              : null,
+          ) : null,
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: Row(

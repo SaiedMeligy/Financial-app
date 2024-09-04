@@ -118,11 +118,11 @@ class _AddQuestionState extends State<AddQuestion> {
                                 ),
                                 RadioWidget(
                                   titleRadio: "اختر المحور",
-                                  items: const [
+                                  items:  [
                                     MapEntry("اختر المحور", 0),
-                                    MapEntry("المحور الاول:بيانات الحالة", 1),
-                                    MapEntry("المحور التاني:التقييم المالي", 2),
-                                    MapEntry("المحور الثالث:السلوك الاستهلاكي", 3)
+                                    MapEntry(isMobile?"المحور الاول":"المحور الاول:بيانات الحالة", 1),
+                                    MapEntry(isMobile?"المحور الثاني":"المحور التاني:التقييم المالي", 2),
+                                    MapEntry(isMobile?"المحو الثالث":"المحور الثالث:السلوك الاستهلاكي", 3)
                                   ],
                                   onChanged: (value) {
                                     setState(() {

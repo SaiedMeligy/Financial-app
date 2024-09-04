@@ -91,10 +91,11 @@ class _SessionDateState extends State<SessionDate> {
                                 Table(
                                 columnWidths: const {
                                   0: FlexColumnWidth(4),
-                                  1: FlexColumnWidth(2.5),
-                                  2: FlexColumnWidth(2.57),
-                                  3: FlexColumnWidth(2),
+                                  1: FlexColumnWidth(2.7),
+                                  2: FlexColumnWidth(2),
+                                  3: FlexColumnWidth(2.9),
                                   4: FlexColumnWidth(2),
+                                  5: FlexColumnWidth(1.8),
                                 },
                                 children: [
                                   TableRow(
@@ -113,7 +114,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .textTheme
                                                   .titleLarge
                                                   ?.copyWith(
-                                                fontSize: isMobile?18:22,
+                                                fontSize: isMobile?14:22,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -131,7 +132,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .textTheme
                                                   .titleLarge
                                                   ?.copyWith(
-                                                fontSize: isMobile?18:22,
+                                                fontSize: isMobile?14:22,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -149,7 +150,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .textTheme
                                                   .titleLarge
                                                   ?.copyWith(
-                                                fontSize: isMobile?18:22,
+                                                fontSize: isMobile?14:22,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -167,7 +168,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .textTheme
                                                   .titleLarge
                                                   ?.copyWith(
-                                                fontSize: isMobile?18:22,
+                                                fontSize: isMobile?14:22,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -185,7 +186,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .textTheme
                                                   .titleLarge
                                                   ?.copyWith(
-                                                fontSize: isMobile?18:22,
+                                                fontSize: isMobile?14:22,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -233,7 +234,7 @@ class _SessionDateState extends State<SessionDate> {
                                                     .bodyMedium
                                                     ?.copyWith(
                                                   color: Colors.white,
-                                                  fontSize: isMobile?16:20,
+                                                  fontSize: isMobile?14:20,
                                                 ),
                                               ),
                                             ),
@@ -266,7 +267,7 @@ class _SessionDateState extends State<SessionDate> {
                                                     .bodyMedium
                                                     ?.copyWith(
                                                   color: Colors.white,
-                                                  fontSize: isMobile?16:20,
+                                                  fontSize: isMobile?12:20,
                                                 ),
                                               ),
                                             ),
@@ -282,7 +283,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .bodyMedium
                                                   ?.copyWith(
                                                 color: Colors.white,
-                                                fontSize: isMobile?16:20,
+                                                fontSize: isMobile?9:20,
                                               ),
                                             ),
                                           ),
@@ -297,7 +298,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .bodyMedium
                                                   ?.copyWith(
                                                 color: Colors.white,
-                                                fontSize: isMobile?16:20,
+                                                fontSize: isMobile?12:20,
                                               ),
                                             ),
                                           ),
@@ -312,7 +313,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   .bodyMedium
                                                   ?.copyWith(
                                                 color: Colors.white,
-                                                fontSize: isMobile?16:20,
+                                                fontSize: isMobile?12:20,
                                               ),
                                             ),
                                           ),

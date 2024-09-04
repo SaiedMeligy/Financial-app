@@ -94,7 +94,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
             backgroundColor: Constants.theme.primaryColor,
             toolbarHeight: Constants.mediaQuery.height * 0.26,
             leadingWidth: Constants.mediaQuery.width * 0.35,
-            leading: Row(
+            leading: isMobile?null:Row(
               children: [
                 Expanded(
                   child: Container(
@@ -115,19 +115,19 @@ class _HomeAdminViewState extends State<HomeAdminView> {
             title: Column(
               children: [
                 Text(
-                  "العيادة المالية",
-                  style: Constants.theme.textTheme.titleLarge,
+                  isMobile?"العيادة \nالمالية":"العيادة المالية",
+                  style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge,
                 ),
                 SizedBox(height: 15,),
                 Text(
                   "$admin_name",
-                  style: Constants.theme.textTheme.titleLarge,
+                  style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge,
                 ),
               ],
             ),
             centerTitle: true,
             actions: [
-              Container(
+               isMobile?Container():Container(
                 height: Constants.mediaQuery.height*0.6,
                 width: Constants.mediaQuery.width*0.29,
                 padding: const EdgeInsets.all(10),
@@ -143,22 +143,20 @@ class _HomeAdminViewState extends State<HomeAdminView> {
               LogoutView()
             ],
           ),
-          drawer: isMobile
-              ? Drawer(
+          drawer: isMobile ? Drawer(
             backgroundColor: Constants.theme.primaryColor,
             child: ListView(
               children: [
                 DrawerHeader(
+                  margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Constants.theme.primaryColor,
                   ),
-
                   child: Container(
-
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/logo2.png",),
-                        fit: BoxFit.cover,
+                        image: AssetImage("assets/images/AEI Logo.png",),
+                        fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),
@@ -186,10 +184,24 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                     },
                   );
                 }).toList(),
+                Divider(color: Colors.white70,),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10,top: 0,bottom: 10,left: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+
+                    ),
+                    child: Image.asset("assets/images/لوجو الهيئة.png",
+                      fit: BoxFit.fitWidth,
+                      height: 80,// Adjust height as needed
+                    ),
+                  ),
+                ).setVerticalPadding(context,enableMediaQuery: false, 10)
               ],
             ),
-          )
-              : null,
+          ) : null,
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: Row(

@@ -90,7 +90,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                           Table(
                             columnWidths: {
                               0: FlexColumnWidth(4),
-                              1: FlexColumnWidth(2.5),
+                              1: FlexColumnWidth(2.7),
                               2: FlexColumnWidth(2),
                               3: FlexColumnWidth(2.6),
                               4: FlexColumnWidth(2),
@@ -110,7 +110,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           "اسم الحالة",
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 16 : 20,
+                                            fontSize: isMobile ? 14 : 20,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -122,10 +122,10 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                       height: 60,
                                       child: Center(
                                         child: Text(
-                                          "أسم الاستشاري",
+                                          "أسم الاستشارى",
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -140,7 +140,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           "رقم الجلسة",
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -156,7 +156,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                             color: Colors.white,
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                           ),
                                         ),
                                       ),
@@ -170,7 +170,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           "الوقت",
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -185,7 +185,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           "الحالة",
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -240,7 +240,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                             session.advicor!.name.toString(),
                                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                               color: Colors.white,
-                                              fontSize: isMobile ? 15 : 20,
+                                              fontSize: isMobile ? 12 : 20,
                                             ),
                                           ),
                                         ),
@@ -253,7 +253,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           "الجلسة ${session.sessionNumber}",
                                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                             color: Colors.white,
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                           ),
                                         ),
                                       ),
@@ -277,7 +277,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           session.time.toString(),
                                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                             color: Colors.white,
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                           ),
                                         ),
                                       ),
@@ -289,7 +289,7 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                           session.isFinished == 1 ? "انتهت" : "لم تنته",
                                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                             color: Colors.white,
-                                            fontSize: isMobile ? 15 : 20,
+                                            fontSize: isMobile ? 12 : 20,
                                           ),
                                         ),
                                       ),

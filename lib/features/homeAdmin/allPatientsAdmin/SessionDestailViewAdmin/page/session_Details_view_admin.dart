@@ -10,6 +10,7 @@ import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailVi
 import 'package:experts_app/features/homeAdvisor/sessions/manager/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
 import '../../../../../core/widget/border_rounded_button.dart';
@@ -77,9 +78,9 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("استمارة برنامج الارشاد المالي"),
+        title: Text("استمارة الارشاد المالي",style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.titleLarge,),
         centerTitle: true,
-        titleTextStyle: Constants.theme.textTheme.titleLarge,
+        // titleTextStyle: isMobile?Constants.theme.textTheme.bodySmall:Constants.theme.textTheme.titleLarge,
         backgroundColor: Constants.theme.primaryColor,
         elevation: 0.0,
         automaticallyImplyLeading: true,
@@ -427,8 +428,11 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                               onPressed: () async {
                                                 print('sssssssssssssssssssssssss');
                                                 final pdf = pw.Document();
-                                                final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-                                                final ttfSans = pw.Font.ttf(notoSans);
+                                                // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
+                                                // final ttf = pw.Font.ttf(notoSans);
+                                                final fontData = await rootBundle.load('assets/fonts/Amiri-Regular.ttf');
+                                                final ttf = pw.Font.ttf(fontData);
+
                                                 // final image = pw.MemoryImage(
                                                 //   (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
                                                 // );
@@ -442,121 +446,123 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             children: [
                                                               pw.Text(
                                                                 "اسم الحالة :${patientName}" ,
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 "اسم الاستشارى :${advisorName}",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 "رقم الهوية :${nationalId}",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 "رقم الهاتف :${phoneNumber}",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 "رقم بديل للهاتف :${otherPhoneNumber}",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 "مدير الحالة : ${caseManager}",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 isAttended
                                                                     ? "الحالة حضرت الجلسة"
                                                                     : "الحالة لم تحضر الجلسة",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 needOtherSession
                                                                     ? "الحالة بحاجه الي جلسة اخرى"
                                                                     : "الحالة غير بحاجه الي جلسة اخرى",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 isSuccessStory
                                                                     ? "الحالة قصة نجاح"
                                                                     : "الحالة ليست قصة نجاح",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text("الخدمة الاستشارية : ${serviceName}",
 
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
                                                               pw.Text(
                                                                 "وصف الخدمة الاستشارية : ${serviceDescription}",
-                                                                style: pw.TextStyle(font: ttfSans, fontSize: 14, color: PdfColors.black),
+                                                                style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                 textDirection: pw.TextDirection.rtl,
                                                               ),
-                                                              pw.Table(
-                                                                border: pw.TableBorder.all(
-                                                                  color: PdfColors.black,
-                                                                  width: 1,
-                                                                ),
-                                                                children: [
-                                                                  pw.TableRow(
+                                                              pw.Directionality(
+                                                                  textDirection: pw.TextDirection.rtl,
+                                                                  child:pw.Table(
+                                                                    border: pw.TableBorder.all(
+                                                                      color: PdfColors.black,
+                                                                      width: 1,
+                                                                    ),
                                                                     children: [
-                                                                      pw.Padding(
-                                                                        padding: const pw.EdgeInsets.all(8.0),
-                                                                        child: pw.Center(child:pw.Text(
-                                                                          "الملاحظة",
-                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 12),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        ),
+                                                                      pw.TableRow(
+                                                                        children: [
+                                                                          pw.Padding(
+                                                                            padding: const pw.EdgeInsets.all(8.0),
+                                                                            child: pw.Center(child:pw.Text(
+                                                                              "الملاحظة",
+                                                                              style: pw.TextStyle(font: ttf, fontSize: 14),
+                                                                              textDirection: pw.TextDirection.rtl,
+                                                                            ),
+                                                                            ),
+                                                                          ),
+                                                                          pw.Padding(
+                                                                              padding: const pw.EdgeInsets.all(8.0),
+                                                                              child: pw.Container(
+                                                                                width:400,
+                                                                                child:pw.Center(child:pw.Text(
+                                                                                  "تاريخ الجلسة",
+                                                                                  style: pw.TextStyle(font: ttf, fontSize: 14),
+                                                                                  textDirection: pw.TextDirection.rtl,
+                                                                                ),
+                                                                                ),
+                                                                              )
+                                                                          )
+                                                                        ],
                                                                       ),
-                                                                      pw.Padding(
-                                                                          padding: const pw.EdgeInsets.all(8.0),
-                                                                          child: pw.Container(
-                                                                            width:400,
-                                                                            child:pw.Center(child:pw.Text(
-                                                                              "تاريخ الجلسة",
-                                                                              style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                                      // Add more rows as needed
+                                                                      pw.TableRow(
+                                                                        children: [
+                                                                          pw.Padding(
+                                                                            padding: const pw.EdgeInsets.all(8.0),
+                                                                            child:pw.Text(
+                                                                              advisorComments,
+                                                                              style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
+                                                                              textDirection: pw.TextDirection.rtl,
+                                                                            ),
+                                                                          ),
+                                                                          pw.Expanded( // Expands this column to take up more space
+                                                                            child: pw.Center(child:pw.Text(
+                                                                              sessionDate,
+                                                                              style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                                               textDirection: pw.TextDirection.rtl,
                                                                             ),
                                                                             ),
                                                                           )
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  // Add more rows as needed
-                                                                  pw.TableRow(
-                                                                    children: [
-                                                                      pw.Padding(
-                                                                        padding: const pw.EdgeInsets.all(8.0),
-                                                                        child:pw.Text(
-                                                                          advisorComments,
-                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
+                                                                        ],
                                                                       ),
-                                                                      pw.Expanded( // Expands this column to take up more space
-                                                                        child: pw.Center(child:pw.Text(
-                                                                          sessionDate,
-                                                                          style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        ),
-                                                                      )
                                                                     ],
-                                                                  ),
-                                                                ],
+                                                                  )
+
                                                               )
-
-
                                                             ]
                                                         );
                                                     },
@@ -606,13 +612,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                               .textTheme.bodyLarge?.copyWith(
                                               color: Colors.black),
                                         ),
-                                        Text(
-                                          "رقم الهاتف : $phoneNumber",
-                                          style: isMobile ? Constants.theme
-                                              .textTheme.bodyMedium?.copyWith(
-                                            color: Colors.black,) : Constants.theme
-                                              .textTheme.bodyLarge?.copyWith(
-                                              color: Colors.black),
+                                        Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: Text(
+                                            "رقم الهاتف : $phoneNumber",
+                                            style: isMobile ? Constants.theme
+                                                .textTheme.bodyMedium?.copyWith(
+                                              color: Colors.black,) : Constants.theme
+                                                .textTheme.bodyLarge?.copyWith(
+                                                color: Colors.black),
+                                          ),
                                         ),
                                         Text(
                                           "رقم بديل للهاتف : $otherPhoneNumber",
@@ -680,7 +689,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                         Table(
                                           columnWidths: {
                                             0: FlexColumnWidth(4),
-                                            1: FlexColumnWidth(1),
+                                            1: isMobile?FlexColumnWidth(2):FlexColumnWidth(1),
                                           },
                                           children: [
                                             TableRow(
@@ -698,7 +707,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             ? Constants.theme
                                                             .textTheme.bodyMedium
                                                             ?.copyWith(
-                                                          color: Colors.black,)
+                                                          color: Colors.white,)
                                                             : Theme
                                                             .of(context)
                                                             .textTheme
@@ -712,6 +721,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                 TableCell(
                                                   child: SizedBox(
                                                     height: 50,
+                                                    width: 100,
                                                     child: Center(
                                                       child: Text(
                                                         "تاريخ الجلسة",
@@ -720,7 +730,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             ? Constants.theme
                                                             .textTheme.bodyMedium
                                                             ?.copyWith(
-                                                          color: Colors.black,)
+                                                          color: Colors.white,)
                                                             : Theme
                                                             .of(context)
                                                             .textTheme
@@ -755,7 +765,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                                   .bodyMedium
                                                                   ?.copyWith(
                                                                 color: Colors
-                                                                    .black,)
+                                                                    .white,)
                                                                   : Theme
                                                                   .of(context)
                                                                   .textTheme
@@ -779,7 +789,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                           ? Constants.theme
                                                           .textTheme.bodyMedium
                                                           ?.copyWith(
-                                                        color: Colors.black,)
+                                                        color: Colors.white,)
                                                           : Theme
                                                           .of(context)
                                                           .textTheme

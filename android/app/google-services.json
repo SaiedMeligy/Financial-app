@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "33164804905",
+    "project_id": "financial-app-activation",
+    "storage_bucket": "financial-app-activation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33164804905:android:aaecae45293edefc25ad38",
+        "android_client_info": {
+          "package_name": "com.example.experts_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBjHElksy6vRGBXZ0kL_iWtm7YBBv5bQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -64,7 +64,6 @@ class _LineChartsState extends State<LineCharts> {
               ),
               child: ListView(
                 children: [
-
                   Column(
                     children: [
                       SizedBox(

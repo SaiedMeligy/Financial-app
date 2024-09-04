@@ -157,28 +157,22 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                       Center(
                                         child: Text(
                                           answer["title"],
-                                          style: Constants
-                                              .theme.textTheme.titleLarge
-                                              ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold,):Constants.theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold,),
                                         ),
                                       ),
                                       Container(
                                         width: double.infinity,
                                         height: isMobile
+                                            ? answer["question_options"].length > 1
                                             ? answer["question_options"]
-                                            .length > 1
-                                            ? answer["question_options"]
-                                            .length * 70
+                                            .length * 80
                                             : 80
                                             : answer["question_options"]
                                             .length > 1
                                             ? answer["question_options"]
-                                            .length * 60
+                                            .length * 70
                                             : 70,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 20),
+                                        margin: EdgeInsets.symmetric(horizontal: isMobile?5:20, vertical: 20),
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade300,
                                           borderRadius: BorderRadius.only(
@@ -485,7 +479,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                             ).setHorizontalPadding(
                                 context, enableMediaQuery: false, 20),
                           ).setHorizontalPadding(
-                              context, enableMediaQuery: false, 20),
+                              context, enableMediaQuery: false, isMobile?5:20),
                         ),
                       ],
                     ),
@@ -556,7 +550,9 @@ class _DropDownButtonConsultaionWidgetState
                     (ConsultationServices value) {
                   return DropdownMenuItem<ConsultationServices?>(
                     value: value,
-                    child: Text(value.name ?? ''),
+                    child: Text(value.name ?? '',style: Constants.theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.black,
+                    ),),
                   );
                 }).toList(),
           );

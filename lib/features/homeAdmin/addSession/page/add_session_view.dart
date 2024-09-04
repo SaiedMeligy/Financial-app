@@ -146,10 +146,8 @@ class _AddSessionViewState extends State<AddSessionView> {
                         ),
                         Row(
                           children: [
-                            Text("استشارى المرحلة التانية", style: Constants.theme.textTheme.titleLarge?.copyWith(
-                              color: Colors.black
-                            )),
-                            SizedBox(width: 15),
+                            Expanded(child: Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black))),
+                            isMobile?SizedBox(width: 5):SizedBox(width: 15),
                             DropdownButtonAdvisor(
                               onAdvisorSelected: (advicor_id) {
                                 setState(() {
@@ -177,12 +175,15 @@ class _AddSessionViewState extends State<AddSessionView> {
                                   },
                               ),
                             ),
-                            SizedBox(width: 10),
-                            BorderRoundedButton(
-                              title: "Get",
-                              onPressed: () {
-                                addSessionCubit.getPatientDetails(_patientNationalIdController.text);
-                              },
+                            (Constants.mediaQuery.width>600)?SizedBox(width:2):SizedBox(width: 10),
+                            Container(
+                              width: 50,
+                              child: BorderRoundedButton(
+                                title: "Get",
+                                onPressed: () {
+                                  addSessionCubit.getPatientDetails(_patientNationalIdController.text);
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -190,7 +191,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                         Row(
                           children: [
                             Container(
-                              width: isMobile?Constants.mediaQuery.width*0.25:Constants.mediaQuery.width*0.09  ,
+                              width: isMobile?Constants.mediaQuery.width*0.30:Constants.mediaQuery.width*0.09  ,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.black,

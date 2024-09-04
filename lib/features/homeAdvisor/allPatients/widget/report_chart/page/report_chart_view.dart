@@ -515,7 +515,56 @@ class _ReportChartViewState extends State<ReportChartView> {
                                   color: Constants.theme.primaryColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Row(
+                                child: isMobile?Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            isMobile?"السيناريوالأول \n(الحالات المتوازنة نسبيا) : "+double.parse(senario1).toStringAsFixed(2) + "%":"السيناريوالأول(الحالات المتوازنة نسبيا) : " + double.parse(senario1).toStringAsFixed(2) + "%",
+                                            style:isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
+                                                fontSize: isMobile?16:24
+                                            ):Constants.theme.textTheme.titleLarge
+                                        ),
+                                        Text(
+                                          isMobile?"السيناريوالثاني \n(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toStringAsFixed(2) + "%":"السيناريوالثاني(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toStringAsFixed(2) + "%",
+                                          style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
+                                              fontSize: isMobile?16:24
+                                          ):Constants.theme.textTheme.titleLarge,
+                                        ),
+                                        Text(
+                                          isMobile?"السيناريوالثالث \n(للحالات المتعثرة ماليا) : " + double.parse(senario3).toStringAsFixed(2) + "%":"السيناريوالثالث(للحالات المتعثرة ماليا) : " + double.parse(senario3).toStringAsFixed(2) + "%",
+                                          style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
+                                              fontSize: isMobile?16:24
+                                          ):Constants.theme.textTheme.titleLarge,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10,),
+                                    MultiCircularSlider(
+                                      size: isMobile?116:200,
+                                      progressBarType: MultiCircularSliderType.circular,
+                                      // values: countData,
+                                      values: [
+                                        pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                        pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                        pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                      ],
+                                      colors: [Colors.red, Colors.blue, Colors.green],
+                                      showTotalPercentage: true,
+                                      // label: 'This is label text',
+                                      animationDuration: const Duration(milliseconds: 500),
+                                      animationCurve: Curves.easeIn,
+                                      trackColor: Colors.white,
+                                      progressBarWidth: 52.0,
+                                      trackWidth: 40,
+                                      //labelTextStyle: TextStyle(color: Colors.black),
+                                      percentageTextStyle: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ):Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Column(
