@@ -81,7 +81,7 @@ class _BookingServiceViewState extends State<BookingServiceView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.theme.primaryColor,
-        toolbarHeight: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.17:Constants.mediaQuery.height * 0.26,
+        toolbarHeight: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.17:Constants.mediaQuery.height * 0.24,
         leadingWidth: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.21:Constants.mediaQuery.width * 0.35,
         leading:
         Row(

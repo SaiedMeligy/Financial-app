@@ -32,7 +32,7 @@ class _LoginWithPatientState extends State<LoginWithPatient> {
       Scaffold(
         appBar: AppBar(
           backgroundColor: Constants.theme.primaryColor,
-          toolbarHeight: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.17:Constants.mediaQuery.height * 0.26,
+          toolbarHeight: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.17:Constants.mediaQuery.height * 0.24,
           leadingWidth: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.height * 0.21:Constants.mediaQuery.width * 0.35,
           leading:
           Row(
@@ -106,7 +106,7 @@ class _LoginWithPatientState extends State<LoginWithPatient> {
                             children: [
 
                               Container(
-                                width: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.width * 0.8:Constants.mediaQuery.width * 0.3,
+                                width: (Constants.mediaQuery.width < 600)?Constants.mediaQuery.width * 0.8:Constants.mediaQuery.width * 0.6,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
