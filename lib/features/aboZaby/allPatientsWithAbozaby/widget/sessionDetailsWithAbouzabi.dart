@@ -388,7 +388,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                             var advisorComments = session["advicor_comments"] ??
                                 "";
                             var sessionDate = session["date"] ?? "";
-                            var phoneNumber = session["pationt"]["phone_number"] ?? "";
+                            var phoneNumber = session["phone_number"] ?? "";
                             var otherPhoneNumber = session["other_phone_number"] ?? "";
                             TextEditingController commentController = TextEditingController(text: advisorComments);
 

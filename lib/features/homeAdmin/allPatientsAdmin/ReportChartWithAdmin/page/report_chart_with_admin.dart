@@ -139,8 +139,9 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                       onPressed: () async {
                         print('sssssssssssssssssssssssss');
                         final pdf = pw.Document();
-                        final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-                        final ttfSans = pw.Font.ttf(notoSans);
+                        final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
+                        final ttf = pw.Font.ttf(fontData);
+
                         // final image = pw.MemoryImage(
                         //   (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
                         // );
@@ -167,17 +168,17 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                             children: [
                                               pw.Text(
                                                 "السيناريوالأول(الحالات المتوازنة نسبيا) : " + double.parse(senario1).toStringAsFixed(2) + "%",
-                                                style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                 textDirection: pw.TextDirection.rtl,
                                               ),
                                               pw.Text(
                                                 "السيناريوالثاني(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toStringAsFixed(2) + "%",
-                                                style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                 textDirection: pw.TextDirection.rtl,
                                               ),
                                               pw.Text(
                                                 "السيناريوالثالث(للحالات المتعثرة ماليا) : " + double.parse(senario3).toStringAsFixed(2) + "%",
-                                                style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                                style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                 textDirection: pw.TextDirection.rtl,
                                               ),
                                             ],
@@ -198,7 +199,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                   padding: const pw.EdgeInsets.all(5.0),
                                                   child: pw.Text(
                                                     "المؤشرات",
-                                                    style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                    style: pw.TextStyle(font: ttf, fontSize: 12),
                                                     textDirection: pw.TextDirection.rtl,
                                                   ),
                                                 ),
@@ -220,7 +221,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 padding: const pw.EdgeInsets.all(8.0),
                                                 child: pw.Text(
                                                   "السيناريو الثالث",
-                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                  style: pw.TextStyle(font: ttf, fontSize: 12),
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
                                               ),
@@ -228,7 +229,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 padding: const pw.EdgeInsets.all(8.0),
                                                 child: pw.Text(
                                                   "السيناريو الثانى",
-                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                  style: pw.TextStyle(font: ttf, fontSize: 12),
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
                                               ),
@@ -236,7 +237,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 padding: const pw.EdgeInsets.all(8.0),
                                                 child: pw.Text(
                                                   "السيناريو الاول",
-                                                  style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                  style: pw.TextStyle(font: ttf, fontSize: 12),
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
                                               ),
@@ -250,10 +251,10 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               pw.Padding(
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 child: pw.Container(
-                                                  height: 250,
+                                                  height: 220,
                                                   child: pw.Column(
                                                     children: [
-                                                      for (var index = 0; index < pointers3Temp.length; index++)
+                                                      for (var index3 = 0; index3 < pointers3Temp.length; index3++)
                                                         pw.Container(
                                                           margin: const pw.EdgeInsets.only(bottom: 5.0),
                                                           child: pw.Column(
@@ -265,9 +266,9 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                                   pw.Table(
                                                                     // border: pw.TableBorder.all(color: PdfColors.black),
                                                                     children: [
-                                                                      for (var index = 0; index < pointers3Temp.length; index++)
+                                                                      for (var index3 = 0; index3 < pointers3Temp.length; index3++)
                                                                         ...[
-                                                                          for (var pointer in pointers3Temp[index]["pationt_pointers"] ?? [])
+                                                                          for (var pointer in pointers3Temp[index3]["pationt_pointers"] ?? [])
                                                                             pw.TableRow(
                                                                               children: [
                                                                                 pw.Padding(
@@ -275,49 +276,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                                                   child: pw.Text(
                                                                                     pointer["text"],
                                                                                     style: pw.TextStyle(
-                                                                                      font: ttfSans,
-                                                                                      fontSize: 8,
-                                                                                      color: PdfColors.black,
-                                                                                    ),
-                                                                                    textDirection: pw.TextDirection.rtl,
-                                                                                  ),
-                                                                                ),
-                                                                              ],),],
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],),
-                                                        ),],),),),
-                                              pw.Padding(
-                                                padding: const pw.EdgeInsets.all(5.0),
-                                                child: pw.Container(
-                                                  height: 250,
-                                                  child: pw.Column(
-                                                    children: [
-                                                      for (var index = 0; index < pointers2Temp.length; index++)
-                                                        pw.Container(
-                                                          margin: const pw.EdgeInsets.only(bottom: 5.0),
-                                                          child: pw.Column(
-                                                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                                            children: [
-                                                              pw.Column(
-                                                                mainAxisAlignment: pw.MainAxisAlignment.start,
-                                                                children: [
-                                                                  pw.Table(
-                                                                    // border: pw.TableBorder.all(color: PdfColors.black),
-                                                                    children: [
-                                                                      for (var index = 0; index < pointers2Temp.length; index++)
-                                                                        ...[
-                                                                          for (var pointer in pointers2Temp[index]["pationt_pointers"] ?? [])
-                                                                            pw.TableRow(
-                                                                              children: [
-                                                                                pw.Padding(
-                                                                                  padding: const pw.EdgeInsets.all(2.0),
-                                                                                  child: pw.Text(
-                                                                                    pointer["text"],
-                                                                                    style: pw.TextStyle(
-                                                                                      font: ttfSans,
+                                                                                      font: ttf,
                                                                                       fontSize: 8,
                                                                                       color: PdfColors.black,
                                                                                     ),
@@ -337,7 +296,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                   height: 220,
                                                   child: pw.Column(
                                                     children: [
-                                                      for (var index = 0; index < pointers1Temp.length; index++)
+                                                      for (var index2 = 0; index2 < pointers2Temp.length; index2++)
                                                         pw.Container(
                                                           margin: const pw.EdgeInsets.only(bottom: 5.0),
                                                           child: pw.Column(
@@ -349,9 +308,9 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                                   pw.Table(
                                                                     // border: pw.TableBorder.all(color: PdfColors.black),
                                                                     children: [
-                                                                      for (var index = 0; index < pointers1Temp.length; index++)
+                                                                      for (var index2 = 0; index2 < pointers2Temp.length; index2++)
                                                                         ...[
-                                                                          for (var pointer in pointers1Temp[index]["pationt_pointers"] ?? [])
+                                                                          for (var pointer in pointers2Temp[index2]["pationt_pointers"] ?? [])
                                                                             pw.TableRow(
                                                                               children: [
                                                                                 pw.Padding(
@@ -359,7 +318,49 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                                                   child: pw.Text(
                                                                                     pointer["text"],
                                                                                     style: pw.TextStyle(
-                                                                                      font: ttfSans,
+                                                                                      font: ttf,
+                                                                                      fontSize: 8,
+                                                                                      color: PdfColors.black,
+                                                                                    ),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+                                                                              ],),],
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],),
+                                                        ),],),),),
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(5.0),
+                                                child: pw.Container(
+                                                  height: 220,
+                                                  child: pw.Column(
+                                                    children: [
+                                                      for (var index1 = 0; index1 < pointers1Temp.length; index1++)
+                                                        pw.Container(
+                                                          margin: const pw.EdgeInsets.only(bottom: 5.0),
+                                                          child: pw.Column(
+                                                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                                            children: [
+                                                              pw.Column(
+                                                                mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                children: [
+                                                                  pw.Table(
+                                                                    // border: pw.TableBorder.all(color: PdfColors.black),
+                                                                    children: [
+                                                                      for (var index1 = 0; index1 < pointers1Temp.length; index1++)
+                                                                        ...[
+                                                                          for (var pointer in pointers1Temp[index1]["pationt_pointers"] ?? [])
+                                                                            pw.TableRow(
+                                                                              children: [
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(2.0),
+                                                                                  child: pw.Text(
+                                                                                    pointer["text"],
+                                                                                    style: pw.TextStyle(
+                                                                                      font: ttf,
                                                                                       fontSize: 8,
                                                                                       color: PdfColors.black,
                                                                                     ),
@@ -395,7 +396,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                   padding: const pw.EdgeInsets.all(5.0),
                                                   child: pw.Text(
                                                     "التوصيات",
-                                                    style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                                    style: pw.TextStyle(font: ttf, fontSize: 12),
                                                     textDirection: pw.TextDirection.rtl,
                                                   ),
                                                 ),
@@ -431,7 +432,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                                               child: pw.Text(
                                                                                 advices[index]["text"],
                                                                                 style: pw.TextStyle(
-                                                                                  font: ttfSans,
+                                                                                  font: ttf,
                                                                                   fontSize: 8,
                                                                                   color: PdfColors.black,
                                                                                 ),

@@ -139,8 +139,9 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                       onPressed: () async {
                         print('sssssssssssssssssssssssss');
                         final pdf = pw.Document();
-                        final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-                        final ttfSans = pw.Font.ttf(notoSans);
+                        final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
+                        final ttf = pw.Font.ttf(fontData);
+
                         // final image = pw.MemoryImage(
                         //   (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
                         // );
@@ -167,17 +168,17 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                         children: [
                                           pw.Text(
                                             "السيناريوالأول(الحالات المتوازنة نسبيا) : " + double.parse(senario1).toStringAsFixed(2) + "%",
-                                            style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                            style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                             textDirection: pw.TextDirection.rtl,
                                           ),
                                           pw.Text(
                                             "السيناريوالثاني(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toStringAsFixed(2) + "%",
-                                            style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                            style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                             textDirection: pw.TextDirection.rtl,
                                           ),
                                           pw.Text(
                                             "السيناريوالثالث(للحالات المتعثرة ماليا) : " + double.parse(senario3).toStringAsFixed(2) + "%",
-                                            style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
+                                            style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                             textDirection: pw.TextDirection.rtl,
                                           ),
                                         ],
@@ -198,7 +199,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                             padding: const pw.EdgeInsets.all(5.0),
                                             child: pw.Text(
                                               "المؤشرات",
-                                              style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                              style: pw.TextStyle(font: ttf, fontSize: 12),
                                               textDirection: pw.TextDirection.rtl,
                                             ),
                                           ),
@@ -219,7 +220,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                             padding: const pw.EdgeInsets.all(8.0),
                                             child: pw.Text(
                                               "السيناريو الثالث",
-                                              style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                              style: pw.TextStyle(font: ttf, fontSize: 12),
                                               textDirection: pw.TextDirection.rtl,
                                             ),
                                           ),
@@ -227,7 +228,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                             padding: const pw.EdgeInsets.all(8.0),
                                             child: pw.Text(
                                               "السيناريو الثانى",
-                                              style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                              style: pw.TextStyle(font: ttf, fontSize: 12),
                                               textDirection: pw.TextDirection.rtl,
                                             ),
                                           ),
@@ -235,7 +236,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                             padding: const pw.EdgeInsets.all(8.0),
                                             child: pw.Text(
                                               "السيناريو الاول",
-                                              style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                              style: pw.TextStyle(font: ttf, fontSize: 12),
                                               textDirection: pw.TextDirection.rtl,
                                             ),
                                           ),
@@ -274,7 +275,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                                                               child: pw.Text(
                                                                                 pointer["text"],
                                                                                 style: pw.TextStyle(
-                                                                                  font: ttfSans,
+                                                                                  font: ttf,
                                                                                   fontSize: 8,
                                                                                   color: PdfColors.black,
                                                                                 ),
@@ -316,7 +317,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                                                               child: pw.Text(
                                                                                 pointer["text"],
                                                                                 style: pw.TextStyle(
-                                                                                  font: ttfSans,
+                                                                                  font: ttf,
                                                                                   fontSize: 8,
                                                                                   color: PdfColors.black,
                                                                                 ),
@@ -358,7 +359,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                                               child: pw.Text(
                                                                 pointer["text"],
                                                                 style: pw.TextStyle(
-                                                                  font: ttfSans,
+                                                                  font: ttf,
                                                                   fontSize: 8,
                                                                   color: PdfColors.black,
                                                                 ),
@@ -394,7 +395,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                             padding: const pw.EdgeInsets.all(5.0),
                                             child: pw.Text(
                                               "التوصيات",
-                                              style: pw.TextStyle(font: ttfSans, fontSize: 12),
+                                              style: pw.TextStyle(font: ttf, fontSize: 12),
                                               textDirection: pw.TextDirection.rtl,
                                             ),
                                           ),
@@ -430,7 +431,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                                                               child: pw.Text(
                                                                                 advices[index]["text"],
                                                                                 style: pw.TextStyle(
-                                                                                  font: ttfSans,
+                                                                                  font: ttf,
                                                                                   fontSize: 8,
                                                                                   color: PdfColors.black,
                                                                                 ),

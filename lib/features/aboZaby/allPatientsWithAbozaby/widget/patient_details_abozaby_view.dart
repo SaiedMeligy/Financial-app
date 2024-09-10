@@ -178,7 +178,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                       onPressed: () async {
                                         print('sssssssssssssssssssssssss');
                                         final pdf = pw.Document();
-                                        final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
+                                        final notoSans = await rootBundle.load("assets/fonts/Amiri-Bold.ttf");
                                         final ttfSans = pw.Font.ttf(notoSans);
                                         final image = pw.MemoryImage(
                                           (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),

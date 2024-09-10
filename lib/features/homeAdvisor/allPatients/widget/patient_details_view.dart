@@ -673,7 +673,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                             final pdf = pw.Document();
                                             // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
                                             // final ttf = pw.Font.ttf(notoSans);
-                                            final fontData = await rootBundle.load('assets/fonts/Amiri-Regular.ttf');
+                                            final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
                                             final ttf = pw.Font.ttf(fontData);
 
                                             final image = pw.MemoryImage(

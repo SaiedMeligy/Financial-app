@@ -336,7 +336,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                           var patientName = session["pationt"]["name"] ?? "";
                           var advisorName = session["advicor"]["name"] ?? "";
                           var nationalId = session["pationt"]["national_id"] ?? "";
-                          var phoneNumber = session["pationt"]["phone_number"] ??"" ?? "";
+                          var phoneNumber = session["phone_number"] ??"" ?? "";
                           var otherPhoneNumber = session["other_phone_number"] ?? "";
                           var caseManager = session["case_manager"] ?? "";
                           var isAttended = session["is_attended"] == 1;
