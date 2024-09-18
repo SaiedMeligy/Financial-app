@@ -191,7 +191,7 @@ import 'package:experts_app/features/initialPage/page/complaint_page.dart';
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => ComplaintPage(),));
                                       },
                                       child: Text(
-                                        "للشكاوى",
+                                        "المقترحات والشكاوى",
                                         style: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
                                       ),
                                     ),
@@ -399,7 +399,7 @@ import 'package:experts_app/features/initialPage/page/complaint_page.dart';
 
                                         },
                                         child: Text(
-                                          "للشكاوى",
+                                          "المقترحات والشكاوى",
                                           style: Constants
                                               .theme.textTheme.bodyLarge
                                               ?.copyWith(color: Colors.black),
