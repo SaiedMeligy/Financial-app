@@ -138,7 +138,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                   child: Column(
                     children: [
                       Container(
-                        height: isMobile?Constants.mediaQuery.height * 0.26:Constants.mediaQuery.height * 0.2,
+                        height: isMobile?Constants.mediaQuery.height * 0.30:Constants.mediaQuery.height * 0.2,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Constants.theme.primaryColor,

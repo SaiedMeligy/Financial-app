@@ -499,7 +499,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                           children: [
                             SizedBox(height: 10),
                             Container(
-                              height: isMobile?Constants.mediaQuery.height * 0.35:Constants.mediaQuery.height * 0.4,
+                              height: isMobile?Constants.mediaQuery.height * 0.37:Constants.mediaQuery.height * 0.4,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 2,

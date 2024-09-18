@@ -56,7 +56,7 @@ class _TabItemWidgetState extends State<TabItemWidget> {
               bottom: TabBar(
                 indicatorColor: Colors.black87,
                 labelStyle: Constants.theme.textTheme.bodyLarge?.copyWith(
-                  color: Colors.white,
+                  color: isMobile?Colors.black:Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: isMobile? 10 : 17,
 

@@ -50,43 +50,45 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
 
         return Scaffold(
           appBar: AppBar(
-            automaticallyImplyLeading: isMobile,
             backgroundColor: Constants.theme.primaryColor,
             toolbarHeight: Constants.mediaQuery.height * 0.26,
             leadingWidth: Constants.mediaQuery.width * 0.35,
-            leading: isMobile
-                ? null
-                : Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10)
+            leading: isMobile?null:Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10)
+                      ),
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/AEI Logo.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ),
-                image: DecorationImage(
-                  image: AssetImage("assets/images/AEI Logo.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              ],
             ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
             title: Column(
               children: [
                 Text(
-                  "العيادة المالية",
-                  style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.titleLarge,
+                  isMobile?"العيادة \nالمالية":"العيادة المالية",
+                  style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge,
                 ),
                 SizedBox(height: 15,),
                 Text(
-                  "هيئة أبوظبي للدعم الأجتماعي",
-                  style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ):Constants.theme.textTheme.titleLarge,
+                  "$admin_name",
+                  style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge,
                 ),
               ],
             ),
+            centerTitle: true,
             actions: [
-              Container(
+              isMobile?Container():Container(
                 height: Constants.mediaQuery.height*0.6,
-                width: Constants.mediaQuery.width*0.27,
+                width: Constants.mediaQuery.width*0.29,
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -99,7 +101,6 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
               ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
               LogoutView()
             ],
-            centerTitle: true,
           ),
           drawer: isMobile ? Drawer(
             backgroundColor: Constants.theme.primaryColor,

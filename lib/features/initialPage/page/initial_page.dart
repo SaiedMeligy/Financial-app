@@ -133,7 +133,7 @@ import 'package:experts_app/features/initialPage/page/complaint_page.dart';
                             child: Image.asset("assets/images/clinic logo.jpg",
                                 fit: BoxFit.fitWidth),
                           ),
-                          SizedBox(width: 15,),
+                          SizedBox(width: 5,),
                           Row(
                             children: [
                               Directionality(
@@ -152,7 +152,7 @@ import 'package:experts_app/features/initialPage/page/complaint_page.dart';
                                               _launchURL(_url);
                                             },
                                             child: Icon(Icons.home, size: 15, color: Colors.black)),
-                                        const SizedBox(width: 5),
+                                        const SizedBox(width: 3),
                                         GestureDetector(
                                             onTap: () {
                                               final Uri _url = Uri.parse(
@@ -160,7 +160,7 @@ import 'package:experts_app/features/initialPage/page/complaint_page.dart';
                                               _launchURL(_url);
                                             },
                                             child: Icon(FontAwesomeIcons.instagram, color: Colors.purple, size: 15)),
-                                        const SizedBox(width: 5),
+                                        const SizedBox(width: 2),
                                         GestureDetector(
                                             onTap: () {
                                               final Uri _url = Uri.parse(
@@ -366,7 +366,7 @@ import 'package:experts_app/features/initialPage/page/complaint_page.dart';
                                       const SizedBox(width: 10),
                                       //Image.asset("assets/images/linkedin.png", fit: BoxFit.cover, height: 20, width: 20),
                                       const SizedBox(width: 10),
-                                      Container(
+                                        Container(
                                         height: 25,
                                         width: 1,
                                         color: Colors.grey,

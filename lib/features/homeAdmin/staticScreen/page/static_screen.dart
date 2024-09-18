@@ -305,7 +305,7 @@ class _StaticScreenState extends State<StaticScreen> {
   Widget _buildInfoCard({required String title, required String count, required IconData icon}) {
     return Container(
       width: isMobile ? Constants.mediaQuery.width * 0.28 : Constants.mediaQuery.width * 0.16,
-      height:isMobile? Constants.mediaQuery.height * 0.15:Constants.mediaQuery.height * 0.16,
+      height:isMobile? Constants.mediaQuery.height * 0.18:Constants.mediaQuery.height * 0.16,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey,
@@ -353,7 +353,7 @@ class _StaticScreenState extends State<StaticScreen> {
   Widget _buildInfoCardPatient({required String title, required String count, required IconData icon}) {
     return Container(
       width: isMobile ? Constants.mediaQuery.width * 0.3 : Constants.mediaQuery.width * 0.2,
-      height:isMobile? Constants.mediaQuery.height * 0.20:Constants.mediaQuery.height * 0.27,
+      height:isMobile? Constants.mediaQuery.height * 0.25:Constants.mediaQuery.height * 0.27,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey,
