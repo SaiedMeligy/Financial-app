@@ -325,7 +325,7 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                                 caseManager: _nameManagerController.text,
                                 phoneNumber: _phoneNumber.text,
                                 otherPhoneNumber: _secondPhoneNumber.text,
-                                time: "${_selectedTime?.hour}:${_selectedTime?.minute}",
+                                time: "${_selectedTime?.hour}:${_selectedTime?.minute}:00",
                                 comments: advisorComment.text
                               );
                               addSessionCubit.addSession(data,isAdvicer: true).then((response) {
@@ -386,6 +386,9 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                                       }
                                   );
 
+                                }
+                                else{
+                                  SnackBarService.showErrorMessage(response.data["message"].toString());
                                 }
 
                               });

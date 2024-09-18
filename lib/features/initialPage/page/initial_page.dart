@@ -2,6 +2,7 @@
   import 'package:experts_app/core/config/page_route_name.dart';
   import 'package:experts_app/core/extensions/padding_ext.dart';
   import 'package:experts_app/features/initialPage/Services/page/services_view.dart';
+import 'package:experts_app/features/initialPage/page/complaint_page.dart';
   import 'package:experts_app/main.dart';
   import 'package:flutter/cupertino.dart';
   import 'package:flutter/material.dart';
@@ -139,7 +140,7 @@
                                 textDirection: TextDirection.rtl,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -180,11 +181,21 @@
                                           },
                                           child: Text(
                                             "اتصل بنا",
-                                            style: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                            style: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
                                           ),
                                         ),
                                       ],
                                     ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ComplaintPage(),));
+                                      },
+                                      child: Text(
+                                        "للشكاوى",
+                                        style: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
+                                      ),
+                                    ),
+
                                   ],
                                 ),
                               ),
@@ -377,6 +388,18 @@
                                         },
                                         child: Text(
                                           "اتصل بنا",
+                                          style: Constants
+                                              .theme.textTheme.bodyLarge
+                                              ?.copyWith(color: Colors.black),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: ()  {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => ComplaintPage(),));
+
+                                        },
+                                        child: Text(
+                                          "للشكاوى",
                                           style: Constants
                                               .theme.textTheme.bodyLarge
                                               ?.copyWith(color: Colors.black),

@@ -146,7 +146,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                         ),
                         Row(
                           children: [
-                            Expanded(child: Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black))),
+                            Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black)),
                             isMobile?SizedBox(width: 5):SizedBox(width: 15),
                             DropdownButtonAdvisor(
                               onAdvisorSelected: (advicor_id) {
@@ -329,7 +329,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                                 caseManager: _nameManagerController.text,
                                 phoneNumber: _phoneNumber.text,
                                 otherPhoneNumber: _secondPhoneNumber.text,
-                                time: "${_selectedTime?.hour}:${_selectedTime?.minute}",
+                                time: "${_selectedTime?.hour}:${_selectedTime?.minute}:00",
                                 comments: advisorComment.text
                               );
                               addSessionCubit.addSession(data).then((response) {
@@ -390,6 +390,9 @@ class _AddSessionViewState extends State<AddSessionView> {
                                       }
                                   );
 
+                                }
+                                else{
+                                  SnackBarService.showErrorMessage(response.data["messgae"]);
                                 }
 
                               });

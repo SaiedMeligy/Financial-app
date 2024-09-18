@@ -184,7 +184,6 @@ class _LogViewState extends State<LogView> {
                                                     print("Done");
                                                     EasyLoading.dismiss();
                                                     SnackBarService.showSuccessMessage("تم تسجيل الدخول بنجاح");
-
                                                     //  Navigator.of(context).pushNamedAndRemoveUntil(PageRouteName.homeAdmin,
                                                     //    (route) => false
                                                     // );
