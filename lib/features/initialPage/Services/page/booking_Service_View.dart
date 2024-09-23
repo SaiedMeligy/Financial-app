@@ -77,6 +77,7 @@ class _BookingServiceViewState extends State<BookingServiceView> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -148,7 +149,6 @@ class _BookingServiceViewState extends State<BookingServiceView> {
           ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
         ],
       ),
-
       body: BlocBuilder<AddServiceCubit,AddServiceStates>(
         bloc: reserveServiceCubit,
         builder:(context, state) {
@@ -213,24 +213,24 @@ class _BookingServiceViewState extends State<BookingServiceView> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 IconButton(
                                   onPressed: () => _selectDate(context),
-                                  icon: Icon(Icons.date_range_outlined, size: 40,
+                                  icon: const Icon(Icons.date_range_outlined, size: 40,
                                       color: Colors.black),
                                 ),
                                 IconButton(
                                   onPressed: () => _selectTime(context),
-                                  icon: Icon(
+                                  icon: const Icon(
                                       Icons.access_time_filled_rounded, size: 40,
                                       color: Colors.black),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             CustomTextField(
                                 controller: _dateTimeController,
                                 readOnly: true,
@@ -244,7 +244,7 @@ class _BookingServiceViewState extends State<BookingServiceView> {
                                   return null;
                                 }
                             ),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 10,),
                             Container(
                               decoration: BoxDecoration(
                                 border: Border.all(
