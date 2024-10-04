@@ -377,8 +377,17 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                           var nationalId = session["pationt"]["national_id"] ??
                               "";
                           var caseManager = session["case_manager"] ?? "";
-                          var phoneNumber = session["phone_number"] ?? "" ?? "";
+                          var phoneNumber = session["phone_number"] ?? "";
                           var otherPhoneNumber = session["other_phone_number"] ?? "";
+
+                          if(phoneNumber.toString().contains('+')){
+                            phoneNumber = phoneNumber.toString().replaceAll('+', '');
+                            phoneNumber = '$phoneNumber+';
+                          }
+                          if(otherPhoneNumber.toString().contains('+')){
+                            otherPhoneNumber = otherPhoneNumber.toString().replaceAll('+', '');
+                            otherPhoneNumber = '$otherPhoneNumber+';
+                          }
 
                           var isAttended = session["is_attended"] == 1;
                           var needOtherSession = session["need_other_session"] ==

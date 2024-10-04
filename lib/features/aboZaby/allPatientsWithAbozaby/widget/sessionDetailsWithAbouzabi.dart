@@ -390,6 +390,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                             var sessionDate = session["date"] ?? "";
                             var phoneNumber = session["phone_number"] ?? "";
                             var otherPhoneNumber = session["other_phone_number"] ?? "";
+
+                            if(phoneNumber.toString().contains('+')){
+                            phoneNumber = phoneNumber.toString().replaceAll('+', '');
+                            phoneNumber = '$phoneNumber+';
+                          }
+                          if(otherPhoneNumber.toString().contains('+')){
+                            otherPhoneNumber = otherPhoneNumber.toString().replaceAll('+', '');
+                            otherPhoneNumber = '$otherPhoneNumber+';
+                          }
+
                             TextEditingController commentController = TextEditingController(text: advisorComments);
 
                             return ListView(

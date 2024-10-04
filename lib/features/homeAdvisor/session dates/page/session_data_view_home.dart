@@ -339,6 +339,17 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                           var nationalId = session["pationt"]["national_id"] ?? "";
                           var phoneNumber = session["phone_number"] ??"" ?? "";
                           var otherPhoneNumber = session["other_phone_number"] ?? "";
+
+                          if(phoneNumber.toString().contains('+')){
+                            phoneNumber = phoneNumber.toString().replaceAll('+', '');
+                            phoneNumber = '$phoneNumber+';
+                          }
+                          if(otherPhoneNumber.toString().contains('+')){
+                            otherPhoneNumber = otherPhoneNumber.toString().replaceAll('+', '');
+                            otherPhoneNumber = '$otherPhoneNumber+';
+                          }
+
+
                           var caseManager = session["case_manager"] ?? "";
                           var isAttended = session["is_attended"] == 1;
                           var needOtherSession = session["need_other_session"] ==
