@@ -2,11 +2,9 @@ import 'package:experts_app/features/homeAdmin/staticScreen/manager/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:multi_circular_slider/multi_circular_slider.dart';
 
 import '../../../../core/config/constants.dart';
-import '../../../../domain/entities/HomeAdmin.dart';
 import '../manager/states.dart';
 
 class SenarioWadget extends StatefulWidget {
