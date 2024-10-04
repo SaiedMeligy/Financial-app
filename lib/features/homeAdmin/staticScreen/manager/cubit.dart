@@ -11,7 +11,6 @@ import '../../../../data/dataSource/homeAdminSenario/home_admin_senario_data_Sou
 import '../../../../data/dataSource/homeAdminSenario/home_admin_senario_data_source_imp.dart';
 import '../../../../data/repository_imp/admin_repository_imp/home_admin_repository_imp.dart';
 import '../../../../data/repository_imp/admin_repository_imp/home_admin_senario_repository_imp.dart';
-import '../../../../domain/entities/HomeAdmin.dart';
 import '../../../../domain/entities/HomeAdminModel.dart';
 import '../../../../domain/repository/homeAdminRepository/home_admin_Senario_repository.dart';
 import '../../../../domain/repository/homeAdminRepository/home_admin_repository.dart';

@@ -187,8 +187,6 @@ class _UpdateFormState extends State<UpdateForm> {
                                         child: Column(
                                           children: answer["question_options"]
                                               .map<Widget>((option) {
-                                            bool isAnswered =
-                                                option['answer'] == "1";
                                             if (option["type"] == 3) {
                                               return Expanded(
                                                 child: Row(
@@ -197,7 +195,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                                       child: Text(
                                                         option["title"]
                                                             .toString(),
-                                                        style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(fontSize: 20)?.copyWith(color: Colors.black,):Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,),
+                                                        style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(fontSize: 20).copyWith(color: Colors.black,):Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,),
                                                       ),
                                                     ),
                                                     Expanded(
@@ -226,7 +224,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                                     child: Text(
                                                       option["title"]
                                                           .toString(),
-                                                      style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(fontSize: 20)?.copyWith(color: Colors.black,):Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,),
+                                                      style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(fontSize: 20).copyWith(color: Colors.black,):Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,),
                                                     ),
                                                   ),
                                                   Expanded(

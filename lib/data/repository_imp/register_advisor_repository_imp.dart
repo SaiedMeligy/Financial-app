@@ -21,7 +21,6 @@ class RegisterRepositoryImp implements RepositoryRegister{
           return Right(true);
         }
         else{
-          print("data false");
           SnackBarService.showErrorMessage(response.data["message"]);
           return Left(ServerFailure(
             statusCode: response.statusCode.toString(),
@@ -29,10 +28,7 @@ class RegisterRepositoryImp implements RepositoryRegister{
 
           ));
         }
-
-
       }
-
       else{
         return Left(ServerFailure(
           statusCode: response.statusCode.toString(),

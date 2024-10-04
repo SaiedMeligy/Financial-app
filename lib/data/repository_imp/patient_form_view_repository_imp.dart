@@ -2,9 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
 import 'package:experts_app/core/Services/snack_bar_service.dart';
-
-import '../../domain/entities/AdviceMode.dart';
-import '../../domain/entities/pointerModel.dart';
 import '../../domain/repository/patientFormViewRepository/patient_form_view_repository.dart';
 import '../dataSource/patientFormView/patient_form_view_data_source.dart';
 
@@ -19,9 +16,6 @@ class PatientFormViewRepositoryImp implements PatientFormViewRepository{
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           SnackBarService.showSuccessMessage(response.data["message"]);
-
-          print("--------->"+response.toString());
-
           return response;
         }
         else {

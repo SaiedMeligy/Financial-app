@@ -1,20 +1,9 @@
-import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/manager/cubit.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/manager/states.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/updatePatient/page/dialog_delete_patient.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/updatePatient/page/dialog_edit_patient.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_widget_view.dart';
 import 'package:experts_app/features/homeAdvisor/recycle_pin/widget/dialog_delete_patient_recycle_with_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/config/constants.dart';
-import '../../../../core/widget/custom_text_field.dart';
-import '../../../../core/widget/second_table_widget.dart';
-import '../../../../core/widget/table_widget.dart';
 import '../manager/cubit.dart';
 import '../manager/states.dart';
-import '../widget/dialog_delete_patient_recycle.dart';
 import '../widget/table_cycle.dart';
 
 class AllPatientRecycleAdminView extends StatefulWidget {
@@ -63,9 +52,6 @@ class _AllPatientRecycleAdminViewState extends State<AllPatientRecycleAdminView>
                             items: patients,
                             itemNameBuilder: (item) => item.name ?? 'No Name',
                           itemDeleteWidgetBuilder: (item){
-                          if (item == null) {
-                          return const Text("Invalid Item");
-                          }
                            return
                              DialogDeletePatientCycleWithAdmin(allPatientCubit: allPatientCubit,
                           patient: item,);

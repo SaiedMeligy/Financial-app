@@ -10,10 +10,7 @@ class StoreFormRepositoryImp implements StoreFormRepository {
   @override
   Future<Response> store(Map<String, dynamic> storeRequest) async {
     try {
-      print('Store Request: $storeRequest');
       final response = await dataSource.store(storeRequest);
-      print('Response Status: ${response.statusCode}');
-      print('Response Data: ${response.data}');
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

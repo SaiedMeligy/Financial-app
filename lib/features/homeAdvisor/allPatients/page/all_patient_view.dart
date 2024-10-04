@@ -84,9 +84,6 @@ class _AllPatientViewState extends State<AllPatientView> {
                         patient: item,
                       ),
                       itemDeleteWidgetBuilder: (item) {
-                        if (item == null) {
-                          return const Text("Invalid Item");
-                        }
                         return DialogDeletePatient(
                           allPatientCubit: allPatientCubit,
                           patient: item,

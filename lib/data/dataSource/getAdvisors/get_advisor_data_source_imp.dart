@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
-import 'package:experts_app/domain/entities/AdviceMode.dart';
 import 'package:experts_app/domain/entities/AllAdvisorsModel.dart';
 
 import '../../../../core/config/cash_helper.dart';

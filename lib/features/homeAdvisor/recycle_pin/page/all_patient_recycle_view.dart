@@ -28,40 +28,33 @@ class _AllPatientRecycleViewState extends State<AllPatientRecycleView> {
     return BlocBuilder<AllPatientRecycleCubit, AllPatientRecycleStates>(
       bloc: allPatientCubit,
       builder: (context, state) {
-        if (state is LoadingAllPatientRecycle)
-        {
+        if (state is LoadingAllPatientRecycle) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is SuccessAllPatientRecycle) {
           var patients = state.patients;
           return Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/back.jpg"),
-                fit: BoxFit.cover,
-                opacity: 0.2
-              )
-            ),
+                image: DecorationImage(
+                    image: AssetImage("assets/images/back.jpg"),
+                    fit: BoxFit.cover,
+                    opacity: 0.2)),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                Expanded(
-                  child: PatientCyclebin<Pationts>(
-                            label1: "اسم الحالة",
-                            label2: "الحذف",
-                            items: patients,
-                            itemNameBuilder: (item) => item.name ?? 'No Name',
-                          itemDeleteWidgetBuilder: (item){
-                          if (item == null) {
-                          return const Text("Invalid Item");
-                          }
-                           return
-                             DialogDeletePatientCycle(allPatientCubit: allPatientCubit,
-                          patient: item,);
-                            }
-
-                          ),
-                ),
+                  Expanded(
+                    child: PatientCyclebin<Pationts>(
+                        label1: "اسم الحالة",
+                        label2: "الحذف",
+                        items: patients,
+                        itemNameBuilder: (item) => item.name ?? 'No Name',
+                        itemDeleteWidgetBuilder: (item) {
+                          return DialogDeletePatientCycle(
+                            allPatientCubit: allPatientCubit,
+                            patient: item,
+                          );
+                        }),
+                  ),
                 ],
               ),
             ),

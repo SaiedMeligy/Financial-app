@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:experts_app/domain/entities/AllPatientModel.dart';
 import '../../../../../../core/config/cash_helper.dart';
 import '../../../../../../core/config/constants.dart';
 import 'replace_patient_data_source.dart';

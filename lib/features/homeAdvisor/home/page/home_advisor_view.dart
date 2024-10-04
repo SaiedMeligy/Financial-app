@@ -7,10 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:screenshot/screenshot.dart';
-
 import '../../../../core/config/constants.dart';
-import '../../sessions/page/session_detials.dart';
 
 class HomeAdvisorView extends StatefulWidget {
   const HomeAdvisorView({super.key});

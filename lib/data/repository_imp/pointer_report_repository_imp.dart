@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
 import 'package:experts_app/domain/entities/PointerReportModel.dart';
-
-import '../../domain/entities/AdviceMode.dart';
 import '../../domain/repository/PointerReport/pointer_report_repository.dart';
 import '../dataSource/PointerReport/pointer_report_data_source.dart';
 class PointerReportRepositoryImp implements PointerReportRepository{

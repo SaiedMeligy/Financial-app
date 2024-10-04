@@ -1,5 +1,4 @@
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/domain/entities/AdviceMode.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

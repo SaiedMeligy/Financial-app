@@ -1,7 +1,6 @@
 import 'package:experts_app/core/config/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:experts_app/domain/entities/AllAdvisorsModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/widget/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/widget/manager/states.dart';
 

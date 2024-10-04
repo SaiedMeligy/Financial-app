@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
-import 'package:experts_app/features/homeAdvisor/sessions/page/session_detials.dart';
 
 import '../../../../../../core/config/constants.dart';
 import '../../../../session dates/page/session_data_view_home.dart';

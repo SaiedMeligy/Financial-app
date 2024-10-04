@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
-import 'package:experts_app/data/repository_imp/delete_consultation_repository_imp.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
 
 import '../../../../../../../core/Services/web_services.dart';

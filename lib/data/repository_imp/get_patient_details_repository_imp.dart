@@ -2,13 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
 import 'package:experts_app/core/Services/snack_bar_service.dart';
-
-import '../../domain/entities/AdviceMode.dart';
-import '../../domain/entities/pointerModel.dart';
 import '../../domain/repository/getPatientDetailsRepository/get_patient_details_repository.dart';
-import '../../domain/repository/patientNationalIdRepository/patient_nationalId_repository.dart';
 import '../dataSource/getPatientDetails/get_patient_details_data_source.dart';
-import '../dataSource/patientNationalId/patient_nationalId_data_source.dart';
 
 class GetPatientDetailsRepositoryImp implements GetPatientDetailsRepository{
   final GetPatientDetailsDataSource dataSource;

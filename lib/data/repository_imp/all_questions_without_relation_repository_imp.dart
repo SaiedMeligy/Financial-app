@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
-import 'package:experts_app/domain/entities/QuestionModel.dart';
 import 'package:experts_app/domain/entities/QuestionRelationModel.dart';
 
 import '../../domain/repository/Question/AllQuestionWithoutRelation/all_question_without_relation_repository.dart';

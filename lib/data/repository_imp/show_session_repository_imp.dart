@@ -16,9 +16,6 @@ class ShowSessionRepositoryImp implements ShowSessionRepository{
           id);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
-
-          print("--------->"+response.toString());
-
           return response;
         }
         else {

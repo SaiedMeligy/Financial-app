@@ -21,6 +21,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
 
 
+// ignore: must_be_immutable
 class SessionDetailsViewHome extends StatefulWidget {
   final dynamic pationt_data;
   final int sessionId;

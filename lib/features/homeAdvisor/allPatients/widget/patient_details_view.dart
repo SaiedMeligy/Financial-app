@@ -27,8 +27,6 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
 
   class _PatientDetailsViewState extends State<PatientDetailsView> with TickerProviderStateMixin {
 
-    int _currentAnimation = 1;
-
     late AddSessionCubit _patientFormViewCubit;
     bool isMobile =false;
 
@@ -196,9 +194,6 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                           final pdf = pw.Document();
                                           final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
                                           final ttfSans = pw.Font.ttf(notoSans);
-                                          final image = pw.MemoryImage(
-                                            (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
-                                          );
                                           await Future.delayed(Duration(seconds: 1));
                                           pdf.addPage(
                                             pw.Page(
@@ -669,16 +664,11 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                         child: IconButton(
                                           icon: Icon(Icons.print, color: Colors.black),
                                           onPressed: () async {
-                                            print('sssssssssssssssssssssssss');
                                             final pdf = pw.Document();
                                             // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
                                             // final ttf = pw.Font.ttf(notoSans);
                                             final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
                                             final ttf = pw.Font.ttf(fontData);
-
-                                            final image = pw.MemoryImage(
-                                              (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
-                                            );
                                             await Future.delayed(Duration(seconds: 1));
                                             pdf.addPage(
                                               pw.Page(

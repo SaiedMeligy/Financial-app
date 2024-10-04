@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
 import 'package:experts_app/domain/entities/AllAdvisorsModel.dart';
-
-import '../../domain/entities/AdviceMode.dart';
 import '../../domain/repository/advisors/AllAdvisor/all_advisor_repository.dart';
 import '../dataSource/getAdvisors/all_advisor_data_source.dart';
 

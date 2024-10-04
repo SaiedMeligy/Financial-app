@@ -2,9 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
 import 'package:experts_app/core/Services/snack_bar_service.dart';
-
-import '../../domain/entities/AdviceMode.dart';
-import '../../domain/entities/pointerModel.dart';
 import '../../domain/repository/patientNationalIdRepository/patient_nationalId_repository.dart';
 import '../dataSource/patientNationalId/patient_nationalId_data_source.dart';
 
@@ -19,9 +16,6 @@ class PatientNationalIdRepositoryImp implements PatientNationalIdRepository{
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           SnackBarService.showSuccessMessage(response.data["message"]);
-
-          print("--------->"+response.toString());
-
           return response;
         }
         else {

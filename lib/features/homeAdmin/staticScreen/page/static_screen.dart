@@ -3,7 +3,6 @@ import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_need_other_session_view.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_no_need_other_session_view.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_success_story_view.dart';
-import 'package:experts_app/features/homeAdmin/staticScreen/Widegets/SenarioWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:experts_app/features/homeAdmin/registrationAdvisor/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/add_user/manager/states.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,7 +8,6 @@ import '../../../../core/Services/snack_bar_service.dart';
 import '../../../../core/Services/web_services.dart';
 import '../../../../data/dataSource/registerPationt/register_pationt_data_source.dart';
 import '../../../../data/dataSource/registerPationt/register_pationt_data_source_imp.dart';
-import '../../../../data/repository_imp/register_advisor_repository_imp.dart';
 import '../../../../data/repository_imp/register_patient_repository_imp.dart';
 import '../../../../domain/entities/RegisterPatient.dart';
 import '../../../../domain/registerPatient/repository_register_patient.dart';

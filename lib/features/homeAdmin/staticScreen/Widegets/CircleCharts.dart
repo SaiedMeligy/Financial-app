@@ -13,8 +13,6 @@ class CircleCharts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    bool isMobile = false;
-
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(10),

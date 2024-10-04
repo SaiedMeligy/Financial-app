@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:experts_app/domain/entities/AddSessionModel.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/manager/states.dart';
 
 import '../../../../core/Services/web_services.dart';

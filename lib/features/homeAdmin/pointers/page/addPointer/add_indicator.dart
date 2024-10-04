@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/Services/snack_bar_service.dart';
 import '../../../../../core/config/constants.dart';
-import '../../../../../core/widget/radio_button.dart';
 import '../../../../../core/widget/custom_text_field.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 
@@ -110,7 +109,7 @@ class _AddIndicatorState extends State<AddIndicator> {
                               selectedScenarioId != null) {
                             formKey.currentState!.save();
                             try {
-                              final response = await addPointerCubit.addPointer(
+                              await addPointerCubit.addPointer(
                                   selectedScenarioId!, titleController.text);
                               showDialog(
                                   context: context,

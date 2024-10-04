@@ -1,6 +1,5 @@
 import 'package:dio/src/response.dart';
 
-import '../../../../domain/entities/AdviceMode.dart';
 
 abstract class AddQuestionStates{}
 class LoadingAddQuestionState extends AddQuestionStates{}

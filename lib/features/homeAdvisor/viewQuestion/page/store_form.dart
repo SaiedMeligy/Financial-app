@@ -1,4 +1,4 @@
-import '../widget/date_time.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +16,7 @@ import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/widget/drop_down.dart';
 
+// ignore: must_be_immutable
 class StoreForm extends StatefulWidget {
   StoreForm({super.key, required this.pationt_data});
   List<int> axis = [];
@@ -31,7 +32,6 @@ class _StoreFormState extends State<StoreForm> {
   TextEditingController _dateTimeController = TextEditingController();
   var questionViewCubit = QuestionViewCubit();
   List<ConsultationServices> menuItem = [];
-  List<bool> _checkBoxValues = [];
   late Map<dynamic, dynamic> answers = {};
   late Map<dynamic, dynamic> radiosBtn = {};
   Map<dynamic, TextEditingController> textControllers = {};

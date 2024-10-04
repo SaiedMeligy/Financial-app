@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
-
-import '../../domain/entities/AdviceMode.dart';
 import '../../domain/entities/AllSessionModel.dart';
 import '../../domain/repository/AllSession/all_session_repository.dart';
 import '../dataSource/AllSession/all_session_data_source.dart';

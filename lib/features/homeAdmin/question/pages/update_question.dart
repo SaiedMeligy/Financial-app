@@ -3,7 +3,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/features/homeAdmin/allQuestionView/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/question/widget/radio_answer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +19,11 @@ import '../../../../core/widget/radio_button.dart';
 import '../../../../core/widget/tab_item_widget.dart';
 import '../../../../domain/entities/AdviceMode.dart';
 import '../../../../domain/entities/QuestionModel.dart';
-import '../../../homeAdvisor/viewQuestion/manager/cubit.dart';
+
 import '../manager/cubit.dart';
 import '../manager/states.dart';
 
+// ignore: must_be_immutable
 class UpdateQuestion extends StatefulWidget {
   List<Questions> allQuestions ;
   Questions question ;

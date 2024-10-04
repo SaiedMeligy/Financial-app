@@ -1,10 +1,5 @@
-import 'package:experts_app/core/config/constants.dart';
-import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/features/homeAdvisor/allPatients/widget/patient_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-
-import '../../../homeAdmin/allPatientsAdmin/widget/patient_details_admin_view.dart';
 
 typedef ItemTextBuilder<T> = String Function(T item);
 typedef ItemWidgetBuilder<T> = Widget Function(T item);

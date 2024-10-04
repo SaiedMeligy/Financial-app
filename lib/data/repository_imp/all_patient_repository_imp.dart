@@ -3,8 +3,6 @@ import 'package:dio/src/response.dart';
 import 'package:experts_app/core/Failure/server_failure.dart';
 import 'package:experts_app/data/dataSource/allPatient/all_patients_data_source.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
-
-import '../../domain/entities/AdviceMode.dart';
 import '../../domain/repository/AllPatient/all_patient_repository.dart';
 
 class AllPatientRepositoryImp implements AllPatientRepository{

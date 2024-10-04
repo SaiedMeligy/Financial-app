@@ -97,20 +97,6 @@ class _ReportChartViewState extends State<ReportChartView> {
               var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
               var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
               List<int> selectedAdviceIds = [];
-              List<int> selectedPointersIds = [];
-
-
-
-              if (pointers1Temp.isNotEmpty) {
-                print("----------->>>${calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString()}%");
-              }
-              if (pointers2Temp.isNotEmpty) {
-                print("----------->>>${calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString()}%");
-              }
-              if (pointers3Temp.isNotEmpty) {
-                print("----------->>>${calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString()}%");
-              }
-
               if (pointers.isEmpty && advices.isEmpty) {
                 return Center(
                   child: Text("No data available"),
