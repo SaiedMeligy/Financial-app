@@ -222,8 +222,8 @@ class _StaticScreenState extends State<StaticScreen> {
                             ],
                           ),
                           SizedBox(height: 10),
-
-                          SenarioWadget(),
+                          //TODO: handle backend process
+                          // SenarioWadget(),
                           Row(
                             children: [
                               

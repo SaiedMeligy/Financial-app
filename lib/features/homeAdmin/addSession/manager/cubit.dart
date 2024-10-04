@@ -3,6 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:experts_app/core/Services/snack_bar_service.dart';
 import 'package:experts_app/domain/entities/AddSessionModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
+import 'package:experts_app/features/homeAdmin/addSession/page/add_session_view.dart';
+import 'package:experts_app/main.dart';
+import 'package:flutter/material.dart';
 import '../../../../core/Services/web_services.dart';
 import '../../../../core/config/cash_helper.dart';
 import '../../../../core/config/constants.dart';
@@ -82,8 +85,8 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
         emit(ErrorFormState());
       }
       else {
-        emit(SuccessPatientNationalIdState(patientDetails));
 
+        emit(SuccessPatientNationalIdState(patientDetails));
       }
 
     }

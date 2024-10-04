@@ -117,9 +117,9 @@ class _AddSessionViewState extends State<AddSessionView> {
                   ),
                 ),
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Form(
                     key: formKey,
-
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -164,7 +164,6 @@ class _AddSessionViewState extends State<AddSessionView> {
                         Row(
                           children: [
                             Expanded(
-
                               child: CustomTextField(
                                 controller: _patientNationalIdController,
                                 hint: "رقم الهوية الأماراتية",

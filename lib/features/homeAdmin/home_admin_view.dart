@@ -1,32 +1,12 @@
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/domain/entities/side_bar_model.dart';
-import 'package:experts_app/features/homeAdmin/allQuestionView/page/all_question_view.dart';
-import 'package:experts_app/features/homeAdmin/bookingSession/page/booking_session_view.dart';
-import 'package:experts_app/features/homeAdmin/pointerReport/page/pointer_report_view.dart';
-import 'package:experts_app/features/homeAdmin/pointers/page/addPointer/add_indicator.dart';
-import 'package:experts_app/features/homeAdmin/pointers/page/all%20Pointers/page/edit_indicator.dart';
-import 'package:experts_app/features/homeAdmin/registrationAdvisor/page/register_view.dart';
-import 'package:experts_app/features/homeAdmin/staticScreen/page/static_screen.dart';
-import 'package:experts_app/features/homeAdvisor/recycle_pin/page/all_patient_recycle_admin_view.dart';
 import 'package:flutter/material.dart';
-
 import '../../core/config/cash_helper.dart';
 import '../../core/config/constants.dart';
-import 'Advices/page/All Advices/page/advice_view.dart';
-import 'Advices/page/addAdvice/add_advice.dart';
-import 'Consulting service/All Consultation/page/consulting_view.dart';
-import 'Consulting service/Consultation Store/page/add_consulting.dart';
-import 'addSession/page/add_session_view.dart';
-import 'add_patient/page/add_patient_view.dart';
-import 'adviceReport/page/advice_report_view.dart';
-import 'allPatientsAdmin/page/all_patient_admin_view.dart';
 import 'logout/page/logout_view.dart';
-import 'question/pages/add_question.dart';
-
 class HomeAdminView extends StatefulWidget {
-  const HomeAdminView({super.key});
-
+  const HomeAdminView({super.key,this.targetIndex = 0});
+  final int targetIndex;
   @override
   State<HomeAdminView> createState() => _HomeAdminViewState();
 }
@@ -40,51 +20,10 @@ class _HomeAdminViewState extends State<HomeAdminView> {
   void initState() {
     super.initState();
     admin_name = CacheHelper.getData(key: 'name');
+    currentIndex = widget.targetIndex;
 
   }
   Widget build(BuildContext context) {
-    List<SideBarModel> titles = [
-      SideBarModel(title: "الصفحة الرئيسية", icon: Icon(Icons.home,color: Colors.black87,)),
-      SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: "الحالات", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete,color: Colors.black87)),
-      SideBarModel(title: "تقارير المؤشرات", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "تقارير التوصيات", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "اضافة الأسئلة", icon: Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: "عرض الأسئلة", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "اضافة المؤشرات", icon: Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: "المؤشرات", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "اضافة التوصيات", icon: Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: " التوصيات", icon: Icon(Icons.list,color: Colors.black87)),
-      // SideBarModel(title: "اضافة الحالات من مصدر خارجي", icon: Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: "حجز جلسات", icon: Icon(Icons.border_color_outlined,color: Colors.black87)),
-      SideBarModel(title: "الجلسات المحجوزة", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "اضافة خدمة استشارية", icon: Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: "الخدمات الاستشارية", icon: Icon(Icons.list,color: Colors.black87)),
-      SideBarModel(title: "اضافة استشاري", icon: Icon(Icons.add,color: Colors.black87)),
-    ];
-
-    List<Widget> bodies = [
-      StaticScreen(),
-      AddPatientView(),
-      AllPatientAdminView(),
-      AllPatientRecycleAdminView(),
-      PointerReportView(),
-      AdviceReportView(),
-      AddQuestion(),
-      AllQuestionView(),
-      AddIndicator(),
-      EditIndicator(),
-      AddRecommend(),
-      EditAdviceView(),
-      // Center(child: Text("اضافة الحالات من مصدر خارجي",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
-      AddSessionView(),
-      BookingSessionView(),
-      AddConsulting(),
-      ConsultingView(),
-      RegisterView(),
-    ];
-
     return LayoutBuilder(
       builder: (context, constraints) {
         isMobile = constraints.maxWidth < 600;
@@ -161,16 +100,16 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                     ),
                   ),
                 ),
-                ...titles.map((title) {
-                  int index = titles.indexOf(title);
+                ...Constants.titles.map((title) {
+                  int index = Constants.titles.indexOf(title);
                   return ListTile(
                     title: Row(
                       children: [
-                        titles[index].icon,
+                        Constants.titles[index].icon,
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            titles[index].title,
+                            Constants.titles[index].title,
                             style: Constants.theme.textTheme.titleLarge,
                           ),
                         ),
@@ -216,7 +155,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                       children: [
                         Expanded(
                           child: ListView.builder(
-                            itemCount: titles.length,
+                            itemCount: Constants.titles.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
@@ -229,11 +168,11 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                                   child: ListTile(
                                     title: Row(
                                       children: [
-                                        titles[index].icon,
+                                        Constants.titles[index].icon,
                                         const SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
-                                            titles[index].title,
+                                           Constants.titles[index].title,
                                             style: currentIndex == index
                                                 ? Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 24)
                                                 : Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 20,color: Colors.black),
@@ -255,7 +194,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                 Expanded(
                   child: Container(
                     color: Constants.theme.primaryColor.withOpacity(0.3),
-                    child: bodies[currentIndex],
+                    child: Constants.bodies[currentIndex],
                   ),
                 ),
               ],
