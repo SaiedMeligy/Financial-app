@@ -40,8 +40,7 @@ import '../../../../domain/useCase/Question/deleteQuestion/delete_question_use_c
           allQuestionUseCase = AllQuestionUseCase(allQuestionRepository);
       emit(LoadingAllQuestion());
     try {
-        var result = await allQuestionUseCase.execute(
-          QuestionModel());
+        var result = await allQuestionUseCase.execute(QuestionModel());
       print('API Response: ${result.data}');
 
       final data = QuestionModel.fromJson(result.data);
