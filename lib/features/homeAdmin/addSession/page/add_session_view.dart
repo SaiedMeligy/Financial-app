@@ -164,6 +164,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                         Row(
                           children: [
                             Expanded(
+
                               child: CustomTextField(
                                 controller: _patientNationalIdController,
                                 hint: "رقم الهوية الأماراتية",
