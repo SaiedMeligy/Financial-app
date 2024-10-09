@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,20 +28,21 @@ class StoreForm extends StatefulWidget {
 class _StoreFormState extends State<StoreForm> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
-  TextEditingController _dateTimeController = TextEditingController();
+  final TextEditingController _dateTimeController = TextEditingController();
   var questionViewCubit = QuestionViewCubit();
   List<ConsultationServices> menuItem = [];
   late Map<dynamic, dynamic> answers = {};
   late Map<dynamic, dynamic> radiosBtn = {};
   Map<int, TextEditingController> textControllers = {};
-  int needOtherSession = 0;
-  int selected_consultation_service = 0;
-  DateTime selectedDate = DateTime.now();
-  bool isMobile = false;
   Map<Questions, SizedBox> questionsWidget = {};
   Map<int, List<Questions>> relatedQuestionsMap = {};
+  bool readyState = false;
+  int needOtherSession = 0;
+  int selectedConsultationService = 0;
+  DateTime selectedDate = DateTime.now();
+  bool isMobile = false;
 
-  TextEditingController advicorComment = TextEditingController();
+  TextEditingController adviserCommentController = TextEditingController();
   void _showDateSelectionSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -96,11 +96,11 @@ class _StoreFormState extends State<StoreForm> {
     relatedQuestionsMap[optionId] = relatedQuestions ?? [];
     if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
       for (var q in relatedQuestions) {
-        questionsWidget.entries.forEach((Q) {
+        for (var Q in questionsWidget.entries) {
           if (Q.key.id == q.id) {
             Q.key.isRelatedQuestion = 0;
           }
-        });
+        }
       }
     }
     mainQuestion.questionOptions?.forEach(
@@ -127,10 +127,7 @@ class _StoreFormState extends State<StoreForm> {
   void initState() {
     super.initState();
     questionViewCubit.getAllQuestion();
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -144,9 +141,9 @@ class _StoreFormState extends State<StoreForm> {
           } else if (state is SuccessQuestionViewState) {
             var questionsResponse = state.question;
 
-            questionsResponse.forEach((q) {
+            for (var q in questionsResponse) {
               _fillQuestionWidgetMap(q);
-            });
+            }
 
             if (relatedQuestionsMap.isNotEmpty) {
               relatedQuestionsMap.forEach(
@@ -163,8 +160,8 @@ class _StoreFormState extends State<StoreForm> {
                 },
               );
             }
+            _fillAnswersMap(questionsResponse);
 
-            _fillAnsewrsMap(questionsResponse);
             List<Questions> questionsList = [];
             questionsWidget.forEach(
               (key, value) {
@@ -175,15 +172,13 @@ class _StoreFormState extends State<StoreForm> {
             );
 
             List<int> axisDisplay = [];
-            questionsList.forEach(
-              (q) {
-                if (!axisDisplay.contains(q.axisId)) {
-                  axisDisplay.add(q.axisId!);
-                } else {
-                  axisDisplay.add(0);
-                }
-              },
-            );
+            for (var q in questionsList) {
+              if (!axisDisplay.contains(q.axisId)) {
+                axisDisplay.add(q.axisId!);
+              } else {
+                axisDisplay.add(0);
+              }
+            }
 
             List<Radio<int>> radiobtnsWidgets = [];
             for (int index = 0; index < questionsList.length; index++) {
@@ -239,377 +234,96 @@ class _StoreFormState extends State<StoreForm> {
                   ),
                   child: Row(
                     children: [
-                      Container(
-                        height: double.maxFinite,
-                        width: Constants.mediaQuery.width * 0.2,
-                        color: Constants.theme.primaryColor.withOpacity(0.6),
-                        child: isMobile
-                            ? Column(
-                                children: [
-                                  Text(
-                                    widget.pationt_data['pationt']['name'],
-                                    style: Constants.theme.textTheme.bodyMedium,
-                                  ),
-                                  const Divider(
-                                    color: Colors.white,
-                                    thickness: 1,
-                                    indent: 10,
-                                    endIndent: 10,
-                                  ),
-                                  Text(
-                                    CacheHelper.getData(key: 'name'),
-                                    style: Constants.theme.textTheme.bodyMedium,
-                                  ),
-                                  const Divider(
-                                    color: Colors.white,
-                                    thickness: 1,
-                                    indent: 10,
-                                    endIndent: 10,
-                                  ),
-                                  Text(
-                                    "رقم الهوية الأماراتية: " +
-                                        widget.pationt_data['pationt']
-                                            ['national_id'],
-                                    style: Constants.theme.textTheme.bodyMedium,
-                                  ),
-                                  const Divider(
-                                    color: Colors.white,
-                                    thickness: 1,
-                                    indent: 10,
-                                    endIndent: 10,
-                                  ),
-                                  Text(
-                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
-                                    style: Constants.theme.textTheme.bodyMedium,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () => _selectDate(context),
-                                        icon: Icon(Icons.date_range_outlined,
-                                            size: 40, color: Colors.white),
-                                      ),
-                                      // IconButton(
-                                      //   onPressed: () => _selectTime(context),
-                                      //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
-                                      // ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                children: [
-                                  Text(
-                                    widget.pationt_data['pationt']['name'],
-                                    style: Constants.theme.textTheme.titleLarge,
-                                  ),
-                                  const Divider(
-                                    color: Colors.white,
-                                    thickness: 1,
-                                    indent: 10,
-                                    endIndent: 10,
-                                  ),
-                                  Text(
-                                    CacheHelper.getData(key: 'name'),
-                                    style: Constants.theme.textTheme.titleLarge,
-                                  ),
-                                  const Divider(
-                                    color: Colors.white,
-                                    thickness: 1,
-                                    indent: 10,
-                                    endIndent: 10,
-                                  ),
-                                  Text(
-                                    "رقم الهوية الأماراتية: " +
-                                        widget.pationt_data['pationt']
-                                            ['national_id'],
-                                    style: Constants.theme.textTheme.titleLarge,
-                                  ),
-                                  const Divider(
-                                    color: Colors.white,
-                                    thickness: 1,
-                                    indent: 10,
-                                    endIndent: 10,
-                                  ),
-                                  Text(
-                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
-                                    style: Constants.theme.textTheme.titleLarge,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () => _selectDate(context),
-                                        icon: Icon(Icons.date_range_outlined,
-                                            size: 40, color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                      PatientInfoWidget(
+                        isMobile: isMobile,
+                        pationtData: widget.pationt_data,
                       ),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: questionsList.length + 1,
-                                itemBuilder: (context, index) {
-                                  if (index < questionsList.length) {
-                                    return Column(
-                                      children: [
-                                        if (index < axisDisplay.length && axisDisplay[index] != 0)
-                                          Column(
-                                            children: [
-                                              Text(
-                                                questionsList[index].axis!.name.toString(),
-                                                style: isMobile?Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black, fontWeight: FontWeight.bold,):Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black, fontWeight: FontWeight.bold,),
-                                              ).setHorizontalPadding(context,enableMediaQuery: false, 10),
-                                              const SizedBox(height: 5),
-                                              Container(
-                                                height: 3,
-                                                width: 140,
-                                                color: Colors.black54,
-                                              )
-                                            ],
-                                          ),
-                                        const SizedBox(height: 10),
-                                        Padding(
-                                          padding:  EdgeInsets.symmetric(
-                                              horizontal:isMobile? 2:20),
-                                          child: questionsWidget.entries.firstWhere((q) => q.key.id ==
-                                                  questionsList[index].id)
-                                              .value,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ).setHorizontalPadding(context,enableMediaQuery: false, (Constants.mediaQuery.width>600)?2:10);
-                                  } else {
-                                    return Column(
-                                      children: [
-                                        Text(
-                                          "ملاحظات الاستشارى",
-                                          style: Constants
-                                              .theme.textTheme.titleLarge
-                                              ?.copyWith(
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        CustomTextField(
-                                          maxLines: 4,
-                                          hint: "ملاحظات الاستشارى",
-                                          controller: advicorComment,
-                                        ),
-                                        isMobile
-                                            ? Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        " هل يحتاج إلى جلسة أخرى",
-                                                        style: Constants
-                                                            .theme
-                                                            .textTheme
-                                                            .bodyMedium
-                                                            ?.copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      Checkbox(
-                                                        value:
-                                                            (needOtherSession ==
-                                                                1),
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            needOtherSession =
-                                                                (value!)
-                                                                    ? 1
-                                                                    : 0;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                    Column(
-                                                    children: [
-                                                      Text(
-                                                        "الخدمة الاستشارية",
-                                                        style: Constants
-                                                            .theme
-                                                            .textTheme
-                                                            .bodyMedium
-                                                            ?.copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      DropDown(
-                                                        onChange: (value) {
-                                                          setState(() {
-                                                            selected_consultation_service =
-                                                                value;
-                                                          });
-                                                        },
-                                                      ),
-
-
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  " هل يحتاج إلى جلسة أخرى",
-                                                  style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
-                                                ),
-                                                Checkbox(
-                                                  value:
-                                                      (needOtherSession == 1),
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      needOtherSession =
-                                                          (value!) ? 1 : 0;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "الخدمة الاستشارية",
-                                                  style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                DropDown(
-                                                  onChange: (value) {
-                                                    setState(() {
-                                                      selected_consultation_service =
-                                                          value;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ).setOnlyPadding(context,enableMediaQuery: false, 10, 0, 0, 0),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            BorderRoundedButton(
-                                                    title: "التالي",
-                                                    onPressed: () {
-                                                      if (advicorComment
-                                                          .text.isEmpty) {
-                                                        SnackBarService
-                                                            .showErrorMessage(
-                                                                "من فضلك ادخل ملاحظات الاستشارى");
-                                                      } else if (_selectedDate ==
-                                                          null) {
-                                                        SnackBarService
-                                                            .showErrorMessage(
-                                                                "من فضلك اختر التاريخ ");
-                                                      } else {
-                                                        setState(() {
-                                                          textControllers
-                                                              .forEach(
-                                                                  (key1, val) {
-                                                            answers[key1] =
-                                                                val.text;
-                                                          });
-                                                        });
-
-                                                        List<dynamic>
-                                                            lastAnswers = [];
-                                                        answers.forEach(
-                                                            (key, value) {
-                                                          lastAnswers.add({
-                                                            "question_option_id":
-                                                                key,
-                                                            "pationt_answer":
-                                                                value,
-                                                          });
-                                                        });
-
-                                                        Map<String, dynamic>
-                                                            storeDate = {
-                                                          "advicor_id":
-                                                              CacheHelper
-                                                                  .getData(
-                                                                      key:
-                                                                          'id'),
-                                                          "pationt_id": widget
-                                                                  .pationt_data[
-                                                              'pationt']['id'],
-                                                          "need_other_session":
-                                                              needOtherSession,
-                                                          "consultation_service_id":
-                                                              selected_consultation_service,
-                                                          "comments":
-                                                              advicorComment
-                                                                  .text,
-                                                          "date": _selectedDate
-                                                                  ?.toString() ??
-                                                              '',
-                                                          "answers":
-                                                              lastAnswers,
-                                                        };
-
-                                                        print(
-                                                            "Data to be sent: $storeDate");
-
-                                                        questionViewCubit
-                                                            .getStoreForm(
-                                                                storeDate)
-                                                            .then((value) {
-                                                          if (value != null) {
-                                                            Navigator.pop(
-                                                                context);
-                                                            SnackBarService
-                                                                .showSuccessMessage(
-                                                                    "تم اضافة الفورم");
-                                                          }
-                                                        });
-                                                      }
-                                                    })
-                                                .setVerticalPadding(
-                                                    context,
-                                                    enableMediaQuery: false,
-                                                    20),
-                                          ],
-                                        ).setHorizontalPadding(
-                                            context,
-                                            enableMediaQuery: false,
-                                            10),
-                                      ],
-                                    ).setHorizontalPadding(
-                                        context, enableMediaQuery: false, 20);
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
+                        child: ListView.builder(
+                          itemCount: questionsList.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index < questionsList.length) {
+                              return Column(
+                                children: [
+                                  if (index < axisDisplay.length &&
+                                      axisDisplay[index] != 0)
+                                    AxisWidget(
+                                      axisName: questionsList[index]
+                                          .axis!
+                                          .name
+                                          .toString(),
+                                      isMobile: isMobile,
+                                    ),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: isMobile ? 2 : 20),
+                                    child: questionsWidget.entries
+                                        .firstWhere((q) =>
+                                            q.key.id == questionsList[index].id)
+                                        .value,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ).setHorizontalPadding(
+                                  context,
+                                  enableMediaQuery: false,
+                                  (Constants.mediaQuery.width > 600) ? 2 : 10);
+                            } else {
+                              return Column(
+                                children: [
+                                  Text(
+                                    "ملاحظات الاستشارى",
+                                    style: Constants.theme.textTheme.titleLarge
+                                        ?.copyWith(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  CustomTextField(
+                                    maxLines: 4,
+                                    hint: "ملاحظات الاستشارى",
+                                    controller: adviserCommentController,
+                                  ),
+                                  NeedOtherSessionAndConsultationServiceWidget(
+                                    isMobile: isMobile,
+                                    needOtherSessionValue: needOtherSession,
+                                    onConsultationServiceChange: (value) {
+                                      setState(() {
+                                        selectedConsultationService = value;
+                                      });
+                                    },
+                                    onNeedOtherSessionChange: (value) {
+                                      setState(() {
+                                        needOtherSession = value;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      BorderRoundedButton(
+                                              title: "التالي",
+                                              onPressed: () {
+                                                submitForm(context);
+                                              })
+                                          .setVerticalPadding(
+                                              context,
+                                              enableMediaQuery: false,
+                                              20),
+                                    ],
+                                  ).setHorizontalPadding(
+                                      context, enableMediaQuery: false, 10),
+                                ],
+                              ).setHorizontalPadding(
+                                  context, enableMediaQuery: false, 20);
+                            }
+                          },
                         ),
                       ),
                     ],
@@ -624,6 +338,47 @@ class _StoreFormState extends State<StoreForm> {
         },
       );
     });
+  }
+
+  void submitForm(BuildContext context) {
+    if (adviserCommentController.text.isEmpty) {
+      SnackBarService.showErrorMessage("من فضلك ادخل ملاحظات الاستشارى");
+    } else if (_selectedDate == null) {
+      SnackBarService.showErrorMessage("من فضلك اختر التاريخ ");
+    } else {
+      setState(() {
+        textControllers.forEach((key1, val) {
+          answers[key1] = val.text;
+        });
+      });
+
+      List<dynamic> lastAnswers = [];
+      answers.forEach((key, value) {
+        lastAnswers.add({
+          "question_option_id": key,
+          "pationt_answer": value,
+        });
+      });
+
+      Map<String, dynamic> storeDate = {
+        "advicor_id": CacheHelper.getData(key: 'id'),
+        "pationt_id": widget.pationt_data['pationt']['id'],
+        "need_other_session": needOtherSession,
+        "consultation_service_id": selectedConsultationService,
+        "comments": adviserCommentController.text,
+        "date": _selectedDate?.toString() ?? '',
+        "answers": lastAnswers,
+      };
+
+      print("Data to be sent: $storeDate");
+
+      questionViewCubit.getStoreForm(storeDate).then((value) {
+        if (value != null) {
+          Navigator.pop(context);
+          SnackBarService.showSuccessMessage("تم اضافة الفورم");
+        }
+      });
+    }
   }
 
   void _fillQuestionWidgetMap(Questions q) {
@@ -642,7 +397,7 @@ class _StoreFormState extends State<StoreForm> {
     );
   }
 
-  void _fillAnsewrsMap(List<Questions> questions) {
+  void _fillAnswersMap(List<Questions> questions) {
     if (answers.isEmpty) {
       for (int index = 0; index < questions.length; index++) {
         radiosBtn[questions[index].id!] = -1;
@@ -666,7 +421,7 @@ class _StoreFormState extends State<StoreForm> {
                   .questionOptions![i]
                   .reletedQuestions!
                   .isNotEmpty) {
-            _fillAnsewrsMap(questions[index]
+            _fillAnswersMap(questions[index]
                 .questionOptions![i]
                 .reletedQuestions as List<Questions>);
           }
@@ -676,117 +431,121 @@ class _StoreFormState extends State<StoreForm> {
     }
   }
 
-  SizedBox _buildQuestion(
-      List<Questions> question, int index, BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: CustomPaint(
-        foregroundPainter: LinePainter(
-          text: question[index].title.toString(),
-        ),
-        child: Container(
-          width: Constants.mediaQuery.width * 0.2,
-          height: question[index].questionOptions!.length > 2
-              ? question[index].questionOptions!.length * 100
-              : 200,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.black87,
-              width: 2.5,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (int i = 0;
-                  i < question[index].questionOptions!.length;
-                  i++) ...[
-                Expanded(
-                  child: Container(
-                    width: Constants.mediaQuery.width * 0.47,
-                    height: Constants.mediaQuery.height * 0.1,
-                    margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white54,
-                      borderRadius: BorderRadius.circular(10),
-                      border: question[index].questionOptions![i].type != 3
-                          ? Border.all(
-                              color: Colors.black87,
-                              width: 2.5,
-                            )
-                          : null,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          question[index].questionOptions![i].title.toString(),
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                            color: Colors.black,
-                          ),
-                        ),
-                        if (question[index].questionOptions![i].type == 1)
-                          Radio<int>(
-                            value: question[index].questionOptions![i].id ?? 0,
-                            groupValue: radiosBtn[question[index].id],
-                            onChanged: (value) {
-                              answers[question[index].questionOptions![i].id] =
-                                  1;
-                              question[index].questionOptions!.forEach((o) {
-                                if (o.type == 1) {
-                                  if (o.id !=
-                                      question[index].questionOptions![i].id) {
-                                    answers[o.id] = 0;
-                                  }
-                                }
-                              });
-                              radiosBtn[question[index].id] = value!;
-                              _updateRelatedQuestions(
-                                  question[index],
-                                  question[index].questionOptions![i].id!,
-                                  question[index]
-                                      .questionOptions![i]
-                                      .reletedQuestions);
-                              setState(() {});
-                            },
-                          ),
-                        if (question[index].questionOptions![i].type == 2)
-                          Checkbox(
-                            value: (answers[question[index].questionOptions![i].id] == 1)
-                                ? true
-                                : false,
-                            onChanged: (value) {
-                              answers[question[index].questionOptions![i].id] =
-                                  (value!) ? 1 : 0;
-                              setState(() {});
-                            },
-                          ),
-                        if (question[index].questionOptions![i].type == 3)
-                          Container(
-                            width: Constants.mediaQuery.width * 0.2,
-                            height: Constants.mediaQuery.height * 0.2,
-                            decoration: BoxDecoration(),
-                            child: QuestionTextField(
-                              hint: "ادخل النص",
-                              maxLines: 3,
-                              controller: textControllers[question[index].questionOptions![i].id!],
-                            ),
-                          ).setVerticalPadding(
-                              context, enableMediaQuery: false, 5),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // SizedBox _buildQuestion(
+  //     List<Questions> question, int index, BuildContext context) {
+  //   return SizedBox(
+  //     width: double.infinity,
+  //     child: CustomPaint(
+  //       foregroundPainter: LinePainter(
+  //         text: question[index].title.toString(),
+  //       ),
+  //       child: Container(
+  //         width: Constants.mediaQuery.width * 0.2,
+  //         height: question[index].questionOptions!.length > 2
+  //             ? question[index].questionOptions!.length * 100
+  //             : 200,
+  //         decoration: BoxDecoration(
+  //           borderRadius: BorderRadius.circular(10),
+  //           border: Border.all(
+  //             color: Colors.black87,
+  //             width: 2.5,
+  //           ),
+  //         ),
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.start,
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             for (int i = 0;
+  //                 i < question[index].questionOptions!.length;
+  //                 i++) ...[
+  //               Expanded(
+  //                 child: Container(
+  //                   width: Constants.mediaQuery.width * 0.47,
+  //                   height: Constants.mediaQuery.height * 0.1,
+  //                   margin: const EdgeInsets.all(8),
+  //                   decoration: BoxDecoration(
+  //                     color: Colors.white54,
+  //                     borderRadius: BorderRadius.circular(10),
+  //                     border: question[index].questionOptions![i].type != 3
+  //                         ? Border.all(
+  //                             color: Colors.black87,
+  //                             width: 2.5,
+  //                           )
+  //                         : null,
+  //                   ),
+  //                   child: Row(
+  //                     crossAxisAlignment: CrossAxisAlignment.center,
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     children: [
+  //                       Text(
+  //                         question[index].questionOptions![i].title.toString(),
+  //                         style: Constants.theme.textTheme.bodyMedium?.copyWith(
+  //                           color: Colors.black,
+  //                         ),
+  //                       ),
+  //                       if (question[index].questionOptions![i].type == 1)
+  //                         Radio<int>(
+  //                           value: question[index].questionOptions![i].id ?? 0,
+  //                           groupValue: radiosBtn[question[index].id],
+  //                           onChanged: (value) {
+  //                             answers[question[index].questionOptions![i].id] =
+  //                                 1;
+  //                             question[index].questionOptions!.forEach((o) {
+  //                               if (o.type == 1) {
+  //                                 if (o.id !=
+  //                                     question[index].questionOptions![i].id) {
+  //                                   answers[o.id] = 0;
+  //                                 }
+  //                               }
+  //                             });
+  //                             radiosBtn[question[index].id] = value!;
+  //                             _updateRelatedQuestions(
+  //                                 question[index],
+  //                                 question[index].questionOptions![i].id!,
+  //                                 question[index]
+  //                                     .questionOptions![i]
+  //                                     .reletedQuestions);
+  //                             setState(() {});
+  //                           },
+  //                         ),
+  //                       if (question[index].questionOptions![i].type == 2)
+  //                         Checkbox(
+  //                           value: (answers[question[index]
+  //                                       .questionOptions![i]
+  //                                       .id] ==
+  //                                   1)
+  //                               ? true
+  //                               : false,
+  //                           onChanged: (value) {
+  //                             answers[question[index].questionOptions![i].id] =
+  //                                 (value!) ? 1 : 0;
+  //                             setState(() {});
+  //                           },
+  //                         ),
+  //                       if (question[index].questionOptions![i].type == 3)
+  //                         Container(
+  //                           width: Constants.mediaQuery.width * 0.2,
+  //                           height: Constants.mediaQuery.height * 0.2,
+  //                           decoration: BoxDecoration(),
+  //                           child: QuestionTextField(
+  //                             hint: "ادخل النص",
+  //                             maxLines: 3,
+  //                             controller: textControllers[
+  //                                 question[index].questionOptions![i].id!],
+  //                           ),
+  //                         ).setVerticalPadding(
+  //                             context, enableMediaQuery: false, 5),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   SizedBox _buildQuestionWidget(Questions question) {
     return SizedBox(
@@ -834,7 +593,14 @@ class _StoreFormState extends State<StoreForm> {
                         Expanded(
                           child: Text(
                             question.questionOptions![i].title.toString(),
-                            style:isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,): Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,),
+                            style: isMobile
+                                ? Constants.theme.textTheme.bodySmall?.copyWith(
+                                    color: Colors.black,
+                                  )
+                                : Constants.theme.textTheme.bodyMedium
+                                    ?.copyWith(
+                                    color: Colors.black,
+                                  ),
                           ),
                         ),
                         if (question.questionOptions![i].type == 1)
@@ -843,13 +609,13 @@ class _StoreFormState extends State<StoreForm> {
                             groupValue: radiosBtn[question.id],
                             onChanged: (value) {
                               answers[question.questionOptions![i].id] = 1;
-                              question.questionOptions!.forEach((o) {
+                              for (var o in question.questionOptions!) {
                                 if (o.type == 1) {
                                   if (o.id != question.questionOptions![i].id) {
                                     answers[o.id] = 0;
                                   }
                                 }
-                              });
+                              }
                               radiosBtn[question.id] = value!;
                               _updateRelatedQuestions(
                                   question,
@@ -882,6 +648,11 @@ class _StoreFormState extends State<StoreForm> {
                               maxLines: 3,
                               controller: textControllers[
                                   question.questionOptions![i].id!],
+                              onChanged: (value) {
+                                answers[question.questionOptions![i].id] =
+                                    value;
+                                setState(() {});
+                              },
                             ),
                           ),
                       ],
@@ -922,15 +693,16 @@ class LinePainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     // Determine the font size based on screen width
-    double fontSize =  9 ;
-    double fontSize2 =  20 ;
+    double fontSize = 9;
+    double fontSize2 = 20;
 
     var textPainter = TextPainter(
       text: TextSpan(
         text: text,
         style: (Constants.mediaQuery.width < 600)
             ? Constants.theme.textTheme.bodyMedium?.copyWith(fontSize: fontSize)
-            : Constants.theme.textTheme.titleLarge?.copyWith(fontSize: fontSize2),
+            : Constants.theme.textTheme.titleLarge
+                ?.copyWith(fontSize: fontSize2),
       ),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
@@ -955,4 +727,257 @@ class LinePainter extends CustomPainter {
   }
 }
 
+class PatientInfoWidget extends StatelessWidget {
+  const PatientInfoWidget(
+      {super.key, required this.isMobile, required this.pationtData});
+  final bool isMobile;
+  final dynamic pationtData;
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.maxFinite,
+      width: Constants.mediaQuery.width * 0.2,
+      color: Constants.theme.primaryColor.withOpacity(0.6),
+      child: isMobile
+          ? Column(
+              children: [
+                Text(
+                  pationtData['pationt']['name'],
+                  style: Constants.theme.textTheme.bodyMedium,
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                Text(
+                  CacheHelper.getData(key: 'name'),
+                  style: Constants.theme.textTheme.bodyMedium,
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                Text(
+                  "رقم الهوية الأماراتية: " +
+                      pationtData['pationt']['national_id'],
+                  style: Constants.theme.textTheme.bodyMedium,
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                Text(
+                  "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                  style: Constants.theme.textTheme.bodyMedium,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+// _selectDate(context)
+                      },
+                      icon: Icon(Icons.date_range_outlined,
+                          size: 40, color: Colors.white),
+                    ),
+                    // IconButton(
+                    //   onPressed: () => _selectTime(context),
+                    //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
+                    // ),
+                  ],
+                ),
+              ],
+            )
+          : Column(
+              children: [
+                Text(
+                  pationtData['pationt']['name'],
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                Text(
+                  CacheHelper.getData(key: 'name'),
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                Text(
+                  "رقم الهوية الأماراتية: " +
+                      pationtData['pationt']['national_id'],
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                Text(
+                  "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                  style: Constants.theme.textTheme.titleLarge,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        // _selectDate(context);
+                      },
+                      icon: Icon(Icons.date_range_outlined,
+                          size: 40, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+class NeedOtherSessionAndConsultationServiceWidget extends StatelessWidget {
+  const NeedOtherSessionAndConsultationServiceWidget(
+      {super.key,
+      required this.isMobile,
+      required this.onNeedOtherSessionChange,
+      required this.onConsultationServiceChange,
+      required this.needOtherSessionValue});
+  final bool isMobile;
+  final ValueChanged onNeedOtherSessionChange;
+  final ValueChanged onConsultationServiceChange;
+  final int needOtherSessionValue;
+  @override
+  Widget build(BuildContext context) {
+    return isMobile
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    " هل يحتاج إلى جلسة أخرى",
+                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black,
+                    ),
+                  ),
+                  Checkbox(
+                    value: (needOtherSessionValue == 1),
+                    onChanged: (value) {
+                      onNeedOtherSessionChange((value!) ? 1 : 0);
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    "الخدمة الاستشارية",
+                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black,
+                    ),
+                  ),
+                  DropDown(
+                    onChange: (value) {
+                      onConsultationServiceChange(value);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    " هل يحتاج إلى جلسة أخرى",
+                    style: isMobile
+                        ? Constants.theme.textTheme.bodySmall?.copyWith(
+                            color: Colors.black,
+                          )
+                        : Constants.theme.textTheme.titleLarge?.copyWith(
+                            color: Colors.black,
+                          ),
+                  ),
+                  Checkbox(
+                    value: (needOtherSessionValue == 1),
+                    onChanged: (value) {
+                      onNeedOtherSessionChange((value!) ? 1 : 0);
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    "الخدمة الاستشارية",
+                    style: isMobile
+                        ? Constants.theme.textTheme.bodySmall?.copyWith(
+                            color: Colors.black,
+                          )
+                        : Constants.theme.textTheme.titleLarge?.copyWith(
+                            color: Colors.black,
+                          ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  DropDown(
+                    onChange: (value) {
+                      onConsultationServiceChange(value);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ).setOnlyPadding(context, enableMediaQuery: false, 10, 0, 0, 0);
+  }
+}
+
+class AxisWidget extends StatelessWidget {
+  const AxisWidget({super.key, required this.isMobile, required this.axisName});
+  final bool isMobile;
+  final String axisName;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          axisName,
+          style: isMobile
+              ? Constants.theme.textTheme.titleLarge?.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                )
+              : Constants.theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+        ).setHorizontalPadding(context, enableMediaQuery: false, 10),
+        const SizedBox(height: 5),
+        Container(
+          height: 3,
+          width: 140,
+          color: Colors.black54,
+        )
+      ],
+    );
+  }
+}
