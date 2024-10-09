@@ -34,7 +34,7 @@ class _StoreFormState extends State<StoreForm> {
   List<ConsultationServices> menuItem = [];
   late Map<dynamic, dynamic> answers = {};
   late Map<dynamic, dynamic> radiosBtn = {};
-  Map<dynamic, TextEditingController> textControllers = {};
+  Map<int, TextEditingController> textControllers = {};
   int needOtherSession = 0;
   int selected_consultation_service = 0;
   DateTime selectedDate = DateTime.now();
@@ -127,7 +127,10 @@ class _StoreFormState extends State<StoreForm> {
   void initState() {
     super.initState();
     questionViewCubit.getAllQuestion();
+
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -364,12 +367,7 @@ class _StoreFormState extends State<StoreForm> {
                                             children: [
                                               Text(
                                                 questionsList[index].axis!.name.toString(),
-                                                style: Constants
-                                                    .theme.textTheme.titleLarge
-                                                    ?.copyWith(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                                style: isMobile?Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black, fontWeight: FontWeight.bold,):Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black, fontWeight: FontWeight.bold,),
                                               ).setHorizontalPadding(context,enableMediaQuery: false, 10),
                                               const SizedBox(height: 5),
                                               Container(
@@ -419,7 +417,7 @@ class _StoreFormState extends State<StoreForm> {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        " هل يحتاج الي جلسة اخري",
+                                                        " هل يحتاج إلى جلسة أخرى",
                                                         style: Constants
                                                             .theme
                                                             .textTheme
@@ -476,7 +474,7 @@ class _StoreFormState extends State<StoreForm> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  " هل يحتاج الي جلسة اخري",
+                                                  " هل يحتاج إلى جلسة أخرى",
                                                   style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
                                                 ),
                                                 Checkbox(
@@ -658,7 +656,7 @@ class _StoreFormState extends State<StoreForm> {
           });
           if (questions[index].questionOptions![i].type == 3) {
             textControllers.addAll({
-              questions[index].questionOptions![i].id:
+              questions[index].questionOptions![i].id!:
                   TextEditingController(text: ""),
             });
           }
@@ -757,10 +755,7 @@ class _StoreFormState extends State<StoreForm> {
                           ),
                         if (question[index].questionOptions![i].type == 2)
                           Checkbox(
-                            value: (answers[question[index]
-                                        .questionOptions![i]
-                                        .id] ==
-                                    1)
+                            value: (answers[question[index].questionOptions![i].id] == 1)
                                 ? true
                                 : false,
                             onChanged: (value) {
@@ -777,8 +772,7 @@ class _StoreFormState extends State<StoreForm> {
                             child: QuestionTextField(
                               hint: "ادخل النص",
                               maxLines: 3,
-                              controller: textControllers[
-                                  question[index].questionOptions![i].id!],
+                              controller: textControllers[question[index].questionOptions![i].id!],
                             ),
                           ).setVerticalPadding(
                               context, enableMediaQuery: false, 5),
@@ -802,7 +796,7 @@ class _StoreFormState extends State<StoreForm> {
           text: question.title.toString(),
         ),
         child: Container(
-          width: Constants.mediaQuery.width * 0.2,
+          width: Constants.mediaQuery.width * 0.3,
           height: question.questionOptions!.length > 2
               ? question.questionOptions!.length * 100
               : 200,
@@ -928,14 +922,15 @@ class LinePainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     // Determine the font size based on screen width
-    double fontSize = Constants.mediaQuery.width > 600 ? 20 : 20;
+    double fontSize =  9 ;
+    double fontSize2 =  20 ;
 
     var textPainter = TextPainter(
       text: TextSpan(
         text: text,
-        style: (Constants.mediaQuery.width > 600)
+        style: (Constants.mediaQuery.width < 600)
             ? Constants.theme.textTheme.bodyMedium?.copyWith(fontSize: fontSize)
-            : Constants.theme.textTheme.titleLarge?.copyWith(fontSize: fontSize),
+            : Constants.theme.textTheme.titleLarge?.copyWith(fontSize: fontSize2),
       ),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
@@ -959,4 +954,5 @@ class LinePainter extends CustomPainter {
     return true;
   }
 }
+
 

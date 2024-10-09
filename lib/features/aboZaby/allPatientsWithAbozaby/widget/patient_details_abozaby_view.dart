@@ -301,7 +301,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                       pw.Container(
                                                         width: 350,
                                                         alignment: pw.Alignment.center,
-                                                        child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه الى جلسة اخرى ":" الحالة ليست بحاجه الى جلسة اخرى  ",
+                                                        child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه إلى جلسة أخرى ":" الحالة ليست بحاجه إلى جلسة أخرى  ",
                                                           style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
                                                           textDirection: pw.TextDirection.rtl,
                                                         ),
@@ -760,7 +760,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                       pw.Container(
                                                         width: 350,
                                                         alignment: pw.Alignment.center,
-                                                        child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه الى جلسة اخرى ":" الحالة ليست بحاجه الى جلسة اخرى  ",
+                                                        child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه إلى جلسة أخرى ":" الحالة ليست بحاجه إلى جلسة أخرى  ",
                                                           style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black,),
                                                           textDirection: pw.TextDirection.rtl,
                                                         ),
@@ -1192,7 +1192,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                               } else {
                                 return Column(
                                   children: [
-                                    Text(formData["need_other_session"]==1?"الحالة بحاجه الى جلسة اخرى":"الحالة ليست بحاجه الي جلسة اخرى",style: Constants.theme.textTheme.bodyLarge,),
+                                    Text(formData["need_other_session"]==1?"الحالة بحاجه إلى جلسة أخرى":"الحالة ليست بحاجه الي جلسة أخرى",style: Constants.theme.textTheme.bodyLarge,),
                                     SizedBox(height: 10),
                                     Divider(
                                       thickness: 2,

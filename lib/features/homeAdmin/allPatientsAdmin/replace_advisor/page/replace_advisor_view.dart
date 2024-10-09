@@ -74,6 +74,7 @@ class _ReplaceAdvisorViewState extends State<ReplaceAdvisorView> {
                                           TextButton(
                                             onPressed: () {
                                               Navigator.of(context).pop();
+                                              Navigator.of(context).pop(true);
                                             },
                                             child: Container(
                                                 decoration: BoxDecoration(

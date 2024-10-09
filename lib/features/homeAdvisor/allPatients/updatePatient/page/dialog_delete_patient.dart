@@ -46,39 +46,66 @@ class _DialogDeletePatientState extends State<DialogDeletePatient> {
             showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  title: Text("حذف الحالة",style:Constants.theme.textTheme.titleLarge?.copyWith(
-                    color: Colors.black
-                  ),),
-                  content: Text("هل أنت متأكد أنك تريد حذف هذه الحالة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                return Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: AlertDialog(
+                    title: Text("حذف الحالة",style:Constants.theme.textTheme.titleLarge?.copyWith(
                       color: Colors.black
-                  ),),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        updatePatientCubit.
-                        deletePatient(
-                          widget.patient!.id!,
-                        ).then((_) {
-                          widget.allPatientCubit.getAllPatient();
-                          Navigator.of(context).pop();
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Constants.theme.primaryColor,
-                            width: 2.5,
+                    ),),
+                    content: Text("هل أنت متأكد أنك تريد حذف هذه الحالة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black
+                    ),),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          updatePatientCubit.
+                          deletePatient(
+                            widget.patient!.id!,
+                          ).then((_) {
+                            widget.allPatientCubit.getAllPatient();
+                            Navigator.of(context).pop();
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Constants.theme.primaryColor,
+                              width: 2.5,
+                            ),
                           ),
+                          child: Text(
+                            "لسلة المهملات",
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
-                        child: Text(
-                          "موافق",
-                          style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                       ),
-                    ),
-                  ],
+                      TextButton(
+                        onPressed: () {
+                          updatePatientCubit.
+                          deletePatientFromSystem(
+                            widget.patient!.id!,
+                          ).then((_) {
+                            widget.allPatientCubit.getAllPatient();
+                            Navigator.of(context).pop();
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Constants.theme.primaryColor,
+                              width: 2.5,
+                            ),
+                          ),
+                          child: Text(
+                            "حذف نهائي",
+                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             );

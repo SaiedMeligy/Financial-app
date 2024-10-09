@@ -210,13 +210,20 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                   .arrow_up_arrow_down_circle,
                                               color: Colors.black),
                                           onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return ReplaceAdvisorView(
-                                                  pationt_data:
-                                                      widget.pationt_data);
-                                            }));
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => ReplaceAdvisorView(pationt_data: widget.pationt_data),
+                                              ),
+                                            ).then((shouldRefresh) {
+                                              if (shouldRefresh == true) {
+                                                setState(() {
+                                                  _patientFormViewCubit.setRefreshSessionAdmin(widget.pationt_data.id);
+                                                });
+                                              }
+                                            });
+
+
                                           },
                                         ),
                                       ),
@@ -448,8 +455,8 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                               child: pw.Text(
                                                                 formData["need_other_session"] ==
                                                                         1
-                                                                    ? " الحالة بحاجه الى جلسة اخرى "
-                                                                    : " الحالة ليست بحاجه الى جلسة اخرى  ",
+                                                                    ? " الحالة بحاجه إلى جلسة أخرى "
+                                                                    : " الحالة ليست بحاجه إلى جلسة أخرى  ",
                                                                 style: pw
                                                                     .TextStyle(
                                                                   font: ttf,
@@ -1198,8 +1205,8 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                               child: pw.Text(
                                                                 formData["need_other_session"] ==
                                                                         1
-                                                                    ? " الحالة بحاجه الى جلسة اخرى "
-                                                                    : " الحالة ليست بحاجه الى جلسة اخرى  ",
+                                                                    ? " الحالة بحاجه إلى جلسة أخرى "
+                                                                    : " الحالة ليست بحاجه إلى جلسة أخرى  ",
                                                                 style: pw
                                                                     .TextStyle(
                                                                   font: ttf,
@@ -1839,8 +1846,8 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                         children: [
                                           Text(
                                             formData["need_other_session"] == 1
-                                                ? "الحالة بحاجه الى جلسة اخرى"
-                                                : "الحالة ليست بحاجه الي جلسة اخرى",
+                                                ? "الحالة بحاجه إلى جلسة أخرى"
+                                                : "الحالة ليست بحاجه الي جلسة أخرى",
                                             style: Constants
                                                 .theme.textTheme.bodyLarge,
                                           ),

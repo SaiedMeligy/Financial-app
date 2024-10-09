@@ -61,7 +61,7 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                       children: [
                         Container(
                             width: isMobile?Constants.mediaQuery.width*0.4:Constants.mediaQuery.width*0.16,
-                            height: Constants.mediaQuery.height*0.15,
+                            height: Constants.mediaQuery.height*0.20,
                             decoration: BoxDecoration(
                                 color: Colors.grey,
                                 border: Border.all(
@@ -94,7 +94,7 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                         ),
                         Container(
                             width: isMobile?Constants.mediaQuery.width*0.4:Constants.mediaQuery.width*0.16,
-                            height: Constants.mediaQuery.height*0.15,
+                            height: Constants.mediaQuery.height*0.20,
                             decoration: BoxDecoration(
                                 color: Colors.grey,
                                 border: Border.all(
