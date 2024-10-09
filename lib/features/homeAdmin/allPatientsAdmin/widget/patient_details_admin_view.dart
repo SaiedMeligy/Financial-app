@@ -108,22 +108,24 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is ErrorFormState) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomeAdminView(
-                      targetIndex: Constants.bodies
-                          .indexWhere((element) => element is AddSessionView)),
-                ),
-              );
-            });
-
+          }
+          else if (state is ErrorFormState) {
+            // WidgetsBinding.instance.addPostFrameCallback((_) {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => HomeAdminView(
+            //           targetIndex: Constants.bodies
+            //               .indexWhere((element) => element is AddSessionView)),
+            //     ),
+            //   );
+            // });
+            Navigator.pop(context);
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is SuccessPatientNationalIdState) {
+          }
+          else if (state is SuccessPatientNationalIdState) {
             var formData = state.result.data["pationt"]["form"];
             var advicor = state.result.data["pationt"]["advicor"];
             var patient = formData["pationt"];
@@ -1852,7 +1854,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                 .theme.textTheme.bodyLarge,
                                           ),
                                           SizedBox(height: 10),
-                                          Divider(
+                                          const Divider(
                                             thickness: 2,
                                             height: 3,
                                             indent: 20,

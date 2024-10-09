@@ -85,7 +85,6 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
         emit(ErrorFormState());
       }
       else {
-
         emit(SuccessPatientNationalIdState(patientDetails));
       }
 

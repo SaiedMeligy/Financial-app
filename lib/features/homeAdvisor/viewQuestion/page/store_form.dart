@@ -234,10 +234,122 @@ class _StoreFormState extends State<StoreForm> {
                   ),
                   child: Row(
                     children: [
-                      PatientInfoWidget(
-                        isMobile: isMobile,
-                        pationtData: widget.pationt_data,
-                      ),
+                      // PatientInfoWidget(
+                      //   isMobile: isMobile,
+                      //   pationtData: widget.pationt_data,
+                      // ),
+                    Container(
+                    height: double.maxFinite,
+                    width: Constants.mediaQuery.width * 0.2,
+                    color: Constants.theme.primaryColor.withOpacity(0.6),
+                    child: isMobile
+                        ? Column(
+                      children: [
+                        Text(
+                          widget.pationt_data['pationt']['name'],
+                          style: Constants.theme.textTheme.bodyMedium,
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        Text(
+                          CacheHelper.getData(key: 'name'),
+                          style: Constants.theme.textTheme.bodyMedium,
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        Text(
+                          "رقم الهوية الأماراتية: " +
+                              widget.pationt_data['pationt']['national_id'],
+                          style: Constants.theme.textTheme.bodyMedium,
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        Text(
+                          "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                          style: Constants.theme.textTheme.bodyMedium,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                _selectDate(context);
+                              },
+                              icon: Icon(Icons.date_range_outlined,
+                                  size: 40, color: Colors.white),
+                            ),
+                            // IconButton(
+                            //   onPressed: () => _selectTime(context),
+                            //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
+                            // ),
+                          ],
+                        ),
+                      ],
+                    )
+                        : Column(
+                      children: [
+                        Text(
+                          widget.pationt_data['pationt']['name'],
+                          style: Constants.theme.textTheme.titleLarge,
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        Text(
+                          CacheHelper.getData(key: 'name'),
+                          style: Constants.theme.textTheme.titleLarge,
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        Text(
+                          "رقم الهوية الأماراتية: " +
+                              widget.pationt_data['pationt']['national_id'],
+                          style: Constants.theme.textTheme.titleLarge,
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        Text(
+                          "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                          style: Constants.theme.textTheme.titleLarge,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                _selectDate(context);
+                              },
+                              icon: Icon(Icons.date_range_outlined,
+                                  size: 40, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                       Expanded(
                         child: ListView.builder(
                           itemCount: questionsList.length + 1,
@@ -286,20 +398,20 @@ class _StoreFormState extends State<StoreForm> {
                                     hint: "ملاحظات الاستشارى",
                                     controller: adviserCommentController,
                                   ),
-                                  NeedOtherSessionAndConsultationServiceWidget(
-                                    isMobile: isMobile,
-                                    needOtherSessionValue: needOtherSession,
-                                    onConsultationServiceChange: (value) {
-                                      setState(() {
-                                        selectedConsultationService = value;
-                                      });
-                                    },
-                                    onNeedOtherSessionChange: (value) {
-                                      setState(() {
-                                        needOtherSession = value;
-                                      });
-                                    },
-                                  ),
+                                    NeedOtherSessionAndConsultationServiceWidget(
+                                      isMobile: isMobile,
+                                      needOtherSessionValue: needOtherSession,
+                                      onConsultationServiceChange: (value) {
+                                        setState(() {
+                                          selectedConsultationService = value;
+                                        });
+                                      },
+                                      onNeedOtherSessionChange: (value) {
+                                        setState(() {
+                                          needOtherSession = value;
+                                        });
+                                      },
+                                    ),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -981,3 +1093,110 @@ class AxisWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+//isMobile
+//                                       ? Column(
+//                                     mainAxisAlignment:
+//                                     MainAxisAlignment
+//                                         .spaceAround,
+//                                     crossAxisAlignment:
+//                                     CrossAxisAlignment.stretch,
+//                                     children: [
+//                                       Row(
+//                                         children: [
+//                                           Text(
+//                                             " هل يحتاج إلى جلسة أخرى",
+//                                             style: Constants
+//                                                 .theme
+//                                                 .textTheme
+//                                                 .bodyMedium
+//                                                 ?.copyWith(
+//                                               color: Colors.black,
+//                                             ),
+//                                           ),
+//                                           Checkbox(
+//                                             value:
+//                                             (needOtherSession ==
+//                                                 1),
+//                                             onChanged: (value) {
+//                                               setState(() {
+//                                                 needOtherSession =
+//                                                 (value!)
+//                                                     ? 1
+//                                                     : 0;
+//                                               });
+//                                             },
+//                                           ),
+//                                         ],
+//                                       ),
+//                                       Column(
+//                                         children: [
+//                                           Text(
+//                                             "الخدمة الاستشارية",
+//                                             style: Constants
+//                                                 .theme
+//                                                 .textTheme
+//                                                 .bodyMedium
+//                                                 ?.copyWith(
+//                                               color: Colors.black,
+//                                             ),
+//                                           ),
+//                                           DropDown(
+//                                             onChange: (value) {
+//                                               setState(() {
+//                                                 selected_consultation_service =
+//                                                     value;
+//                                               });
+//                                             },
+//                                           ),
+//                                         ],
+//                                       ),
+//                                     ],
+//                                   )
+//                                       : Row(
+//                                     mainAxisAlignment:
+//                                     MainAxisAlignment.spaceAround,
+//                                     children: [
+//                                       Row(
+//                                         children: [
+//                                           Text(
+//                                             " هل يحتاج إلى جلسة أخرى",
+//                                             style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
+//                                           ),
+//                                           Checkbox(
+//                                             value:
+//                                             (needOtherSession == 1),
+//                                             onChanged: (value) {
+//                                               setState(() {
+//                                                 needOtherSession =
+//                                                 (value!) ? 1 : 0;
+//                                               });
+//                                             },
+//                                           ),
+//                                         ],
+//                                       ),
+//                                       Row(
+//                                         children: [
+//                                           Text(
+//                                             "الخدمة الاستشارية",
+//                                             style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
+//                                           ),
+//                                           const SizedBox(
+//                                             width: 10,
+//                                           ),
+//                                           DropDown(
+//                                             onChange: (value) {
+//                                               setState(() {
+//                                                 selected_consultation_service =
+//                                                     value;
+//                                               });
+//                                             },
+//                                           ),
+//                                         ],
+//                                       ),
+//                                     ],
+//                                   ).setOnlyPadding(context,enableMediaQuery: false, 10, 0, 0, 0),

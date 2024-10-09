@@ -110,7 +110,8 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is ErrorFormState) {
+            }
+            else if (state is ErrorFormState) {
               Navigator.pop(context);
               return Center(
                 child: CircularProgressIndicator(),

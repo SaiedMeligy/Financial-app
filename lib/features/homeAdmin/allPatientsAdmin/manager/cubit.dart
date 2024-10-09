@@ -25,7 +25,7 @@ import '../../../../domain/useCase/adminUseCase/patiens/allpatient/all_patient_s
 import '../../../../domain/useCase/adminUseCase/patiens/allpatient/all_patient_use_case.dart';
 
 class AllPatientWithAdminCubit extends Cubit<AllPatientWithAdminStates> {
-  AllPatientWithAdminCubit() : super(LoadingAllPatientWithAdmin());
+    AllPatientWithAdminCubit() : super(LoadingAllPatientWithAdmin());
 
   late AllPatientWithAdminUseCase allPatientUseCase;
   late AllPatientWithAdminRepository allPatientRepository;
