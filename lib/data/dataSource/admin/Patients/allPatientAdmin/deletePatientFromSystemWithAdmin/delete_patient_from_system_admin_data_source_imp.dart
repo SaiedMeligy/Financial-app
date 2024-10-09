@@ -9,8 +9,8 @@ class DeletePatientFromSystemWithAdminDataSourceImp implements DeletePatientFrom
   DeletePatientFromSystemWithAdminDataSourceImp(this.dio);
   @override
   Future<Response> deletePatientWithAdmin(int id) async{
-    return await dio.delete(
-      "/api/pationt/destroy",
+    return await dio.post(
+     "/api/pationt/delete-patient-from-system",
       options: Options(
           headers: {
             "api-password": Constants.apiPassword,

@@ -10,10 +10,11 @@ class DeletePatientFromSystemDataSourceImp implements DeletePatientFromSystemDat
   DeletePatientFromSystemDataSourceImp(this.dio);
   @override
   Future<Response> deletePatient(int id) async{
-    return await dio.delete(
+    return await dio.post(
       //
-      "/api/advicor/pationt/destroy",
-      options: Options(
+        "/api/advicor/pationt/delete-patient-from-system",
+
+        options: Options(
           headers: {
             "api-password": Constants.apiPassword,
             "token": CacheHelper.getData(key: "token")
