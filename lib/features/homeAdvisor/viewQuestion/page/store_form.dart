@@ -238,118 +238,122 @@ class _StoreFormState extends State<StoreForm> {
                       //   isMobile: isMobile,
                       //   pationtData: widget.pationt_data,
                       // ),
-                    Container(
-                    height: double.maxFinite,
-                    width: Constants.mediaQuery.width * 0.2,
-                    color: Constants.theme.primaryColor.withOpacity(0.6),
-                    child: isMobile
-                        ? Column(
-                      children: [
-                        Text(
-                          widget.pationt_data['pationt']['name'],
-                          style: Constants.theme.textTheme.bodyMedium,
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1,
-                          indent: 10,
-                          endIndent: 10,
-                        ),
-                        Text(
-                          CacheHelper.getData(key: 'name'),
-                          style: Constants.theme.textTheme.bodyMedium,
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1,
-                          indent: 10,
-                          endIndent: 10,
-                        ),
-                        Text(
-                          "رقم الهوية الأماراتية: " +
-                              widget.pationt_data['pationt']['national_id'],
-                          style: Constants.theme.textTheme.bodyMedium,
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1,
-                          indent: 10,
-                          endIndent: 10,
-                        ),
-                        Text(
-                          "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
-                          style: Constants.theme.textTheme.bodyMedium,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                _selectDate(context);
-                              },
-                              icon: Icon(Icons.date_range_outlined,
-                                  size: 40, color: Colors.white),
-                            ),
-                            // IconButton(
-                            //   onPressed: () => _selectTime(context),
-                            //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
-                            // ),
-                          ],
-                        ),
-                      ],
-                    )
-                        : Column(
-                      children: [
-                        Text(
-                          widget.pationt_data['pationt']['name'],
-                          style: Constants.theme.textTheme.titleLarge,
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1,
-                          indent: 10,
-                          endIndent: 10,
-                        ),
-                        Text(
-                          CacheHelper.getData(key: 'name'),
-                          style: Constants.theme.textTheme.titleLarge,
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1,
-                          indent: 10,
-                          endIndent: 10,
-                        ),
-                        Text(
-                          "رقم الهوية الأماراتية: " +
-                              widget.pationt_data['pationt']['national_id'],
-                          style: Constants.theme.textTheme.titleLarge,
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1,
-                          indent: 10,
-                          endIndent: 10,
-                        ),
-                        Text(
-                          "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
-                          style: Constants.theme.textTheme.titleLarge,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                _selectDate(context);
-                              },
-                              icon: Icon(Icons.date_range_outlined,
-                                  size: 40, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                      Container(
+                        height: double.maxFinite,
+                        width: Constants.mediaQuery.width * 0.2,
+                        color: Constants.theme.primaryColor.withOpacity(0.6),
+                        child: isMobile
+                            ? Column(
+                                children: [
+                                  Text(
+                                    widget.pationt_data['pationt']['name'],
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    CacheHelper.getData(key: 'name'),
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "رقم الهوية الأماراتية: " +
+                                        widget.pationt_data['pationt']
+                                            ['national_id'],
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                                    style: Constants.theme.textTheme.bodyMedium,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          _selectDate(context);
+                                        },
+                                        icon: Icon(Icons.date_range_outlined,
+                                            size: 40, color: Colors.white),
+                                      ),
+                                      // IconButton(
+                                      //   onPressed: () => _selectTime(context),
+                                      //   icon: Icon(Icons.access_time_filled_rounded, size: 40, color: Colors.white),
+                                      // ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  Text(
+                                    widget.pationt_data['pationt']['name'],
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    CacheHelper.getData(key: 'name'),
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "رقم الهوية الأماراتية: " +
+                                        widget.pationt_data['pationt']
+                                            ['national_id'],
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  const Divider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                    indent: 10,
+                                    endIndent: 10,
+                                  ),
+                                  Text(
+                                    "${DateTime.now().minute.toString()} : ${DateTime.now().hour.toString()}",
+                                    style: Constants.theme.textTheme.titleLarge,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          _selectDate(context);
+                                        },
+                                        icon: Icon(Icons.date_range_outlined,
+                                            size: 40, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                      ),
                       Expanded(
                         child: ListView.builder(
                           itemCount: questionsList.length + 1,
@@ -398,20 +402,20 @@ class _StoreFormState extends State<StoreForm> {
                                     hint: "ملاحظات الاستشارى",
                                     controller: adviserCommentController,
                                   ),
-                                    NeedOtherSessionAndConsultationServiceWidget(
-                                      isMobile: isMobile,
-                                      needOtherSessionValue: needOtherSession,
-                                      onConsultationServiceChange: (value) {
-                                        setState(() {
-                                          selectedConsultationService = value;
-                                        });
-                                      },
-                                      onNeedOtherSessionChange: (value) {
-                                        setState(() {
-                                          needOtherSession = value;
-                                        });
-                                      },
-                                    ),
+                                  NeedOtherSessionAndConsultationServiceWidget(
+                                    isMobile: isMobile,
+                                    needOtherSessionValue: needOtherSession,
+                                    onConsultationServiceChange: (value) {
+                                      setState(() {
+                                        selectedConsultationService = value;
+                                      });
+                                    },
+                                    onNeedOtherSessionChange: (value) {
+                                      setState(() {
+                                        needOtherSession = value;
+                                      });
+                                    },
+                                  ),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -542,122 +546,6 @@ class _StoreFormState extends State<StoreForm> {
       }
     }
   }
-
-  // SizedBox _buildQuestion(
-  //     List<Questions> question, int index, BuildContext context) {
-  //   return SizedBox(
-  //     width: double.infinity,
-  //     child: CustomPaint(
-  //       foregroundPainter: LinePainter(
-  //         text: question[index].title.toString(),
-  //       ),
-  //       child: Container(
-  //         width: Constants.mediaQuery.width * 0.2,
-  //         height: question[index].questionOptions!.length > 2
-  //             ? question[index].questionOptions!.length * 100
-  //             : 200,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(10),
-  //           border: Border.all(
-  //             color: Colors.black87,
-  //             width: 2.5,
-  //           ),
-  //         ),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             for (int i = 0;
-  //                 i < question[index].questionOptions!.length;
-  //                 i++) ...[
-  //               Expanded(
-  //                 child: Container(
-  //                   width: Constants.mediaQuery.width * 0.47,
-  //                   height: Constants.mediaQuery.height * 0.1,
-  //                   margin: const EdgeInsets.all(8),
-  //                   decoration: BoxDecoration(
-  //                     color: Colors.white54,
-  //                     borderRadius: BorderRadius.circular(10),
-  //                     border: question[index].questionOptions![i].type != 3
-  //                         ? Border.all(
-  //                             color: Colors.black87,
-  //                             width: 2.5,
-  //                           )
-  //                         : null,
-  //                   ),
-  //                   child: Row(
-  //                     crossAxisAlignment: CrossAxisAlignment.center,
-  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                     children: [
-  //                       Text(
-  //                         question[index].questionOptions![i].title.toString(),
-  //                         style: Constants.theme.textTheme.bodyMedium?.copyWith(
-  //                           color: Colors.black,
-  //                         ),
-  //                       ),
-  //                       if (question[index].questionOptions![i].type == 1)
-  //                         Radio<int>(
-  //                           value: question[index].questionOptions![i].id ?? 0,
-  //                           groupValue: radiosBtn[question[index].id],
-  //                           onChanged: (value) {
-  //                             answers[question[index].questionOptions![i].id] =
-  //                                 1;
-  //                             question[index].questionOptions!.forEach((o) {
-  //                               if (o.type == 1) {
-  //                                 if (o.id !=
-  //                                     question[index].questionOptions![i].id) {
-  //                                   answers[o.id] = 0;
-  //                                 }
-  //                               }
-  //                             });
-  //                             radiosBtn[question[index].id] = value!;
-  //                             _updateRelatedQuestions(
-  //                                 question[index],
-  //                                 question[index].questionOptions![i].id!,
-  //                                 question[index]
-  //                                     .questionOptions![i]
-  //                                     .reletedQuestions);
-  //                             setState(() {});
-  //                           },
-  //                         ),
-  //                       if (question[index].questionOptions![i].type == 2)
-  //                         Checkbox(
-  //                           value: (answers[question[index]
-  //                                       .questionOptions![i]
-  //                                       .id] ==
-  //                                   1)
-  //                               ? true
-  //                               : false,
-  //                           onChanged: (value) {
-  //                             answers[question[index].questionOptions![i].id] =
-  //                                 (value!) ? 1 : 0;
-  //                             setState(() {});
-  //                           },
-  //                         ),
-  //                       if (question[index].questionOptions![i].type == 3)
-  //                         Container(
-  //                           width: Constants.mediaQuery.width * 0.2,
-  //                           height: Constants.mediaQuery.height * 0.2,
-  //                           decoration: BoxDecoration(),
-  //                           child: QuestionTextField(
-  //                             hint: "ادخل النص",
-  //                             maxLines: 3,
-  //                             controller: textControllers[
-  //                                 question[index].questionOptions![i].id!],
-  //                           ),
-  //                         ).setVerticalPadding(
-  //                             context, enableMediaQuery: false, 5),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   SizedBox _buildQuestionWidget(Questions question) {
     return SizedBox(
