@@ -104,6 +104,17 @@ class Questions {
     return map;
   }
 
+    // Override == operator to compare based on id
+  @override
+  bool operator ==(Object other) {
+    return other is Questions && other.id == id;
+  }
+
+  // Override hashCode to include id
+  @override
+  int get hashCode => id.hashCode;
+
+
 }
 
 /// id : 153

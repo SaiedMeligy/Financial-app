@@ -111,15 +111,35 @@ class _StoreFormState extends State<StoreForm> {
               questionsWidget.entries.forEach((Q) {
                 if (Q.key.id == q.id) {
                   Q.key.isRelatedQuestion = 1;
+                  if (Q.key.questionOptions!.isNotEmpty) {
+                    Q.key.questionOptions?.forEach(
+                      (option) {
+                        if(option.id == 207||option.id ==206){
+                            print("hi");
+                        }
+                        if (option.type! < 3) {
+                          answers[option.id] = 0;
+                          radiosBtn[Q.key.id!] = -1;
+                        } else {
+                          answers[option.id] = null;
+                          textControllers[option.id!] =
+                              TextEditingController(text: "");
+                        }
+                        
+                        _updateRelatedQuestions(
+                              Q.key, option.id!, option.reletedQuestions);
+                      },
+                    );
+                  }
                 }
               });
             }
-
             relatedQuestionsMap.remove(option.id);
           }
         }
       },
     );
+    print(relatedQuestionsMap);
     setState(() {});
   }
 
@@ -160,6 +180,7 @@ class _StoreFormState extends State<StoreForm> {
                 },
               );
             }
+
             _fillAnswersMap(questionsResponse);
 
             List<Questions> questionsList = [];
@@ -216,6 +237,9 @@ class _StoreFormState extends State<StoreForm> {
                 print(error.toString());
               }
             }
+
+            print(relatedQuestionsMap);
+            print(questionsWidget);
 
             return Directionality(
               textDirection: TextDirection.rtl,
@@ -358,7 +382,11 @@ class _StoreFormState extends State<StoreForm> {
                         child: ListView.builder(
                           itemCount: questionsList.length + 1,
                           itemBuilder: (context, index) {
-                            if (index < questionsList.length) {
+                            final displayedQuestion = questionsWidget.entries
+                                .firstWhere(
+                                    (q) => q.key.id == questionsList[index].id);
+                            if (index < questionsList.length &&
+                                displayedQuestion.key.isRelatedQuestion == 0) {
                               return Column(
                                 children: [
                                   if (index < axisDisplay.length &&
@@ -374,10 +402,7 @@ class _StoreFormState extends State<StoreForm> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: isMobile ? 2 : 20),
-                                    child: questionsWidget.entries
-                                        .firstWhere((q) =>
-                                            q.key.id == questionsList[index].id)
-                                        .value,
+                                    child: displayedQuestion.value,
                                   ),
                                   SizedBox(
                                     height: 10,
