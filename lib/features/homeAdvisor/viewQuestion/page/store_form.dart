@@ -380,45 +380,40 @@ class _StoreFormState extends State<StoreForm> {
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: questionsList.length + 1,
+                          itemCount: questionsList.length + 1, // Ensure that the index doesn't go out of bounds.
                           itemBuilder: (context, index) {
-                            final displayedQuestion = questionsWidget.entries
-                                .firstWhere(
-                                    (q) => q.key.id == questionsList[index].id);
-                            if (index < questionsList.length &&
-                                displayedQuestion.key.isRelatedQuestion == 0) {
-                              return Column(
-                                children: [
-                                  if (index < axisDisplay.length &&
-                                      axisDisplay[index] != 0)
-                                    AxisWidget(
-                                      axisName: questionsList[index]
-                                          .axis!
-                                          .name
-                                          .toString(),
-                                      isMobile: isMobile,
+                            if (index < questionsList.length) {
+                              final displayedQuestion = questionsWidget.entries
+                                  .firstWhere((q) => q.key.id == questionsList[index].id);
+
+                              if (displayedQuestion.key.isRelatedQuestion == 0) {
+                                return Column(
+                                  children: [
+                                    if (index < axisDisplay.length && axisDisplay[index] != 0)
+                                      AxisWidget(
+                                        axisName: questionsList[index].axis!.name.toString(),
+                                        isMobile: isMobile,
+                                      ),
+                                    const SizedBox(height: 10),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: isMobile ? 2 : 20),
+                                      child: displayedQuestion.value,
                                     ),
-                                  const SizedBox(height: 10),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: isMobile ? 2 : 20),
-                                    child: displayedQuestion.value,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              ).setHorizontalPadding(
+                                    SizedBox(height: 10),
+                                  ],
+                                ).setHorizontalPadding(
                                   context,
                                   enableMediaQuery: false,
-                                  (Constants.mediaQuery.width > 600) ? 2 : 10);
+                                  (Constants.mediaQuery.width > 600) ? 2 : 10,
+                                );
+                              }
                             } else {
+                              // The "adviser comment" section
                               return Column(
                                 children: [
                                   Text(
                                     "ملاحظات الاستشارى",
-                                    style: Constants.theme.textTheme.titleLarge
-                                        ?.copyWith(
+                                    style: Constants.theme.textTheme.titleLarge?.copyWith(
                                       color: Colors.black,
                                     ),
                                   ),
@@ -441,32 +436,25 @@ class _StoreFormState extends State<StoreForm> {
                                       });
                                     },
                                   ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
+                                  SizedBox(height: 10),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: [
                                       BorderRoundedButton(
-                                              title: "التالي",
-                                              onPressed: () {
-                                                submitForm(context);
-                                              })
-                                          .setVerticalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              20),
+                                        title: "التالي",
+                                        onPressed: () {
+                                          submitForm(context);
+                                        },
+                                      ).setVerticalPadding(context, enableMediaQuery: false, 20),
                                     ],
-                                  ).setHorizontalPadding(
-                                      context, enableMediaQuery: false, 10),
+                                  ).setHorizontalPadding(context, enableMediaQuery: false, 10),
                                 ],
-                              ).setHorizontalPadding(
-                                  context, enableMediaQuery: false, 20);
+                              ).setHorizontalPadding(context, enableMediaQuery: false, 20);
                             }
                           },
                         ),
-                      ),
+                      )
+
                     ],
                   ),
                 ),
