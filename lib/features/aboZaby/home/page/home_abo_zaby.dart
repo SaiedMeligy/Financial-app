@@ -77,162 +77,157 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
                   }).toList();
 
                   return isMobile
-                      ? SingleChildScrollView(
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
+                      ? Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage("assets/images/back.jpg"),
+                                  fit: BoxFit.cover,
+                                  opacity: 0.2
+
+                              ),
+                            ),
+
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    _buildInfoCard(
+                                      title: "عدد الأسر",
+                                      count: homeAdmin?.pationtsCount.toString() ?? "",
+                                      icon: Icons.back_hand_rounded,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
+                                      },
+                                      child: _buildInfoCard(
+                                        title: "عدد قصص النجاح",
+                                        count: homeAdmin?.successStoryCount.toString() ?? "",
+                                        icon: Icons.emoji_events,
+                                      ),
+                                    ),
+                                    _buildInfoCard(
+                                      title: "عدد الجلسات",
+                                      count: homeAdmin?.sessionsCount.toString() ?? "",
+                                      icon: Icons.bookmark_added_rounded,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView()));
+
+                                            },
+                                      child: _buildInfoCardPatient(
+                                        title: "عدد الأسر التى تتطلب جلسة إضافية",
+                                        count: homeAdmin?.needOtherSession.toString() ?? "",
+                                        icon: Icons.back_hand_rounded,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView()));
+
+
+                                      },
+                                      child: _buildInfoCardPatient(
+                                          title: "عدد الأسر التى لا تتطلب جلسة إضافية",
+                                          count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                          icon:  Icons.back_hand_rounded
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                                // _buildScenarioReport(senario1, senario2, senario3, senarioReport),
+                                // Row(
+                                //   children: [
+                                //     Expanded(child: CircleCharts(advisorData: advisorData)),
+                                //   ],
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                      : Container(
+                        decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage("assets/images/back.jpg"),
                                 fit: BoxFit.cover,
-                                opacity: 0.2
-
-                            ),
-                          ),
-
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  _buildInfoCard(
-                                    title: "عدد الأسر",
-                                    count: homeAdmin?.pationtsCount.toString() ?? "",
-                                    icon: Icons.back_hand_rounded,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context,MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
-                                    },
-                                    child: _buildInfoCard(
-                                      title: "عدد قصص النجاح",
-                                      count: homeAdmin?.successStoryCount.toString() ?? "",
-                                      icon: Icons.emoji_events,
-                                    ),
-                                  ),
-                                  _buildInfoCard(
-                                    title: "عدد الجلسات",
-                                    count: homeAdmin?.sessionsCount.toString() ?? "",
-                                    icon: Icons.bookmark_added_rounded,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView()));
-
-                                          },
-                                    child: _buildInfoCardPatient(
-                                      title: "عدد الأسر التى تتطلب جلسة إضافية",
-                                      count: homeAdmin?.needOtherSession.toString() ?? "",
-                                      icon: Icons.back_hand_rounded,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView()));
-
-
-                                    },
-                                    child: _buildInfoCardPatient(
-                                        title: "عدد الأسر التى لا تتطلب جلسة إضافية",
-                                        count: homeAdmin?.noNeedOtherSession.toString() ?? "",
-                                        icon:  Icons.back_hand_rounded
-                                    ),
-                                  ),
-
-                                ],
-                              ),
-                              // _buildScenarioReport(senario1, senario2, senario3, senarioReport),
-                              Row(
-                                children: [
-                                  Expanded(child: CircleCharts(advisorData: advisorData)),
-                                ],
-                              ),
-                            ],
-                          ),
+                                opacity: 0.4
+                            )
                         ),
-                      ],
-                    ),
-                  )
-                      : SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/back.jpg"),
-                              fit: BoxFit.cover,
-                              opacity: 0.4
-                          )
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              _buildInfoCard(
-                                title: "عدد الأسر",
-                                count: homeAdmin?.pationtsCount.toString() ?? "",
-                                icon: Icons.back_hand_rounded,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
-                                },
-                                child: _buildInfoCard(
-                                    title: "عدد قصص النجاح",
-                                    count: homeAdmin?.successStoryCount.toString() ?? "",
-                                    icon: Icons.emoji_events
-                                ),
-                              ),
-                              _buildInfoCard(
-                                  title: "عدد الجلسات",
-                                  count: homeAdmin?.sessionsCount.toString() ?? "",
-                                  icon: Icons.bookmark_added_rounded
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView()));
-                                  },
-                                child: _buildInfoCardPatient(
-                                  title: "عدد الأسر التى تتطلب جلسة إضافية",
-                                  count: homeAdmin?.needOtherSession.toString() ?? "",
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                _buildInfoCard(
+                                  title: "عدد الأسر",
+                                  count: homeAdmin?.pationtsCount.toString() ?? "",
                                   icon: Icons.back_hand_rounded,
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView(),));
-                                },
-                                child: _buildInfoCardPatient(
-                                    title: "عدد الأسر التى لا تتطلب جلسة إضافية",
-                                    count: homeAdmin?.noNeedOtherSession.toString() ?? "",
-                                    icon:  Icons.back_hand_rounded
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
+                                  },
+                                  child: _buildInfoCard(
+                                      title: "عدد قصص النجاح",
+                                      count: homeAdmin?.successStoryCount.toString() ?? "",
+                                      icon: Icons.emoji_events
+                                  ),
                                 ),
-                              ),
+                                _buildInfoCard(
+                                    title: "عدد الجلسات",
+                                    count: homeAdmin?.sessionsCount.toString() ?? "",
+                                    icon: Icons.bookmark_added_rounded
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView()));
+                                    },
+                                  child: _buildInfoCardPatient(
+                                    title: "عدد الأسر التى تتطلب جلسة إضافية",
+                                    count: homeAdmin?.needOtherSession.toString() ?? "",
+                                    icon: Icons.back_hand_rounded,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView(),));
+                                  },
+                                  child: _buildInfoCardPatient(
+                                      title: "عدد الأسر التى لا تتطلب جلسة إضافية",
+                                      count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                      icon:  Icons.back_hand_rounded
+                                  ),
+                                ),
 
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          SenarioWadget(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CircleCharts(advisorData: advisorData),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ).setHorizontalPadding(context,enableMediaQuery: false,15),
-                    ),
-                  );
+                              ],
+                            ),
+                            // SizedBox(height: 10),
+                            // SenarioWadget(),
+                            // Row(
+                            //   children: [
+                            //     Expanded(
+                            //       child: CircleCharts(advisorData: advisorData),
+                            //     ),
+                            //   ],
+                            // ),
+                          ],
+                        ).setHorizontalPadding(context,enableMediaQuery: false,15),
+                      );
                 }
                 else {
                   return Center(
@@ -251,7 +246,7 @@ class _HomeAboZabyState extends State<HomeAboZaby> {
   Widget _buildInfoCard({required String title, required String count, required IconData icon}) {
     return Container(
       width: isMobile ? Constants.mediaQuery.width * 0.28 : Constants.mediaQuery.width * 0.16,
-      height:isMobile? Constants.mediaQuery.height * 0.18:Constants.mediaQuery.height * 0.16,
+      height:isMobile? Constants.mediaQuery.height * 0.19:Constants.mediaQuery.height * 0.18,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey,

@@ -75,7 +75,7 @@ class _DialogDeletePatientWithAdminState extends State<DialogDeletePatientWithAd
                             ),
                           ),
                           child: Text(
-                            "لسلة المهملات",
+                            "إلى سلة المهملات",
                             style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
                           ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
