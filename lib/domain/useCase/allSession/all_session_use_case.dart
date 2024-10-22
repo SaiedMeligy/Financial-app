@@ -9,7 +9,7 @@ class AllSessionUseCase{
 
   AllSessionUseCase( this.allSessionRepository);
 
-  Future<Response> execute(AllSessionModel sessionModel){
-    return allSessionRepository.getAllSession(sessionModel);
+  Future<Response> execute(AllSessionModel sessionModel,{int page=1,int per_page=15}){
+    return allSessionRepository.getAllSession(sessionModel,page: page,per_page: per_page);
   }
 }

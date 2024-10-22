@@ -10,10 +10,10 @@ class AllSessionWithAdminRepositoryImp implements AllSessionWithAdminRepository{
   final AllSessionWithAdminDataSource dataSource;
   AllSessionWithAdminRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAllSessionWithAdmin(AllSessionModel sessionModel) async {
+  Future<Response> getAllSessionWithAdmin(AllSessionModel sessionModel,{int page =1,int per_page=15}) async {
     try {
       final response = await dataSource.getAllSessionWithAdmin(
-          sessionModel);
+          sessionModel,page: page,per_page: per_page);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

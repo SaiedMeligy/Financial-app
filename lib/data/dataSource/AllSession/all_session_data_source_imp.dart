@@ -9,9 +9,13 @@ class AllSessionDataSourceImp implements AllSessionDataSource{
   final Dio dio;
   AllSessionDataSourceImp(this.dio);
   @override
-  Future<Response> getAllSession(AllSessionModel sessionModel) async{
+  Future<Response> getAllSession(AllSessionModel sessionModel,{int page=1,int per_page=15}) async{
     return await dio.get(
         "/api/advicor/session",
+        queryParameters: {
+          "page": page,
+          "per_page": per_page
+        },
         options: Options(
             headers: {
               "api-password": Constants.apiPassword,

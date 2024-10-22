@@ -9,10 +9,10 @@ class AllSessionRepositoryImp implements AllSessionRepository{
   final AllSessionDataSource dataSource;
   AllSessionRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAllSession(AllSessionModel sessionModel) async {
+  Future<Response> getAllSession(AllSessionModel sessionModel,{int page=1,int per_page=15}) async {
     try {
       final response = await dataSource.getAllSession(
-          sessionModel);
+          sessionModel,page: page,per_page: per_page);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

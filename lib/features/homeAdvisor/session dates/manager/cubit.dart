@@ -15,30 +15,42 @@ import '../../../../domain/useCase/adminUseCase/allSessionWithAdmin/all_session_
 import '../../../../domain/useCase/allSession/all_session_use_case.dart';
 
 class AllSessionCubit extends Cubit<AllSessionStates> {
+  int currentPage=1;
+  bool isLoading = false;
+  bool isLastPage = false;
+  List<Sessions> sessions = [];
+  List<Sessions> sessionsAdvicors = [];
   AllSessionCubit() : super(LoadingAllSession());
 
   late AllSessionUseCase allSessionUseCase;
   late AllSessionRepository allSessionRepository;
   late AllSessionDataSource allSessionDataSource;
 
-  Future<void> getAllSession() async {
+  Future<void> getAllSession({bool loadMore=false}) async {
+    if(isLastPage||isLoading) return;
+
+    isLoading = true;
     WebServices service = WebServices();
     allSessionDataSource = AllSessionDataSourceImp(service.freeDio);
     allSessionRepository = AllSessionRepositoryImp(allSessionDataSource);
     allSessionUseCase = AllSessionUseCase(allSessionRepository);
+    if(!loadMore)
     emit(LoadingAllSession());
     try {
-      var result = await allSessionUseCase.execute(AllSessionModel());
-      print('API Response: ${result.data}');
-
+      var result = await allSessionUseCase.execute(AllSessionModel(),page: currentPage);
       final data = AllSessionModel.fromJson(result.data);
-      if (data != null) {
-        emit(SuccessAllSession(data.sessions ?? []));
-      } else {
-        emit(ErrorAllSession("No consultation services found"));
+      if(data.sessions!.isEmpty){
+        isLastPage = true;
       }
-    } catch (error) {
+      else{
+        currentPage++;
+        sessionsAdvicors.addAll(data.sessions?? []);
+      }
+      emit(SuccessAllSession(sessionsAdvicors));
+        } catch (error) {
       emit(ErrorAllSession(error.toString()));
+    }finally{
+      isLoading = false;
     }
   }
 
@@ -46,24 +58,33 @@ class AllSessionCubit extends Cubit<AllSessionStates> {
   late AllSessionWithAdminRepository allSessionWithAdminRepository;
   late AllSessionWithAdminDataSource allSessionWithAdminDataSource;
 
-  Future<void> getAllSessionWithAdmin() async {
+  Future<void> getAllSessionWithAdmin({bool loadMore=true}) async {
+    if(isLastPage||isLoading) return;
+
+    isLoading = true;
     WebServices service = WebServices();
     allSessionWithAdminDataSource = AllSessionWithAdminDataSourceImp(service.freeDio);
     allSessionWithAdminRepository = AllSessionWithAdminRepositoryImp(allSessionWithAdminDataSource);
     allSessionWithAdminUseCase = AllSessionWithAdminUseCase(allSessionWithAdminRepository);
+    if(!loadMore)
+
     emit(LoadingAllSession());
     try {
-      var result = await allSessionWithAdminUseCase.execute(AllSessionModel());
-      print('API Response: ${result.data}');
-
+      var result = await allSessionWithAdminUseCase.execute(AllSessionModel(),page: currentPage);
       final data = AllSessionModel.fromJson(result.data);
-      if (data != null) {
-        emit(SuccessAllSession(data.sessions ?? []));
-      } else {
-        emit(ErrorAllSession("No consultation services found"));
+      if(data.sessions!.isEmpty){
+        isLastPage = true;
       }
-    } catch (error) {
+      else{
+        currentPage++;
+        sessions.addAll(data.sessions??[]);
+      }
+      emit(SuccessAllSession(sessions));
+        } catch (error) {
       emit(ErrorAllSession(error.toString()));
+    }
+    finally{
+      isLoading = false;
     }
   }
 }

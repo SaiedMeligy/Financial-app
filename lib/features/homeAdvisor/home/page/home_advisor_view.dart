@@ -238,7 +238,6 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                                                       sessionComment:home.upCommingSession?.comments,
                                                       sessionDate:home.upCommingSession?.date,
                                                           isAttend: home.upCommingSession?.isAttended,
-
                                                           consultationService: home.upCommingSession?.consultationServiceId,
                                                     ),
                                                   ),
