@@ -10,10 +10,10 @@ class AllPatientWithAdminRepositoryImp implements AllPatientWithAdminRepository{
   final AllPatientsWithAdminDataSource dataSource;
   AllPatientWithAdminRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAllPatientWithAdmin(AllPatientModel patientModel) async {
+  Future<Response> getAllPatientWithAdmin(AllPatientModel patientModel,{int page =1,int per_page = 20}) async {
     try {
       final response = await dataSource.getAllPatientsWithAdmin(
-          patientModel);
+          patientModel,page: page,per_page: per_page);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

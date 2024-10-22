@@ -9,9 +9,9 @@ class AllPatientRecycleWithAdminRepositoryImp implements AllPatientRecycleWithAd
   final AllPatientsRecycleWithAdminDataSource dataSource;
   AllPatientRecycleWithAdminRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAllPatientRecycleWithAdmin(AllPatientModel patientModel,int recycle) async {
+  Future<Response> getAllPatientRecycleWithAdmin(AllPatientModel patientModel,int recycle,{int page = 1,int per_page=20}) async {
     try {
-      final response = await dataSource.getAllPatientsRecycleWithAdmin(patientModel,recycle);
+      final response = await dataSource.getAllPatientsRecycleWithAdmin(patientModel,recycle,page: page,per_page: per_page);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

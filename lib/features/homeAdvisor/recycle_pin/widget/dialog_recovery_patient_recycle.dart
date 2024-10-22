@@ -1,40 +1,41 @@
+import 'package:dio/dio.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
-import 'package:experts_app/features/homeAdvisor/recycle_pin/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/recycle_pin/manager/states.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../core/config/constants.dart';
-import '../../allPatients/manager/cubit.dart';
-import '../../allPatients/updatePatient/manager/dialog_cubit.dart';
-import '../../allPatients/updatePatient/manager/dialog_state.dart';
+import '../../../../core/config/cash_helper.dart';
+import '../../allPatients/manager/states.dart';
+import '../manager/cubit.dart';
 
 
-class DialogDeletePatientCycle extends StatefulWidget {
+class DialogRecoveryPatientCycle extends StatefulWidget {
   final Pationts? patient;
   final AllPatientRecycleCubit allPatientCubit;
-  const DialogDeletePatientCycle({
+  const DialogRecoveryPatientCycle({
     Key? key,
     this.patient,
     required this.allPatientCubit,
   }) : super(key: key);
 
   @override
-  State<DialogDeletePatientCycle> createState() => _DialogDeletePatientCycleState();
+  State<DialogRecoveryPatientCycle> createState() => _DialogRecoveryPatientCycleState();
 }
 
-class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
-  late UpdatePatientCubit updatePatientCubit;
+class _DialogRecoveryPatientCycleState extends State<DialogRecoveryPatientCycle> {
+  late AllPatientRecycleCubit updatePatientCubit;
 
   @override
   void initState() {
     super.initState();
-    updatePatientCubit = UpdatePatientCubit();
+    updatePatientCubit = AllPatientRecycleCubit();
   }
   void _deletePatientLocally(Pationts patient) {
-    widget.allPatientCubit.patients.removeWhere((p) => p.id == patient.id); // Remove patient from local list
-    widget.allPatientCubit.emit(SuccessAllPatientRecycle(widget.allPatientCubit.patients)); // Emit updated list
+    widget.allPatientCubit.patients.removeWhere((p) => p.id == patient.id);
+    widget.allPatientCubit.emit(SuccessAllPatientRecycle(widget.allPatientCubit.patients));
   }
 
 
@@ -44,11 +45,11 @@ class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
       return const Text("No consultation service provided");
     }
 
-    return BlocBuilder<UpdatePatientCubit, UpdatePatientStates>(
+    return BlocBuilder<AllPatientRecycleCubit, AllPatientRecycleStates>(
       bloc: updatePatientCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.delete,color: Colors.white,),
+          icon: Icon(CupertinoIcons.arrow_up_arrow_down_circle,color: Colors.white,),
           onPressed: () {
             showDialog(
               context: context,
@@ -56,18 +57,19 @@ class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
                 return Directionality(
                   textDirection: TextDirection.rtl,
                   child: AlertDialog(
-                    title: Text("حذف الحالة",style:Constants.theme.textTheme.titleLarge?.copyWith(
+                    title: Text("استعادة الحالة",style:Constants.theme.textTheme.titleLarge?.copyWith(
                         color: Colors.black
                     ),),
-                    content: Text("هل أنت متأكد أنك تريد حذف هذه الحالة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                    content: Text("هل أنت متأكد أنك تريد استعادة هذه الحالة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
                         color: Colors.black
                     ),),
                     actions: [
                       TextButton(
                         onPressed: () async{
-                          await updatePatientCubit.deletePatientFromSystem(widget.patient!.id!,);
+                          await updatePatient(widget.patient!.id!);
                           _deletePatientLocally(widget.patient!);
                           Navigator.of(context).pop();
+
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -78,7 +80,7 @@ class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
                             ),
                           ),
                           child: Text(
-                            "حذف نهائي",
+                            "موافق",
                             style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
                           ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                         ),
@@ -92,7 +94,29 @@ class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
         );
       },
     );
+
   }
+
 }
+Future<Response> updatePatient(int id) async{
+  final Dio dio = Dio();
+  return await dio.patch(
+      "${Constants.baseUrl}/api/advicor/pationt/update",
+      options: Options(
+        headers: {
+          "api-password": Constants.apiPassword,
+          "token": CacheHelper.getData(key: "token")
+        },
+      ),
+
+      data: {
+        "id":id,
+        "is_deleted":0
+      }
+  );
+
+
+}
+
 
 

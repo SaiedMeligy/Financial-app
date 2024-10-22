@@ -166,6 +166,8 @@ class PatientWidgetViewWithAdmin<T> extends StatefulWidget {
   final ItemTextBuilder<T> itemNameBuilder;
   final ItemWidgetBuilder<T> itemEditWidgetBuilder;
   final ItemWidgetBuilder<T>? itemDeleteWidgetBuilder;
+  final ScrollController? scrollController;
+  final bool isLastPage;
 
   const PatientWidgetViewWithAdmin({
     Key? key,
@@ -176,6 +178,8 @@ class PatientWidgetViewWithAdmin<T> extends StatefulWidget {
     required this.itemNameBuilder,
     required this.itemEditWidgetBuilder,
     this.itemDeleteWidgetBuilder,
+    this.scrollController,
+    this.isLastPage=false,
   }) : super(key: key);
 
   @override
@@ -184,48 +188,77 @@ class PatientWidgetViewWithAdmin<T> extends StatefulWidget {
 
 class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdmin<T>> {
   bool isMobile = false;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: LayoutBuilder(
-        builder: (context, constraints) {
-          isMobile = constraints.maxWidth < 600;
-          return ListView(
-            children: [
-              Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(4),
-                  1: FlexColumnWidth(1),
-                  2: FlexColumnWidth(1),
-                },
-                children: [
-                  TableRow(
-                    decoration: const BoxDecoration(color: Colors.black),
-                    children: [
-                      _buildTableHeaderCell(widget.label1, context),
-                      _buildTableHeaderCell(widget.label2, context),
-                      _buildTableHeaderCell(widget.label3, context),
-                    ],
-                  ),
-                  for (int index = 0; index < widget.items.length; index++)
+          builder: (context, constraints) {
+            isMobile = constraints.maxWidth < 600;
+            return Column(
+              children: [
+                Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(4),
+                    1: FlexColumnWidth(1),
+                    2: FlexColumnWidth(1),
+                  },
+                  children: [
                     TableRow(
-                      decoration: const BoxDecoration(color: Colors.black45),
+                      decoration: const BoxDecoration(color: Colors.black),
                       children: [
-                        _buildNameCell(widget.items[index], context),
-                        _buildEditCell(widget.items[index], context),
-                        _buildDeleteCell(widget.items[index], context),
+                        _buildHeaderCell(widget.label1, isMobile),
+                        _buildHeaderCell(widget.label2, isMobile),
+                        _buildHeaderCell(widget.label3, isMobile),
                       ],
                     ),
-                ],
-              ),
-            ],
-          );
-        }
+                  ],
+                ),
+                // for (int index = 0; index < widget.items.length; index++)
+                Expanded(
+                  child: ListView.builder(
+                    controller: widget.scrollController,
+                    itemCount: widget.items.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == widget.items.length) {
+                        return widget.isLastPage
+                            ? const SizedBox.shrink()
+                            : const Center(child: CircularProgressIndicator());
+                      }
+
+                      var item = widget.items[index];
+                      return Table(
+                        columnWidths: {
+                          0: const FlexColumnWidth(4),
+                          1: const FlexColumnWidth(1),
+                          2: const FlexColumnWidth(1),
+                        },
+                        children: [
+                          TableRow(
+                            decoration: const BoxDecoration(
+                              color: Colors.black38,
+                            ),
+                            children: [
+                              _buildDataCell(context, item, widget.itemNameBuilder, isMobile,
+                              ),
+                              _buildEditCell(item),
+                              _buildDeleteCell(item),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+
+              ],
+            );
+          }
       ),
     );
   }
 
-  TableCell _buildTableHeaderCell(String label, BuildContext context) {
+  TableCell _buildHeaderCell(String label, bool isMobile) {
     return TableCell(
       child: Container(
         height: 50,
@@ -233,8 +266,12 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
         child: Text(
           label,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontSize: isMobile?16:20,
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(
+            fontSize: isMobile ? 18 : 22,
             color: Colors.white,
           ),
         ),
@@ -242,9 +279,10 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
     );
   }
 
-  TableCell _buildNameCell(T item, BuildContext context) {
+  TableCell _buildDataCell(BuildContext context, T item,
+      ItemTextBuilder<T> nameBuilder, bool isMobile) {
     return TableCell(
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           Navigator.push(
             context,
@@ -255,34 +293,32 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
         },
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.all(8.0),
           child: Text(
-            widget.itemNameBuilder(item),
-            style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge
+            nameBuilder(item),
+            style: isMobile ? Constants.theme.textTheme.bodyMedium : Constants
+                .theme.textTheme.bodyLarge,
           ),
         ),
       ),
     );
   }
 
-  TableCell _buildEditCell(T item, BuildContext context) {
+  TableCell _buildEditCell(T item) {
     return TableCell(
       child: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(8.0),
         child: widget.itemEditWidgetBuilder(item),
       ),
     );
   }
 
-  TableCell _buildDeleteCell(T item, BuildContext context) {
+  TableCell _buildDeleteCell(T item) {
     return TableCell(
       child: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(8.0),
         child: widget.itemDeleteWidgetBuilder != null
             ? widget.itemDeleteWidgetBuilder!(item)
-            : Container(),
+            : const SizedBox.shrink(),
       ),
     );
   }

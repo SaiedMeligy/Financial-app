@@ -22,6 +22,7 @@ class AllPatientAbozabyView extends StatefulWidget {
 class _AllPatientAbozabyViewState extends State<AllPatientAbozabyView> {
   late AllPatientWithAdminCubit allPatientCubit;
   TextEditingController searchController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
   String searchQuery = '';
 
   @override
@@ -29,6 +30,12 @@ class _AllPatientAbozabyViewState extends State<AllPatientAbozabyView> {
     super.initState();
     allPatientCubit = AllPatientWithAdminCubit();
     allPatientCubit.getAllPatientWithAdmin();
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels >= _scrollController.position.maxScrollExtent -50){
+        if(!allPatientCubit.isLoading)
+        allPatientCubit.getAllPatientWithAdmin(loadMore: true);
+      }
+    },);
     searchController.addListener(() {
       setState(() {
         searchQuery = searchController.text;
@@ -79,6 +86,9 @@ class _AllPatientAbozabyViewState extends State<AllPatientAbozabyView> {
                     label1: "اسم الحالة",
                     items: filteredPatients,
                     itemNameBuilder: (item) => item.name ?? 'No Name',
+                    scrollController: _scrollController,
+                    isLastPage: allPatientCubit.isLastPage,
+
 
                   ),
                 ],

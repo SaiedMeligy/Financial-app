@@ -103,19 +103,17 @@ class _DialogEditPatientWithAdminState extends State<DialogEditPatientWithAdmin>
                     actions: [
                       TextButton(
                         onPressed: () {
-                          var data =
-                            Pationts(
-                          name: titleController.text,
-                          email: emailController.text,
-                          phoneNumber: phoneController.text,
+                          var updatedPatient = Pationts(
+                            id: widget.patient!.id, // Ensure the ID is kept
+                            name: titleController.text,
+                            email: emailController.text,
+                            phoneNumber: phoneController.text,
                           );
                           if (formKey.currentState!.validate()) {
-                            updatePatientCubit.updatePatientWithAdmin(widget.patient!.id!, data)
-                                .then((_) {
-                              widget.allPatientCubit.getAllPatientWithAdmin();
+                            updatePatientCubit.updatePatientWithAdmin(widget.patient!.id!, updatedPatient).then((_) {
+                              widget.allPatientCubit.updatePatientLocally(updatedPatient);
                               Navigator.of(context).pop();
-                            }
-                            );
+                            });
                           }
                         },
                         child: Container(

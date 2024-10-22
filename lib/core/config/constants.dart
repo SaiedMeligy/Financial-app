@@ -69,4 +69,6 @@ class Constants {
       const ConsultingView(),
       const RegisterView(),
     ];
+   static int page = 1;
+   static int totalPages = 20;
 }

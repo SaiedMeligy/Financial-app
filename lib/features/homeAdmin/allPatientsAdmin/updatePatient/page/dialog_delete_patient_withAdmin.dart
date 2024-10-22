@@ -1,4 +1,5 @@
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/features/homeAdmin/allPatientsAdmin/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,6 +31,11 @@ class _DialogDeletePatientWithAdminState extends State<DialogDeletePatientWithAd
     super.initState();
     updatePatientCubit = UpdatePatientWithAdminCubit();
   }
+  void _deletePatientLocally(Pationts patient) {
+    widget.allPatientCubit.patients.removeWhere((p) => p.id == patient.id); // Remove patient from local list
+    widget.allPatientCubit.emit(SuccessAllPatientWithAdmin(widget.allPatientCubit.patients)); // Emit updated list
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +68,7 @@ class _DialogDeletePatientWithAdminState extends State<DialogDeletePatientWithAd
                           deletePatient(
                             widget.patient!.id!,
                           ).then((_) {
-                            widget.allPatientCubit.getAllPatientWithAdmin();
+                            _deletePatientLocally(widget.patient!);
                             Navigator.of(context).pop();
                           });
                         },

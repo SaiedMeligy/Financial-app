@@ -9,7 +9,7 @@ class AllPatientRecycleWithAdminDataSourceImp implements AllPatientsRecycleWithA
   final Dio dio;
   AllPatientRecycleWithAdminDataSourceImp(this.dio);
   @override
-  Future<Response> getAllPatientsRecycleWithAdmin(AllPatientModel patientModel,int recycle) async{
+  Future<Response> getAllPatientsRecycleWithAdmin(AllPatientModel patientModel,int recycle,{int page = 1,int per_page=20}) async{
     return await dio.get(
         "/api/pationt",
         options: Options(
@@ -19,7 +19,9 @@ class AllPatientRecycleWithAdminDataSourceImp implements AllPatientsRecycleWithA
             }
         ),
       queryParameters:{
-          "recycle_bin":recycle
+          "recycle_bin":recycle,
+        "page": page,
+        "per_page": per_page,
       }
     );
 

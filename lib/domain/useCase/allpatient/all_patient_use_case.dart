@@ -9,7 +9,8 @@ class AllPatientUseCase{
 
   AllPatientUseCase( this.allPatientRepository);
 
-  Future<Response> execute(AllPatientModel patientModel){
-    return allPatientRepository.getAllPatient(patientModel);
+
+  Future<Response> execute(AllPatientModel patientModel, {int page = 1, int per_page = 20}){
+    return allPatientRepository.getAllPatient(patientModel,page: page,per_page: per_page);
   }
 }

@@ -1,40 +1,43 @@
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
+import 'package:experts_app/features/homeAdmin/allPatientsAdmin/updatePatient/manager/dialog_cubit.dart';
 import 'package:experts_app/features/homeAdvisor/recycle_pin/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/recycle_pin/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../core/config/constants.dart';
+import '../../../homeAdmin/allPatientsAdmin/updatePatient/manager/dialog_state.dart';
 import '../../allPatients/manager/cubit.dart';
 import '../../allPatients/updatePatient/manager/dialog_cubit.dart';
 import '../../allPatients/updatePatient/manager/dialog_state.dart';
 
 
-class DialogDeletePatientCycle extends StatefulWidget {
+class DialogDeletePatientCycleWithAdmin extends StatefulWidget {
   final Pationts? patient;
   final AllPatientRecycleCubit allPatientCubit;
-  const DialogDeletePatientCycle({
+  const DialogDeletePatientCycleWithAdmin({
     Key? key,
     this.patient,
     required this.allPatientCubit,
   }) : super(key: key);
 
   @override
-  State<DialogDeletePatientCycle> createState() => _DialogDeletePatientCycleState();
+  State<DialogDeletePatientCycleWithAdmin> createState() => _DialogDeletePatientCycleWithAdminState();
 }
 
-class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
-  late UpdatePatientCubit updatePatientCubit;
+class _DialogDeletePatientCycleWithAdminState extends State<DialogDeletePatientCycleWithAdmin> {
+  late UpdatePatientWithAdminCubit updatePatientWithAdminCubit;
 
   @override
   void initState() {
     super.initState();
-    updatePatientCubit = UpdatePatientCubit();
+    updatePatientWithAdminCubit = UpdatePatientWithAdminCubit();
   }
   void _deletePatientLocally(Pationts patient) {
-    widget.allPatientCubit.patients.removeWhere((p) => p.id == patient.id); // Remove patient from local list
-    widget.allPatientCubit.emit(SuccessAllPatientRecycle(widget.allPatientCubit.patients)); // Emit updated list
+    widget.allPatientCubit.patients.removeWhere((p) => p.id == patient.id);
+    widget.allPatientCubit.recyclePatients.removeWhere((p) => p.id == patient.id); // Update recyclePatients too
+    widget.allPatientCubit.emit(SuccessAllPatientRecycleWithAdmin(widget.allPatientCubit.recyclePatients));
   }
 
 
@@ -44,8 +47,8 @@ class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
       return const Text("No consultation service provided");
     }
 
-    return BlocBuilder<UpdatePatientCubit, UpdatePatientStates>(
-      bloc: updatePatientCubit,
+    return BlocBuilder<UpdatePatientWithAdminCubit, UpdatePatientWithAdminStates>(
+      bloc: updatePatientWithAdminCubit,
       builder: (context, state) {
         return IconButton(
           icon: Icon(Icons.delete,color: Colors.white,),
@@ -65,7 +68,7 @@ class _DialogDeletePatientCycleState extends State<DialogDeletePatientCycle> {
                     actions: [
                       TextButton(
                         onPressed: () async{
-                          await updatePatientCubit.deletePatientFromSystem(widget.patient!.id!,);
+                          await updatePatientWithAdminCubit.deletePatientFromSystem(widget.patient!.id!,);
                           _deletePatientLocally(widget.patient!);
                           Navigator.of(context).pop();
                         },

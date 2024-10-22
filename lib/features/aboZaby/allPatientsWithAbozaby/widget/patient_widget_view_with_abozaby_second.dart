@@ -8,13 +8,18 @@ typedef ItemWidgetBuilder<T> = Widget Function(T item);
 
 class PatientWidgetViewWithAbozabySecond<T> extends StatefulWidget {
   final String label1;
+  final ScrollController? scrollController;
+  final bool isLastPage;
   final List<T> items;
   final ItemTextBuilder<T> itemNameBuilder;
+
 
 
   const PatientWidgetViewWithAbozabySecond({
     Key? key,
     required this.label1,
+    required this.scrollController,
+    required this.isLastPage,
     required this.items,
     required this.itemNameBuilder,
   }) : super(key: key);
@@ -31,7 +36,7 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
       child: LayoutBuilder(
         builder: (context, constraints) {
           isMobile = constraints.maxWidth < 600;
-          return ListView(
+          return Column(
             children: [
               Table(
                 columnWidths: const {
@@ -45,15 +50,30 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
                       _buildTableHeaderCell(widget.label1, context),
                     ],
                   ),
-                  for (int index = 0; index < widget.items.length; index++)
-                    TableRow(
-                      decoration:  BoxDecoration(color: Colors.black45),
-                      children: [
-                        _buildNameCell(widget.items[index], context),
-                      ],
-                    ),
                 ],
               ),
+              Expanded(child: ListView.builder(
+                controller: widget.scrollController,
+                itemCount: widget.items.length+1,
+                itemBuilder: (context, index) {
+                  var item = widget.items;
+                  if (index == widget.items.length) {
+                    return widget.isLastPage
+                        ? const SizedBox.shrink()
+                        : const Center(child: CircularProgressIndicator());
+                  }
+                  return Table(
+                    children: [
+                      TableRow(
+                        decoration:  BoxDecoration(color: Colors.black45),
+                        children: [
+                          _buildNameCell(item[index], context),
+                        ],
+                      ),
+                    ],
+                  );
+
+              },))
             ],
           );
         }
@@ -95,7 +115,7 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
           child: Text(
             widget.itemNameBuilder(item),
             style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge?.copyWith(
-              color: Colors.black
+              color: Colors.white
             )
           ),
         ),

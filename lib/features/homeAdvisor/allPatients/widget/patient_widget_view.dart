@@ -13,6 +13,8 @@ class PatientWidgetView<T> extends StatefulWidget {
   final ItemTextBuilder<T> itemNameBuilder;
   final ItemWidgetBuilder<T> itemEditWidgetBuilder;
   final ItemWidgetBuilder<T>? itemDeleteWidgetBuilder;
+  final ScrollController? scrollController;
+  final bool isLastPage;
 
   const PatientWidgetView({
     super.key,
@@ -20,9 +22,11 @@ class PatientWidgetView<T> extends StatefulWidget {
     required this.label2,
     required this.label3,
     required this.items,
-    required this.  itemNameBuilder,
+    required this.itemNameBuilder,
     required this.itemEditWidgetBuilder,
     this.itemDeleteWidgetBuilder,
+    this.scrollController,
+    this.isLastPage = false,
   });
 
   @override
@@ -31,122 +35,134 @@ class PatientWidgetView<T> extends StatefulWidget {
 
 class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
   bool isMobile = false;
+
   @override
   Widget build(BuildContext context) {
-    return
-      LayoutBuilder(
+    return LayoutBuilder(
       builder: (context, constraints) {
         isMobile = constraints.maxWidth < 600;
-        return ListView(
+        return Column(
           children: [
             Table(
               columnWidths: {
-                0 : FlexColumnWidth(4) ,
-                1 : FlexColumnWidth(1) ,
-                2 : FlexColumnWidth(1) ,
+                0: const FlexColumnWidth(4),
+                1: const FlexColumnWidth(1),
+                2: const FlexColumnWidth(1),
               },
               children: [
                 TableRow(
-                  decoration: BoxDecoration(
-                    color: Colors.black ,
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
                   ),
                   children: [
-                    TableCell(
-                      child: Container(
-                        height: 50,
-                        child: Center(
-                          child: Text(
-                            widget.label1,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: isMobile?18:22,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        height: 50 ,
-                        child: Center(
-                          child: Text(
-                            widget.label2,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: isMobile?18:22,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Container(
-                        height: 50,
-                        child: Center(
-                          child: Text(
-                            widget.label3,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontSize: isMobile?18:22,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]
+                    _buildHeaderCell(widget.label1, isMobile),
+                    _buildHeaderCell(widget.label2, isMobile),
+                    _buildHeaderCell(widget.label3, isMobile),
+                  ],
                 ),
-                for(int index = 0; index < widget.items.length ; index++)...[
-                  TableRow(
-                    decoration: BoxDecoration(
-                      color: Colors.black38 ,
-                    ),
-                    children: [
-                      TableCell(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PatientDetailsView(pationt_data: widget.items[index]),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Center(
-                              child: Text(
-                                widget.itemNameBuilder(widget.items[index]),
-                                style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: widget.itemEditWidgetBuilder(widget.items[index]),
-                        ),
-                      ),
-                      TableCell(
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: widget.itemDeleteWidgetBuilder != null
-                              ? widget.itemDeleteWidgetBuilder!(widget.items[index])
-                            : Container(),
-                        ),
-                      ),
-                    ]
-                  ),
-                ]
               ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                controller: widget.scrollController,
+                itemCount: widget.items.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == widget.items.length) {
+                    return widget.isLastPage
+                        ? const SizedBox.shrink()
+                        : const Center(child: CircularProgressIndicator());
+                  }
+
+                  var item = widget.items[index];
+                  return Table(
+                    columnWidths: {
+                      0: const FlexColumnWidth(4),
+                      1: const FlexColumnWidth(1),
+                      2: const FlexColumnWidth(1),
+                    },
+                    children: [
+                      TableRow(
+                        decoration: const BoxDecoration(
+                          color: Colors.black38,
+                        ),
+                        children: [
+                          _buildDataCell(
+                            context,
+                            item,
+                            widget.itemNameBuilder,
+                            isMobile,
+                          ),
+                          _buildEditCell(item),
+                          _buildDeleteCell(item),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ],
         );
       },
+    );
+  }
+
+  TableCell _buildHeaderCell(String label, bool isMobile) {
+    return TableCell(
+      child: Container(
+        height: 50,
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontSize: isMobile ? 18 : 22,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  TableCell _buildDataCell(BuildContext context, T item, ItemTextBuilder<T> nameBuilder, bool isMobile) {
+    return TableCell(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PatientDetailsView(pationt_data: item),
+            ),
+          );
+        },
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(
+            nameBuilder(item),
+            style: isMobile ? Constants.theme.textTheme.bodyMedium : Constants.theme.textTheme.bodyLarge,
+          ),
+        ),
+      ),
+    );
+  }
+
+  TableCell _buildEditCell(T item) {
+    return TableCell(
+      child: Container(
+        alignment: Alignment.center,
+        child: widget.itemEditWidgetBuilder(item),
+      ),
+    );
+  }
+
+  TableCell _buildDeleteCell(T item) {
+    return TableCell(
+      child: Container(
+        alignment: Alignment.center,
+        child: widget.itemDeleteWidgetBuilder != null
+            ? widget.itemDeleteWidgetBuilder!(item)
+            : const SizedBox.shrink(),
+      ),
     );
   }
 }

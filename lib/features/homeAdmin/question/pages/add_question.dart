@@ -187,7 +187,229 @@ class _AddQuestionState extends State<AddQuestion> {
                             children: List.generate(answerControllers.length, (index) {
                               return FadeInRight(
                                 delay: const Duration(microseconds: 1300),
-                                child: Row(
+                                child:
+                                (Constants.mediaQuery.width<600)?
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: SizedBox(
+                                            width: Constants.mediaQuery.width * 0.3,
+                                            child: CustomTextField(
+                                              fillColor: Colors.grey,
+                                              controller: answerControllers[index],
+                                              hint: "ادخل الاجابة",
+                                              onValidate: (value) {
+                                                if (value == null ||
+                                                    value.trim().isEmpty) {
+                                                  return "من فضلك أدخل الاجابة";
+                                                }
+                                                return null;
+                                              },
+                                            ).setOnlyPadding(context, enableMediaQuery: false, 0, 5, 0, 0),
+                                          ),
+                                        ),
+
+                                        RadioAnswerWidget(
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _answerTypes[index] = value!;
+                                            });
+                                          },
+                                          titleRadio: "نوع الأجابة",
+                                          items: const [
+                                            MapEntry("اختيار واحد", 1),
+                                            MapEntry("متعدد الأختيارات", 2),
+                                            MapEntry("حقل نص", 3)
+                                          ],
+                                        ),
+
+                                        DropDownButton(
+                                          titleRadio: GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    backgroundColor: Colors.black,
+                                                    content: SizedBox(height: Constants.mediaQuery.height * 0.6,
+                                                        width: Constants.mediaQuery.width * 0.45,
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                          children: [
+                                                            Container(
+                                                              alignment: Alignment.center,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                border: Border.all(color: Constants.theme.primaryColor, width: 2.5,
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                  "اختر من التوصيات",
+                                                                  style: Constants.theme.textTheme.titleLarge
+                                                              ),
+                                                            ),
+                                                            CheckBoxQuestion(
+                                                              previous: selectedAdvices[index],
+                                                              items: advices,
+                                                              onChanged: (value) {
+                                                                setState(() {
+                                                                  selectedAdvices[index] = value!;
+                                                                });
+                                                              },
+                                                            ),
+                                                          ],
+                                                        )),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              border: Border.all(color: Constants.theme.primaryColor, width: 2.5,),
+                                                            ),
+                                                            child: Text(
+                                                                "موافق", style: Constants.theme.textTheme.bodyMedium
+                                                            ).setHorizontalPadding(context, enableMediaQuery: false, 20)),
+                                                      ),],);},
+                                              );
+                                            },
+                                            child: Text(
+                                              "التوصيات", style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.white,
+                                            ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                      children: [
+                                        DropDownButton(
+                                          titleRadio: GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    backgroundColor: Colors.black,
+                                                    title: Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(10),
+                                                        border: Border.all(
+                                                          color: Constants
+                                                              .theme.primaryColor,
+                                                          width: 2.5,
+                                                        ),
+                                                      ),
+                                                      child: Text(
+                                                          "اختر من المؤشرات", style: Constants.theme.textTheme.titleLarge
+                                                      ),
+                                                    ),
+                                                    content: SizedBox(height: Constants.mediaQuery.height * 0.6,
+                                                      width: Constants.mediaQuery.width * 0.45,
+                                                      child: TabItemWidget(
+                                                        item1: "السيناريو الاول",
+                                                        item2: "السيناريو التاني",
+                                                        item3: "السيناريو التالت",
+                                                        firstWidget: CheckBoxQuestion(
+                                                          items: pointers1,
+                                                          previous: selectedPointers1[index],
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              selectedPointers1[index] =
+                                                              value!;
+                                                            });
+                                                          },
+                                                        ),
+                                                        secondWidget: CheckBoxQuestion(
+                                                          previous: selectedPointers2[index],
+                                                          items: pointers2,
+                                                          onChanged: (value) {selectedPointers2[index] = value!;
+                                                          },
+                                                        ),
+                                                        thirdWidget: CheckBoxQuestion(
+                                                          previous: selectedPointers3[index],
+                                                          items: pointers3,
+                                                          onChanged: (value) {
+                                                            selectedPointers3[index] =
+                                                            value!;
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10),
+                                                              border: Border.all(
+                                                                color: Constants
+                                                                    .theme.primaryColor,
+                                                                width: 2.5,
+                                                              ),
+                                                            ),
+                                                            child: Text(
+                                                                "موافق",
+                                                                style: Constants.theme
+                                                                    .textTheme.bodyMedium
+                                                            ).setHorizontalPadding(
+                                                                context,
+                                                                enableMediaQuery: false,
+                                                                20)),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Text("المؤاشرات",
+                                                style: Constants
+                                                    .theme.textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                  color: Colors.white,
+                                                )),
+                                          ),
+                                        ),
+                                        QuestionDropDown(
+                                          selectedQuestion: selectedQuestions[index],
+                                          onSelect:(value) {
+                                            setState(() {
+                                              selectedQuestions[index] = value!;
+                                            });
+
+                                          },
+                                        ),
+
+                                        IconButton(
+                                          icon: Icon(Icons.delete, color: Colors.red),
+                                          onPressed: () {
+                                            setState(() {
+                                              _deleteAnswer(index);
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ):
+
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

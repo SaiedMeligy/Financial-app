@@ -13,7 +13,7 @@ class DialogEditPatient extends StatefulWidget {
   final Pationts? patient;
   final AllPatientCubit allPatientCubit;
 
-  const   DialogEditPatient({
+  const DialogEditPatient({
     Key? key,
     this.patient,
     required this.allPatientCubit,
@@ -34,8 +34,8 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
   void initState() {
     super.initState();
     titleController = TextEditingController(text: widget.patient?.name ?? "");
-    emailController = TextEditingController(text: widget.patient?.email??"");
-    phoneController = TextEditingController(text: widget.patient?.phoneNumber??"");
+    emailController = TextEditingController(text: widget.patient?.email ?? "");
+    phoneController = TextEditingController(text: widget.patient?.phoneNumber ?? "");
     updatePatientCubit = UpdatePatientCubit();
   }
 
@@ -45,7 +45,7 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
       bloc: updatePatientCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.edit,color: Colors.white,),
+          icon: Icon(Icons.edit, color: Colors.white),
           onPressed: () {
             showDialog(
               context: context,
@@ -55,10 +55,8 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
                   content: Form(
                     key: formKey,
                     child: SizedBox(
-                      height:
-                      Constants.mediaQuery.height * 0.6,
-                      width:
-                      Constants.mediaQuery.width * 0.45,
+                      height: Constants.mediaQuery.height * 0.6,
+                      width: Constants.mediaQuery.width * 0.45,
                       child: Directionality(
                         textDirection: TextDirection.rtl,
                         child: Column(
@@ -73,12 +71,12 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
                                 return null;
                               },
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(height: 10),
                             CustomTextField(
                               controller: emailController,
                               onValidate: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return "Please enter the service name";
+                                  return "Please enter the email";
                                 }
                                 return null;
                               },
@@ -88,7 +86,7 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
                               controller: phoneController,
                               onValidate: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return "Please enter the service name";
+                                  return "Please enter the phone number";
                                 }
                                 return null;
                               },
@@ -101,19 +99,17 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        var data =
-                          Pationts(
-                        name: titleController.text,
-                        email: emailController.text,
-                        phoneNumber: phoneController.text,
+                        var updatedPatient = Pationts(
+                          id: widget.patient!.id, // Ensure the ID is kept
+                          name: titleController.text,
+                          email: emailController.text,
+                          phoneNumber: phoneController.text,
                         );
                         if (formKey.currentState!.validate()) {
-                          updatePatientCubit.updatePatient(widget.patient!.id!, data)
-                              .then((_) {
-                            widget.allPatientCubit.getAllPatient();
+                          updatePatientCubit.updatePatient(widget.patient!.id!, updatedPatient).then((_) {
+                            widget.allPatientCubit.updatePatientLocally(updatedPatient);
                             Navigator.of(context).pop();
-                          }
-                          );
+                          });
                         }
                       },
                       child: Container(
@@ -140,4 +136,5 @@ class _DialogEditPatientState extends State<DialogEditPatient> {
     );
   }
 }
+
 

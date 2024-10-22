@@ -40,7 +40,7 @@ class _DropDownButtonState extends State<DropDownButton> {
               ),
             ),
             child: SizedBox(
-              width: Constants.mediaQuery.width * 0.22,
+              width: (Constants.mediaQuery.width<600)?Constants.mediaQuery.width * 0.26:Constants.mediaQuery.width * 0.10,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

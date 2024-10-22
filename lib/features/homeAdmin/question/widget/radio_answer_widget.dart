@@ -59,7 +59,7 @@ class _RadioAnswerWidgetState extends State<RadioAnswerWidget> {
                   ),
                   child:
                   SizedBox(
-                    width:  Constants.mediaQuery.width * 0.28,
+                    width: (Constants.mediaQuery.width<600)?Constants.mediaQuery.width * 0.25:Constants.mediaQuery.width * 0.10,
                     child: DropdownButton<int>(
                       value: selectedValue,
                       dropdownColor: Constants.theme.primaryColor.withOpacity(0.9),

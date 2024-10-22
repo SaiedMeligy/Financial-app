@@ -9,9 +9,10 @@ class AllPatientRecycleDataSourceImp implements AllPatientsRecycleDataSource{
   final Dio dio;
   AllPatientRecycleDataSourceImp(this.dio);
   @override
-  Future<Response> getAllPatientsRecycle(AllPatientModel patientModel,int recycle) async{
+  Future<Response> getAllPatientsRecycle(AllPatientModel patientModel,int recycle,{int page =1,int per_page= 20}) async{
     return await dio.get(
         "/api/advicor/pationt",
+
         options: Options(
             headers: {
               "api-password": Constants.apiPassword,
@@ -19,7 +20,9 @@ class AllPatientRecycleDataSourceImp implements AllPatientsRecycleDataSource{
             }
         ),
       queryParameters:{
-          "recycle_bin":recycle
+          "recycle_bin":recycle,
+          "page": page,
+          "per_page": per_page,
       }
     );
 

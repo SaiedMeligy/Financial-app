@@ -1,9 +1,11 @@
 import 'package:experts_app/domain/entities/AllPatientModel.dart';
-import 'package:experts_app/features/homeAdvisor/recycle_pin/widget/dialog_delete_patient_recycle_with_admin.dart';
+import 'package:experts_app/features/homeAdmin/allPatientsAdmin/updatePatient/page/dialog_delete_patient_withAdmin.dart';
+import 'package:experts_app/features/homeAdvisor/recycle_pin/widget/dialog_recovery_patient_recycle_with_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../manager/cubit.dart';
 import '../manager/states.dart';
+import '../widget/dialog_delete_patient_recycle_with_Admin.dart';
 import '../widget/table_cycle.dart';
 
 class AllPatientRecycleAdminView extends StatefulWidget {
@@ -15,12 +17,19 @@ class AllPatientRecycleAdminView extends StatefulWidget {
 
 class _AllPatientRecycleAdminViewState extends State<AllPatientRecycleAdminView> {
   late AllPatientRecycleCubit allPatientCubit;
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     allPatientCubit = AllPatientRecycleCubit();
     allPatientCubit.getAllPatientRecycleWithAdmin(1);
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50){
+        if(!allPatientCubit.isLoading)
+        allPatientCubit.getAllPatientRecycleWithAdmin( 1,loadMore: true);
+      }
+    },);
   }
 
   @override
@@ -31,7 +40,7 @@ class _AllPatientRecycleAdminViewState extends State<AllPatientRecycleAdminView>
         if (state is LoadingAllPatientRecycle)
         {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is SuccessAllPatientRecycle) {
+        } else if (state is SuccessAllPatientRecycleWithAdmin) {
           var patients = state.patients;
           return Container(
             decoration: BoxDecoration(
@@ -49,13 +58,17 @@ class _AllPatientRecycleAdminViewState extends State<AllPatientRecycleAdminView>
                   child: PatientCyclebin<Pationts>(
                             label1: "اسم الحالة",
                             label2: "استرجاع",
+                            label3: "حذف",
                             items: patients,
                             itemNameBuilder: (item) => item.name ?? 'No Name',
-                          itemDeleteWidgetBuilder: (item){
-                           return
-                             DialogDeletePatientCycleWithAdmin(allPatientCubit: allPatientCubit,
-                          patient: item,);
-                            }
+                          itemRecoveryWidgetBuilder: (item){
+                           return DialogRecoveryPatientCycleWithAdmin(allPatientCubit: allPatientCubit, patient: item,);
+                            },
+                    itemDeleteWidgetBuilder: (item) {
+                              return DialogDeletePatientCycleWithAdmin(allPatientCubit: allPatientCubit,patient: item,);
+
+                    }, scrollController: _scrollController,
+                    lastPage: allPatientCubit.isLastPage,
 
                           ),
                 ),

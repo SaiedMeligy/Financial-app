@@ -10,26 +10,41 @@ import '../../../../domain/repository/admin repository/patiens/AllPatientWithAdm
 import '../../../../domain/useCase/adminUseCase/patiens/allpatient/all_patient_use_case.dart';
 
 class AllPatientWithAdminCubit extends Cubit<AllPatientWithAdminStates> {
+  int currentPage = 1;
+  bool isLoading = false;
+  bool isLastPage = false;
+  List<Pationts> patients = [];
   AllPatientWithAdminCubit() : super(LoadingAllPatientWithAdmin());
+
 
   late AllPatientWithAdminUseCase allPatientUseCase;
   late AllPatientWithAdminRepository allPatientRepository;
   late AllPatientsWithAdminDataSource allPatientDataSource;
 
-  Future<void> getAllPatientWithAdmin() async {
+  Future<void> getAllPatientWithAdmin({bool loadMore =false}) async {
+    if (isLoading || isLastPage) return;
+    isLoading = true;
     WebServices service = WebServices();
     allPatientDataSource = AllPatientWithAdminDataSourceImp(service.freeDio);
     allPatientRepository = AllPatientWithAdminRepositoryImp(allPatientDataSource);
     allPatientUseCase = AllPatientWithAdminUseCase(allPatientRepository);
+    if(!loadMore)
     emit(LoadingAllPatientWithAdmin());
     try {
-      var result = await allPatientUseCase.execute(AllPatientModel());
-      print('API Response: ${result.data}');
-
+      var result = await allPatientUseCase.execute(AllPatientModel(),page: currentPage);
       final data = AllPatientModel.fromJson(result.data);
-      emit(SuccessAllPatientWithAdmin(data.pationts ?? []));
+      if(data.pationts!.isEmpty){
+        isLastPage = true;
+      }
+      else{
+        currentPage++;
+        patients.addAll(data.pationts?? []);
+      }
+      emit(SuccessAllPatientWithAdmin(patients));
     } catch (error) {
       emit(ErrorAllPatientWithAdmin(error.toString()));
+    }finally{
+      isLoading = false;
     }
   }
 }

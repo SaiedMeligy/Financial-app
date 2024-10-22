@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../core/config/constants.dart';
 import '../../manager/cubit.dart';
+import '../../manager/states.dart';
 import '../manager/dialog_cubit.dart';
 import '../manager/dialog_state.dart';
 
@@ -24,11 +25,18 @@ class DialogDeletePatient extends StatefulWidget {
 
 class _DialogDeletePatientState extends State<DialogDeletePatient> {
   late UpdatePatientCubit updatePatientCubit;
+  late AllPatientCubit allPatientCubit;
 
   @override
   void initState() {
     super.initState();
     updatePatientCubit = UpdatePatientCubit();
+    allPatientCubit = AllPatientCubit();
+  }
+
+  void _deletePatientLocally(Pationts patient) {
+    widget.allPatientCubit.patients.removeWhere((p) => p.id == patient.id); // Remove patient from local list
+    widget.allPatientCubit.emit(SuccessAllPatient(widget.allPatientCubit.patients)); // Emit updated list
   }
 
   @override
@@ -41,7 +49,7 @@ class _DialogDeletePatientState extends State<DialogDeletePatient> {
       bloc: updatePatientCubit,
       builder: (context, state) {
         return IconButton(
-          icon: Icon(Icons.delete,color: Colors.white,),
+          icon: Icon(Icons.delete, color: Colors.white),
           onPressed: () {
             showDialog(
               context: context,
@@ -49,60 +57,32 @@ class _DialogDeletePatientState extends State<DialogDeletePatient> {
                 return Directionality(
                   textDirection: TextDirection.rtl,
                   child: AlertDialog(
-                    title: Text("حذف الحالة",style:Constants.theme.textTheme.titleLarge?.copyWith(
-                      color: Colors.black
-                    ),),
-                    content: Text("هل أنت متأكد أنك تريد حذف هذه الحالة ",style:Constants.theme.textTheme.bodyMedium?.copyWith(
+                    title: Text("حذف الحالة", style: Constants.theme.textTheme.titleLarge?.copyWith(
                         color: Colors.black
-                    ),),
+                    )),
+                    content: Text("هل أنت متأكد أنك تريد حذف هذه الحالة", style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black
+                    )),
                     actions: [
                       TextButton(
                         onPressed: () {
-                          updatePatientCubit.
-                          deletePatient(
-                            widget.patient!.id!,
-                          ).then((_) {
-                            widget.allPatientCubit.getAllPatient();
+                          // Delete patient to trash
+                          updatePatientCubit.deletePatient(widget.patient!.id!).then((_) {
+                            _deletePatientLocally(widget.patient!); // Remove patient from local list
                             Navigator.of(context).pop();
                           });
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: Constants.theme.primaryColor,
-                              width: 2.5,
-                            ),
-                          ),
-                          child: Text(
-                            "إلى سلة المهملات",
-                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                        ),
+                        child: _buildActionButton("إلى سلة المهملات", context),
                       ),
                       TextButton(
                         onPressed: () {
-                          updatePatientCubit.
-                          deletePatientFromSystem(
-                            widget.patient!.id!,
-                          ).then((_) {
-                            widget.allPatientCubit.getAllPatient();
+                          // Permanently delete patient
+                          updatePatientCubit.deletePatientFromSystem(widget.patient!.id!).then((_) {
+                            _deletePatientLocally(widget.patient!); // Remove patient from local list
                             Navigator.of(context).pop();
                           });
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: Constants.theme.primaryColor,
-                              width: 2.5,
-                            ),
-                          ),
-                          child: Text(
-                            "حذف نهائي",
-                            style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                        ),
+                        child: _buildActionButton("حذف نهائي", context),
                       ),
                     ],
                   ),
@@ -114,6 +94,23 @@ class _DialogDeletePatientState extends State<DialogDeletePatient> {
       },
     );
   }
+
+  Widget _buildActionButton(String label, BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: Constants.theme.primaryColor,
+          width: 2.5,
+        ),
+      ),
+      child: Text(
+        label,
+        style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+    );
+  }
 }
+
 
 

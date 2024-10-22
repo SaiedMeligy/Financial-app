@@ -9,10 +9,9 @@ class AllPatientRepositoryImp implements AllPatientRepository{
   final AllPatientsDataSource dataSource;
   AllPatientRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAllPatient(AllPatientModel patientModel) async {
+  Future<Response> getAllPatient(AllPatientModel patientModel, {int page = 1, int per_page = 20}) async {
     try {
-      final response = await dataSource.getAllPatients(
-          patientModel);
+      final response = await dataSource.getAllPatients(patientModel,page: page,per_page: per_page);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

@@ -9,9 +9,13 @@ class AllPatientWithAdminDataSourceImp implements AllPatientsWithAdminDataSource
   final Dio dio;
   AllPatientWithAdminDataSourceImp(this.dio);
   @override
-  Future<Response> getAllPatientsWithAdmin(AllPatientModel patientModel) async{
+  Future<Response> getAllPatientsWithAdmin(AllPatientModel patientModel,{int page =1,int per_page = 20}) async{
     return await dio.get(
         "/api/pationt",
+        queryParameters: {
+          "page":page,
+          "per_page":per_page
+        },
         options: Options(
             headers: {
               "api-password": Constants.apiPassword,

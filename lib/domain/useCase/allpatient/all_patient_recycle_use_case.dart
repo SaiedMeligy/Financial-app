@@ -10,7 +10,7 @@ class AllPatientRecycleUseCase{
 
   AllPatientRecycleUseCase( this.allPatientRecycleRepository);
 
-  Future<Response> execute(AllPatientModel patientModel,int recycle){
-    return allPatientRecycleRepository.getAllPatientRecycle(patientModel,recycle);
+  Future<Response> execute(AllPatientModel patientModel,int recycle,{int page =1,int per_page=20}){
+    return allPatientRecycleRepository.getAllPatientRecycle(patientModel,recycle,page: page,per_page: per_page);
   }
 }

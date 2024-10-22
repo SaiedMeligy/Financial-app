@@ -18,29 +18,43 @@ import '../../../../domain/useCase/allpatient/all_patient_recycle_use_case.dart'
 
 
 class AllPatientRecycleCubit extends Cubit<AllPatientRecycleStates> {
+  int currentPage=1;
+  bool isLoading=false;
+  bool isLastPage=false;
+  List<Pationts> patients = [];
+  List<Pationts> recyclePatients = [];
   AllPatientRecycleCubit() : super(LoadingAllPatientRecycle());
 
   late AllPatientRecycleUseCase allPatientRecycleUseCase;
   late AllPatientRecycleRepository allPatientRecycleRepository;
   late AllPatientsRecycleDataSource allPatientRecycleDataSource;
 
-  Future<void> getAllPatientRecycle(int recycle) async {
+  Future<void> getAllPatientRecycle(int recycle,{bool loadMore=false}) async {
+    if(isLastPage || isLoading) return;
+    isLoading = true;
     WebServices service = WebServices();
     allPatientRecycleDataSource = AllPatientRecycleDataSourceImp(service.freeDio);
     allPatientRecycleRepository = AllPatientRecycleRepositoryImp(allPatientRecycleDataSource);
     allPatientRecycleUseCase = AllPatientRecycleUseCase(allPatientRecycleRepository);
+    if(!loadMore)
     emit(LoadingAllPatientRecycle());
     try {
       var result = await allPatientRecycleUseCase.execute(
-        AllPatientModel(),
-         recycle
+        AllPatientModel(), recycle,page: currentPage
       );
-      print('API Response: ${result.data}');
-
       final data = AllPatientModel.fromJson(result.data);
-      emit(SuccessAllPatientRecycle(data.pationts ?? []));
+      if(data.pationts!.isEmpty){
+        isLastPage = true;
+      }
+      else{
+        currentPage++;
+        patients.addAll(data.pationts?? []);
+      }
+      emit(SuccessAllPatientRecycle(patients));
     } catch (error) {
       emit(ErrorAllPatientRecycle(error.toString()));
+    }finally{
+      isLoading = false;
     }
   }
 
@@ -50,23 +64,34 @@ class AllPatientRecycleCubit extends Cubit<AllPatientRecycleStates> {
   late AllPatientRecycleWithAdminRepository allPatientRecycleAdminRepository;
   late AllPatientsRecycleWithAdminDataSource allPatientRecycleWithAdminDataSource;
 
-  Future<void> getAllPatientRecycleWithAdmin(int recycle) async {
+  Future<void> getAllPatientRecycleWithAdmin(int recycle,{bool loadMore=false}) async {
+    if(isLastPage || isLoading) return;
+
+    isLoading =true;
     WebServices service = WebServices();
     allPatientRecycleWithAdminDataSource = AllPatientRecycleWithAdminDataSourceImp(service.freeDio);
     allPatientRecycleAdminRepository = AllPatientRecycleWithAdminRepositoryImp(allPatientRecycleWithAdminDataSource);
     allPatientRecycleWithAdminUseCase = AllPatientRecycleWithAdminUseCase(allPatientRecycleAdminRepository);
+    if(!loadMore)
     emit(LoadingAllPatientRecycle());
     try {
       var result = await allPatientRecycleWithAdminUseCase.execute(
-          AllPatientModel(),
-          recycle
+          AllPatientModel(), recycle, page: currentPage
       );
-      print('API Response: ${result.data}');
 
       final data = AllPatientModel.fromJson(result.data);
-      emit(SuccessAllPatientRecycle(data.pationts ?? []));
+      if(data.pationts!.isEmpty){
+        isLastPage = true;
+      }
+      else{
+        currentPage++;
+        recyclePatients.addAll(data.pationts?? []);
+      }
+      emit(SuccessAllPatientRecycleWithAdmin(recyclePatients));
     } catch (error) {
       emit(ErrorAllPatientRecycle(error.toString()));
+    }finally{
+      isLoading = false;
     }
   }
 

@@ -8,9 +8,9 @@ class AllPatientRecycleRepositoryImp implements AllPatientRecycleRepository{
   final AllPatientsRecycleDataSource dataSource;
   AllPatientRecycleRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAllPatientRecycle(AllPatientModel patientModel,int recycle) async {
+  Future<Response> getAllPatientRecycle(AllPatientModel patientModel,int recycle,{int page =1,int per_page =20}) async {
     try {
-      final response = await dataSource.getAllPatientsRecycle(patientModel,recycle);
+      final response = await dataSource.getAllPatientsRecycle(patientModel,recycle,page: page,per_page: per_page);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

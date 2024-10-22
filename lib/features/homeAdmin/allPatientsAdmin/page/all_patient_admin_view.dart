@@ -19,6 +19,7 @@ class AllPatientAdminView extends StatefulWidget {
 class _AllPatientAdminViewState extends State<AllPatientAdminView> {
   late AllPatientWithAdminCubit allPatientCubit;
   TextEditingController searchController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
   String searchQuery = '';
 
   @override
@@ -26,6 +27,15 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
     super.initState();
     allPatientCubit = AllPatientWithAdminCubit();
     allPatientCubit.getAllPatientWithAdmin();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
+        if (!allPatientCubit.isLoading) {
+          allPatientCubit.getAllPatientWithAdmin(loadMore: true);
+        }
+      }
+
+
+    },);
     searchController.addListener(() {
       setState(() {
         searchQuery = searchController.text;
@@ -36,6 +46,7 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
   @override
   void dispose() {
     searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -44,7 +55,7 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
     return BlocBuilder<AllPatientWithAdminCubit, AllPatientWithAdminStates>(
       bloc: allPatientCubit,
       builder: (context, state) {
-        if (state is LoadingAllPatientWithAdmin) {
+        if (state is LoadingAllPatientWithAdmin && allPatientCubit.patients.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
         else if (state is SuccessAllPatientWithAdmin) {
@@ -55,7 +66,7 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
           }).toList();
 
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/back.jpg"),
                   fit: BoxFit.cover,
@@ -83,14 +94,14 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
                       patient: item,
                     ),
                     itemDeleteWidgetBuilder: (item) {
-                      if (item == null) {
-                        return const Text("Invalid Item");
-                      }
                       return DialogDeletePatientWithAdmin(
                         allPatientCubit: allPatientCubit,
                         patient: item,
                       );
                     },
+                      scrollController :_scrollController,
+                    isLastPage: allPatientCubit.isLastPage,
+
                   ),
                 ],
               ),

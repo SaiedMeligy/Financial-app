@@ -11,20 +11,20 @@ import '../../../../core/config/cash_helper.dart';
 import '../manager/cubit.dart';
 
 
-class DialogDeletePatientCycleWithAdmin extends StatefulWidget {
+class DialogRecoveryPatientCycleWithAdmin extends StatefulWidget {
   final Pationts? patient;
   final AllPatientRecycleCubit allPatientCubit;
-  const DialogDeletePatientCycleWithAdmin({
+  const DialogRecoveryPatientCycleWithAdmin({
     Key? key,
     this.patient,
     required this.allPatientCubit,
   }) : super(key: key);
 
   @override
-  State<DialogDeletePatientCycleWithAdmin> createState() => _DialogDeletePatientCycleWithAdminState();
+  State<DialogRecoveryPatientCycleWithAdmin> createState() => _DialogRecoveryPatientCycleWithAdminState();
 }
 
-class _DialogDeletePatientCycleWithAdminState extends State<DialogDeletePatientCycleWithAdmin> {
+class _DialogRecoveryPatientCycleWithAdminState extends State<DialogRecoveryPatientCycleWithAdmin> {
   late AllPatientRecycleCubit updatePatientCubit;
 
   @override
@@ -32,6 +32,12 @@ class _DialogDeletePatientCycleWithAdminState extends State<DialogDeletePatientC
     super.initState();
     updatePatientCubit = AllPatientRecycleCubit();
   }
+  void _deletePatientLocally(Pationts patient) {
+    widget.allPatientCubit.patients.removeWhere((p) => p.id == patient.id);
+    widget.allPatientCubit.recyclePatients.removeWhere((p) => p.id == patient.id); // Update recyclePatients too
+    widget.allPatientCubit.emit(SuccessAllPatientRecycleWithAdmin(widget.allPatientCubit.recyclePatients));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +50,6 @@ class _DialogDeletePatientCycleWithAdminState extends State<DialogDeletePatientC
       builder: (context, state) {
         return IconButton(
           icon: Icon(CupertinoIcons.arrow_up_arrow_down_circle,color: Colors.white,),
-          // onPressed: ()async {
-          //  await updatePatient(widget.patient!.id!);
-          //  await widget.allPatientCubit.getAllPatientRecycle(1); // Call refresh method
-          //
-          // },
           onPressed: () {
             showDialog(
               context: context,
@@ -63,9 +64,10 @@ class _DialogDeletePatientCycleWithAdminState extends State<DialogDeletePatientC
                   actions: [
                     TextButton(
                       onPressed: () async{
-                        await updatePatient(widget.patient!.id!);
-                        await widget.allPatientCubit.getAllPatientRecycleWithAdmin(1);
+                         await updatePatient(widget.patient!.id!);
+                         _deletePatientLocally(widget.patient!);
                         Navigator.of(context).pop();
+
 
                       },
                       child: Container(

@@ -8,28 +8,96 @@ import '../../../../data/repository_imp/all_patient_repository_imp.dart';
 import '../../../../domain/repository/AllPatient/all_patient_repository.dart';
 import '../../../../domain/useCase/allpatient/all_patient_use_case.dart';
 
+// class AllPatientCubit extends Cubit<AllPatientStates> {
+//   int currentPage = 1;
+//   bool isLastPage = false;
+//   List<Pationts> patients = [];
+//
+//   AllPatientCubit() : super(LoadingAllPatient());
+//
+//   late AllPatientUseCase allPatientUseCase;
+//   late AllPatientRepository allPatientRepository;
+//   late AllPatientsDataSource allPatientDataSource;
+//
+//   Future<void> getAllPatient({bool loadMore = false}) async {
+//     if (isLastPage && loadMore) return;
+//     WebServices service = WebServices();
+//     allPatientDataSource = AllPatientDataSourceImp(service.freeDio);
+//     allPatientRepository = AllPatientRepositoryImp(allPatientDataSource);
+//     allPatientUseCase = AllPatientUseCase(allPatientRepository);
+//     emit(LoadingAllPatient());
+//     try {
+//       var result = await allPatientUseCase.execute(AllPatientModel(),page: currentPage);
+//       print('API Response: ${result.data}');
+//
+//       final data = AllPatientModel.fromJson(result.data);
+//       if(data.pationts!.isEmpty){
+//         isLastPage = true;
+//       }
+//       else {
+//         currentPage++;
+//         patients.addAll(data.pationts??[]);
+//       }
+//       emit(SuccessAllPatient(data.pationts ?? []));
+//     } catch (error) {
+//       emit(ErrorAllPatient(error.toString()));
+//     }
+//   }
+//
+// }
+
 class AllPatientCubit extends Cubit<AllPatientStates> {
+  int currentPage = 1;
+  bool isLastPage = false;
+  bool isLoading = false;
+  List<Pationts> patients = [];
+
   AllPatientCubit() : super(LoadingAllPatient());
 
   late AllPatientUseCase allPatientUseCase;
   late AllPatientRepository allPatientRepository;
   late AllPatientsDataSource allPatientDataSource;
 
-  Future<void> getAllPatient() async {
+  Future<void> getAllPatient({bool loadMore = false}) async {
+    if (isLastPage || isLoading) return;
+
+    isLoading = true;
     WebServices service = WebServices();
     allPatientDataSource = AllPatientDataSourceImp(service.freeDio);
     allPatientRepository = AllPatientRepositoryImp(allPatientDataSource);
     allPatientUseCase = AllPatientUseCase(allPatientRepository);
-    emit(LoadingAllPatient());
-    try {
-      var result = await allPatientUseCase.execute(AllPatientModel());
-      print('API Response: ${result.data}');
 
+    if (!loadMore) emit(LoadingAllPatient());
+
+    try {
+      var result = await allPatientUseCase.execute(AllPatientModel(), page: currentPage,);
       final data = AllPatientModel.fromJson(result.data);
-      emit(SuccessAllPatient(data.pationts ?? []));
+
+      if (data.pationts!.isEmpty) {
+        isLastPage = true;
+      } else {
+        currentPage++;
+        patients.addAll(data.pationts ?? []);
+      }
+
+      emit(SuccessAllPatient(patients));
     } catch (error) {
       emit(ErrorAllPatient(error.toString()));
+    } finally {
+      isLoading = false;
     }
   }
-
+  void updatePatientLocally(Pationts updatedPatient) {
+    final index = patients.indexWhere((p) => p.id == updatedPatient.id);
+    if (index != -1) {
+      patients[index] = updatedPatient;
+      emit(SuccessAllPatient( patients));
+    }
+  }
 }
+
+  // Function to remove a patient from the local list and update state
+  // void removePatientFromList(Pationts patient) {
+  //   patients.removeWhere((p) => p.id == patient.id);
+  //   emit(SuccessAllPatient(patients));
+  // }
