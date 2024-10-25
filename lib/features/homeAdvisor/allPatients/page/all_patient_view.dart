@@ -144,11 +144,6 @@ class _AllPatientViewState extends State<AllPatientView> {
         }
       }
     });
-    searchController.addListener(() {
-      setState(() {
-        searchQuery = searchController.text;
-      });
-    });
   }
 
   @override
@@ -156,6 +151,10 @@ class _AllPatientViewState extends State<AllPatientView> {
     searchController.dispose();
     _scrollController.dispose();
     super.dispose();
+  }
+  void search() {
+    _scrollController.jumpTo(0);
+    allPatientCubit.getAllPatient(searchQuery: searchController.text);
   }
 
   @override
@@ -188,7 +187,11 @@ class _AllPatientViewState extends State<AllPatientView> {
                   CustomTextField(
                     controller: searchController,
                     hint: "البحث",
-                    icon: Icons.search,
+                    prefixIcon: IconButton(
+                        onPressed: () {
+                          search();
+                        },
+                        icon: Icon(Icons.search)),
                   ),
                   const SizedBox(height: 10),
                   Expanded(

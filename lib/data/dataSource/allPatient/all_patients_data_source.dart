@@ -5,5 +5,5 @@ import '../../../domain/entities/AllPatientModel.dart';
 
 abstract class AllPatientsDataSource {
 
-  Future<Response> getAllPatients(AllPatientModel patientModel, {int page = 1, int per_page = 20});
+  Future<Response> getAllPatients(AllPatientModel patientModel, {int page = 1, int per_page = 20,String searchQuery=''});
 }

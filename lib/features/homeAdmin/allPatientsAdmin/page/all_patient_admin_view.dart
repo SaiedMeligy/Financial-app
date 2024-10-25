@@ -27,20 +27,16 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
     super.initState();
     allPatientCubit = AllPatientWithAdminCubit();
     allPatientCubit.getAllPatientWithAdmin();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
-        if (!allPatientCubit.isLoading) {
-          allPatientCubit.getAllPatientWithAdmin(loadMore: true);
+    _scrollController.addListener(
+      () {
+        if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 50) {
+          if (!allPatientCubit.isLoading) {
+            allPatientCubit.getAllPatientWithAdmin(loadMore: true);
+          }
         }
-      }
-
-
-    },);
-    searchController.addListener(() {
-      setState(() {
-        searchQuery = searchController.text;
-      });
-    });
+      },
+    );
   }
 
   @override
@@ -50,29 +46,33 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
     super.dispose();
   }
 
+  void search() {
+    _scrollController.jumpTo(0);
+    allPatientCubit.getAllPatientWithAdmin(searchQuery: searchController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AllPatientWithAdminCubit, AllPatientWithAdminStates>(
       bloc: allPatientCubit,
       builder: (context, state) {
-        if (state is LoadingAllPatientWithAdmin && allPatientCubit.patients.isEmpty) {
+        if (state is LoadingAllPatientWithAdmin &&
+            allPatientCubit.patients.isEmpty) {
           return const Center(child: CircularProgressIndicator());
-        }
-        else if (state is SuccessAllPatientWithAdmin) {
+        } else if (state is SuccessAllPatientWithAdmin) {
           var patients = state.patients;
 
-          var filteredPatients = patients.where((patient) {
-            return patient.name != null && patient.name!.contains(searchQuery);
-          }).toList();
+          var filteredPatients = patients;
+          // .where((patient) {
+          //   return patient.name != null && patient.name!.contains(searchQuery);
+          // }).toList();
 
           return Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/back.jpg"),
-                  fit: BoxFit.cover,
-                  opacity: 0.2
-                )
-            ),
+                    image: AssetImage("assets/images/back.jpg"),
+                    fit: BoxFit.cover,
+                    opacity: 0.2)),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -80,7 +80,11 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
                   CustomTextField(
                     controller: searchController,
                     hint: "البحث",
-                    icon: Icons.search,
+                    prefixIcon: IconButton(
+                        onPressed: () {
+                          search();
+                        },
+                        icon: Icon(Icons.search)),
                   ),
                   const SizedBox(height: 10),
                   PatientWidgetViewWithAdmin<Pationts>(
@@ -99,16 +103,14 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
                         patient: item,
                       );
                     },
-                      scrollController :_scrollController,
+                    scrollController: _scrollController,
                     isLastPage: allPatientCubit.isLastPage,
-
                   ),
                 ],
               ),
             ),
           );
-        }
-        else if (state is ErrorAllPatientWithAdmin) {
+        } else if (state is ErrorAllPatientWithAdmin) {
           SnackBarService.showErrorMessage(state.errorMessage);
         }
         return const SizedBox.shrink();
@@ -116,4 +118,3 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
     );
   }
 }
-

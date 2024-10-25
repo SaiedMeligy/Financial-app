@@ -28,6 +28,7 @@ class AllPatientWithAdminCubit extends Cubit<AllPatientWithAdminStates> {
   int currentPage = 1;
   bool isLastPage = false;
   bool isLoading = false;
+  String currentSearchQuery = '';
   List<Pationts> patients = [];
     AllPatientWithAdminCubit() : super(LoadingAllPatientWithAdmin());
 
@@ -35,9 +36,15 @@ class AllPatientWithAdminCubit extends Cubit<AllPatientWithAdminStates> {
   late AllPatientWithAdminRepository allPatientRepository;
   late AllPatientsWithAdminDataSource allPatientDataSource;
 
-  Future<void> getAllPatientWithAdmin({bool loadMore=false}) async {
+  Future<void> getAllPatientWithAdmin({bool loadMore=false,String? searchQuery}) async {
+    if(searchQuery!=null && !loadMore){
+      if(searchQuery == currentSearchQuery)return;
+      isLastPage = false;
+      currentPage=1;
+      currentSearchQuery=searchQuery;
+      patients = [];
+    }
     if(isLastPage||isLoading) return;
-
     isLoading = true;
     WebServices service = WebServices();
     allPatientDataSource = AllPatientWithAdminDataSourceImp(service.freeDio);
@@ -45,7 +52,7 @@ class AllPatientWithAdminCubit extends Cubit<AllPatientWithAdminStates> {
     allPatientUseCase = AllPatientWithAdminUseCase(allPatientRepository);
     if (!loadMore) emit(LoadingAllPatientWithAdmin());
     try {
-      var result = await allPatientUseCase.execute(AllPatientModel(),page: currentPage);
+      var result = await allPatientUseCase.execute(AllPatientModel(),page: currentPage,searchQuery: currentSearchQuery);
       final data = AllPatientModel.fromJson(result.data);
       if(data.pationts!.isEmpty){
         isLastPage = true;

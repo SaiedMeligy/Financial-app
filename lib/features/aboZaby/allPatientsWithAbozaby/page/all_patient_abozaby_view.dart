@@ -36,17 +36,16 @@ class _AllPatientAbozabyViewState extends State<AllPatientAbozabyView> {
         allPatientCubit.getAllPatientWithAdmin(loadMore: true);
       }
     },);
-    searchController.addListener(() {
-      setState(() {
-        searchQuery = searchController.text;
-      });
-    });
   }
 
   @override
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+  void search() {
+    _scrollController.jumpTo(0);
+    allPatientCubit.getAllPatientWithAdmin(searchQuery: searchController.text);
   }
 
   @override
@@ -79,7 +78,11 @@ class _AllPatientAbozabyViewState extends State<AllPatientAbozabyView> {
                   CustomTextField(
                     controller: searchController,
                     hint: "البحث",
-                    icon: Icons.search,
+                    prefixIcon: IconButton(
+                        onPressed: () {
+                          search();
+                        },
+                        icon: Icon(Icons.search)),
                   ),
                   const SizedBox(height: 10),
                   PatientWidgetViewWithAbozabySecond<Pationts>(

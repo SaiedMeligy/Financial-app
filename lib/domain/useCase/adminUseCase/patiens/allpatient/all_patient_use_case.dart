@@ -10,7 +10,7 @@ class AllPatientWithAdminUseCase{
 
   AllPatientWithAdminUseCase( this.allPatientRepository);
 
-  Future<Response> execute(AllPatientModel patientModel,{int page =1,int per_page = 20}){
-    return allPatientRepository.getAllPatientWithAdmin(patientModel,page: page,per_page: per_page);
+  Future<Response> execute(AllPatientModel patientModel,{int page =1,int per_page = 20, String searchQuery = ''}) async {
+    return allPatientRepository.getAllPatientWithAdmin(patientModel,page: page,per_page: per_page,searchQuery : searchQuery);
   }
 }

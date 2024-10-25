@@ -68,9 +68,7 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
                 itemCount: widget.items.length + 1,
                 itemBuilder: (context, index) {
                   if (index == widget.items.length) {
-                    return widget.isLastPage
-                        ? const SizedBox.shrink()
-                        : const Center(child: CircularProgressIndicator());
+                    return const SizedBox.shrink();
                   }
 
                   var item = widget.items[index];
@@ -116,15 +114,16 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
           label,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontSize: isMobile ? 18 : 22,
-            color: Colors.white,
-          ),
+                fontSize: isMobile ? 18 : 22,
+                color: Colors.white,
+              ),
         ),
       ),
     );
   }
 
-  TableCell _buildDataCell(BuildContext context, T item, ItemTextBuilder<T> nameBuilder, bool isMobile) {
+  TableCell _buildDataCell(BuildContext context, T item,
+      ItemTextBuilder<T> nameBuilder, bool isMobile) {
     return TableCell(
       child: GestureDetector(
         onTap: () {
@@ -139,7 +138,9 @@ class _PatientWidgetViewState<T> extends State<PatientWidgetView<T>> {
           alignment: Alignment.center,
           child: Text(
             nameBuilder(item),
-            style: isMobile ? Constants.theme.textTheme.bodyMedium : Constants.theme.textTheme.bodyLarge,
+            style: isMobile
+                ? Constants.theme.textTheme.bodyMedium
+                : Constants.theme.textTheme.bodyLarge,
           ),
         ),
       ),

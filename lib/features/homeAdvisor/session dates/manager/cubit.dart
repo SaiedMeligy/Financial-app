@@ -15,9 +15,10 @@ import '../../../../domain/useCase/adminUseCase/allSessionWithAdmin/all_session_
 import '../../../../domain/useCase/allSession/all_session_use_case.dart';
 
 class AllSessionCubit extends Cubit<AllSessionStates> {
-  int currentPage=1;
+  int currentPage = 1;
   bool isLoading = false;
   bool isLastPage = false;
+  String currentSearchQuery = '';
   List<Sessions> sessions = [];
   List<Sessions> sessionsAdvicors = [];
   AllSessionCubit() : super(LoadingAllSession());
@@ -26,30 +27,29 @@ class AllSessionCubit extends Cubit<AllSessionStates> {
   late AllSessionRepository allSessionRepository;
   late AllSessionDataSource allSessionDataSource;
 
-  Future<void> getAllSession({bool loadMore=false}) async {
-    if(isLastPage||isLoading) return;
+  Future<void> getAllSession({bool loadMore = false}) async {
+    if (isLastPage || isLoading) return;
 
     isLoading = true;
     WebServices service = WebServices();
     allSessionDataSource = AllSessionDataSourceImp(service.freeDio);
     allSessionRepository = AllSessionRepositoryImp(allSessionDataSource);
     allSessionUseCase = AllSessionUseCase(allSessionRepository);
-    if(!loadMore)
-    emit(LoadingAllSession());
+    if (!loadMore) emit(LoadingAllSession());
     try {
-      var result = await allSessionUseCase.execute(AllSessionModel(),page: currentPage);
+      var result =
+          await allSessionUseCase.execute(AllSessionModel(), page: currentPage);
       final data = AllSessionModel.fromJson(result.data);
-      if(data.sessions!.isEmpty){
+      if (data.sessions!.isEmpty) {
         isLastPage = true;
-      }
-      else{
+      } else {
         currentPage++;
-        sessionsAdvicors.addAll(data.sessions?? []);
+        sessionsAdvicors.addAll(data.sessions ?? []);
       }
       emit(SuccessAllSession(sessionsAdvicors));
-        } catch (error) {
+    } catch (error) {
       emit(ErrorAllSession(error.toString()));
-    }finally{
+    } finally {
       isLoading = false;
     }
   }
@@ -58,32 +58,40 @@ class AllSessionCubit extends Cubit<AllSessionStates> {
   late AllSessionWithAdminRepository allSessionWithAdminRepository;
   late AllSessionWithAdminDataSource allSessionWithAdminDataSource;
 
-  Future<void> getAllSessionWithAdmin({bool loadMore=true}) async {
-    if(isLastPage||isLoading) return;
+  Future<void> getAllSessionWithAdmin(
+      {bool loadMore = true, String? searchQuery}) async {
+    if (searchQuery != null && !loadMore) {
+      if (searchQuery == currentSearchQuery) return;
+      isLastPage = false;
+      currentPage = 1;
+      currentSearchQuery = searchQuery;
+      sessions = [];
+    }
+    if (isLastPage || isLoading) return;
 
     isLoading = true;
     WebServices service = WebServices();
-    allSessionWithAdminDataSource = AllSessionWithAdminDataSourceImp(service.freeDio);
-    allSessionWithAdminRepository = AllSessionWithAdminRepositoryImp(allSessionWithAdminDataSource);
-    allSessionWithAdminUseCase = AllSessionWithAdminUseCase(allSessionWithAdminRepository);
-    if(!loadMore)
-
-    emit(LoadingAllSession());
+    allSessionWithAdminDataSource =
+        AllSessionWithAdminDataSourceImp(service.freeDio);
+    allSessionWithAdminRepository =
+        AllSessionWithAdminRepositoryImp(allSessionWithAdminDataSource);
+    allSessionWithAdminUseCase =
+        AllSessionWithAdminUseCase(allSessionWithAdminRepository);
+    if (!loadMore) emit(LoadingAllSession());
     try {
-      var result = await allSessionWithAdminUseCase.execute(AllSessionModel(),page: currentPage);
+      var result = await allSessionWithAdminUseCase.execute(AllSessionModel(),
+          page: currentPage, searchQuery: currentSearchQuery);
       final data = AllSessionModel.fromJson(result.data);
-      if(data.sessions!.isEmpty){
+      if (data.sessions!.isEmpty) {
         isLastPage = true;
-      }
-      else{
+      } else {
         currentPage++;
-        sessions.addAll(data.sessions??[]);
+        sessions.addAll(data.sessions ?? []);
       }
       emit(SuccessAllSession(sessions));
-        } catch (error) {
+    } catch (error) {
       emit(ErrorAllSession(error.toString()));
-    }
-    finally{
+    } finally {
       isLoading = false;
     }
   }

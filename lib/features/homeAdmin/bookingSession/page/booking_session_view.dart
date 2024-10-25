@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widget/custom_text_field.dart';
+
 class BookingSessionView extends StatefulWidget {
   const BookingSessionView({super.key});
 
@@ -27,15 +28,11 @@ class _BookingSessionViewState extends State<BookingSessionView> {
     super.initState();
     _patientSessionCubit = AllSessionCubit();
     _patientSessionCubit.getAllSessionWithAdmin();
-    searchController.addListener(() {
-      setState(() {
-        searchQuery = searchController.text;
-      });
-    });
     _scrollController.addListener(() {
-      if(_scrollController.position.pixels >= _scrollController.position.maxScrollExtent-50){
-        if(!_patientSessionCubit.isLoading)
-        _patientSessionCubit.getAllSessionWithAdmin(loadMore: true);
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 50) {
+        if (!_patientSessionCubit.isLoading)
+          _patientSessionCubit.getAllSessionWithAdmin(loadMore: true);
       }
     });
   }
@@ -44,6 +41,12 @@ class _BookingSessionViewState extends State<BookingSessionView> {
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  void search() {
+    _scrollController.jumpTo(0);
+    _patientSessionCubit.getAllSessionWithAdmin(
+        searchQuery: searchController.text);
   }
 
   @override
@@ -65,16 +68,14 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                   state.errorMessage,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: 20,
-                    color: Colors.red,
-                  ),
+                        fontSize: 20,
+                        color: Colors.red,
+                      ),
                 ),
               );
             }
             if (state is SuccessAllSession) {
               var session = state.session;
-              var filteredSessions = session.where((s) => s.pationt!.name!.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-
               return Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -88,7 +89,11 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                     CustomTextField(
                       controller: searchController,
                       hint: "البحث",
-                      icon: Icons.search,
+                      prefixIcon: IconButton(
+                          onPressed: () {
+                            search();
+                          },
+                          icon: Icon(Icons.search)),
                     ),
                     const SizedBox(height: 20),
                     Expanded(
@@ -116,10 +121,13 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                         child: Text(
                                           "اسم الحالة",
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 14 : 20,
-                                            color: Colors.white,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                fontSize: isMobile ? 14 : 20,
+                                                color: Colors.white,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -131,10 +139,13 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                         child: Text(
                                           "أسم الاستشارى",
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 12 : 20,
-                                            color: Colors.white,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                fontSize: isMobile ? 12 : 20,
+                                                color: Colors.white,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -146,10 +157,13 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                         child: Text(
                                           "رقم الجلسة",
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 12 : 20,
-                                            color: Colors.white,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                fontSize: isMobile ? 12 : 20,
+                                                color: Colors.white,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -161,10 +175,13 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                         child: Text(
                                           "تاريخ الجلسة",
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            color: Colors.white,
-                                            fontSize: isMobile ? 12 : 20,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                color: Colors.white,
+                                                fontSize: isMobile ? 12 : 20,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -176,10 +193,13 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                         child: Text(
                                           "الوقت",
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 12 : 20,
-                                            color: Colors.white,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                fontSize: isMobile ? 12 : 20,
+                                                color: Colors.white,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -191,10 +211,13 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                         child: Text(
                                           "الحالة",
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                            fontSize: isMobile ? 12 : 20,
-                                            color: Colors.white,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                fontSize: isMobile ? 12 : 20,
+                                                color: Colors.white,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -206,11 +229,12 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                           Expanded(
                             child: ListView.builder(
                               controller: _scrollController,
-                              itemCount: session.length+1,
+                              itemCount: session.length + 1,
                               itemBuilder: (context, index) {
                                 if (index == session.length) {
                                   return const Center(
-                                    child: CircularProgressIndicator(), // Show loader when at the end of the list
+                                    child:
+                                        CircularProgressIndicator(), // Show loader when at the end of the list
                                   );
                                 }
                                 var item = session[index];
@@ -224,117 +248,148 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                                     5: FlexColumnWidth(2),
                                   },
                                   children: [
-                                       TableRow(
-                                        decoration: const BoxDecoration(
-                                          color: Colors.black38,
-                                        ),
-                                        children: [
-                                          TableCell(
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => SessionDetailsViewAdmin(
-                                                      pationt_data: item.pationt,
-                                                      sessionId: item.id!,
-                                                      isFinished: item.isFinished!,
-                                                      sessionCaseManager: item.caseManager,
-                                                      sessionComment: item.comments,
-                                                      sessionDate: item.date,
-                                                      consultationService: item.consultationService,
-                                                      isAttend: item.isAttended,
-                            
+                                    TableRow(
+                                      decoration: const BoxDecoration(
+                                        color: Colors.black38,
+                                      ),
+                                      children: [
+                                        TableCell(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SessionDetailsViewAdmin(
+                                                    pationt_data: item.pationt,
+                                                    sessionId: item.id!,
+                                                    isFinished:
+                                                        item.isFinished!,
+                                                    sessionCaseManager:
+                                                        item.caseManager,
+                                                    sessionComment:
+                                                        item.comments,
+                                                    sessionDate: item.date,
+                                                    consultationService: item
+                                                        .consultationService,
+                                                    isAttend: item.isAttended,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                item.pationt!.name.toString(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      color: Colors.white,
                                                     ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  item.pationt!.name.toString(),
-                                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: GestureDetector(
+                                            onTap: () {},
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                item.advicor!.name.toString(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          isMobile ? 12 : 20,
+                                                    ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "الجلسة ${item.sessionNumber}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
                                                     color: Colors.white,
+                                                    fontSize:
+                                                        isMobile ? 12 : 20,
                                                   ),
-                                                ),
-                                              ),
                                             ),
                                           ),
-                                          TableCell(
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  item.advicor!.name.toString(),
-                                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              item.date.toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
                                                     color: Colors.white,
-                                                    fontSize: isMobile ? 12 : 20,
+                                                    fontSize:
+                                                        isMobile ? 14 : 20,
                                                   ),
-                                                ),
-                                              ),
                                             ),
                                           ),
-                                          TableCell(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "الجلسة ${item.sessionNumber}",
-                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: isMobile ? 12 : 20,
-                                                ),
-                                              ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              item.time.toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
+                                                    color: Colors.white,
+                                                    fontSize:
+                                                        isMobile ? 12 : 20,
+                                                  ),
                                             ),
                                           ),
-                                          TableCell(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                item.date.toString(),
-                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: isMobile ? 14 : 20,
-                                                ),
-                                              ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              item.isFinished == 1
+                                                  ? "انتهت"
+                                                  : "لم تنته",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
+                                                    color: Colors.white,
+                                                    fontSize:
+                                                        isMobile ? 12 : 20,
+                                                  ),
                                             ),
                                           ),
-                                          TableCell(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                item.time.toString(),
-                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: isMobile ? 12 : 20,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          TableCell(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                item.isFinished == 1 ? "انتهت" : "لم تنته",
-                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: isMobile ? 12 : 20,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 );
-
-                            },),
+                              },
+                            ),
                           )
                         ],
                       ),
                     ),
                   ],
-                ).setHorizontalPadding(context, enableMediaQuery: false, 20).setVerticalPadding(context, enableMediaQuery: false, 20),
+                )
+                    .setHorizontalPadding(context, enableMediaQuery: false, 20)
+                    .setVerticalPadding(context, enableMediaQuery: false, 20),
               );
             } else {
               return const Center(

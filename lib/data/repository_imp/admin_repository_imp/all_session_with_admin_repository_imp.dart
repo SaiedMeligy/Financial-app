@@ -10,7 +10,7 @@ class AllSessionWithAdminRepositoryImp implements AllSessionWithAdminRepository{
   final AllSessionWithAdminDataSource dataSource;
   AllSessionWithAdminRepositoryImp(this.dataSource);
   @override
-  Future<Response> getAllSessionWithAdmin(AllSessionModel sessionModel,{int page =1,int per_page=15}) async {
+  Future<Response> getAllSessionWithAdmin(AllSessionModel sessionModel,{int page =1,int per_page=15,String searchQuery = ''}) async {
     try {
       final response = await dataSource.getAllSessionWithAdmin(
           sessionModel,page: page,per_page: per_page);

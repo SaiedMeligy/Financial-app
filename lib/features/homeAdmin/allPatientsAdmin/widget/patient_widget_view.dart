@@ -221,11 +221,8 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
                     itemCount: widget.items.length + 1,
                     itemBuilder: (context, index) {
                       if (index == widget.items.length) {
-                        return widget.isLastPage
-                            ? const SizedBox.shrink()
-                            : const Center(child: CircularProgressIndicator());
+                        return const SizedBox.shrink();
                       }
-
                       var item = widget.items[index];
                       return Table(
                         columnWidths: {

@@ -9,12 +9,13 @@ class AllSessionWithAdminDataSourceImp implements AllSessionWithAdminDataSource{
   final Dio dio;
   AllSessionWithAdminDataSourceImp(this.dio);
   @override
-  Future<Response> getAllSessionWithAdmin(AllSessionModel sessionModel,{int page=1,int per_page=15}) async{
+  Future<Response> getAllSessionWithAdmin(AllSessionModel sessionModel,{int page=1,int per_page=15 ,String searchQuery = ''}) async{
     return await dio.get(
         "/api/session",
         queryParameters: {
           "page":page,
-          "per_page":per_page
+          "per_page":per_page,
+          "searchQuery":searchQuery
         },
         options: Options(
             headers: {

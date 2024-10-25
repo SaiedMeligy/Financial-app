@@ -58,9 +58,7 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
                 itemBuilder: (context, index) {
                   var item = widget.items;
                   if (index == widget.items.length) {
-                    return widget.isLastPage
-                        ? const SizedBox.shrink()
-                        : const Center(child: CircularProgressIndicator());
+                    return const SizedBox.shrink();
                   }
                   return Table(
                     children: [

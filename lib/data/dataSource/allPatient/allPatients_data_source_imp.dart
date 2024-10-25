@@ -10,12 +10,13 @@ class AllPatientDataSourceImp implements AllPatientsDataSource{
   AllPatientDataSourceImp(this.dio);
 
   @override
-  Future<Response> getAllPatients(AllPatientModel patientModel, {int page = 1,int per_page = 20}) async{
+  Future<Response> getAllPatients(AllPatientModel patientModel, {int page = 1,int per_page = 20,String searchQuery=''}) async{
     return await dio.get(
         "/api/advicor/pationt",
         queryParameters: {
           "page":page,
-          "per_page":per_page },
+          "per_page":per_page,
+          "searchQuery":searchQuery},
         options: Options(
             headers: {
               "api-password": Constants.apiPassword,
