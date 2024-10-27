@@ -1,11 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:experts_app/core/Services/web_services.dart';
-import 'package:experts_app/domain/entities/AdviceMode.dart';
 import 'package:experts_app/domain/entities/QuestionModel.dart';
 import 'package:experts_app/domain/entities/QuestionRelationModel.dart';
 import 'package:experts_app/features/homeAdmin/allQuestionView/manager/states.dart';
-import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
 
 import '../../../../data/dataSource/question/AllQuestion/all_question_data_source.dart';
 import '../../../../data/dataSource/question/AllQuestion/all_question_data_source_imp.dart';
@@ -34,9 +32,8 @@ import '../../../../domain/useCase/Question/deleteQuestion/delete_question_use_c
 
     Future<void> getAllQuestion() async {
     WebServices service = WebServices();
-        allQuestionDataSource = AllQuestionDataSourceImp(service.freeDio);
-      allQuestionRepository =
-            AllQuestionRepositoryImp(allQuestionDataSource);
+    allQuestionDataSource = AllQuestionDataSourceImp(service.freeDio);
+      allQuestionRepository = AllQuestionRepositoryImp(allQuestionDataSource);
           allQuestionUseCase = AllQuestionUseCase(allQuestionRepository);
       emit(LoadingAllQuestion());
     try {

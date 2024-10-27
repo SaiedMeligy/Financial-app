@@ -2,9 +2,7 @@ import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/page/session_Details_view_admin.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/manager/cubit.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/manager/states.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widget/custom_text_field.dart';
@@ -19,7 +17,7 @@ class BookingSessionView extends StatefulWidget {
 class _BookingSessionViewState extends State<BookingSessionView> {
   late AllSessionCubit _patientSessionCubit;
   TextEditingController searchController = TextEditingController();
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   String searchQuery = '';
   bool isMobile = false;
 
@@ -31,8 +29,9 @@ class _BookingSessionViewState extends State<BookingSessionView> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 50) {
-        if (!_patientSessionCubit.isLoading)
-          _patientSessionCubit.getAllSessionWithAdmin(loadMore: true);
+        if (!_patientSessionCubit.isLoading) {
+          _patientSessionCubit.getAllSessionWithAdmin(loadMore: true,);
+        }
       }
     });
   }
@@ -74,8 +73,9 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                 ),
               );
             }
-            if (state is SuccessAllSession) {
+            if (state is SuccessAllSessionWithAdmin) {
               var session = state.session;
+
               return Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -229,12 +229,12 @@ class _BookingSessionViewState extends State<BookingSessionView> {
                           Expanded(
                             child: ListView.builder(
                               controller: _scrollController,
-                              itemCount: session.length + 1,
+                              itemCount: _patientSessionCubit.isLastPage?session.length:session.length + 1,
                               itemBuilder: (context, index) {
                                 if (index == session.length) {
                                   return const Center(
                                     child:
-                                        CircularProgressIndicator(), // Show loader when at the end of the list
+                                        CircularProgressIndicator(),
                                   );
                                 }
                                 var item = session[index];

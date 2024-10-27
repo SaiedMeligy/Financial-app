@@ -13,7 +13,7 @@ class AllSessionWithAdminRepositoryImp implements AllSessionWithAdminRepository{
   Future<Response> getAllSessionWithAdmin(AllSessionModel sessionModel,{int page =1,int per_page=15,String searchQuery = ''}) async {
     try {
       final response = await dataSource.getAllSessionWithAdmin(
-          sessionModel,page: page,per_page: per_page);
+          sessionModel,page: page,per_page: per_page,searchQuery: searchQuery);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;

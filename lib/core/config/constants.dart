@@ -1,6 +1,7 @@
 import 'package:experts_app/domain/entities/side_bar_model.dart';
 import 'package:experts_app/features/homeAdmin/Advices/page/All%20Advices/page/advice_view.dart';
 import 'package:experts_app/features/homeAdmin/Advices/page/addAdvice/add_advice.dart';
+import 'package:experts_app/features/homeAdmin/Backup_data/page/backup_data_page.dart';
 import 'package:experts_app/features/homeAdmin/Consulting%20service/All%20Consultation/page/consulting_view.dart';
 import 'package:experts_app/features/homeAdmin/Consulting%20service/Consultation%20Store/page/add_consulting.dart';
 import 'package:experts_app/features/homeAdmin/addSession/page/add_session_view.dart';
@@ -47,6 +48,7 @@ class Constants {
       SideBarModel(title: "اضافة خدمة استشارية", icon: const Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: "الخدمات الاستشارية", icon: const Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة استشاري", icon: const Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "النسخ الأحتياطي للبيانات", icon: const Icon(Icons.save_alt_outlined,color: Colors.black87)),
     ];
 
   static  List<Widget> bodies = [
@@ -68,6 +70,7 @@ class Constants {
       const AddConsulting(),
       const ConsultingView(),
       const RegisterView(),
+      const BackupDataPage(),
     ];
    static int page = 1;
    static int totalPages = 20;

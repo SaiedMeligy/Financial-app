@@ -32,11 +32,12 @@ class _SessionDateState extends State<SessionDate> {
     _patientSessionCubit = AllSessionCubit();
     _patientSessionCubit.getAllSession();
 
-    searchController.addListener(() {
-      setState(() {
-        searchQuery = searchController.text;
-      });
-    });
+    // searchController.addListener(() {
+    //   setState(() {
+    //     searchQuery = searchController.text;
+    //   });
+    // });
+
 
     _scrollController.addListener(() {
       if(_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
@@ -52,6 +53,11 @@ class _SessionDateState extends State<SessionDate> {
     searchController.dispose();
     super.dispose();
   }
+  void search() {
+    _scrollController.jumpTo(0);
+    _patientSessionCubit.getAllSession(searchQuery: searchController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
           return LayoutBuilder(
@@ -80,8 +86,7 @@ class _SessionDateState extends State<SessionDate> {
                 if (state is SuccessAllSession) {
                   var session = state.session;
                   var filteredSessions = session.where((s) =>
-                  s.pationt?.name?.toLowerCase().contains(searchQuery.toLowerCase()) ?? false
-                  ).toList();
+                  s.pationt?.name?.toLowerCase().contains(searchQuery.toLowerCase()) ?? false).toList();
                   return  Directionality(
                     textDirection: TextDirection.rtl,
                     child: Container(
@@ -97,7 +102,12 @@ class _SessionDateState extends State<SessionDate> {
                           CustomTextField(
                             controller: searchController,
                             hint: "البحث",
-                            icon: Icons.search,
+                            prefixIcon: IconButton(
+                                onPressed: () {
+                                  search();
+                                },
+                                icon: Icon(Icons.search)),
+
                           ),
                           const SizedBox(height: 20,),
                           Expanded(
@@ -215,7 +225,7 @@ class _SessionDateState extends State<SessionDate> {
                                 Expanded(
                                   child: ListView.builder(
                                     controller: _scrollController,
-                                    itemCount: filteredSessions.length+1,
+                                    itemCount: _patientSessionCubit.isLastPage?filteredSessions.length:filteredSessions.length+1,
                                     itemBuilder: (context, index) {
                                       if (index == filteredSessions.length) {
                                         return const Center(
@@ -232,7 +242,7 @@ class _SessionDateState extends State<SessionDate> {
                                           4: FlexColumnWidth(2),
                                           5: FlexColumnWidth(2),
                                         },
-                            
+
                                         children: [
                                           TableRow(
                                             decoration: const BoxDecoration(
@@ -255,7 +265,7 @@ class _SessionDateState extends State<SessionDate> {
                                                       ),
                                       )
                                                     );
-                            
+
                                                     },
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -318,10 +328,10 @@ class _SessionDateState extends State<SessionDate> {
                                               ),
                                       ],
                                       )
-                            
+
                                         ],
                                       );
-                            
+
                                   },),
                                 )
                               ],

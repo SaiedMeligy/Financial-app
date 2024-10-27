@@ -9,6 +9,10 @@ class SuccessAllSession extends AllSessionStates{
    List<Sessions> session;
   SuccessAllSession(this.session);
 }
+class SuccessAllSessionWithAdmin extends AllSessionStates{
+   List<Sessions> session;
+  SuccessAllSessionWithAdmin(this.session);
+}
 
 class ErrorAllSession extends AllSessionStates{
   final String errorMessage;

@@ -27,7 +27,15 @@ class AllSessionCubit extends Cubit<AllSessionStates> {
   late AllSessionRepository allSessionRepository;
   late AllSessionDataSource allSessionDataSource;
 
-  Future<void> getAllSession({bool loadMore = false}) async {
+  Future<void> getAllSession({bool loadMore = false,String? searchQuery}) async {
+    if(searchQuery!=null && !loadMore){
+      if(searchQuery == currentSearchQuery)return;
+      isLastPage = false;
+      currentPage=1;
+      currentSearchQuery=searchQuery;
+      sessionsAdvicors = [];
+    }
+
     if (isLastPage || isLoading) return;
 
     isLoading = true;
@@ -37,8 +45,7 @@ class AllSessionCubit extends Cubit<AllSessionStates> {
     allSessionUseCase = AllSessionUseCase(allSessionRepository);
     if (!loadMore) emit(LoadingAllSession());
     try {
-      var result =
-          await allSessionUseCase.execute(AllSessionModel(), page: currentPage);
+      var result = await allSessionUseCase.execute(AllSessionModel(), page: currentPage,searchQuery: currentSearchQuery);
       final data = AllSessionModel.fromJson(result.data);
       if (data.sessions!.isEmpty) {
         isLastPage = true;
@@ -60,13 +67,14 @@ class AllSessionCubit extends Cubit<AllSessionStates> {
 
   Future<void> getAllSessionWithAdmin(
       {bool loadMore = true, String? searchQuery}) async {
-    if (searchQuery != null && !loadMore) {
-      if (searchQuery == currentSearchQuery) return;
+
+    if (searchQuery != null && searchQuery != currentSearchQuery) {
+      currentSearchQuery = searchQuery;
       isLastPage = false;
       currentPage = 1;
-      currentSearchQuery = searchQuery;
-      sessions = [];
+      sessions = []; // Reset the sessions list
     }
+
     if (isLastPage || isLoading) return;
 
     isLoading = true;
@@ -88,11 +96,17 @@ class AllSessionCubit extends Cubit<AllSessionStates> {
         currentPage++;
         sessions.addAll(data.sessions ?? []);
       }
-      emit(SuccessAllSession(sessions));
+      emit(SuccessAllSessionWithAdmin(sessions));
     } catch (error) {
       emit(ErrorAllSession(error.toString()));
     } finally {
       isLoading = false;
     }
   }
+
+  // void updateSearchQuery(String query) {
+  //   currentSearchQuery = query.toLowerCase();
+  //   emit(SuccessAllSession(sessionsAdvicors));  // Emit the existing sessions to trigger the UI update
+  // }
+
 }
