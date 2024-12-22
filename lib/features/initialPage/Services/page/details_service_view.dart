@@ -114,7 +114,7 @@ class _DetailsServiceViewState extends State<DetailsServiceView> {
                       decoration:BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.black,width: 2)
-                      ),child: Text("تفاصيل الخدمة",style: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodyMedium?.copyWith(fontSize: 28,color: Colors.black):Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 28,color: Colors.black),)),
+                      ),child: Text(" تفاصيل الخدمة",style: (Constants.mediaQuery.width < 600)?Constants.theme.textTheme.bodyMedium?.copyWith(fontSize: 28,color: Colors.black):Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 28,color: Colors.black),)),
                 ],
               ),
               SizedBox(height: 20,),

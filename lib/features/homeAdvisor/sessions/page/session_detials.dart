@@ -59,7 +59,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
       appBar: AppBar(
         title: Text(
           "استمارة برنامج الارشاد المالي",
-        ),
+      ),
         centerTitle: true,
         titleTextStyle: Constants.theme.textTheme.titleLarge,
         backgroundColor: Color(0xff000000),
@@ -133,7 +133,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                             child: Row(
                               children: [
                                 Text(
-                                  " هل يحتاج الي جلسة اخري",
+                                  " هل يحتاج إلى جلسة اخرى",
                                   style: Constants.theme.textTheme.titleLarge?.copyWith(
                                     color: Colors.black,
                                   ),

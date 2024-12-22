@@ -884,7 +884,8 @@ class NeedOtherSessionAndConsultationServiceWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    " بحاجه إلى جلسة أخرى",
+                    " بحاجه"
+                        " إلى جلسة أخرى",
                     style: Constants.theme.textTheme.bodyMedium?.copyWith(
                       color: Colors.black,
                     ),
@@ -920,7 +921,8 @@ class NeedOtherSessionAndConsultationServiceWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    " بحاجه إلى جلسة أخرى",
+                    " بحاجه"
+                        " إلى جلسة أخرى",
                     style: isMobile
                         ? Constants.theme.textTheme.bodySmall?.copyWith(
                             color: Colors.black,

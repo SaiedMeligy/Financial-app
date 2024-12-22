@@ -83,7 +83,8 @@ class AllPatientCubit extends Cubit<AllPatientStates> {
 
       if (data.pationts!.isEmpty) {
         isLastPage = true;
-      } else {
+      }
+      else {
         currentPage++;
         patients.addAll(data.pationts ?? []);
       }

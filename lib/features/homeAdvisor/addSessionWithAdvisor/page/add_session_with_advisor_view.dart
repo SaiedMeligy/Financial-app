@@ -9,6 +9,7 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart' as intl;
 
 class AddSessionWithAdminView extends StatefulWidget {
   @override
@@ -61,8 +62,13 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
 
   void _updateDateTimeText() {
     if (_selectedDate != null && _selectedTime != null) {
-      final date = '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}';
-      final time = '${_selectedTime!.hour}:${_selectedTime!.minute}';
+      // final date = '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}';
+      // final time = '${_selectedTime!.hour}:${_selectedTime!.minute}';
+      DateTime newTime = DateTime(1,1,1,_selectedTime!.hour,_selectedTime!.minute,0);
+      DateTime newDate = DateTime(_selectedDate!.year,_selectedDate!.month,_selectedDate!.day,0,0,0);
+      String time = intl.DateFormat('HH:mm:ss').format(newTime);
+      String date = intl.DateFormat('yy:MM:dd').format(newDate);
+
       _dateTimeController.text = '$date $time';
     }
   }
@@ -148,12 +154,12 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Expanded(child: Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black))),
-                            isMobile?SizedBox(width: 5):SizedBox(width: 15),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Expanded(child: Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black))),
+                        //     isMobile?SizedBox(width: 5):SizedBox(width: 15),
+                        //   ],
+                        // ),
                         Text("ادخل رقم الهوية الأماراتية", style: Constants.theme.textTheme.bodyLarge?.copyWith(
                             color: Colors.black
                         )),
@@ -317,15 +323,22 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                         BorderRoundedButton(
                           title: "اضافة",
                           onPressed: () {
+
                             if (formKey.currentState!.validate()) {
+                              DateTime newTime = DateTime(1,1,1,_selectedTime!.hour,_selectedTime!.minute,0);
+                              DateTime newDate = DateTime(_selectedDate!.year,_selectedDate!.month,_selectedDate!.day,0,0,0);
+                              String time = intl.DateFormat('HH:mm:ss').format(newTime);
+                              String date = intl.DateFormat('yy:MM:dd').format(newDate);
                               var data = Sessions(
-                                date: _selectedDate?.toString() ?? '',
+                                // date: _selectedDate?.toString() ?? '',
+                                date: date,
                                 advicorId: selected_advisor??0,
                                 pationtId: patient_id ?? 0,
                                 caseManager: _nameManagerController.text,
                                 phoneNumber: _phoneNumber.text,
                                 otherPhoneNumber: _secondPhoneNumber.text,
-                                time: "${_selectedTime?.hour}:${_selectedTime?.minute}:00",
+                                // time: "${_selectedTime?.hour}:${_selectedTime?.minute}:00",
+                                  time:time,
                                 comments: advisorComment.text
                               );
                               addSessionCubit.addSession(data,isAdvicer: true).then((response) {

@@ -720,6 +720,8 @@ class _AddQuestionState extends State<AddQuestion> {
       });
     }
   }
+
+
   void _clearAnswer() {
     titleController.clear();
     answerControllers.clear();

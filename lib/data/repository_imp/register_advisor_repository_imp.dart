@@ -18,7 +18,7 @@ class RegisterRepositoryImp implements RepositoryRegister{
       final response = await registerDataSource.register(data);
       if(response.statusCode ==200){
         if (response.data["status"] == true) {
-          return Right(true);
+          return const Right(true);
         }
         else{
           SnackBarService.showErrorMessage(response.data["message"]);

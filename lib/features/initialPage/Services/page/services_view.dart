@@ -123,7 +123,7 @@ class _ServicesViewState extends State<ServicesView> {
             body: 
             SingleChildScrollView(
                 child: SizedBox(
-                  height: (Constants.mediaQuery.width<600)?Constants.mediaQuery.height*3.5:Constants.mediaQuery.height*2,
+                  height: (Constants.mediaQuery.width<600)?Constants.mediaQuery.height*3.5:Constants.mediaQuery.height*2.2,
                   child: Form(
                   key: formKey,
                   child: Directionality(

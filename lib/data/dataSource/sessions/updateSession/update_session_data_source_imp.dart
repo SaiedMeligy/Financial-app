@@ -26,7 +26,10 @@ class UpdateSessionDataSourceImp implements UpdateSessionDataSource{
         "is_attended":data.isAttend,
         "need_other_session":data.needOtherSession,
         "is_success_story":data.isSuccessStory,
-        "is_finished":data.isFinished
+        "is_finished":data.isFinished,
+        "phone_number":data.phoneNumber,
+        'other_phone_number':data.otherPhoneNumber,
+        'case_manager':data.caseManager
       },
 
     );

@@ -1,3 +1,6 @@
+import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/domain/entities/AddSessionModel.dart';
+import 'package:experts_app/features/homeAdvisor/session%20dates/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
@@ -21,10 +24,12 @@ class _PatientSessionViewState extends State<PatientSessionView> {
 
   @override
   void initState() {
+    // print("---->Patient Data"+widget.pationt_data);
     super.initState();
     _patientSessionCubit = AddSessionCubit();
     _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
   }
+
 
   @override
   void dispose() {
@@ -43,6 +48,12 @@ class _PatientSessionViewState extends State<PatientSessionView> {
           return Center(child: Text(state.errorMessage));
         } else if (state is SuccessAddSessionState) {
           var session = state.result.data["pationt"]["sessions"];
+          void _deletePatientLocally(int sessionId) {
+            setState(() {
+              session.removeWhere((s) => s['id'] == sessionId);
+            });
+          }
+
 
           return Container(
             decoration: BoxDecoration(
@@ -112,6 +123,24 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                 ),
                               ),
                             ),
+                            TableCell(
+                              child: Container(
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                    "حذف الجلسة",
+                                    textAlign: TextAlign.center,
+                                    style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         for (int index = 0; index <
@@ -162,6 +191,72 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                         .bodyLarge
 
                                   ),
+                                ),
+                              ),
+                              TableCell(
+                                child: IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.white),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: AlertDialog(
+                                            title: Text("حذف الجلسة", style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                color: Colors.black
+                                            )),
+                                            content: Text("هل أنت متأكد أنك تريد حذف هذه الجلسة", style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                color: Colors.black
+                                            )),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  _patientSessionCubit.deleteSession(session[index]['id']).then((_) {
+
+                                                    Navigator.of(context).pop();
+                                                    // _deletePatientLocally(widget.pationt_data); // Remove patient from local list
+
+                                                    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
+                                                  });
+                                                },
+                                                child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Constants.theme.primaryColor,
+                                                    width: 2.5,
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  'نعم',
+                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                              ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                }, child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Constants.theme.primaryColor,
+                                                    width: 2.5,
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  'لا',
+                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                              ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
                               ),
                             ],

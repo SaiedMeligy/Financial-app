@@ -319,14 +319,14 @@ import 'package:experts_app/features/initialPage/page/complaint_page.dart';
                   Container(
                     height:
                     isMobile ? 100 : Constants.mediaQuery.height * 0.17,
-                    decoration: const BoxDecoration(
+                    decoration: const BoxDecoration( 
                       color: Colors.white,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Image.asset("assets/images/clinic logo.jpg",
-                            fit: BoxFit.cover),
+                            fit: BoxFit.fill),
                         Row(
                           children: [
                             Directionality(

@@ -25,15 +25,10 @@ class AllAdvicesCubit extends Cubit<AllAdvicesStates> {
     emit(LoadingAllAdvices());
     try {
       var result = await allAdvicesUseCase.execute(AdviceModel());
-      print('API Response: ${result.data}');
 
       final data = AdviceModel.fromJson(result.data);
-      if (data != null) {
-        emit(SuccessAllAdvices(data.advices!));
-      } else {
-        emit(ErrorAllAdvices("No consultation services found"));
-      }
-    } catch (error) {
+      emit(SuccessAllAdvices(data.advices!));
+        } catch (error) {
       emit(ErrorAllAdvices(error.toString()));
     }
   }

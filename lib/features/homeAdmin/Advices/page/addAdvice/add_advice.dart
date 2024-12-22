@@ -30,7 +30,7 @@ class _AddRecommendState extends State<AddRecommend> {
         return
           Container(
             height: double.maxFinite,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/back.jpg"),
                 fit: BoxFit.cover,
@@ -44,7 +44,6 @@ class _AddRecommendState extends State<AddRecommend> {
                 key: formKey,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    // Align children to the end (bottom) of the column
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Row(
@@ -66,9 +65,7 @@ class _AddRecommendState extends State<AddRecommend> {
                           controller: titleController,
                           hint: "ادخل عنوان التوصية",
                           onValidate: (value) {
-                            if (value == null || value
-                                .trim()
-                                .isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return "من فضلك أدخل التوصية";
                             }
                             return null;

@@ -103,12 +103,18 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
 
             if (pointers1Temp.isNotEmpty) {
               print("----------->>>${calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString()}%");
+              print("first"+pointers1Temp[0]["pationt_pointers_count"].toString());
+              print("second"+pointers1Temp[0]["pointers_count"].toString());
             }
             if (pointers2Temp.isNotEmpty) {
               print("----------->>>${calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString()}%");
+              print("third"+pointers2Temp[0]["pationt_pointers_count"].toString());
+              print("four"+pointers2Temp[0]["pointers_count"].toString());
             }
             if (pointers3Temp.isNotEmpty) {
               print("----------->>>${calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString()}%");
+              print("fifth"+pointers3Temp[0]["pationt_pointers_count"].toString());
+              print("six"+pointers3Temp[0]["pointers_count"].toString());
             }
 
             if (pointers.isEmpty && advices.isEmpty) {
@@ -554,7 +560,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
                                     ],
                                     colors: [Colors.red, Colors.blue, Colors.green],
-                                    showTotalPercentage: true,
+                                    showTotalPercentage: false,
                                     // label: 'This is label text',
                                     animationDuration: const Duration(milliseconds: 500),
                                     animationCurve: Curves.easeIn,
@@ -601,7 +607,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
                                     ],
                                     colors: [Colors.red, Colors.blue, Colors.green],
-                                    showTotalPercentage: true,
+                                    showTotalPercentage: false,
                                     // label: 'This is label text',
                                     animationDuration: const Duration(milliseconds: 500),
                                     animationCurve: Curves.easeIn,
@@ -618,6 +624,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                           SizedBox(
                             height: 20,
                           ),
+                          //todo
                           Container(
                             height: Constants.mediaQuery.height*0.4,
                             decoration: BoxDecoration(
@@ -945,6 +952,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 TextButton(
                                                   onPressed: () async {
 
+
                                                     if (selectedAdviceIds.isNotEmpty) {
                                                       for (var adviceId in selectedAdviceIds) {
                                                         await addAdvices(adviceId, patient["id"]).then((value){
@@ -1034,6 +1042,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
       );}
     );
   }
+
   Future<void> fetchPointers() async {
     final dio = Dio();
     try {

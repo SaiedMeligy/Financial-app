@@ -12,9 +12,12 @@ import 'firebase_options.dart';
 
 
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -28,19 +31,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'معهد الخبراء العرب للتدريب و الإستشارات',
-      theme: AppThemeManager.lightTheme,
-      debugShowCheckedModeBanner: false,
-        home: const InitialPage(),
-      initialRoute: PageRouteName.initial,
-      onGenerateRoute: Routes.onGenerateRoute,
-      navigatorKey: navigatorKey,
-      builder: EasyLoading.init(
-        builder:BotToastInit()
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'معهد الخبراء العرب للتدريب و الإستشارات',
+          theme: AppThemeManager.lightTheme,
+          debugShowCheckedModeBanner: false,
+          initialRoute: PageRouteName.initial,
+          onGenerateRoute: Routes.onGenerateRoute,
+          navigatorKey: navigatorKey,
+          builder: (context, widget) {
+            widget = EasyLoading.init()(context, widget);
+            widget = BotToastInit()(context, widget);
+            return widget;
+          },
+        );
+      },
     );
   }
 }
+
 
 

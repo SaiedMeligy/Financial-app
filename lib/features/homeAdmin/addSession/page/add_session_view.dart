@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widget/all_advisor_drop_down.dart';
+import 'package:intl/intl.dart' as intl;
+
 
 class AddSessionView extends StatefulWidget {
   @override
@@ -61,8 +63,13 @@ class _AddSessionViewState extends State<AddSessionView> {
 
   void _updateDateTimeText() {
     if (_selectedDate != null && _selectedTime != null) {
-      final date = '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}';
-      final time = '${_selectedTime!.hour}:${_selectedTime!.minute}';
+      // final date = '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}';
+      // final time = '${_selectedTime!.hour}:${_selectedTime!.minute}';
+      DateTime newTime = DateTime(1,1,1,_selectedTime!.hour,_selectedTime!.minute,0);
+      DateTime newDate = DateTime(_selectedDate!.year,_selectedDate!.month,_selectedDate!.day,0,0,0);
+      String time = intl.DateFormat('HH:mm:ss').format(newTime);
+      String date = intl.DateFormat('yy:MM:dd').format(newDate);
+
       _dateTimeController.text = '$date $time';
     }
   }
@@ -146,7 +153,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                         ),
                         Row(
                           children: [
-                            Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black)),
+                            // Text("استشارى المرحلة التانية", style: isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,fontWeight: FontWeight.bold):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black)),
                             isMobile?SizedBox(width: 5):SizedBox(width: 15),
                             DropdownButtonAdvisor(
                               onAdvisorSelected: (advicor_id) {
@@ -197,7 +204,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                                   color: Colors.black,
                                   width: 2,
                                 ),
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(10),
                                 ),
                               ),
@@ -320,89 +327,93 @@ class _AddSessionViewState extends State<AddSessionView> {
                         SizedBox(height: 16),
                         BorderRoundedButton(
                           title: "اضافة",
+
                           onPressed: () {
+                            print("selected advisor: ${selected_advisor.toString()}");
+
+                            // Check if selected_advisor is null
+                            if (selected_advisor == null) {
+                              SnackBarService.showErrorMessage("يرجى اختيار الأستشاري قبل إرسال الطلب");
+                              return; // Exit the function early
+                            }
+
                             if (formKey.currentState!.validate()) {
+                              DateTime newTime = DateTime(1,1,1,_selectedTime!.hour,_selectedTime!.minute,0);
+                              DateTime newDate = DateTime(_selectedDate!.year,_selectedDate!.month,_selectedDate!.day,0,0,0);
+                              String time = intl.DateFormat('HH:mm:ss').format(newTime);
+                              String date = intl.DateFormat('yy:MM:dd').format(newDate);
                               var data = Sessions(
                                 date: _selectedDate?.toString() ?? '',
-                                advicorId: int.parse(selected_advisor ?? '0'),
+                                advicorId: int.parse(selected_advisor.toString()),
                                 pationtId: patient_id ?? 0,
                                 caseManager: _nameManagerController.text,
                                 phoneNumber: _phoneNumber.text,
                                 otherPhoneNumber: _secondPhoneNumber.text,
                                 time: "${_selectedTime?.hour}:${_selectedTime?.minute}:00",
-                                comments: advisorComment.text
+                                comments: advisorComment.text,
                               );
+
                               addSessionCubit.addSession(data).then((response) {
-                                if (response.data["status"]==true){
+                                if (response.data["status"] == true) {
                                   print("تم اضافة الجلسة");
-                                   _dateTimeController.clear();
-                                   _patientNationalIdController.clear();
-                                   _namePatientController.clear();
-                                   _nameAdvisorController.clear();
-                                   _nameManagerController.clear();
-                                   _phoneNumber.clear();
-                                   _secondPhoneNumber.clear();
-                                   advisorComment.clear();
+                                  _dateTimeController.clear();
+                                  _patientNationalIdController.clear();
+                                  _namePatientController.clear();
+                                  _nameAdvisorController.clear();
+                                  _nameManagerController.clear();
+                                  _phoneNumber.clear();
+                                  _secondPhoneNumber.clear();
+                                  advisorComment.clear();
 
                                   showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return
-                                          Directionality(
-                                            textDirection: TextDirection.rtl,
-                                            child: AlertDialog(
-                                              title: Text(
-                                                "تم اضافة الجلسة",
-                                                style: Constants.theme
-                                                    .textTheme.bodyMedium
-                                                    ?.copyWith(
-                                                    color: Colors.black
-                                                ),),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius
-                                                            .circular(10),
-                                                        border: Border.all(
-                                                          color: Constants.theme
-                                                              .primaryColor,
-                                                          width: 2.5,
-                                                        ),
-                                                      ),
-                                                      child: Text("اغلاق",
-                                                        style: Constants.theme
-                                                            .textTheme.bodyMedium
-                                                            ?.copyWith(
-                                                            color: Colors.black
-                                                        ),).setHorizontalPadding(
-                                                          context,
-                                                          enableMediaQuery: false,
-                                                          20)
+                                    context: context,
+                                    builder: (context) {
+                                      return Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: AlertDialog(
+                                          title: Text(
+                                            "تم اضافة الجلسة",
+                                            style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Constants.theme.primaryColor,
+                                                    width: 2.5,
                                                   ),
                                                 ),
-                                              ],
+                                                child: Text(
+                                                  "اغلاق",
+                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                    color: Colors.black,
+                                                  ),
+                                                ).setHorizontalPadding(
+                                                  context,
+                                                  enableMediaQuery: false,
+                                                  20,
+                                                ),
+                                              ),
                                             ),
-                                          );
-                                      }
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   );
-
+                                } else {
+                                  SnackBarService.showErrorMessage(response.data["message"]);
                                 }
-                                else{
-                                  SnackBarService.showErrorMessage(response.data["messgae"]);
-                                }
-
                               });
-
-
-
                             }
-
-
                           },
+
                         ),
                       ],
                     ).setHorizontalPadding(context, enableMediaQuery: false, 20).setVerticalPadding(context, enableMediaQuery: false, 20),

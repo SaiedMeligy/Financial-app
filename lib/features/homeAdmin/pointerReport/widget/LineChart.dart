@@ -145,7 +145,7 @@ class _LineChartsState extends State<LineCharts> {
                               fontWeight: FontWeight.bold,
                             ),)),
                             DataColumn(label: Text('النسبةالمئوية',style: Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold,),)),
-                            DataColumn(label: Text('عددالحالات',style: Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold,),)),
+                            DataColumn(label: Text('عددالأختيارات',style: Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold,),)),
                           ],
                           rows: countData.map((data) => DataRow(
                             cells: <DataCell>[

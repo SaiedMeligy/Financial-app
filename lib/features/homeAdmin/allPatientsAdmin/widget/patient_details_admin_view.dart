@@ -1681,7 +1681,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                 BorderRadius.circular(20),
                                           ),
                                           child: IconButton(
-                                            icon: Icon(
+                                            icon: const Icon(
                                                 Icons.thumb_up_alt_outlined,
                                                 color: Colors.black),
                                             onPressed: () {
@@ -1721,6 +1721,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     if (index < answers.length) {
                                       var answer = answers[index];
                                       return Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -1744,103 +1745,101 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                           ),
                                           Container(
                                             width: double.infinity,
-                                            height: answer["question_options"]
-                                                    .length *
-                                                50,
+                                            // height: answer["question_options"].length * 40,
+                                            height: answer["question_options"].length > 3 ? Constants.mediaQuery.height * 0.35  : Constants.mediaQuery.height * 0.18, //todo change
+
                                             margin: EdgeInsets.symmetric(
                                                 horizontal: isMobile ? 5 : 20,
                                                 vertical: 20),
-                                            decoration: BoxDecoration(
+                                             alignment:Alignment.center,
+                                            decoration: const BoxDecoration(
                                               color: Colors.white,
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(20),
                                                 topRight: Radius.circular(20),
                                               ),
                                             ),
-                                            child: ListView(
-                                              children: [
-                                                Column(
-                                                  children:
-                                                      answer["question_options"]
-                                                          .map<Widget>(
-                                                              (option) {
-                                                    return Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                            option["title"]
-                                                                .toString(),
-                                                            style: Constants
-                                                                .theme
-                                                                .textTheme
-                                                                .bodyMedium
-                                                                ?.copyWith(
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:MainAxisAlignment.center,
+                                              children:
+                                                  answer["question_options"]
+                                                      .map<Widget>(
+                                                          (option) {
+                                                return Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        option["title"]
+                                                            .toString(),
+                                                        style: Constants
+                                                            .theme
+                                                            .textTheme
+                                                            .bodyMedium
+                                                            ?.copyWith(
+                                                          color:
+                                                              Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    if (option["type"] == 1)
+                                                      Expanded(
+                                                        child: Radio<bool>(
+                                                          value:
+                                                              option["answer"] ==
+                                                                      "1"
+                                                                  ? true
+                                                                  : false,
+                                                          groupValue: true,
+                                                          onChanged:
+                                                              (value) {},
+                                                        ),
+                                                      ),
+                                                    if (option["type"] == 2)
+                                                      Expanded(
+                                                        child: Checkbox(
+                                                          value:
+                                                              option["answer"] ==
+                                                                      "1"
+                                                                  ? true
+                                                                  : false,
+                                                          onChanged:
+                                                              (value) {},
+                                                        ),
+                                                      ),
+                                                    if (option["type"] ==
+                                                            3 &&
+                                                        option["answer"] !=
+                                                            null)
+                                                      Expanded(
+                                                        child: Text(
+                                                          option["answer"]
+                                                              .toString(),
+                                                          style: Constants
+                                                              .theme
+                                                              .textTheme
+                                                              .bodyMedium
+                                                              ?.copyWith(
+                                                            color: Colors
+                                                                .black,
                                                           ),
                                                         ),
-                                                        if (option["type"] == 1)
-                                                          Expanded(
-                                                            child: Radio<bool>(
-                                                              value:
-                                                                  option["answer"] ==
-                                                                          "1"
-                                                                      ? true
-                                                                      : false,
-                                                              groupValue: true,
-                                                              onChanged:
-                                                                  (value) {},
-                                                            ),
-                                                          ),
-                                                        if (option["type"] == 2)
-                                                          Expanded(
-                                                            child: Checkbox(
-                                                              value:
-                                                                  option["answer"] ==
-                                                                          "1"
-                                                                      ? true
-                                                                      : false,
-                                                              onChanged:
-                                                                  (value) {},
-                                                            ),
-                                                          ),
-                                                        if (option["type"] ==
-                                                                3 &&
-                                                            option["answer"] !=
-                                                                null)
-                                                          Expanded(
-                                                            child: Text(
-                                                              option["answer"]
-                                                                  .toString(),
-                                                              style: Constants
-                                                                  .theme
-                                                                  .textTheme
-                                                                  .bodyMedium
-                                                                  ?.copyWith(
-                                                                color: Colors
-                                                                    .black,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                      ],
-                                                    );
-                                                  }).toList(),
-                                                ),
-                                              ],
+                                                      ),
+                                                  ],
+                                                );
+                                              }).toList(),
                                             ).setHorizontalPadding(
                                                 context,
                                                 enableMediaQuery: false,
                                                 isMobile ? 5 : 20),
                                           ),
-                                          Divider(
+                                          const Divider(
                                             thickness: 2,
                                             height: 3,
                                             indent: 20,
                                             endIndent: 20,
                                             color: Colors.black45,
                                           ),
-                                          SizedBox(height: 10),
+                                          const SizedBox(height: 10),
                                         ],
                                       );
                                     } else {
@@ -1849,7 +1848,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                           Text(
                                             formData["need_other_session"] == 1
                                                 ? "الحالة بحاجه إلى جلسة أخرى"
-                                                : "الحالة ليست بحاجه الي جلسة أخرى",
+                                                : "الحالة ليست بحاجه إلى جلسة أخرى",
                                             style: Constants
                                                 .theme.textTheme.bodyLarge,
                                           ),

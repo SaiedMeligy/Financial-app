@@ -26,7 +26,8 @@ import '../../../data/dataSource/login/login_data_source.dart';
     loginUseCase = LoginUseCase(loginRepository);
     EasyLoading.show();
     final result = await loginUseCase.execute(email, password);
-    return result.fold((fail) {
+
+     return result.fold((fail) {
       var error = fail as ServerFailure;
       EasyLoading.dismiss();
       SnackBarService.showErrorMessage(error.message ?? "خطأ في تسجيل الدخول");
@@ -37,8 +38,8 @@ import '../../../data/dataSource/login/login_data_source.dart';
       EasyLoading.dismiss();
       emit(LoginSuccessState());
       return Future.value(true);
-
-    });
+    }
+    );
 
   }
 

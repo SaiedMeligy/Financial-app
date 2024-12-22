@@ -196,7 +196,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                               child: Row(
                                 children: [
                                   Text(
-                                    " هل يحتاج الي جلسة اخري",
+                                    " هل يحتاج إلى جلسة اخرى",
                                     style: isMobile ? Constants.theme.textTheme
                                         .bodyMedium?.copyWith(
                                       color: Colors.black,) : Constants.theme
@@ -475,8 +475,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                             ),
                                                             pw.Text(
                                                               needOtherSession
-                                                                  ? "الحالة بحاجه الي جلسة اخرى"
-                                                                  : "الحالة غير بحاجه الي جلسة اخرى",
+                                                                  ? "الحالة بحاجه إلى جلسة اخرى"
+                                                                  : "الحالة ليست بحاجه إلى جلسة اخرى",
                                                               style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                               textDirection: pw.TextDirection.rtl,
                                                             ),
@@ -632,8 +632,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                       ),
                                       Text(
                                         needOtherSession
-                                            ? "الحالة بحاجه الي جلسة اخرى"
-                                            : "الحالة غير بحاجه الي جلسة اخرى",
+                                            ? "الحالة بحاجه إلى جلسة اخرى"
+                                            : "الحالة ليست بحاجه إلى جلسة اخرى",
                                         style: isMobile ? Constants.theme
                                             .textTheme.bodyMedium?.copyWith(
                                           color: Colors.black,) : Constants.theme

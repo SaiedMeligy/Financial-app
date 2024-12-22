@@ -5,6 +5,7 @@ import 'package:experts_app/features/aboZaby/allPatientsWithAbozaby/page/all_pat
 import 'package:experts_app/features/aboZaby/home/page/home_abo_zaby.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/config/cash_helper.dart';
 import '../../core/config/constants.dart';
@@ -51,8 +52,8 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Constants.theme.primaryColor,
-            toolbarHeight: Constants.mediaQuery.height * 0.26,
-            leadingWidth: Constants.mediaQuery.width * 0.35,
+            toolbarHeight: Constants.mediaQuery.height * 0.32.h,
+            leadingWidth: Constants.mediaQuery.width * 0.40,
             leading: isMobile?null:Row(
               children: [
                 Expanded(
@@ -64,7 +65,7 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
                       ),
                       image: DecorationImage(
                         image: AssetImage("assets/images/AEI Logo.png"),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -87,8 +88,8 @@ class _LayoutAboZabyViewState extends State<LayoutAboZabyView> {
             centerTitle: true,
             actions: [
               isMobile?Container():Container(
-                height: Constants.mediaQuery.height*0.6,
-                width: Constants.mediaQuery.width*0.29,
+                height: Constants.mediaQuery.height*0.8.h,
+                width: Constants.mediaQuery.width*0.37,
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   color: Colors.white,

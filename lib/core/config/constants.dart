@@ -22,10 +22,9 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 
 class Constants {
-
   static var theme = Theme.of(navigatorKey.currentState!.context);
   static var mediaQuery = MediaQuery.of(navigatorKey.currentState!.context).size;
-   static var baseUrl = "https://financialclinic.site/financial_clinic_apis/public";
+  static var baseUrl = "https://financialclinic.site/financial_clinic_apis/public" ;
   //  static var baseUrl = "http://127.0.0.1:8000";
   static var apiPassword = "FWe4ayY2gaGX8TSM";
 
@@ -48,7 +47,7 @@ class Constants {
       SideBarModel(title: "اضافة خدمة استشارية", icon: const Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: "الخدمات الاستشارية", icon: const Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة استشاري", icon: const Icon(Icons.add,color: Colors.black87)),
-      SideBarModel(title: "النسخ الأحتياطي للبيانات", icon: const Icon(Icons.save_alt_outlined,color: Colors.black87)),
+      // SideBarModel(title: "النسخ الأحتياطي للبيانات", icon: const Icon(Icons.save_alt_outlined,color: Colors.black87)),
     ];
 
   static  List<Widget> bodies = [
@@ -70,7 +69,7 @@ class Constants {
       const AddConsulting(),
       const ConsultingView(),
       const RegisterView(),
-      const BackupDataPage(),
+      // const BackupDataPage(),
     ];
    static int page = 1;
    static int totalPages = 20;

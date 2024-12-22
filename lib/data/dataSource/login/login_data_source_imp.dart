@@ -21,7 +21,7 @@ class LoginDataSourceImp implements LoginDataSource {
             }
         ),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       print('Error: ${e.response?.data ?? e.message}');
       rethrow;
     }

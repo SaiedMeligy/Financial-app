@@ -17,6 +17,11 @@ class SuccessShowSession extends AddSessionStates{
   SuccessShowSession(this.result);
 
 }
+class SuccessDeleteSession extends AddSessionStates{
+  final Response result;
+  SuccessDeleteSession(this.result);
+
+}
 class SuccessShowSessionWithAdmin extends AddSessionStates{
   final Response result;
   SuccessShowSessionWithAdmin(this.result);

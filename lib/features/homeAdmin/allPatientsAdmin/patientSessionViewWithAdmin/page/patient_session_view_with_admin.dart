@@ -1,8 +1,10 @@
+import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 
+import '../../../../../core/config/constants.dart';
 import '../../SessionDestailViewAdmin/page/session_Details_view_admin.dart';
 
 
@@ -115,6 +117,26 @@ bool isMobile = false;
                                 ),
                               ),
                             ),
+                            TableCell(
+                              child: Container(
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                    "حذف الجلسة",
+                                    textAlign: TextAlign.center,
+                                    style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+
                           ],
                         ),
                         for (int index = 0; index <
@@ -132,6 +154,8 @@ bool isMobile = false;
                                             SessionDetailsViewAdmin(
                                               pationt_data: widget.pationt_data,
                                               sessionId: session[index]["id"],
+                                              patientNationalId: session[index]["pationt"]['national_id'],
+                                              patientId: session[index]["pationt"]['id'],
                                               isFinished: session[index]["is_finished"],
                                               sessionCaseManager: session[index]["case_manager"],
                                               sessionComment: session[index]["comments"],
@@ -176,6 +200,73 @@ bool isMobile = false;
                                   ),
                                 ),
                               ),
+                              TableCell(
+                                child: IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.white),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: AlertDialog(
+                                            title: Text("حذف الجلسة", style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                color: Colors.black
+                                            )),
+                                            content: Text("هل أنت متأكد أنك تريد حذف هذه الجلسة", style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                color: Colors.black
+                                            )),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  _patientSessionCubit.deleteSessionWithAdmin(session[index]['id']).then((_) {
+
+                                                    Navigator.of(context).pop();
+                                                    // _deletePatientLocally(widget.pationt_data); // Remove patient from local list
+
+                                                    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+                                                  });
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    border: Border.all(
+                                                      color: Constants.theme.primaryColor,
+                                                      width: 2.5,
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    'نعم',
+                                                    style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                  ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                }, child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Constants.theme.primaryColor,
+                                                    width: 2.5,
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  'لا',
+                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                              ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+
                             ],
                           ),
                         ],

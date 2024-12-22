@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio/src/response.dart';
 import 'package:experts_app/core/config/cash_helper.dart';
 import 'package:experts_app/core/config/constants.dart';
 
@@ -18,8 +17,6 @@ class AddAdviceDataSourceImp implements AddAdviceDataSource{
           "api-password":Constants.apiPassword,
           "token":CacheHelper.getData(key: "token")
         },
-
-
       ),
     );
 

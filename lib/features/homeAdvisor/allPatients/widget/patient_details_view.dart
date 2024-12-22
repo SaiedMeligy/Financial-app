@@ -313,7 +313,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                         pw.Container(
                                                           width: 350,
                                                           alignment: pw.Alignment.center,
-                                                          child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه إلى جلسة أخرى ":" الحالة ليست بحاجه إلى جلسة أخرى  ",
+                                                          child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجة إلى جلسة أخرى ":" الحالة ليست بحاجه إلى جلسة أخرى  ",
                                                             style: pw.TextStyle(font: ttfSans, fontSize: 15, color: PdfColors.black,),
                                                             textDirection: pw.TextDirection.rtl,
                                                           ),
@@ -1167,61 +1167,58 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                       ),
                                       Container(
                                         width: double.infinity,
-                                        // height: answer["question_options"].length > 1 ? Constants.mediaQuery.height * 0.18 : Constants.mediaQuery.height * 0.09,
+                                        height: answer["question_options"].length > 3 ? Constants.mediaQuery.height * 0.35  : Constants.mediaQuery.height * 0.18, //todo change
 
-                                        height: answer["question_options"].length * 50,
+                                        // height: answer["question_options"].length * 40,
                                         margin: EdgeInsets.symmetric(horizontal: isMobile?5:20, vertical: 20),
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           color: Colors.white,
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(20),
                                             topRight: Radius.circular(20),
                                           ),
                                         ),
-                                        child: ListView(
-                                          children: [
-                                            Column(
-                                              children: answer["question_options"].map<Widget>((option) {
-                                                return Row(
-                                                  children: [
-                                                    // if (isAnswered)
-                                                      Expanded(
-                                                        child: Text(
-                                                          option["title"].toString(),
-                                                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:MainAxisAlignment.center,
+                                          children: answer["question_options"].map<Widget>((option) {
+                                            return Row(
+                                              children: [
+                                                // if (isAnswered)
+                                                  Expanded(
+                                                    child: Text(
+                                                      option["title"].toString(),
+                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                        color: Colors.black,
                                                       ),
-                                                    if (option["type"] == 1 )
-                                                      Expanded(
-                                                        child: Radio<bool>(
-                                                          value: option["answer"]=="1"?true:false,
-                                                          groupValue: true,
-                                                          onChanged: (value) {},
-                                                        ),
+                                                    ),
+                                                  ),
+                                                if (option["type"] == 1 )
+                                                  Expanded(
+                                                    child: Radio<bool>(
+                                                      value: option["answer"]=="1"?true:false,
+                                                      groupValue: true,
+                                                      onChanged: (value) {},
+                                                    ),
+                                                  ),
+                                                if (option["type"] == 2 )
+                                                  Expanded(
+                                                    child: Checkbox(
+                                                      value: option["answer"]=="1"?true:false,
+                                                      onChanged: (value) {},
+                                                    ),
+                                                  ),
+                                                if (option["type"] == 3 && option["answer"] != null)
+                                                  Expanded(
+                                                    child: Text(
+                                                      option["answer"].toString(),
+                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                        color: Colors.black,
                                                       ),
-                                                    if (option["type"] == 2 )
-                                                      Expanded(
-                                                        child: Checkbox(
-                                                          value: option["answer"]=="1"?true:false,
-                                                          onChanged: (value) {},
-                                                        ),
-                                                      ),
-                                                    if (option["type"] == 3 && option["answer"] != null)
-                                                      Expanded(
-                                                        child: Text(
-                                                          option["answer"].toString(),
-                                                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ],
+                                                    ),
+                                                  ),
+                                              ],
+                                            );
+                                          }).toList(),
                                         ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                       ),
                                       Divider(

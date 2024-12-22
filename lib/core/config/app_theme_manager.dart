@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 
 class AppThemeManager{
   static const primaryColor = Color(0xffCCA86A);
-  //0xff2B455F
-  //#CA961C
-  //#CCA86A
-  //#F0BF4C
   static ThemeData lightTheme = ThemeData(
     primaryColor: primaryColor,
     appBarTheme: const AppBarTheme(

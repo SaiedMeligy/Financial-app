@@ -21,8 +21,6 @@ LoginRepositoryImp(this.loginDataSource);
       final response = await loginDataSource.login(email, password);
       if (response.statusCode == 200) {
         if(response.data["status"]==true){
-          print("data true");
-          print(response.data["user"]["token"]);
           CacheHelper.clearAllData();
           CacheHelper.saveData(key: "token", value: response.data["user"]["token"]);
           CacheHelper.saveData(key: "email", value: response.data["user"]["email"]);

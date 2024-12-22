@@ -6,15 +6,20 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdmin/addSession/page/add_session_view.dart';
 import 'package:experts_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../core/Services/web_services.dart';
 import '../../../../core/config/cash_helper.dart';
 import '../../../../core/config/constants.dart';
 import '../../../../data/dataSource/admin/Patients/getSessionDetails/get_session_details_data_source.dart';
 import '../../../../data/dataSource/admin/Patients/getSessionDetails/get_session_details_data_source_imp.dart';
+import '../../../../data/dataSource/admin/deleteSessionWithAdmin/delete_session_with_admin_data_source.dart';
+import '../../../../data/dataSource/admin/deleteSessionWithAdmin/delete_session_with_admin_data_source_imp.dart';
 import '../../../../data/dataSource/getPatientDetails/get_patient_details_data_source.dart';
 import '../../../../data/dataSource/getPatientDetails/get_patient_details_data_source_imp.dart';
 import '../../../../data/dataSource/sessions/addSession/add_session_data_source.dart';
 import '../../../../data/dataSource/sessions/addSession/add_session_data_source_imp.dart';
+import '../../../../data/dataSource/sessions/deleteSession/delete_session_data_source.dart';
+import '../../../../data/dataSource/sessions/deleteSession/delete_session_data_source_imp.dart';
 import '../../../../data/dataSource/sessions/showSession/show_session_data_source.dart';
 import '../../../../data/dataSource/sessions/showSession/show_session_data_source_imp.dart';
 import '../../../../data/dataSource/sessions/showSessionWithAdmin/show_session_with_admin_data_source_imp.dart';
@@ -23,24 +28,31 @@ import '../../../../data/dataSource/sessions/updateSession/update_session_data_s
 import '../../../../data/dataSource/sessions/updateSession/update_session_data_source_imp.dart';
 import '../../../../data/repository_imp/add_session_repository_imp.dart';
 import '../../../../data/repository_imp/admin_repository_imp/get_session_details_repository_imp.dart';
+import '../../../../data/repository_imp/delete_session_repository_imp.dart';
+import '../../../../data/repository_imp/delete_session_with_admin_repository_imp.dart';
 import '../../../../data/repository_imp/get_patient_details_repository_imp.dart';
 import '../../../../data/repository_imp/show_session_repository_imp.dart';
 import '../../../../data/repository_imp/show_session_with_Admin_repository_imp.dart';
 import '../../../../data/repository_imp/update_session_repository_imp.dart';
 import '../../../../domain/entities/QuestionModel.dart';
 import '../../../../domain/entities/SessionUpdateModel.dart';
+import '../../../../domain/repository/admin repository/deleteSessionWithAdmin/delete_session_with_admin_repository.dart';
 import '../../../../domain/repository/admin repository/patiens/getSessionDetailsRepository/get_session_details_repository.dart';
 import '../../../../domain/repository/getPatientDetailsRepository/get_patient_details_repository.dart';
 import '../../../../domain/repository/sessions/addSession/add_session_repository.dart';
+import '../../../../domain/repository/sessions/deleteSession/delete_session_repository.dart';
 import '../../../../domain/repository/sessions/showSession/show_session_repository.dart';
 import '../../../../domain/repository/sessions/showSessionWithAdmin/show_session_with_Admin_repository.dart';
 import '../../../../domain/repository/sessions/updateSession/update_session_repository.dart';
 import '../../../../domain/useCase/Sessions/addSession/add_session_use_case.dart';
+import '../../../../domain/useCase/Sessions/deleteSession/delete_session_use_case.dart';
 import '../../../../domain/useCase/Sessions/showSession/show_session_use_case.dart';
 import '../../../../domain/useCase/Sessions/showSessionWithAdmin/show_session_with_admin_use_case.dart';
 import '../../../../domain/useCase/Sessions/updateSession/update_session_use_case.dart';
+import '../../../../domain/useCase/adminUseCase/deleteSessionWithAdmin/delete_session_with_admin_use_case.dart';
 import '../../../../domain/useCase/adminUseCase/patiens/getSessionDetails/get_session_details_use_case.dart';
 import '../../../../domain/useCase/getPatientDetails/get_patient_details_use_case.dart';
+import '../../../homeAdvisor/sessions/manager/states.dart';
 
 class AddSessionCubit extends Cubit<AddSessionStates> {
   AddSessionCubit() : super(LoadingAddSessionState());
@@ -178,6 +190,52 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
   late ShowSessionWithAdminRepository showSessionWithAdminRepository;
   late ShowSessionWithAdminDataSource showSessionWithAdminDataSource;
 
+  late DeleteSessionUseCase deleteSessionUseCase;
+  late DeleteSessionRepository deleteSessionRepository;
+  late DeleteSessionDataSource deleteSessionDataSource;
+
+  Future<void> deleteSession(int id ) async {
+    WebServices service = WebServices();
+    deleteSessionDataSource =
+        DeleteSessionDataSourceImp(service.freeDio);
+    deleteSessionRepository =
+        DeleteSessionRepositoryImp(deleteSessionDataSource);
+    deleteSessionUseCase =
+        DeleteSessionUseCase(deleteSessionRepository);
+    emit(LoadingAddSessionState());
+
+    try {
+      final response = await deleteSessionUseCase.execute(id);
+
+      emit(SuccessDeleteSession(response.data));
+    } catch (error) {
+      emit(ErrorAddSessionState(error.toString()));
+    }
+  }
+
+  late DeleteSessionWithAdminUseCase deleteSessionWithAdminUseCase;
+  late DeleteSessionWithAdminRepository deleteSessionWithAdminRepository;
+  late DeleteSessionWithAdminDataSource deleteSessionWithAdminDataSource;
+
+  Future<void> deleteSessionWithAdmin(int id ) async {
+    WebServices service = WebServices();
+    deleteSessionWithAdminDataSource =
+        DeleteSessionWithAdminDataSourceImp(service.freeDio);
+    deleteSessionWithAdminRepository =
+        DeleteSessionWithAdminRepositoryImp(deleteSessionWithAdminDataSource);
+    deleteSessionWithAdminUseCase =
+        DeleteSessionWithAdminUseCase(deleteSessionWithAdminRepository);
+    emit(LoadingAddSessionState());
+
+    try {
+      final response = await deleteSessionWithAdminUseCase.execute(id);
+
+      emit(SuccessDeleteSession(response.data));
+    } catch (error) {
+      emit(ErrorAddSessionState(error.toString()));
+    }
+  }
+
   Future<void> showSessionWithAdmin(int id) async {
     WebServices service = WebServices();
     showSessionWithAdminDataSource =
@@ -196,7 +254,12 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
       emit(ErrorAddSessionState(e.toString()));
     }
   }
-
+  void onRefreshSession(
+      RefreshController controller,BuildContext context)async {
+    emit(LoadingAddSessionState());
+    await Future.delayed(Duration(microseconds:1000 ));
+    controller.refreshCompleted();
+  }
 
 
 
