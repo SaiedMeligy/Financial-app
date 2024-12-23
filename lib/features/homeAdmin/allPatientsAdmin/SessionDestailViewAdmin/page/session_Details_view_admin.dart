@@ -89,6 +89,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
 
   // late var session;
   var addSessionCubit = AddSessionCubit();
+  bool finished=false;
 
 
   @override
@@ -155,7 +156,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                       child: BlocBuilder<UpdateSessionCubit, UpdateSessionStates>(
                                           bloc: updateSessionCubit,
                                           builder: (context, state) {
-                                           return widget.isFinished == 0?
+                                           return (widget.isFinished == 0&&finished==false)?
                                                Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                                                 child: Column(
@@ -370,6 +371,9 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                                         TextButton(
                                                                           onPressed: () {
                                                                             Navigator.of(context).pop();
+                                                                            addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                                            finished = true;
+
                                                                             setState(() {});
                                                                           },
                                                                           child: Container(
@@ -436,7 +440,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                     var caseManager = session["case_manager"] ?? "";
                                                     var phoneNumber = session["phone_number"] ?? "";
                                                     var otherPhoneNumber = session["other_phone_number"] ?? "";
-                                                    var pointers = session["pointers"] ?? [];
+                                                    var pointers = session["Pointers"] ?? [];
                                                     var advices = session["Advices"] ?? [];
 
                                                     List<dynamic> pointers1Temp = [];
@@ -444,11 +448,11 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                     List<dynamic> pointers3Temp = [];
 
                                                     for (var pointer in pointers) {
-                                                      if (pointer["id"] == 1) {
+                                                      if (pointer["senario_id"] == 1) {
                                                         pointers1Temp.add(pointer);
-                                                      } else if (pointer["id"] == 2) {
+                                                      } else if (pointer["senario_id"] == 2) {
                                                         pointers2Temp.add(pointer);
-                                                      } else if (pointer["id"] == 3) {
+                                                      } else if (pointer["senario_id"] == 3) {
                                                         pointers3Temp.add(pointer);
                                                       }
                                                     }
@@ -905,7 +909,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                                   print('Error adding pointerId $pointerId: $e');
                                                                 }
                                                               }
-                                                              addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                              _patientSessionCubit.setRefreshSessionAdmin(widget.sessionId);
                                                             }
                                                             Navigator.of(context).pop();
                                                           },
@@ -944,11 +948,10 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                   : ListView.builder(
                                                 itemCount: pointers1Temp.length,
                                                 itemBuilder: (context, index) {
-                                                  var pationtPointers = pointers1Temp[index]["pationt_pointers"] ?? [];
+                                                  final pointer = pointers1Temp[index];
                                                   return Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      for (var pointer in pationtPointers)
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
@@ -965,7 +968,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             IconButton(
                                                               onPressed: () {
                                                                 deletePointers(sessionId, pointer["id"]);
-                                                                addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+
+                                                                _patientSessionCubit.setRefreshSessionAdmin(widget.sessionId);
                                                               },
                                                               icon: Icon(Icons.delete),
                                                             ),
@@ -983,17 +987,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                   : ListView.builder(
                                                 itemCount: pointers2Temp.length,
                                                 itemBuilder: (context, index) {
-                                                  var pationtPointers = pointers2Temp[index]["pationt_pointers"] ?? [];
+                                                  final pointer2 = pointers2Temp[index];
                                                   return Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      for (var pointer in pationtPointers)
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                pointer["text"] ?? '',
+                                                                pointer2["text"] ?? '',
                                                                 style: TextStyle(
                                                                   fontSize: isMobile ? 14 : 20,
                                                                   fontWeight: FontWeight.bold,
@@ -1003,8 +1006,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             ),
                                                             IconButton(
                                                               onPressed: () {
-                                                                deletePointers(sessionId, pointer["id"]);
-                                                                addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                                deletePointers(sessionId, pointer2["id"]);
+                                                                _patientSessionCubit.setRefreshSessionAdmin(widget.sessionId);
                                                               },
                                                               icon: Icon(Icons.delete),
                                                             ),
@@ -1022,17 +1025,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                   : ListView.builder(
                                                 itemCount: pointers3Temp.length,
                                                 itemBuilder: (context, index) {
-                                                  var pationtPointers = pointers3Temp[index]["pationt_pointers"] ?? [];
+                                                  final pointer3 = pointers3Temp[index];
                                                   return Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      for (var pointer in pationtPointers)
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                pointer["text"] ?? '',
+                                                                pointer3["text"] ?? '',
                                                                 style: TextStyle(
                                                                   fontSize: isMobile ? 14 : 20,
                                                                   fontWeight: FontWeight.bold,
@@ -1042,8 +1044,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             ),
                                                             IconButton(
                                                               onPressed: () {
-                                                                deletePointers(sessionId, pointer["id"]);
-                                                                addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                                deletePointers(sessionId, pointer3["id"]);
+                                                                _patientSessionCubit.setRefreshSessionAdmin(widget.sessionId);
                                                               },
                                                               icon: Icon(Icons.delete),
                                                             ),
@@ -1131,7 +1133,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             if (selectedAdviceIds.isNotEmpty) {
                                                               for (var adviceId in selectedAdviceIds) {
                                                                 await addAdvices(adviceId, sessionId).then((value){
-                                                                  addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                                  _patientSessionCubit.setRefreshSessionAdmin(widget.sessionId);
                                                                 });
                                                               }
 
@@ -1194,7 +1196,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                         ),
                                                         IconButton(onPressed: ()async{
                                                           await deleteAdvices(sessionId, advices[index]["id"]);
-                                                          addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                          _patientSessionCubit.setRefreshSessionAdmin(widget.sessionId);
+
                                                         }, icon: Icon(Icons.delete))
                                                       ],
                                                     ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
@@ -1362,12 +1365,12 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                             const SizedBox(height: 10,),
                                                             CustomTextField(
                                                               controller: otherPhoneController,
-                                                              onValidate: (value) {
-                                                                if (value == null || value.trim().isEmpty) {
-                                                                  return "Please enter otherPhoneNumber";
-                                                                }
-                                                                return null;
-                                                              },
+                                                              // onValidate: (value) {
+                                                              //   if (value == null || value.trim().isEmpty) {
+                                                              //     return "Please enter otherPhoneNumber";
+                                                              //   }
+                                                              //   return null;
+                                                              // },
                                                             ),
                                                             SizedBox(height: 10,),
                                                             CustomTextField(
@@ -1643,8 +1646,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
       );
       if (response.statusCode == 200) {
         print('Success: ${response.data["message"]}');
-        SnackBarService.showSuccessMessage(response.data["message"]);
 
+          SnackBarService.showSuccessMessage(response.data["message"]);
       } else {
         print('Failed to add pointer. Status code: ${response.statusCode}');
         SnackBarService.showErrorMessage(response.data["message"]);
@@ -1664,7 +1667,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
             "token": CacheHelper.getData(key: "token")
           }),
           data: {
-            "patient_id": sessionId,
+            "session_id": sessionId,
             "pointer_id": pointerId,
           }
       );

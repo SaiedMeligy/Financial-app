@@ -73,6 +73,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
   late var caseManager;
   late var session;
   bool isMobile = false;
+  bool finish = false;
 
   @override
   void initState() {
@@ -115,7 +116,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
               BlocBuilder<UpdateSessionCubit, UpdateSessionStates>(
                   bloc: updateSessionCubit,
                   builder: (context, state) {
-                    return widget.isFinished == 0 ?
+                    return (widget.isFinished == 0 && finish ==false) ?
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Column(
@@ -300,6 +301,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
+
                                                     Navigator.of(context).pop();
                                                     // Navigator.pushAndRemoveUntil(context,
                                                     //     MaterialPageRoute(
@@ -309,6 +311,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                     //   (route) => false,
                                                     // );
                                                     _patientSessionCubit.setRefreshSession(widget.sessionId);
+                                                    finish=true;
                                                     setState(() {});
                                                   },
                                                   child: Container(
@@ -399,7 +402,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                           int needSession = needOtherSession ? 1 : 0;
                           int successStory = isSuccessStory ? 1 : 0;
                           int attendSession = isAttended ? 1 : 0;
-                          var pointers = session["pointers"] ?? [];
+                          var pointers = session["Pointers"] ?? [];
                           var advices = session["Advices"] ?? [];
                           print("session advice"+session['Advices'].toString());
 
@@ -408,11 +411,11 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                           List<dynamic> pointers3Temp = [];
 
                           for (var pointer in pointers) {
-                            if (pointer["id"] == 1) {
+                            if (pointer["senario_id"] == 1) {
                               pointers1Temp.add(pointer);
-                            } else if (pointer["id"] == 2) {
+                            } else if (pointer["senario_id"] == 2) {
                               pointers2Temp.add(pointer);
-                            } else if (pointer["id"] == 3) {
+                            } else if (pointer["senario_id"] == 3) {
                               pointers3Temp.add(pointer);
                             }
                           }
@@ -789,7 +792,8 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                                     print('Error adding pointerId $pointerId: $e');
                                                                   }
                                                                 }
-                                                                _patientSessionCubit.setRefreshSession(widget.sessionId);                                                              }
+                                                                _patientSessionCubit.setRefreshSession(widget.sessionId);
+                                                              }
                                                               Navigator.of(context).pop();
                                                             },
                                                             child: Container(
@@ -827,11 +831,10 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                     : ListView.builder(
                                                   itemCount: pointers1Temp.length,
                                                   itemBuilder: (context, index) {
-                                                    var pationtPointers = pointers1Temp[index]["pationt_pointers"] ?? [];
+                                                    var pointer = pointers1Temp[index];
                                                     return Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        for (var pointer in pationtPointers)
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
@@ -847,8 +850,13 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                               ),
                                                               IconButton(
                                                                 onPressed: () {
+
                                                                   deletePointers(sessionId, pointer["id"]);
-                                                                  _patientSessionCubit.setRefreshSession(widget.sessionId);                                                                },
+                                                                  _patientSessionCubit.setRefreshSession(widget.sessionId);
+                                                                  // Navigator.of(context).pop();
+                                                                  },
+
+
                                                                 icon: Icon(Icons.delete),
                                                               ),
                                                             ],
@@ -865,17 +873,16 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                     : ListView.builder(
                                                   itemCount: pointers2Temp.length,
                                                   itemBuilder: (context, index) {
-                                                    var pationtPointers = pointers2Temp[index]["pationt_pointers"] ?? [];
+                                                    final pointer2 = pointers2Temp[index] ;
                                                     return Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        for (var pointer in pationtPointers)
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  pointer["text"] ?? '',
+                                                                  pointer2["text"] ?? '',
                                                                   style: TextStyle(
                                                                     fontSize: isMobile ? 14 : 20,
                                                                     fontWeight: FontWeight.bold,
@@ -885,7 +892,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                               ),
                                                               IconButton(
                                                                 onPressed: () {
-                                                                  deletePointers(sessionId, pointer["id"]);
+                                                                  deletePointers(sessionId, pointer2["id"]);
                                                                   _patientSessionCubit.setRefreshSession(widget.sessionId);                                                                },
                                                                 icon: Icon(Icons.delete),
                                                               ),
@@ -903,17 +910,16 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                     : ListView.builder(
                                                   itemCount: pointers3Temp.length,
                                                   itemBuilder: (context, index) {
-                                                    var pationtPointers = pointers3Temp[index]["pationt_pointers"] ?? [];
+                                                    final pointer3 = pointers3Temp[index];
                                                     return Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        for (var pointer in pationtPointers)
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  pointer["text"] ?? '',
+                                                                  pointer3["text"] ?? '',
                                                                   style: TextStyle(
                                                                     fontSize: isMobile ? 14 : 20,
                                                                     fontWeight: FontWeight.bold,
@@ -923,7 +929,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                               ),
                                                               IconButton(
                                                                 onPressed: () {
-                                                                  deletePointers(sessionId, pointer["id"]);
+                                                                  deletePointers(sessionId, pointer3["id"]);
                                                                   _patientSessionCubit.setRefreshSession(widget.sessionId);                                                                },
                                                                 icon: Icon(Icons.delete),
                                                               ),
@@ -1072,8 +1078,11 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                           ),
                                                           IconButton(onPressed: ()async{
                                                             await deleteAdvices(sessionId, advices[index]["id"]);
-                                                            _patientSessionCubit.setRefreshSession(widget.pationt_data.nationalId);
-                                                          }, icon: Icon(Icons.delete))
+                                                            _patientSessionCubit.setRefreshSession(widget.sessionId);
+
+
+
+                                                            }, icon: Icon(Icons.delete))
                                                         ],
                                                       ).setHorizontalPadding(context,enableMediaQuery: false,10 ),
                                                     ],
@@ -1518,7 +1527,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
             "token": CacheHelper.getData(key: "token")
           }),
           data: {
-            "patient_id": sessionId,
+            "session_id": sessionId,
             "pointer_id": pointerId,
           }
       );

@@ -343,13 +343,13 @@ class _AddSessionViewState extends State<AddSessionView> {
                               String time = intl.DateFormat('HH:mm:ss').format(newTime);
                               String date = intl.DateFormat('yy:MM:dd').format(newDate);
                               var data = Sessions(
-                                date: _selectedDate?.toString() ?? '',
+                                date: date,
                                 advicorId: int.parse(selected_advisor.toString()),
                                 pationtId: patient_id ?? 0,
                                 caseManager: _nameManagerController.text,
                                 phoneNumber: _phoneNumber.text,
                                 otherPhoneNumber: _secondPhoneNumber.text,
-                                time: "${_selectedTime?.hour}:${_selectedTime?.minute}:00",
+                                time: time,
                                 comments: advisorComment.text,
                               );
 
