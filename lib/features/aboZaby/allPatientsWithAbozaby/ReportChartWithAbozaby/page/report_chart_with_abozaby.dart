@@ -92,9 +92,13 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                 pointers3Temp.add(pointer);
               }
             }
-            var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString();
-            var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
-            var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
+            // var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString();
+            // var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
+            // var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
+            var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
+            var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
+            var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
+
             List<int> selectedAdviceIds = [];
             List<int> selectedPointersIds = [];
 
@@ -569,7 +573,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                           isMobile?"السيناريوالأول \n(الحالات المتوازنة نسبيا) : "+double.parse(senario1).toStringAsFixed(2) + "%":"السيناريوالأول(الحالات المتوازنة نسبيا) : " + double.parse(senario1).toStringAsFixed(2) + "%",

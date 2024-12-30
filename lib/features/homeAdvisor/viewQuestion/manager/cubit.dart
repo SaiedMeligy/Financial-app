@@ -6,6 +6,7 @@ import 'package:experts_app/domain/useCase/quesionView/question_view_use_case.da
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../core/Services/web_services.dart';
 import '../../../../data/dataSource/Form/storeForm/store_form_data_source.dart';
 import '../../../../data/dataSource/Form/storeForm/store_form_data_source_imp.dart';
@@ -145,5 +146,11 @@ class QuestionViewCubit extends Cubit<QuestionViewStates> {
       emit(QuestionViewDateSelected(selectedDate));
     }
     return picked;
+  }
+  Future<void> onRefreshSession(
+      RefreshController controller,BuildContext context)async {
+    emit(LoadingQuestionViewState());
+    await Future.delayed(Duration(microseconds:1000 ));
+    controller.refreshCompleted();
   }
 }

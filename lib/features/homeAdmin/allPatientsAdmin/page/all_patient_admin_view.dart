@@ -89,8 +89,9 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
                   const SizedBox(height: 10),
                   PatientWidgetViewWithAdmin<Pationts>(
                     label1: "اسم الحالة",
-                    label2: "التعديل",
-                    label3: "الحذف",
+                    label2: "عدد الجلسات",
+                    label3: "التعديل",
+                    label4: 'الحذف',
                     items: filteredPatients,
                     itemNameBuilder: (item) => item.name ?? 'No Name',
                     itemEditWidgetBuilder: (item) => DialogEditPatientWithAdmin(
@@ -105,6 +106,7 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
                     },
                     scrollController: _scrollController,
                     isLastPage: allPatientCubit.isLastPage,
+                    itemSessionCountBuilder: (item) => item.sessionCount.toString(),
                   ),
                 ],
               ),

@@ -162,15 +162,17 @@ class PatientWidgetViewWithAdmin<T> extends StatefulWidget {
   final String label1;
   final String label2;
   final String label3;
+  final String label4;
   final List<T> items;
   final ItemTextBuilder<T> itemNameBuilder;
+  final ItemTextBuilder<T> itemSessionCountBuilder;
   final ItemWidgetBuilder<T> itemEditWidgetBuilder;
   final ItemWidgetBuilder<T>? itemDeleteWidgetBuilder;
   final ScrollController? scrollController;
   final bool isLastPage;
 
   const PatientWidgetViewWithAdmin({
-    Key? key,
+    super.key,
     required this.label1,
     required this.label2,
     required this.label3,
@@ -179,8 +181,8 @@ class PatientWidgetViewWithAdmin<T> extends StatefulWidget {
     required this.itemEditWidgetBuilder,
     this.itemDeleteWidgetBuilder,
     this.scrollController,
-    this.isLastPage=false,
-  }) : super(key: key);
+    this.isLastPage=false, required this.label4, required this.itemSessionCountBuilder,
+  });
 
   @override
   State<PatientWidgetViewWithAdmin<T>> createState() => _PatientWidgetViewWithAdminState<T>();
@@ -210,6 +212,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
                         _buildHeaderCell(widget.label1, isMobile),
                         _buildHeaderCell(widget.label2, isMobile),
                         _buildHeaderCell(widget.label3, isMobile),
+                        _buildHeaderCell(widget.label4, isMobile),
                       ],
                     ),
                   ],
@@ -236,8 +239,8 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
                               color: Colors.black38,
                             ),
                             children: [
-                              _buildDataCell(context, item, widget.itemNameBuilder, isMobile,
-                              ),
+                              _buildDataCell(context, item, widget.itemNameBuilder, isMobile,),
+                              _buildSessionCell(context, item, widget.itemSessionCountBuilder, isMobile,),
                               _buildEditCell(item),
                               _buildDeleteCell(item),
                             ],
@@ -276,8 +279,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
     );
   }
 
-  TableCell _buildDataCell(BuildContext context, T item,
-      ItemTextBuilder<T> nameBuilder, bool isMobile) {
+  TableCell _buildDataCell(BuildContext context, T item, ItemTextBuilder<T> nameBuilder, bool isMobile) {
     return TableCell(
       child: GestureDetector(
         onTap: () {
@@ -288,6 +290,20 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
             ),
           );
         },
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(
+            nameBuilder(item),
+            style: isMobile ? Constants.theme.textTheme.bodyMedium : Constants
+                .theme.textTheme.bodyLarge,
+          ),
+        ),
+      ),
+    );
+  }
+  TableCell _buildSessionCell(BuildContext context, T item, ItemTextBuilder<T> nameBuilder, bool isMobile) {
+    return TableCell(
+      child: GestureDetector(
         child: Container(
           alignment: Alignment.center,
           child: Text(

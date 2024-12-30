@@ -139,8 +139,7 @@ bool isMobile = false;
 
                           ],
                         ),
-                        for (int index = 0; index <
-                            session.length; index++) ...[
+                        for (int index = 0; index < session.length; index++) ...[
                           TableRow(
                             decoration: BoxDecoration(color: Colors.black38),
                             children: [

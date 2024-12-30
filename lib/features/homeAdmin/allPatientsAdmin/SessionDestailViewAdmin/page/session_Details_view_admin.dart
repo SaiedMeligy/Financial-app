@@ -100,10 +100,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
     addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
     fetchPointers();
     fetchAdvices();
-
-
     updateSessionCubit = UpdateSessionCubit();
-    print("patientData--->"+widget.patientId.toString());
 
 
   }
@@ -501,13 +498,11 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                     TextEditingController otherPhoneController = TextEditingController(text:otherPhoneNumber );
                     TextEditingController caseManagerController = TextEditingController(text:caseManager );
 
-
-                    return
-                          Directionality(
+                    return Directionality(
                             textDirection: TextDirection.rtl,
                             child:
                             Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage("assets/images/back.jpg"),
                                   fit: BoxFit.cover,

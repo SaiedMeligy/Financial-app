@@ -93,9 +93,9 @@ class _ReportChartViewState extends State<ReportChartView> {
                   pointers3Temp.add(pointer);
                 }
               }
-              var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString();
-              var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
-              var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
+              var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
+              var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
+              var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
               List<int> selectedAdviceIds = [];
               if (pointers.isEmpty && advices.isEmpty) {
                 return Center(

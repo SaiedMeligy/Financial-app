@@ -8,10 +8,12 @@ typedef ItemWidgetBuilder<T> = Widget Function(T item);
 
 class PatientWidgetViewWithAbozabySecond<T> extends StatefulWidget {
   final String label1;
+  final String label2;
   final ScrollController? scrollController;
   final bool isLastPage;
   final List<T> items;
   final ItemTextBuilder<T> itemNameBuilder;
+  final ItemTextBuilder<T> itemSessionCountBuilder;
 
 
 
@@ -21,7 +23,7 @@ class PatientWidgetViewWithAbozabySecond<T> extends StatefulWidget {
     required this.scrollController,
     required this.isLastPage,
     required this.items,
-    required this.itemNameBuilder,
+    required this.itemNameBuilder, required this.label2, required this.itemSessionCountBuilder,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
               Table(
                 columnWidths: const {
                   0: FlexColumnWidth(4),
+                  1: FlexColumnWidth(4),
 
                 },
                 children: [
@@ -48,6 +51,7 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
                     decoration:  BoxDecoration(color: Colors.black),
                     children: [
                       _buildTableHeaderCell(widget.label1, context),
+                      _buildTableHeaderCell(widget.label2, context),
                     ],
                   ),
                 ],
@@ -66,6 +70,7 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
                         decoration:  BoxDecoration(color: Colors.black45),
                         children: [
                           _buildNameCell(item[index], context),
+                          _buildSessionCountCell(item[index], context),
                         ],
                       ),
                     ],
@@ -116,6 +121,20 @@ class _PatientWidgetViewWithAbozabySecondState<T> extends State<PatientWidgetVie
               color: Colors.white
             )
           ),
+        ),
+      ),
+    );
+  }
+  TableCell _buildSessionCountCell(T item, BuildContext context) {
+    return TableCell(
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          widget.itemSessionCountBuilder(item),
+          style: isMobile?Constants.theme.textTheme.bodyMedium:Constants.theme.textTheme.bodyLarge?.copyWith(
+            color: Colors.white
+          )
         ),
       ),
     );

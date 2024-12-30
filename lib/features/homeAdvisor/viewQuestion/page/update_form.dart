@@ -86,6 +86,8 @@ class _UpdateFormState extends State<UpdateForm> {
           var formData = state.result.data["pationt"]["form"];
           var answers = formData["answers"].toList();
           var consultation = formData["consultationService"];
+          var needOtherSession = formData["need_other_session"]==1;
+          int needSession = needOtherSession ? 1 : 0;
           ConsultationServices consultations =
           ConsultationServices.fromJson(formData["consultationService"]);
           if (selected_consultation == null) {
@@ -313,6 +315,45 @@ class _UpdateFormState extends State<UpdateForm> {
                                     crossAxisAlignment: CrossAxisAlignment
                                         .stretch,
                                     children: [
+                                      StatefulBuilder(
+                                        builder: (context, setState) =>  Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Radio<int>(
+                                                  value: 1, // Needing another session
+                                                  groupValue: needSession,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      needSession = value!;
+                                                      needOtherSession = needSession == 1;
+                                                    });
+                                                  },
+                                                ),
+                                                Text("الحالة بحاجه إلى جلسة اخرى",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Radio<int>(
+                                                  value: 0, // Not needing another session
+                                                  groupValue: needSession,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      needSession = value!;
+                                                      needOtherSession = needSession == 1;
+                                                    });
+                                                  },
+                                                ),
+                                                Text("الحالة ليست بحاجه إلى جلسة اخرى",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Divider(color: Colors.black54,indent: 10,endIndent:25 ,thickness: 2,),
+
+
                                       DropDownButtonConsultaionWidget(
                                         onChange: (value) {
                                           setState(() {
@@ -435,8 +476,7 @@ class _UpdateFormState extends State<UpdateForm> {
                                             "advicor_id":
                                             CacheHelper.getData(key: 'id'),
                                             "pationt_id": formData["pationt_id"],
-                                            "need_other_session":
-                                            formData["need_other_session"],
+                                            "need_other_session":needSession,
                                             "consultation_service_id":
                                             selected_consultation?.id ??
                                                 consultation.id,

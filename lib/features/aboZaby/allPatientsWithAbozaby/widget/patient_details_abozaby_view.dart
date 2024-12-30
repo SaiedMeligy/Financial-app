@@ -560,7 +560,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                     icon: const Icon(Icons.list, color: Colors.black),
                                     onPressed: () {
                                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                        return PatientSessionViewWithAdmin(
+                                        return PatientSessionViewWithAbouzabi(
                                           pationt_data: widget.pationt_data,
                                         );
                                       }));

@@ -87,10 +87,11 @@ class _AllPatientAbozabyViewState extends State<AllPatientAbozabyView> {
                   const SizedBox(height: 10),
                   PatientWidgetViewWithAbozabySecond<Pationts>(
                     label1: "اسم الحالة",
+                    label2: 'عدد الجلسات',
                     items: filteredPatients,
                     itemNameBuilder: (item) => item.name ?? 'No Name',
                     scrollController: _scrollController,
-                    isLastPage: allPatientCubit.isLastPage,
+                    isLastPage: allPatientCubit.isLastPage, itemSessionCountBuilder:(item) => item.sessionCount.toString(),
 
 
                   ),

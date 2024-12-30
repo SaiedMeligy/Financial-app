@@ -89,11 +89,14 @@ class _AllPatientViewState extends State<AllPatientView> {
                   Expanded(
                     child: PatientWidgetView<Pationts>(
                       label1: "اسم الحالة",
-                      label2: "التعديل",
-                      label3: "الحذف",
+                      label2: "عدد الجلسات",
+                      label3: "التعديل",
+                      label4: 'الحذف',
                       items: filteredPatients,
                       scrollController: _scrollController,
                       itemNameBuilder: (item) => item.name ?? 'No Name',
+                      itemSessionCountBuilder: (item) => item.sessionCount.toString(),
+
                       itemEditWidgetBuilder: (item) => DialogEditPatient(
                         allPatientCubit: allPatientCubit,
                         patient: item,

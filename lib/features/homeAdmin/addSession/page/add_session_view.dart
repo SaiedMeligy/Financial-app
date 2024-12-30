@@ -34,7 +34,57 @@ class _AddSessionViewState extends State<AddSessionView> {
   int? sessionNum;
   final formKey = GlobalKey<FormState>();
   bool isMobile = false;
-
+//todo change
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime.now(), // Prevents selecting a date before today
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (pickedDate != null && pickedDate != _selectedDate) {
+  //     setState(() {
+  //       _selectedDate = pickedDate;
+  //       _updateDateTimeText();
+  //     });
+  //   }
+  // }
+  //
+  //
+  // Future<void> _selectTime(BuildContext context) async {
+  //   final TimeOfDay? pickedTime = await showTimePicker(
+  //     context: context,
+  //     initialTime: TimeOfDay.now(),
+  //   );
+  //
+  //   if (pickedTime != null) {
+  //     final now = TimeOfDay.now();
+  //     final selectedDateTime = DateTime(
+  //       DateTime.now().year,
+  //       DateTime.now().month,
+  //       DateTime.now().day,
+  //       pickedTime.hour,
+  //       pickedTime.minute,
+  //     );
+  //     final nowDateTime = DateTime.now();
+  //     final nowPlusOneHour = nowDateTime.add(const Duration(hours: 1));
+  //
+  //     // Validate time selection
+  //     if (selectedDateTime.isAfter(nowDateTime) &&
+  //         selectedDateTime.isBefore(nowPlusOneHour)) {
+  //       setState(() {
+  //         _selectedTime = pickedTime;
+  //         _updateDateTimeText();
+  //       });
+  //     } else {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('.يرجى اختيار وقت ضمن الساعة القادمة'),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,

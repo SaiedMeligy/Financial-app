@@ -5,6 +5,7 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/viewQuestion/manager/cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/widget/Question_text_field.dart';
 import '../../../../../domain/entities/ConsultationViewModel.dart';
@@ -29,18 +30,22 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
   _UpdateFormAdminViewState(this.pationt_data);
 
   late AddSessionCubit _patientFormViewCubit;
+  late QuestionViewCubit _questionCubit;
   Map<dynamic, TextEditingController> textControllers = {};
   Map<dynamic, String> selectedAnswers = {};
   Map<dynamic, bool> checkboxValues = {};
   ConsultationServices? selected_consultation;
   late List<dynamic> answers = [];
   bool isMobile = false;
+  RefreshController controller = RefreshController();
+
 
 
   @override
   void initState() {
     super.initState();
     _patientFormViewCubit = AddSessionCubit();
+    _questionCubit = QuestionViewCubit();
     _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId);//**getSession
   }
 
@@ -87,6 +92,8 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
           var consultation = formData["consultationService"];
           ConsultationServices consultations =
           ConsultationServices.fromJson(formData["consultationService"]);
+          var needOtherSession = formData["need_other_session"]==1;
+          int needSession = needOtherSession ? 1 : 0;
           if (selected_consultation == null) {
             selected_consultation = consultations;
           }
@@ -317,6 +324,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                         color: Colors.grey.shade600,
                                       ),
                                       SizedBox(height: 10),
+
                                     ],
                                   );
                                 } else {
@@ -324,14 +332,47 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                     crossAxisAlignment: CrossAxisAlignment
                                         .stretch,
                                     children: [
+                                      StatefulBuilder(
+                                        builder: (context, setState) =>  Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Radio<int>(
+                                                  value: 1, // Needing another session
+                                                  groupValue: needSession,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      needSession = value!;
+                                                      needOtherSession = needSession == 1;
+                                                    });
+                                                  },
+                                                ),
+                                                Text("الحالة بحاجه إلى جلسة اخرى",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Radio<int>(
+                                                  value: 0, // Not needing another session
+                                                  groupValue: needSession,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      needSession = value!;
+                                                      needOtherSession = needSession == 1;
+                                                    });
+                                                  },
+                                                ),
+                                                Text("الحالة ليست بحاجه إلى جلسة اخرى",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Divider(color: Colors.black54,indent: 10,endIndent:25 ,thickness: 2,),
                                       DropDownButtonConsultaionWidget(
                                         onChange: (value) {
                                           setState(() {
                                             selected_consultation = value;
-                                            print("=============>" +
-                                                selected_consultation!
-                                                    .description
-                                                    .toString());
                                           });
                                         },
                                         selectedValue:
@@ -447,8 +488,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                             "advicor_id":
                                             CacheHelper.getData(key: 'id'),
                                             "pationt_id": formData["pationt_id"],
-                                            "need_other_session":
-                                            formData["need_other_session"],
+                                            "need_other_session":needSession,
                                             "consultation_service_id":
                                             selected_consultation?.id ??
                                                 consultation.id,
@@ -458,12 +498,13 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                           };
                                           setState(() {});
 
-                                          QuestionViewCubit()
-                                              .getUpdateFormWithAdmin(
-                                              updateDate)
-                                              .then((value) {
+                                          QuestionViewCubit().getUpdateFormWithAdmin(updateDate).then((value) {
                                             if (value != null) {
+
+                                              QuestionViewCubit().onRefreshSession(controller,context);
+                                              _patientFormViewCubit.setRefresh(widget.pationt_data.nationalId);//**getSession
                                               Navigator.pop(context);
+
                                               SnackBarService
                                                   .showSuccessMessage(
                                                   "تم التعديل بنجاح");
