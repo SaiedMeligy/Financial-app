@@ -35,7 +35,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
       super.initState();
 
       _patientFormViewCubit = AddSessionCubit();
-      _patientFormViewCubit.getSessionDetails(widget.pationt_data.nationalId);
+      _patientFormViewCubit.getSessionDetails(widget.pationt_data.nationalId,0);
     }
 
     @override

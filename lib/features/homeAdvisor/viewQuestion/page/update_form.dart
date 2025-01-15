@@ -42,7 +42,7 @@ class _UpdateFormState extends State<UpdateForm> {
   void initState() {
     super.initState();
     _patientFormViewCubit = AddSessionCubit();
-    _patientFormViewCubit.getSessionDetails(widget.pationt_data.nationalId);//**getSession
+    _patientFormViewCubit.getSessionDetails(widget.pationt_data.nationalId,1);//**getSession
   }
 
   @override

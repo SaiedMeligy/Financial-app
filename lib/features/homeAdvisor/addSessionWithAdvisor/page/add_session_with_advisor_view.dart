@@ -184,7 +184,7 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
                               child: BorderRoundedButton(
                                 title: "Get",
                                 onPressed: () {
-                                  addSessionCubit.getSessionDetails(_patientNationalIdController.text);
+                                  addSessionCubit.getSessionDetails(_patientNationalIdController.text,0);
                                 },
                               ),
                             ),

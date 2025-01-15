@@ -10,11 +10,12 @@ class GetPatientDetailsDataSourceImp implements GetPatientDetailsDataSource{
   GetPatientDetailsDataSourceImp(this.dio);
 
   @override
-  Future<Response> getPatientDetails(String nationalId) async{
+  Future<Response> getPatientDetails(String nationalId,int? with_all_questions) async{
     return await dio.get(
       "/api/pationt/show",
       queryParameters: {
-        "national_id": nationalId
+        "national_id": nationalId,
+        "with_all_questions":with_all_questions,
       },
       options: Options(
         headers: {

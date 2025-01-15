@@ -15,7 +15,8 @@ class PatientNationalIdDataSourceImp implements PatientNationalIdDataSource{
     return await dio.get(
       "/api/advicor/pationt/show",
       queryParameters: {
-        "national_id": nationalId
+        "national_id": nationalId,
+
       },
       options: Options(
         headers: {

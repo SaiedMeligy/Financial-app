@@ -46,7 +46,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
   @override
   void initState() {
     super.initState();
-    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId,0);
     fetchPointers();
     fetchAdvices();
   }
@@ -338,7 +338,7 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                           pw.Padding(
                                             padding: const pw.EdgeInsets.all(5.0),
                                             child: pw.Container(
-                                              height: 220,
+                                              height: 260,
                                               child: pw.Column(
                                                 children: [
                                   for (var index = 0; index < pointers1Temp.length; index++)
@@ -547,26 +547,53 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                     ],
                                   ),
                                   SizedBox(height: 10,),
-                                  MultiCircularSlider(
-                                    size: isMobile?116:200,
-                                    progressBarType: MultiCircularSliderType.circular,
-                                    // values: countData,
-                                    values: [
-                                      pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      MultiCircularSlider(
+                                        size: isMobile ? 120 : 200,
+                                        progressBarType: MultiCircularSliderType.circular,
+                                        values: [
+                                          double.parse('${senario1}') / 100,
+                                          double.parse('${senario2}') / 100,
+                                          double.parse('${senario3}') / 100
+                                        ],
+                                        colors: [Colors.red, Colors.blue, Colors.green],
+                                        showTotalPercentage: false,
+                                        animationDuration: const Duration(milliseconds: 500),
+                                        animationCurve: Curves.easeIn,
+                                        trackColor: Colors.white,
+                                        progressBarWidth: 52.0,
+                                        trackWidth: 40,
+                                        labelTextStyle: TextStyle(color: Colors.black),
+                                        percentageTextStyle: TextStyle(color: Colors.black),
+                                      ),
+                                      // Centralized text for scenario 1
+                                      Transform.translate(
+                                        offset: Offset(0, -30),
+                                        child: Text(
+                                          '${(double.parse('${senario1}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 2
+                                      Transform.translate(
+                                        offset: Offset(0, 0),
+                                        child: Text(
+                                          '${(double.parse('${senario2}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 3
+                                      Transform.translate(
+                                        offset: Offset(0, 30),
+                                        child: Text(
+                                          '${(double.parse('${senario3}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
                                     ],
-                                    colors: [Colors.red, Colors.blue, Colors.green],
-                                    showTotalPercentage: false,
-                                    // label: 'This is label text',
-                                    animationDuration: const Duration(milliseconds: 500),
-                                    animationCurve: Curves.easeIn,
-                                    trackColor: Colors.white,
-                                    progressBarWidth: 52.0,
-                                    trackWidth: 40,
-                                    //labelTextStyle: TextStyle(color: Colors.black),
-                                    percentageTextStyle: TextStyle(color: Colors.black),
-                                  ),
+                                  )
                                 ],
                               )
                                   :Row(
@@ -595,26 +622,53 @@ class _ReportChartViewWithAbozabyState extends State<ReportChartViewWithAbozaby>
                                       ),
                                     ],
                                   ),
-                                  MultiCircularSlider(
-                                    size: isMobile?116:200,
-                                    progressBarType: MultiCircularSliderType.circular,
-                                    // values: countData,
-                                    values: [
-                                      pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      MultiCircularSlider(
+                                        size: isMobile ? 120 : 200,
+                                        progressBarType: MultiCircularSliderType.circular,
+                                        values: [
+                                          double.parse('${senario1}') / 100,
+                                          double.parse('${senario2}') / 100,
+                                          double.parse('${senario3}') / 100
+                                        ],
+                                        colors: [Colors.red, Colors.blue, Colors.green],
+                                        showTotalPercentage: false,
+                                        animationDuration: const Duration(milliseconds: 500),
+                                        animationCurve: Curves.easeIn,
+                                        trackColor: Colors.white,
+                                        progressBarWidth: 52.0,
+                                        trackWidth: 40,
+                                        labelTextStyle: TextStyle(color: Colors.black),
+                                        percentageTextStyle: TextStyle(color: Colors.black),
+                                      ),
+                                      // Centralized text for scenario 1
+                                      Transform.translate(
+                                        offset: Offset(0, -30),
+                                        child: Text(
+                                          '${(double.parse('${senario1}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 2
+                                      Transform.translate(
+                                        offset: Offset(0, 0),
+                                        child: Text(
+                                          '${(double.parse('${senario2}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 3
+                                      Transform.translate(
+                                        offset: Offset(0, 30),
+                                        child: Text(
+                                          '${(double.parse('${senario3}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
                                     ],
-                                    colors: [Colors.red, Colors.blue, Colors.green],
-                                    showTotalPercentage: false,
-                                    // label: 'This is label text',
-                                    animationDuration: const Duration(milliseconds: 500),
-                                    animationCurve: Curves.easeIn,
-                                    trackColor: Colors.white,
-                                    progressBarWidth: 52.0,
-                                    trackWidth: 40,
-                                    //labelTextStyle: TextStyle(color: Colors.black),
-                                    percentageTextStyle: TextStyle(color: Colors.black),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),

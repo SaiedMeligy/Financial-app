@@ -9,10 +9,10 @@ class GetSessionDetailsRepositoryImp implements GetSessionDetailsRepository{
   final GetSessionDetailsDataSource dataSource;
   GetSessionDetailsRepositoryImp(this.dataSource);
   @override
-  Future<Response> getSessionDetails(String nationalId) async {
+  Future<Response> getSessionDetails(String nationalId,int? with_all_questions) async {
     try {
       final response = await dataSource.getSessionDetails(
-          nationalId);
+          nationalId,with_all_questions);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           // SnackBarService.showSuccessMessage(response.data["message"]);

@@ -36,7 +36,7 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
   void initState() {
     super.initState();
     _patientFormViewCubit = AddSessionCubit();
-    _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId);
+    _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId,0);
   }
 
   @override

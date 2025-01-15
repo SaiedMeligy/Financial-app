@@ -46,7 +46,7 @@ class _ReportChartViewState extends State<ReportChartView> {
   @override
   void initState() {
     super.initState();
-    addSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
+    addSessionCubit.getSessionDetails(widget.pationt_data.nationalId,0);
     fetchPointers();
     fetchAdvices();
   }
@@ -93,10 +93,11 @@ class _ReportChartViewState extends State<ReportChartView> {
                   pointers3Temp.add(pointer);
                 }
               }
-              var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
-              var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
-              var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
+              var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toStringAsFixed(2).toString();
+              var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toStringAsFixed(2).toString();
+              var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toStringAsFixed(2).toString();
               List<int> selectedAdviceIds = [];
+              print("---->"'${senario1}');
               if (pointers.isEmpty && advices.isEmpty) {
                 return Center(
                   child: Text("No data available"),
@@ -158,12 +159,12 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
                                                 pw.Text(
-                                                  "السيناريوالثاني(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toStringAsFixed(2) + "%",
+                                                  "السيناريوالثاني(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toString() + "%",
                                                   style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
                                                 pw.Text(
-                                                  "السيناريوالثالث(للحالات المتعثرة ماليا) : " + double.parse(senario3).toStringAsFixed(2) + "%",
+                                                  "السيناريوالثالث(للحالات المتعثرة ماليا) : " + double.parse(senario3).toString() + "%",
                                                   style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
@@ -237,7 +238,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                 pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
                                                   child: pw.Container(
-                                                    height: 220,
+                                                    height: 260,
                                                     child: pw.Column(
                                                       children: [
                                                         for (var index3 = 0; index3 < pointers3Temp.length; index3++)
@@ -279,7 +280,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                 pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
                                                   child: pw.Container(
-                                                    height: 220,
+                                                    height: 260,
                                                     child: pw.Column(
                                                       children: [
                                                         for (var index2 = 0; index2 < pointers2Temp.length; index2++)
@@ -321,7 +322,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                 pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
                                                   child: pw.Container(
-                                                    height: 220,
+                                                    height: 260,
                                                     child: pw.Column(
                                                       children: [
                                                         for (var index1 = 0; index1 < pointers1Temp.length; index1++)
@@ -395,7 +396,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                 pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
                                                   child: pw.Container(
-                                                    height: 150,
+                                                    height: 200,
                                                     child: pw.Column(
                                                       children: [
                                                         for (var index = 0; index < pointers1Temp.length; index++)
@@ -530,26 +531,53 @@ class _ReportChartViewState extends State<ReportChartView> {
                                       ],
                                     ),
                                     SizedBox(height: 10,),
-                                    MultiCircularSlider(
-                                      size: isMobile?116:200,
-                                      progressBarType: MultiCircularSliderType.circular,
-                                      // values: countData,
-                                      values: [
-                                        pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                        pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                        pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        MultiCircularSlider(
+                                          size: isMobile ? 120 : 200,
+                                          progressBarType: MultiCircularSliderType.circular,
+                                          values: [
+                                            double.parse('${senario1}') / 100,
+                                            double.parse('${senario2}') / 100,
+                                            double.parse('${senario3}') / 100
+                                          ],
+                                          colors: [Colors.red, Colors.blue, Colors.green],
+                                          showTotalPercentage: false,
+                                          animationDuration: const Duration(milliseconds: 500),
+                                          animationCurve: Curves.easeIn,
+                                          trackColor: Colors.white,
+                                          progressBarWidth: 52.0,
+                                          trackWidth: 40,
+                                          labelTextStyle: TextStyle(color: Colors.black),
+                                          percentageTextStyle: TextStyle(color: Colors.black),
+                                        ),
+                                        // Centralized text for scenario 1
+                                        Transform.translate(
+                                          offset: Offset(0, -30),
+                                          child: Text(
+                                            '${(double.parse('${senario1}')).toStringAsFixed(1)}%',
+                                            style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        // Centralized text for scenario 2
+                                        Transform.translate(
+                                          offset: Offset(0, 0),
+                                          child: Text(
+                                            '${(double.parse('${senario2}')).toStringAsFixed(1)}%',
+                                            style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        // Centralized text for scenario 3
+                                        Transform.translate(
+                                          offset: Offset(0, 30),
+                                          child: Text(
+                                            '${(double.parse('${senario3}')).toStringAsFixed(1)}%',
+                                            style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
                                       ],
-                                      colors: [Colors.red, Colors.blue, Colors.green],
-                                      showTotalPercentage: false,
-                                      // label: 'This is label text',
-                                      animationDuration: const Duration(milliseconds: 500),
-                                      animationCurve: Curves.easeIn,
-                                      trackColor: Colors.white,
-                                      progressBarWidth: 52.0,
-                                      trackWidth: 40,
-                                      //labelTextStyle: TextStyle(color: Colors.black),
-                                      percentageTextStyle: TextStyle(color: Colors.black),
-                                    ),
+                                    )
                                   ],
                                 ):Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -577,26 +605,73 @@ class _ReportChartViewState extends State<ReportChartView> {
                                         ),
                                       ],
                                     ),
-                                    MultiCircularSlider(
-                                      size: isMobile?120:200,
-                                      progressBarType: MultiCircularSliderType.circular,
-                                      // values: countData,
-                                      values: [
-                                        pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                        pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                        pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                    // MultiCircularSlider(
+                                    //   size: isMobile ? 120 : 200,
+                                    //   progressBarType: MultiCircularSliderType.circular,
+                                    //   values: [
+                                    //     double.parse('${senario1}')/100,
+                                    //     double.parse('${senario2}')/100,
+                                    //     double.parse('${senario3}')/100
+                                    //   ],
+                                    //   colors: [Colors.red, Colors.blue, Colors.green],
+                                    //   showTotalPercentage: true,
+                                    //   animationDuration: const Duration(milliseconds: 500),
+                                    //   animationCurve: Curves.easeIn,
+                                    //   trackColor: Colors.white,
+                                    //   progressBarWidth: 52.0,
+                                    //   trackWidth: 40,
+                                    //   labelTextStyle: TextStyle(color: Colors.black),
+                                    //   percentageTextStyle: TextStyle(color: Colors.black),
+                                    // )
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        MultiCircularSlider(
+                                          size: isMobile ? 120 : 200,
+                                          progressBarType: MultiCircularSliderType.circular,
+                                          values: [
+                                            double.parse('${senario1}') / 100,
+                                            double.parse('${senario2}') / 100,
+                                            double.parse('${senario3}') / 100
+                                          ],
+                                          colors: [Colors.red, Colors.blue, Colors.green],
+                                          showTotalPercentage: false,
+                                          animationDuration: const Duration(milliseconds: 500),
+                                          animationCurve: Curves.easeIn,
+                                          trackColor: Colors.white,
+                                          progressBarWidth: 52.0,
+                                          trackWidth: 40,
+                                          labelTextStyle: TextStyle(color: Colors.black),
+                                          percentageTextStyle: TextStyle(color: Colors.black),
+                                        ),
+                                        // Centralized text for scenario 1
+                                        Transform.translate(
+                                          offset: Offset(0, -30),
+                                          child: Text(
+                                            '${(double.parse('${senario1}')).toStringAsFixed(1)}%',
+                                            style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        // Centralized text for scenario 2
+                                        Transform.translate(
+                                          offset: Offset(0, 0),
+                                          child: Text(
+                                            '${(double.parse('${senario2}')).toStringAsFixed(1)}%',
+                                            style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        // Centralized text for scenario 3
+                                        Transform.translate(
+                                          offset: Offset(0, 30),
+                                          child: Text(
+                                            '${(double.parse('${senario3}')).toStringAsFixed(1)}%',
+                                            style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
                                       ],
-                                      colors: [Colors.red, Colors.blue, Colors.green],
-                                      showTotalPercentage: false,
-                                      // label: 'This is label text',
-                                      animationDuration: const Duration(milliseconds: 500),
-                                      animationCurve: Curves.easeIn,
-                                      trackColor: Colors.white,
-                                      progressBarWidth: 52.0,
-                                      trackWidth: 40,
-                                      //labelTextStyle: TextStyle(color: Colors.black),
-                                      percentageTextStyle: TextStyle(color: Colors.black),
-                                    ),
+                                    )
+
+
                                   ],
                                 ),
                               ),

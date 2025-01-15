@@ -11,11 +11,12 @@ class GetSessionDetailsDataSourceImp implements GetSessionDetailsDataSource{
   GetSessionDetailsDataSourceImp(this.dio);
 
   @override
-  Future<Response> getSessionDetails(String nationalId) async{
+  Future<Response> getSessionDetails(String nationalId,int?with_all_questions) async{
     return await dio.get(
       "/api/advicor/pationt/show",
       queryParameters: {
-        "national_id": nationalId
+        "national_id": nationalId,
+        "with_all_questions":with_all_questions
       },
       options: Options(
         headers: {

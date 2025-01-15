@@ -65,9 +65,9 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
   late GetPatientDetailsRepository getPatientDetailsRepository;
   late GetPatientDetailsDataSource getPatientDetailsDataSource;
 
-  Future<void> setRefresh(String nationalId) async {
+  Future<void> setRefresh(String nationalId,int? with_all_questions) async {
     emit(LoadingAddSessionState());
-    getPatientDetails(nationalId);
+    getPatientDetails(nationalId,with_all_questions);
   }
   Future<void> setRefreshSession(int id) async {
     emit(LoadingAddSessionState());
@@ -79,10 +79,10 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
   }
   Future<void> setRefreshAdvicor(String nationalId) async {
     emit(LoadingAddSessionState());
-    getSessionDetails(nationalId);
+    getSessionDetails(nationalId,0);
   }
 
-  Future<void> getPatientDetails(String nationalId) async {
+  Future<void> getPatientDetails(String nationalId,int? with_all_questions) async {
     WebServices service = WebServices();
     getPatientDetailsDataSource =
         GetPatientDetailsDataSourceImp(service.freeDio);
@@ -91,7 +91,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
     getPatientDetailsUseCase =
         GetPatientDetailsUseCase(getPatientDetailsRepository);
     try {
-      final patientDetails = await getPatientDetailsUseCase.execute(nationalId);
+      final patientDetails = await getPatientDetailsUseCase.execute(nationalId,with_all_questions);
       if(patientDetails.data['pationt']["form"]==null  ) {
         SnackBarService.showErrorMessage("لم يسجل في الفورم");
         emit(ErrorFormState());
@@ -124,7 +124,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
   late GetSessionDetailsRepository getSessionDetailsRepository;
   late GetSessionDetailsDataSource getSessionDetailsDataSource;
 
-  Future<void> getSessionDetails(String nationalId) async {
+  Future<void> getSessionDetails(String nationalId,int? with_all_questions) async {
     WebServices service = WebServices();
     getSessionDetailsDataSource =
         GetSessionDetailsDataSourceImp(service.freeDio);
@@ -134,7 +134,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
         GetSessionDetailsUseCase(getSessionDetailsRepository);
     emit(LoadingAddSessionState());
     try {
-      final patientDetails = await getSessionDetailsUseCase.execute(nationalId);
+      final patientDetails = await getSessionDetailsUseCase.execute(nationalId,with_all_questions);
       if(patientDetails.data['pationt']["form"]==null  ) {
         SnackBarService.showErrorMessage("لم يسجل في الفورم");
         emit(ErrorFormState());

@@ -96,7 +96,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
     super.initState();
     _patientSessionCubit = AddSessionCubit();
     _patientSessionCubit.showSessionWithAdmin(widget.sessionId);//todo
-    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId,0);
     fetchPointers();
     fetchAdvices();
 
@@ -172,7 +172,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                         print("sesssion Id"+session['id'].toString());
                                         var sessionId = session['id'];
                                         var patientName = session["pationt"]["name"] ?? "";
-                                        var advisorName = session["advicor"]["name"] ?? "";
+                                        // var advisorName = session["advicor"]["name"] ?? "";
                                         var nationalId = session["pationt"]["national_id"] ?? "";
                                         var caseManager = session["case_manager"] ?? "";
                                         var phoneNumber = session["phone_number"] ?? "";
@@ -280,11 +280,11 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                                           style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                                           textDirection: pw.TextDirection.rtl,
                                                                         ),
-                                                                        pw.Text(
-                                                                          "اسم الاستشارى :${advisorName}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
+                                                                        // pw.Text(
+                                                                        //   "اسم الاستشارى :${advisorName}",
+                                                                        //   style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                        //   textDirection: pw.TextDirection.rtl,
+                                                                        // ),
                                                                         pw.Text(
                                                                           "رقم الهوية :${nationalId}",
                                                                           style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
@@ -427,14 +427,14 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                         .textTheme.bodyLarge?.copyWith(
                                                         color: Colors.black),
                                                   ),
-                                                  Text(
-                                                    "اسم الاستشاري : $advisorName",
-                                                    style: isMobile ? Constants.theme
-                                                        .textTheme.bodyMedium?.copyWith(
-                                                      color: Colors.black,) : Constants.theme
-                                                        .textTheme.bodyLarge?.copyWith(
-                                                        color: Colors.black),
-                                                  ),
+                                                  // Text(
+                                                  //   "اسم الاستشاري : $advisorName",
+                                                  //   style: isMobile ? Constants.theme
+                                                  //       .textTheme.bodyMedium?.copyWith(
+                                                  //     color: Colors.black,) : Constants.theme
+                                                  //       .textTheme.bodyLarge?.copyWith(
+                                                  //       color: Colors.black),
+                                                  // ),
                                                   Text(
                                                     "رقم الهوية : $nationalId",
                                                     style: isMobile ? Constants.theme
@@ -445,7 +445,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                   ),
                                                   Directionality(
                                                     textDirection: TextDirection.rtl,
-                                                    child: Text(
+                                                     child: Text(
                                                       "رقم الهاتف : $phoneNumber",
                                                       style: isMobile ? Constants.theme
                                                           .textTheme.bodyMedium?.copyWith(

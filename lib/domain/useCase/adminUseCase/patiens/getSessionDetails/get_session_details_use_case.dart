@@ -6,7 +6,7 @@ import '../../../../repository/admin repository/patiens/getSessionDetailsReposit
 class GetSessionDetailsUseCase {
   final GetSessionDetailsRepository getSessionDetailsRepository;
   GetSessionDetailsUseCase(this.getSessionDetailsRepository);
-  Future<Response> execute(String nationalId)async{
-    return await getSessionDetailsRepository.getSessionDetails(nationalId);
+  Future<Response> execute(String nationalId,int? with_all_questions)async{
+    return await getSessionDetailsRepository.getSessionDetails(nationalId,with_all_questions);
   }
   }

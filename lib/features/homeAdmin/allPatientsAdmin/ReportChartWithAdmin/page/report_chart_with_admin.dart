@@ -47,7 +47,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
   @override
   void initState() {
     super.initState();
-    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId,0);
     fetchPointers();
     fetchAdvices();
   }
@@ -261,7 +261,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               pw.Padding(
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 child: pw.Container(
-                                                  height: 220,
+                                                  height: 260,
                                                   child: pw.Column(
                                                     children: [
                                                       for (var index3 = 0; index3 < pointers3Temp.length; index3++)
@@ -303,7 +303,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               pw.Padding(
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 child: pw.Container(
-                                                  height: 220,
+                                                  height: 260,
                                                   child: pw.Column(
                                                     children: [
                                                       for (var index2 = 0; index2 < pointers2Temp.length; index2++)
@@ -345,7 +345,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               pw.Padding(
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 child: pw.Container(
-                                                  height: 220,
+                                                  height: 260,
                                                   child: pw.Column(
                                                     children: [
                                                       for (var index1 = 0; index1 < pointers1Temp.length; index1++)
@@ -419,7 +419,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               pw.Padding(
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 child: pw.Container(
-                                                  height: 150,
+                                                  height: 200,
                                                   child: pw.Column(
                                                     children: [
                                                       for (var index = 0; index < pointers1Temp.length; index++)
@@ -554,26 +554,53 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                     ],
                                   ),
                                   SizedBox(height: 10,),
-                                  MultiCircularSlider(
-                                    size: isMobile?116:200,
-                                    progressBarType: MultiCircularSliderType.circular,
-                                    // values: countData,
-                                    values: [
-                                      pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      MultiCircularSlider(
+                                        size: isMobile ? 120 : 200,
+                                        progressBarType: MultiCircularSliderType.circular,
+                                        values: [
+                                          double.parse('${senario1}') / 100,
+                                          double.parse('${senario2}') / 100,
+                                          double.parse('${senario3}') / 100
+                                        ],
+                                        colors: [Colors.red, Colors.blue, Colors.green],
+                                        showTotalPercentage: false,
+                                        animationDuration: const Duration(milliseconds: 500),
+                                        animationCurve: Curves.easeIn,
+                                        trackColor: Colors.white,
+                                        progressBarWidth: 52.0,
+                                        trackWidth: 40,
+                                        labelTextStyle: TextStyle(color: Colors.black),
+                                        percentageTextStyle: TextStyle(color: Colors.black),
+                                      ),
+                                      // Centralized text for scenario 1
+                                      Transform.translate(
+                                        offset: Offset(0, -30),
+                                        child: Text(
+                                          '${(double.parse('${senario1}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 2
+                                      Transform.translate(
+                                        offset: Offset(0, 0),
+                                        child: Text(
+                                          '${(double.parse('${senario2}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 3
+                                      Transform.translate(
+                                        offset: Offset(0, 30),
+                                        child: Text(
+                                          '${(double.parse('${senario3}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
                                     ],
-                                    colors: [Colors.red, Colors.blue, Colors.green],
-                                    showTotalPercentage: false,
-                                    // label: 'This is label text',
-                                    animationDuration: const Duration(milliseconds: 500),
-                                    animationCurve: Curves.easeIn,
-                                    trackColor: Colors.white,
-                                    progressBarWidth: 52.0,
-                                    trackWidth: 40,
-                                    //labelTextStyle: TextStyle(color: Colors.black),
-                                    percentageTextStyle: TextStyle(color: Colors.black),
-                                  ),
+                                  )
                                 ],
                               ):Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -601,26 +628,53 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       ),
                                     ],
                                   ),
-                                  MultiCircularSlider(
-                                    size: isMobile?120:200,
-                                    progressBarType: MultiCircularSliderType.circular,
-                                    // values: countData,
-                                    values: [
-                                      pointers1Temp.isNotEmpty ? calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers2Temp.isNotEmpty ? calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0) / 100 : 0,
-                                      pointers3Temp.isNotEmpty ? calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0) / 100 : 0,
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      MultiCircularSlider(
+                                        size: isMobile ? 120 : 200,
+                                        progressBarType: MultiCircularSliderType.circular,
+                                        values: [
+                                          double.parse('${senario1}') / 100,
+                                          double.parse('${senario2}') / 100,
+                                          double.parse('${senario3}') / 100
+                                        ],
+                                        colors: [Colors.red, Colors.blue, Colors.green],
+                                        showTotalPercentage: false,
+                                        animationDuration: const Duration(milliseconds: 500),
+                                        animationCurve: Curves.easeIn,
+                                        trackColor: Colors.white,
+                                        progressBarWidth: 52.0,
+                                        trackWidth: 40,
+                                        labelTextStyle: TextStyle(color: Colors.black),
+                                        percentageTextStyle: TextStyle(color: Colors.black),
+                                      ),
+                                      // Centralized text for scenario 1
+                                      Transform.translate(
+                                        offset: Offset(0, -30),
+                                        child: Text(
+                                          '${(double.parse('${senario1}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 2
+                                      Transform.translate(
+                                        offset: Offset(0, 0),
+                                        child: Text(
+                                          '${(double.parse('${senario2}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      // Centralized text for scenario 3
+                                      Transform.translate(
+                                        offset: Offset(0, 30),
+                                        child: Text(
+                                          '${(double.parse('${senario3}')).toStringAsFixed(1)}%',
+                                          style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
                                     ],
-                                    colors: [Colors.red, Colors.blue, Colors.green],
-                                    showTotalPercentage: false,
-                                    // label: 'This is label text',
-                                    animationDuration: const Duration(milliseconds: 500),
-                                    animationCurve: Curves.easeIn,
-                                    trackColor: Colors.white,
-                                    progressBarWidth: 52.0,
-                                    trackWidth: 40,
-                                    //labelTextStyle: TextStyle(color: Colors.black),
-                                    percentageTextStyle: TextStyle(color: Colors.black),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
@@ -747,7 +801,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                   print('Error adding pointerId $pointerId: $e');
                                                 }
                                               }
-                                              addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                              addSessionCubit.setRefresh(widget.pationt_data.nationalId,0);
                                             }
                                             Navigator.of(context).pop();
                                           },
@@ -804,7 +858,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               ),
                                               IconButton(onPressed: (){
                                                 deletePointers(patient["id"], pointer["id"]);
-                                                addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                addSessionCubit.setRefresh(widget.pationt_data.nationalId,0);
                                               }, icon: Icon(Icons.delete))
                                             ],
                                           ),
@@ -838,7 +892,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                     ),
                                                     IconButton(onPressed: (){
                                                       deletePointers(patient["id"], pointer["id"]);
-                                                      addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                      addSessionCubit.setRefresh(widget.pationt_data.nationalId,0);
 
 
                                                     }, icon: Icon(Icons.delete))
@@ -874,7 +928,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                     ),
                                                     IconButton(onPressed: (){
                                                       deletePointers(patient["id"], pointer["id"]);
-                                                      addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                      addSessionCubit.setRefresh(widget.pationt_data.nationalId,0);
                                                     }, icon: Icon(Icons.delete))
                                                   ],
                                                 ),
@@ -960,7 +1014,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                     if (selectedAdviceIds.isNotEmpty) {
                                                       for (var adviceId in selectedAdviceIds) {
                                                         await addAdvices(adviceId, patient["id"]).then((value){
-                                                          addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                          addSessionCubit.setRefresh(widget.pationt_data.nationalId,0);
                                                         });
                                                       }
 
@@ -1020,7 +1074,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                                 ),
                                                 IconButton(onPressed: ()async{
                                                   await deleteAdvices(patient["id"], advices[index]["id"]);
-                                                  addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                  addSessionCubit.setRefresh(widget.pationt_data.nationalId,0);
                                                 }, icon: Icon(Icons.delete))
                                               ],
                                             ).setHorizontalPadding(context,enableMediaQuery: false,10 ),

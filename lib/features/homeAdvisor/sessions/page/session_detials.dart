@@ -47,7 +47,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
   void initState() {
     super.initState();
     _patientSessionCubit = AddSessionCubit();
-    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
+    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId,0);
     updateSessionCubit = UpdateSessionCubit();
      advisorComment = TextEditingController(text: widget.sessionComment!??"",);
 
@@ -450,7 +450,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                               sessionId: widget.sessionId,
                                               comments: advisorComment.text,);
                                             updateSessionCubit.updateSession(data).then((_) {
-                                              _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
+                                              _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId,0);
                                               Navigator.of(context).pop();
                                             });
 

@@ -14,6 +14,7 @@ class RegisterPatientWithAdminDatasourceImp implements RegisterPatientWithAdminD
     return await dio.post(
       "/api/pationt",
       data: {
+        "advicor_id":data.advicorId,
         "name": data.name,
         "national_id":data.nationalId,
         "phone_number":data.phoneNumber,

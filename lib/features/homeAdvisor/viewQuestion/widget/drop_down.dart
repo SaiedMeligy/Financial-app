@@ -11,7 +11,7 @@ import '../../../homeAdmin/Consulting service/All Consultation/manager/states.da
 class DropDown extends StatefulWidget {
   final ValueChanged<int> onChange;
   var items;
-  DropDown({super.key, required this.onChange,  this.items});
+  DropDown({super.key, required this.onChange, this.items});
 
   @override
   State<DropDown> createState() => _DropDownState(onChange: onChange);
@@ -34,7 +34,7 @@ class _DropDownState extends State<DropDown> {
   void handleDropdownValueChanged(ConsultationServices? newValue) {
     setState(() {
       selectedValue = newValue;
-      if (newValue != null) {
+      if (newValue != null && newValue.id != null) {
         onChange(newValue.id!);
       }
     });
@@ -42,9 +42,7 @@ class _DropDownState extends State<DropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-
+    return LayoutBuilder(builder: (context, constraints) {
       isMobile = constraints.maxWidth < 600;
 
       return BlocBuilder<AllConsultationCubit, AllConsultationStates>(
@@ -53,14 +51,11 @@ class _DropDownState extends State<DropDown> {
           if (state is LoadingAllConsultations) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is SuccessAllConsultations) {
-            var consultations = state.consultationServices;
-
-            if (selectedValue == null && consultations.isNotEmpty) {
-              selectedValue = consultations.first;
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                handleDropdownValueChanged(selectedValue);
-              });
-            }
+            // Add a default option for " اختر الخدمة الأستشارية"
+            var consultations = [
+              ConsultationServices(id: null, name: "اختر الخدمة الأستشارية"),
+              ...state.consultationServices
+            ];
 
             return Container(
               decoration: BoxDecoration(
@@ -71,27 +66,51 @@ class _DropDownState extends State<DropDown> {
               ),
               child: DropdownButton<ConsultationServices>(
                 value: selectedValue,
-                onChanged: handleDropdownValueChanged,
-                items: consultations.map((dynamic value) {
+                hint: Text(
+                  "اختر الخدمة الأستشارية",
+                  style: isMobile
+                      ? Constants.theme.textTheme.bodySmall?.copyWith(
+                    color: Colors.black54,
+                    fontSize: 10,
+                  )
+                      : Constants.theme.textTheme.bodyMedium?.copyWith(
+                    color: Colors.black54,
+                    fontSize: 18,
+                  ),
+                ),
+                onChanged: (newValue) {
+                  // Prevent selection of " اختر الخدمة الأستشارية"
+                  if (newValue != null && newValue.id != null) {
+                    handleDropdownValueChanged(newValue);
+                  }
+                },
+                items: consultations.map((value) {
                   return DropdownMenuItem<ConsultationServices>(
                     value: value,
+                    enabled: value.id != null, // Disable the default option
                     child: Text(
-                      value.name,
-                      style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,fontSize: 10):Constants.theme.textTheme.bodyMedium?.copyWith(
+                      value.name.toString(),
+                      style: isMobile
+                          ? Constants.theme.textTheme.bodySmall?.copyWith(
                         color: Colors.black,
-                        fontSize: 18
+                        fontSize: 10,
+                      )
+                          : Constants.theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontSize: 18,
                       ),
                     ),
                   );
                 }).toList(),
-              ),
+              )
+
             );
           } else if (state is ErrorAllConsultations) {
             return Center(child: Text(state.errorMessage));
           }
           return const SizedBox.shrink();
         },
-      );}
-    );
+      );
+    });
   }
 }

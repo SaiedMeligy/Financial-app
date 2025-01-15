@@ -238,7 +238,7 @@ class _AddSessionViewState extends State<AddSessionView> {
                               child: BorderRoundedButton(
                                 title: "Get",
                                 onPressed: () {
-                                  addSessionCubit.getPatientDetails(_patientNationalIdController.text);
+                                  addSessionCubit.getPatientDetails(_patientNationalIdController.text,0);
                                 },
                               ),
                             ),

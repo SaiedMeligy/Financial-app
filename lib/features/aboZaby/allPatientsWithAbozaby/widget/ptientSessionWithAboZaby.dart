@@ -22,7 +22,7 @@ class _PatientSessionViewWithAbouzabiState extends State<PatientSessionViewWithA
   void initState() {
     super.initState();
     _patientSessionCubit = AddSessionCubit();
-    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId,0);
   }
 
   @override

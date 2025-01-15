@@ -73,7 +73,7 @@ class _PatientNationalIdState extends State<PatientNationalId> {
                         ),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            patientNationalIdCubit.getPatientNationalId(nationalId.text).then((value)
+                            patientNationalIdCubit.getPatientNationalId(nationalId.text,).then((value)
                             {
                               if (value.data!= null&&value.data["pationt"]["form"]!=null) {
                                   SnackBarService.showErrorMessage("تم التسجيل لهذه الحالة من قبل");

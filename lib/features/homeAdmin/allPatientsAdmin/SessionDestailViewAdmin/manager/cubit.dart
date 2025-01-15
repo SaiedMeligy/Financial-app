@@ -48,7 +48,7 @@ class SessionCubit extends Cubit<States> {
     getPatientDetailsUseCase =
         GetPatientDetailsUseCase(getPatientDetailsRepository);
     try {
-      final patientDetails = await getPatientDetailsUseCase.execute(nationalId);
+      final patientDetails = await getPatientDetailsUseCase.execute(nationalId,0);
       if(patientDetails.data['pationt']["form"]==null  ) {
         SnackBarService.showErrorMessage("لم يسجل في الفورم");
         emit(ErrorFormState());
@@ -92,7 +92,7 @@ class SessionCubit extends Cubit<States> {
         GetSessionDetailsUseCase(getSessionDetailsRepository);
     emit(LoadingSessionState());
     try {
-      final patientDetails = await getSessionDetailsUseCase.execute(nationalId);
+      final patientDetails = await getSessionDetailsUseCase.execute(nationalId,0);
       if(patientDetails.data['pationt']["form"]==null  ) {
         SnackBarService.showErrorMessage("لم يسجل في الفورم");
         emit(ErrorFormState());

@@ -97,7 +97,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
     super.initState();
     _patientSessionCubit = AddSessionCubit();
      _patientSessionCubit.showSessionWithAdmin(widget.sessionId);//todo
-    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+    addSessionCubit.getPatientDetails(widget.pationt_data.nationalId,0);
     fetchPointers();
     fetchAdvices();
     updateSessionCubit = UpdateSessionCubit();
@@ -368,7 +368,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                                         TextButton(
                                                                           onPressed: () {
                                                                             Navigator.of(context).pop();
-                                                                            addSessionCubit.setRefresh(widget.pationt_data.nationalId);
+                                                                            addSessionCubit.setRefresh(widget.pationt_data.nationalId,0);
                                                                             finished = true;
 
                                                                             setState(() {});

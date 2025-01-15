@@ -24,7 +24,7 @@ bool isMobile = false;
   void initState() {
     super.initState();
     _patientSessionCubit = AddSessionCubit();
-    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId,0);
   }
 
   @override
@@ -223,7 +223,7 @@ bool isMobile = false;
                                                     Navigator.of(context).pop();
                                                     // _deletePatientLocally(widget.pationt_data); // Remove patient from local list
 
-                                                    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId);
+                                                    _patientSessionCubit.getPatientDetails(widget.pationt_data.nationalId,0);
                                                   });
                                                 },
                                                 child: Container(

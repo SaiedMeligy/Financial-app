@@ -473,8 +473,10 @@ class _StoreFormState extends State<StoreForm> {
     if (adviserCommentController.text.isEmpty) {
       SnackBarService.showErrorMessage("من فضلك ادخل ملاحظات الاستشارى");
     } else if (_selectedDate == null) {
-      SnackBarService.showErrorMessage("من فضلك اختر التاريخ ");
-    } else {
+      SnackBarService.showErrorMessage("من فضلك اختر التاريخ ");}
+      else if(selectedConsultationService==0){
+      SnackBarService.showErrorMessage("من فضلك اختر الخدمة الاستشارية ");}
+      else {
       setState(() {
         textControllers.forEach((key1, val) {
           answers[key1] = val.text;
@@ -1001,105 +1003,3 @@ class AxisWidget extends StatelessWidget {
 
 
 
-//isMobile
-//                                       ? Column(
-//                                     mainAxisAlignment:
-//                                     MainAxisAlignment
-//                                         .spaceAround,
-//                                     crossAxisAlignment:
-//                                     CrossAxisAlignment.stretch,
-//                                     children: [
-//                                       Row(
-//                                         children: [
-//                                           Text(
-//                                             " هل يحتاج إلى جلسة أخرى",
-//                                             style: Constants
-//                                                 .theme
-//                                                 .textTheme
-//                                                 .bodyMedium
-//                                                 ?.copyWith(
-//                                               color: Colors.black,
-//                                             ),
-//                                           ),
-//                                           Checkbox(
-//                                             value:
-//                                             (needOtherSession ==
-//                                                 1),
-//                                             onChanged: (value) {
-//                                               setState(() {
-//                                                 needOtherSession =
-//                                                 (value!)
-//                                                     ? 1
-//                                                     : 0;
-//                                               });
-//                                             },
-//                                           ),
-//                                         ],
-//                                       ),
-//                                       Column(
-//                                         children: [
-//                                           Text(
-//                                             "الخدمة الاستشارية",
-//                                             style: Constants
-//                                                 .theme
-//                                                 .textTheme
-//                                                 .bodyMedium
-//                                                 ?.copyWith(
-//                                               color: Colors.black,
-//                                             ),
-//                                           ),
-//                                           DropDown(
-//                                             onChange: (value) {
-//                                               setState(() {
-//                                                 selected_consultation_service =
-//                                                     value;
-//                                               });
-//                                             },
-//                                           ),
-//                                         ],
-//                                       ),
-//                                     ],
-//                                   )
-//                                       : Row(
-//                                     mainAxisAlignment:
-//                                     MainAxisAlignment.spaceAround,
-//                                     children: [
-//                                       Row(
-//                                         children: [
-//                                           Text(
-//                                             " هل يحتاج إلى جلسة أخرى",
-//                                             style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
-//                                           ),
-//                                           Checkbox(
-//                                             value:
-//                                             (needOtherSession == 1),
-//                                             onChanged: (value) {
-//                                               setState(() {
-//                                                 needOtherSession =
-//                                                 (value!) ? 1 : 0;
-//                                               });
-//                                             },
-//                                           ),
-//                                         ],
-//                                       ),
-//                                       Row(
-//                                         children: [
-//                                           Text(
-//                                             "الخدمة الاستشارية",
-//                                             style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(color: Colors.black,):Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,),
-//                                           ),
-//                                           const SizedBox(
-//                                             width: 10,
-//                                           ),
-//                                           DropDown(
-//                                             onChange: (value) {
-//                                               setState(() {
-//                                                 selected_consultation_service =
-//                                                     value;
-//                                               });
-//                                             },
-//                                           ),
-//                                         ],
-//                                       ),
-//                                     ],
-//                                   ).setOnlyPadding(context,enableMediaQuery: false, 10, 0, 0, 0),

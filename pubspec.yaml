@@ -43,6 +43,7 @@ dependencies:
   firebase_core: ^3.4.0
   cloud_firestore: ^5.3.0
   pull_to_refresh: ^2.0.0
+  sleek_circular_slider: ^2.0.1
 
 dev_dependencies:
   flutter_test:

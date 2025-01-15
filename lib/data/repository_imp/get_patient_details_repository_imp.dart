@@ -9,10 +9,10 @@ class GetPatientDetailsRepositoryImp implements GetPatientDetailsRepository{
   final GetPatientDetailsDataSource dataSource;
   GetPatientDetailsRepositoryImp(this.dataSource);
   @override
-  Future<Response> getPatientDetails(String nationalId) async {
+  Future<Response> getPatientDetails(String nationalId,int? with_all_questions) async {
     try {
       final response = await dataSource.getPatientDetails(
-          nationalId);
+          nationalId,with_all_questions);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           // SnackBarService.showSuccessMessage(response.data["message"]);

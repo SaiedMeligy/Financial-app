@@ -46,7 +46,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
     super.initState();
     _patientFormViewCubit = AddSessionCubit();
     _questionCubit = QuestionViewCubit();
-    _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId);//**getSession
+    _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId,1);//**getSession
   }
 
   @override
@@ -502,7 +502,7 @@ class _UpdateFormAdminViewState extends State<UpdateFormAdminView> {
                                             if (value != null) {
 
                                               QuestionViewCubit().onRefreshSession(controller,context);
-                                              _patientFormViewCubit.setRefresh(widget.pationt_data.nationalId);//**getSession
+                                              _patientFormViewCubit.setRefresh(widget.pationt_data.nationalId,0);//**getSession
                                               Navigator.pop(context);
 
                                               SnackBarService

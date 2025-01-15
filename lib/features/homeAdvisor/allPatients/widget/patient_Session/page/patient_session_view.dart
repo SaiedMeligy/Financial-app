@@ -27,7 +27,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
     // print("---->Patient Data"+widget.pationt_data);
     super.initState();
     _patientSessionCubit = AddSessionCubit();
-    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
+    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId,0);
   }
 
 
@@ -217,7 +217,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                                     Navigator.of(context).pop();
                                                     // _deletePatientLocally(widget.pationt_data); // Remove patient from local list
 
-                                                    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId);
+                                                    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId,0);
                                                   });
                                                 },
                                                 child: Container(
