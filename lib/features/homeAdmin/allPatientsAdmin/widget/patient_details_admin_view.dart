@@ -127,7 +127,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
           }
           else if (state is SuccessPatientNationalIdState) {
             var formData = state.result.data["pationt"]["form"];
-            var advicor = state.result.data["pationt"]["advicor"];
+            var advicor = formData["advicor"] ;
             var patient = formData["pationt"];
             var answers = formData["answers"];
             var comments = formData["comments"];

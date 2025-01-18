@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/border_rounded_button.dart';
 
+import '../../../../domain/entities/QuestionModel.dart';
 import '../../../homeAdmin/Consulting service/All Consultation/manager/cubit.dart';
 import '../../../homeAdmin/Consulting service/All Consultation/manager/states.dart';
 
@@ -33,9 +34,48 @@ class _UpdateFormState extends State<UpdateForm> {
   Map<dynamic, TextEditingController> textControllers = {};
   Map<dynamic, String> selectedAnswers = {};
   Map<dynamic, bool> checkboxValues = {};
+  late Map<dynamic, dynamic> radiosBtn = {};
+  Map<Questions, SizedBox> questionsWidget = {};
+  Map<int, List<Questions>> relatedQuestionsMap = {};
   ConsultationServices? selected_consultation;
   late List<dynamic> answers = [];
   bool isMobile = false;
+
+  void _updateRelatedQuestions(
+      Questions mainQuestion,
+      int selectedOptionId,
+      List<Questions>? relatedQuestions,
+      ) {
+    // Step 1: Reset all previous related questions for this main question
+    mainQuestion.questionOptions?.forEach((option) {
+      if (relatedQuestionsMap[option.id] != null) {
+        for (var q in relatedQuestionsMap[option.id]!) {
+          for (var entry in questionsWidget.entries) {
+            if (entry.key.id == q.id) {
+              entry.key.isRelatedQuestion = 0; // Reset the flag
+            }
+          }
+        }
+      }
+    }
+    );
+    // Step 2: Update the map for the selected option
+    relatedQuestionsMap[selectedOptionId] = relatedQuestions ?? [];
+    // Step 3: Mark the related questions for the selected option as active
+    if (relatedQuestions != null && relatedQuestions.isNotEmpty) {
+      for (var q in relatedQuestions) {
+        for (var entry in questionsWidget.entries) {
+          if (entry.key.id == q.id) {
+            entry.key.isRelatedQuestion = 1; // Mark as related
+          }
+        }
+      }
+    }
+
+    // Step 4: Update the state to rebuild the UI
+    setState(() {});
+  }
+
 
 
   @override
@@ -75,6 +115,7 @@ class _UpdateFormState extends State<UpdateForm> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<AddSessionCubit, AddSessionStates>(
       bloc: _patientFormViewCubit,
       builder: (context, state) {
@@ -92,6 +133,21 @@ class _UpdateFormState extends State<UpdateForm> {
           ConsultationServices.fromJson(formData["consultationService"]);
           if (selected_consultation == null) {
             selected_consultation = consultations;
+          }
+          if (relatedQuestionsMap.isNotEmpty) {
+            relatedQuestionsMap.forEach(
+                  (key, value) {
+                for (var rQuestion in value) {
+                  questionsWidget.entries.forEach(
+                        (e) {
+                      if (e.key.id == rQuestion.id) {
+                        e.key.isRelatedQuestion = 0;
+                      }
+                    },
+                  );
+                }
+              },
+            );
           }
           _initializeTextControllers(answers);
           TextEditingController commentController =
@@ -229,37 +285,66 @@ class _UpdateFormState extends State<UpdateForm> {
                                                       style: isMobile?Constants.theme.textTheme.bodySmall?.copyWith(fontSize: 20).copyWith(color: Colors.black,):Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,),
                                                     ),
                                                   ),
+                                                  // todo change
+                                                  // Expanded(
+                                                  //   child: Radio<String>(
+                                                  //     value:
+                                                  //     option["id"].toString(),
+                                                  //     groupValue:
+                                                  //     selectedAnswers[int.parse(answer["id"].toString())],
+                                                  //     onChanged: (value) {
+                                                  //       setState(() {
+                                                  //         selectedAnswers[
+                                                  //           int.parse(answer["id"].toString())] =
+                                                  //         value!;
+                                                  //         for (var opt in answer["question_options"]) {
+                                                  //           if (opt["type"] == 1) {
+                                                  //             opt["answer"] = opt["id"]
+                                                  //                 .toString() == value ? "1" : "0";
+                                                  //           }
+                                                  //         }
+                                                  //       });
+                                                  //     },
+                                                  //   ),
+                                                  // ),
+
                                                   Expanded(
                                                     child: Radio<String>(
-                                                      value:
-                                                      option["id"].toString(),
-                                                      groupValue: selectedAnswers[
-                                                      int.parse(answer["id"]
-                                                          .toString())],
+                                                      value: option["id"].toString(),
+                                                      groupValue: selectedAnswers[int.parse(answer["id"].toString())],
                                                       onChanged: (value) {
                                                         setState(() {
-                                                          selectedAnswers[int
-                                                              .parse(
-                                                              answer["id"]
-                                                                  .toString())] =
-                                                          value!;
-                                                          for (var opt in answer[
-                                                          "question_options"]) {
-                                                            if (opt["type"] ==
-                                                                1) {
-                                                              opt["answer"] =
-                                                              opt[
-                                                              "id"]
-                                                                  .toString() ==
-                                                                  value
-                                                                  ? "1"
-                                                                  : "0";
+                                                          // Update the selected answer
+                                                          selectedAnswers[int.parse(answer["id"].toString())] = value!;
+
+                                                          // Update the "answer" property for all options
+                                                          for (var opt in answer["question_options"]) {
+                                                            if (opt["type"] == 1) {
+                                                              opt["answer"] = opt["id"].toString() == value ? "1" : "0";
                                                             }
+                                                          }
+
+                                                          // Call the _updateRelatedQuestions function
+                                                          final selectedOption = answer["question_options"].firstWhere(
+                                                                (opt) => opt["id"].toString() == value,
+                                                            orElse: () => null,
+                                                          );
+
+                                                          if (selectedOption != null) {
+                                                            _updateRelatedQuestions(
+                                                              Questions.fromJson(answer), // Convert the current question to the `Questions` model
+                                                              int.parse(selectedOption["id"].toString()), // Selected option ID
+                                                              (selectedOption["related_questions"] as List?)
+                                                                  ?.map((q) => Questions.fromJson(q)) // Map related questions to `Questions`
+                                                                  .toList(),
+                                                            );
                                                           }
                                                         });
                                                       },
                                                     ),
-                                                  ),
+                                                  )
+
+
                                                 ],
                                               );
                                             } else if (option["type"] == 2) {

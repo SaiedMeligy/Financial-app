@@ -1467,37 +1467,6 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                                   Row(
                                                                     children: [
                                                                       Radio<int>(
-                                                                        value: 1,
-                                                                        groupValue: attendSession,
-                                                                        onChanged: (value) {
-                                                                          setState(() {
-                                                                            attendSession = value!;
-                                                                            isAttended = attendSession == 1;
-                                                                          });
-                                                                        },
-                                                                      ),
-                                                                      Text("الحالة حضرت الجلسة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),
-                                                                    ],
-                                                                  ),
-                                                                  Row(
-                                                                    children: [
-                                                                      Radio<int>(
-                                                                        value: 0,
-                                                                        groupValue: attendSession,
-                                                                        onChanged: (value) {
-                                                                          setState(() {
-                                                                            attendSession = value!;
-                                                                            isAttended = attendSession == 1;
-                                                                          });
-                                                                        },
-                                                                      ),
-                                                                      Text("الحالة لم تحضر الجلسة",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),),
-                                                                    ],
-                                                                  ),
-                                                                  Divider(color: Colors.black54,indent: 10,endIndent:25 ,thickness: 2,),
-                                                                  Row(
-                                                                    children: [
-                                                                      Radio<int>(
                                                                         value: 1, // Needing another session
                                                                         groupValue: needSession,
                                                                         onChanged: (value) {
