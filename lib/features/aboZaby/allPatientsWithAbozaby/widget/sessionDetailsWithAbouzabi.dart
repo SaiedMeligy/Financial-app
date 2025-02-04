@@ -1,25 +1,16 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
-import 'package:experts_app/core/widget/custom_text_field.dart';
 import 'package:experts_app/domain/entities/AllSessionModel.dart';
-import 'package:experts_app/domain/entities/SessionUpdateModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
-import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/drop_down_with_admin.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/manager/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '../../../../../core/Services/snack_bar_service.dart';
 import '../../../../../core/config/cash_helper.dart';
-import '../../../../../core/widget/border_rounded_button.dart';
-import '../../../../../core/widget/check_box_question.dart';
-import '../../../../../core/widget/drop_down_button.dart';
 import '../../../../../core/widget/tab_item_widget.dart';
 import '../../../../../domain/entities/AdviceMode.dart';
 import '../../../../../domain/entities/QuestionModel.dart';
@@ -257,147 +248,313 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                       child: IconButton(
                                                         icon: Icon(Icons.print, color: Colors.black,size: 40,),
                                                         onPressed: () async {
-                                                          print('sssssssssssssssssssssssss');
+                                                          print('Generating PDF...');
                                                           final pdf = pw.Document();
-                                                          // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-                                                          // final ttf = pw.Font.ttf(notoSans);
-                                                          final fontData = await rootBundle.load('assets/fonts/Amiri-Regular.ttf');
+                                                          final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
                                                           final ttf = pw.Font.ttf(fontData);
 
-                                                          // final image = pw.MemoryImage(
-                                                          //   (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
-                                                          // );
                                                           await Future.delayed(Duration(seconds: 1));
                                                           pdf.addPage(
                                                             pw.Page(
                                                               build: (pw.Context context) {
-                                                                return
-                                                                  pw.Column(
-                                                                      crossAxisAlignment: pw.CrossAxisAlignment.end,
-                                                                      children: [
-                                                                        pw.Text(
-                                                                          "اسم الحالة :${patientName}" ,
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        // pw.Text(
-                                                                        //   "اسم الاستشارى :${advisorName}",
-                                                                        //   style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                        //   textDirection: pw.TextDirection.rtl,
-                                                                        // ),
-                                                                        pw.Text(
-                                                                          "رقم الهوية :${nationalId}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text(
-                                                                          "رقم الهاتف :${phoneNumber}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text(
-                                                                          "رقم بديل للهاتف :${otherPhoneNumber}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text(
-                                                                          "مدير الحالة : ${caseManager}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text(
-                                                                          isAttended
-                                                                              ? "الحالة حضرت الجلسة"
-                                                                              : "الحالة لم تحضر الجلسة",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text(
-                                                                          needOtherSession
-                                                                              ? "الحالة بحاجه الى جلسة اخرى"
-                                                                              : "الحالة ليست بحاجه الى جلسة اخرى",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text(
-                                                                          isSuccessStory
-                                                                              ? "الحالة قصة نجاح"
-                                                                              : "الحالة ليست قصة نجاح",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text("الخدمة الاستشارية : ${serviceName}",
-
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Text(
-                                                                          "وصف الخدمة الاستشارية : ${serviceDescription}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                                          textDirection: pw.TextDirection.rtl,
-                                                                        ),
-                                                                        pw.Directionality(
-                                                                            textDirection: pw.TextDirection.rtl,
-                                                                            child:pw.Table(
-                                                                              border: pw.TableBorder.all(
-                                                                                color: PdfColors.black,
-                                                                                width: 1,
+                                                                return pw.Column(
+                                                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                                                  children: [
+                                                                    pw.Text(
+                                                                      "اسم الحالة: ${patientName}",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      "رقم الهوية: ${nationalId}",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      "رقم الهاتف: ${phoneNumber}",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      "رقم بديل للهاتف: ${otherPhoneNumber}",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      "مدير الحالة: ${caseManager}",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    // pw.Text(
+                                                                    //   isAttended ? "الحالة حضرت الجلسة" : "الحالة لم تحضر الجلسة",
+                                                                    //   style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                    //   textDirection: pw.TextDirection.rtl,
+                                                                    // ),
+                                                                    pw.Text(
+                                                                      needOtherSession ? "الحالة بحاجة إلى جلسة أخرى" : "الحالة ليست بحاجة إلى جلسة أخرى",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      isSuccessStory ? "الحالة قصة نجاح" : "الحالة ليست قصة نجاح",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      "الخدمة الاستشارية: ${serviceName}",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.Text(
+                                                                      "وصف الخدمة الاستشارية: ${serviceDescription}",
+                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                    ),
+                                                                    pw.SizedBox(height: 20),
+                                                                    pw.Directionality(
+                                                                      textDirection: pw.TextDirection.rtl,
+                                                                      child: pw.Table(
+                                                                        border: pw.TableBorder.all(color: PdfColors.black, width: 1),
+                                                                        children: [
+                                                                          pw.TableRow(
+                                                                            children: [
+                                                                              pw.Padding(
+                                                                                padding: const pw.EdgeInsets.all(8.0),
+                                                                                child: pw.Center(
+                                                                                  child: pw.Text(
+                                                                                    "الملاحظة",
+                                                                                    style: pw.TextStyle(font: ttf, fontSize: 14),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
                                                                               ),
-                                                                              children: [
-                                                                                pw.TableRow(
-                                                                                  children: [
-                                                                                    pw.Padding(
-                                                                                      padding: const pw.EdgeInsets.all(8.0),
-                                                                                      child: pw.Center(child:pw.Text(
-                                                                                        "الملاحظة",
-                                                                                        style: pw.TextStyle(font: ttf, fontSize: 14),
-                                                                                        textDirection: pw.TextDirection.rtl,
-                                                                                      ),
-                                                                                      ),
+                                                                              pw.Padding(
+                                                                                padding: const pw.EdgeInsets.all(8.0),
+                                                                                child: pw.Container(
+                                                                                  width: 400,
+                                                                                  child: pw.Center(
+                                                                                    child: pw.Text(
+                                                                                      "تاريخ الجلسة",
+                                                                                      style: pw.TextStyle(font: ttf, fontSize: 14),
+                                                                                      textDirection: pw.TextDirection.rtl,
                                                                                     ),
-                                                                                    pw.Padding(
-                                                                                        padding: const pw.EdgeInsets.all(8.0),
-                                                                                        child: pw.Container(
-                                                                                          width:400,
-                                                                                          child:pw.Center(child:pw.Text(
-                                                                                            "تاريخ الجلسة",
-                                                                                            style: pw.TextStyle(font: ttf, fontSize: 14),
-                                                                                            textDirection: pw.TextDirection.rtl,
-                                                                                          ),
-                                                                                          ),
-                                                                                        )
-                                                                                    )
-                                                                                  ],
+                                                                                  ),
                                                                                 ),
-                                                                                // Add more rows as needed
-                                                                                pw.TableRow(
-                                                                                  children: [
-                                                                                    pw.Padding(
-                                                                                      padding: const pw.EdgeInsets.all(8.0),
-                                                                                      child:pw.Text(
-                                                                                        advisorComments,
-                                                                                        style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
-                                                                                        textDirection: pw.TextDirection.rtl,
-                                                                                      ),
-                                                                                    ),
-                                                                                    pw.Expanded( // Expands this column to take up more space
-                                                                                      child: pw.Center(child:pw.Text(
-                                                                                        sessionDate,
-                                                                                        style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
-                                                                                        textDirection: pw.TextDirection.rtl,
-                                                                                      ),
-                                                                                      ),
-                                                                                    )
-                                                                                  ],
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          pw.TableRow(
+                                                                            children: [
+                                                                              pw.Padding(
+                                                                                padding: const pw.EdgeInsets.all(8.0),
+                                                                                child: pw.Text(
+                                                                                  advisorComments,
+                                                                                  style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
+                                                                                  textDirection: pw.TextDirection.rtl,
                                                                                 ),
-                                                                              ],
-                                                                            )
-
-                                                                        )
-                                                                      ]
-                                                                  );
+                                                                              ),
+                                                                              pw.Expanded(
+                                                                                child: pw.Center(
+                                                                                  child: pw.Text(
+                                                                                    sessionDate,
+                                                                                    style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                );
                                                               },
                                                             ),
+                                                          );
+                                                          pdf.addPage(
+                                                              pw.Page(
+                                                                build: (context) {
+                                                                  return pw.Column(
+                                                                      children: [
+                                                                        pw.Table(
+                                                                            border: pw.TableBorder.all(
+                                                                              color: PdfColors.black,
+                                                                              width: 1,
+                                                                            ),
+                                                                            children: [
+                                                                              pw.TableRow(
+                                                                                children: [
+                                                                                  pw.Center(child:
+                                                                                  pw.Padding(
+                                                                                    padding: const pw.EdgeInsets.all(5.0),
+                                                                                    child: pw.Text(
+                                                                                      "المؤشرات",
+                                                                                      style: pw.TextStyle(font: ttf, fontSize: 14),
+                                                                                      textDirection: pw.TextDirection.rtl,
+                                                                                    ),
+                                                                                  ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ]
+                                                                        ),
+                                                                        pw.Table(
+                                                                          border: pw.TableBorder.all(
+                                                                            color: PdfColors.black,
+                                                                            width: 1,
+                                                                          ),
+                                                                          children: [
+
+                                                                            pw.TableRow(
+                                                                              children: [
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(8.0),
+                                                                                  child: pw.Text(
+                                                                                    "السيناريو الثالث",
+                                                                                    style: pw.TextStyle(font: ttf, fontSize: 12),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(8.0),
+                                                                                  child: pw.Text(
+                                                                                    "السيناريو الثانى",
+                                                                                    style: pw.TextStyle(font: ttf, fontSize: 12),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(8.0),
+                                                                                  child: pw.Text(
+                                                                                    "السيناريو الاول",
+                                                                                    style: pw.TextStyle(font: ttf, fontSize: 12),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+
+
+                                                                              ],
+                                                                            ),
+                                                                            pw.TableRow(
+                                                                              children: [
+                                                                                pw.Column(
+                                                                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                                                                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                                  children: pointers3Temp.map((pointer) {
+                                                                                    return pw.Padding(
+                                                                                      padding: const pw.EdgeInsets.only(right: 3),
+                                                                                      child:
+                                                                                      pw.Text(
+                                                                                        pointer["text"] ?? '',
+                                                                                        style: pw.TextStyle(font: ttf, fontSize: 8, color: PdfColors.black),
+                                                                                        textDirection: pw.TextDirection.rtl,
+                                                                                      ),
+                                                                                    );
+                                                                                  }).toList(),
+                                                                                ),
+                                                                                pw.Column(
+                                                                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                                                                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                                  children: pointers2Temp.map((pointer) {
+                                                                                    return pw.Padding(
+                                                                                      padding: const pw.EdgeInsets.only(right: 3),
+                                                                                      child: pw.Text(
+                                                                                        pointer["text"] ?? '',
+                                                                                        style: pw.TextStyle(font: ttf, fontSize: 8, color: PdfColors.black),
+                                                                                        textDirection: pw.TextDirection.rtl,
+                                                                                      ),
+                                                                                    );
+                                                                                  }).toList(),
+                                                                                ),
+                                                                                pw.Column(
+                                                                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                                                                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                                  children: pointers1Temp.map((pointer) {
+                                                                                    return pw.Padding(
+                                                                                      padding: const pw.EdgeInsets.only(right: 3),
+                                                                                      child: pw.Text(
+                                                                                        pointer["text"] ?? '',
+                                                                                        style: pw.TextStyle(font: ttf, fontSize: 8, color: PdfColors.black),
+                                                                                        textDirection: pw.TextDirection.rtl,
+                                                                                      ),
+                                                                                    );
+                                                                                  }).toList(),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+
+                                                                          ],
+                                                                        ),
+
+                                                                        pw.SizedBox(height: 20),
+
+                                                                        pw.Table(
+                                                                          border: pw.TableBorder.symmetric(
+                                                                            outside: pw.BorderSide(color: PdfColors.black, width: 1),
+                                                                          ),
+                                                                          children: [
+                                                                            // Table Header
+                                                                            pw.TableRow(
+                                                                              decoration: pw.BoxDecoration(
+                                                                                border: pw.Border(bottom: pw.BorderSide(color: PdfColors.black, width: 1)),
+                                                                              ),
+                                                                              children: [
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(8.0),
+                                                                                  child: pw.Center(
+                                                                                    child: pw.Text(
+                                                                                      "التوصيات",
+                                                                                      style: pw.TextStyle(font: ttf, fontSize: 16, fontWeight: pw.FontWeight.bold),
+                                                                                      textDirection: pw.TextDirection.rtl,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            ...(
+                                                                                advices.isNotEmpty
+                                                                                    ? advices.map((advice) {
+                                                                                  return pw.TableRow(
+                                                                                    children: [
+                                                                                      pw.Padding(
+                                                                                        padding: const pw.EdgeInsets.only(right:3.0),
+                                                                                        child:
+                                                                                        pw.Text(
+                                                                                          advice["text"] ?? '',
+                                                                                          style: pw.TextStyle(font: ttf, fontSize: 10, color: PdfColors.black),
+                                                                                          textDirection: pw.TextDirection.rtl,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  );
+                                                                                }).toList()
+                                                                                    : [
+                                                                                  // If No Recommendations Exist
+                                                                                  pw.TableRow(
+                                                                                    children: [
+                                                                                      pw.Padding(
+                                                                                        padding: const pw.EdgeInsets.all(0),
+                                                                                        child: pw.Text(
+                                                                                          "",
+                                                                                          style: pw.TextStyle(font: ttf, fontSize: 8, color: PdfColors.grey),
+                                                                                          textDirection: pw.TextDirection.rtl,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ]
+                                                                            ),
+                                                                          ],
+                                                                        ),
+
+                                                                      ]
+
+                                                                  );
+
+                                                                },
+
+                                                              )
                                                           );
 
                                                           try {
@@ -411,7 +568,6 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                             await Printing.layoutPdf(
                                                               onLayout: (PdfPageFormat format) async => pdf.save(),
                                                             );
-
                                                           } catch (e) {
                                                             print('Error: $e');
                                                           }
@@ -470,16 +626,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAbuzabi> {
                                                         .textTheme.bodyLarge?.copyWith(
                                                         color: Colors.black),
                                                   ),
-                                                  Text(
-                                                    isAttended
-                                                        ? "الحالة حضرت الجلسة"
-                                                        : "الحالة لم تحضر الجلسة",
-                                                    style: isMobile ? Constants.theme
-                                                        .textTheme.bodyMedium?.copyWith(
-                                                      color: Colors.black,) : Constants.theme
-                                                        .textTheme.bodyLarge?.copyWith(
-                                                        color: Colors.black),
-                                                  ),
+                                                  // Text(
+                                                  //   isAttended
+                                                  //       ? "الحالة حضرت الجلسة"
+                                                  //       : "الحالة لم تحضر الجلسة",
+                                                  //   style: isMobile ? Constants.theme
+                                                  //       .textTheme.bodyMedium?.copyWith(
+                                                  //     color: Colors.black,) : Constants.theme
+                                                  //       .textTheme.bodyLarge?.copyWith(
+                                                  //       color: Colors.black),
+                                                  // ),
                                                   Text(
                                                     needOtherSession
                                                         ? "الحالة بحاجه الى جلسة اخرى"

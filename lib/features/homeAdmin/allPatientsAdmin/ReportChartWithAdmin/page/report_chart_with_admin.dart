@@ -224,7 +224,6 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                           width: 1,
                                         ),
                                         children: [
-
                                           pw.TableRow(
                                             children: [
                                               pw.Padding(
