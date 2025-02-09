@@ -93,33 +93,12 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                 pointers3Temp.add(pointer);
               }
             }
-            // var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString();
-            // var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString();
-            // var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString();
             var senario1 = calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
             var senario2 = calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
             var senario3 = calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pationt_pointers_count"]+pointers2Temp[0]["pationt_pointers_count"]+pointers3Temp[0]["pationt_pointers_count"] ?? 0).toString();
 
             List<int> selectedAdviceIds = [];
             List<int> selectedPointersIds = [];
-
-
-
-            if (pointers1Temp.isNotEmpty) {
-              print("----------->>>${calculatePercentage(pointers1Temp[0]["pationt_pointers_count"] ?? 0, pointers1Temp[0]["pointers_count"] ?? 0).toString()}%");
-              print("first"+pointers1Temp[0]["pationt_pointers_count"].toString());
-              print("second"+pointers1Temp[0]["pointers_count"].toString());
-            }
-            if (pointers2Temp.isNotEmpty) {
-              print("----------->>>${calculatePercentage(pointers2Temp[0]["pationt_pointers_count"] ?? 0, pointers2Temp[0]["pointers_count"] ?? 0).toString()}%");
-              print("third"+pointers2Temp[0]["pationt_pointers_count"].toString());
-              print("four"+pointers2Temp[0]["pointers_count"].toString());
-            }
-            if (pointers3Temp.isNotEmpty) {
-              print("----------->>>${calculatePercentage(pointers3Temp[0]["pationt_pointers_count"] ?? 0, pointers3Temp[0]["pointers_count"] ?? 0).toString()}%");
-              print("fifth"+pointers3Temp[0]["pationt_pointers_count"].toString());
-              print("six"+pointers3Temp[0]["pointers_count"].toString());
-            }
 
             if (pointers.isEmpty && advices.isEmpty) {
               return Center(
@@ -173,6 +152,35 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                           borderRadius: pw.BorderRadius.circular(10),
                                         ),
                                         child: pw.Center(
+                                          child: pw.Row(
+                                            mainAxisAlignment: pw.MainAxisAlignment.center,
+                                            children: [
+                                              pw.Text(
+                                                "الحالة : " + patient["name"],
+                                                style: pw.TextStyle(font: ttf, fontSize: 10, color: PdfColors.black),
+                                                textDirection: pw.TextDirection.rtl,
+                                              ),
+                                              pw.SizedBox(width: 20,),
+                                              pw.Text(
+                                                "الاستشارى : " + patient["form"]["advicor"]["name"],
+                                                style: pw.TextStyle(font: ttf, fontSize: 10, color: PdfColors.black),
+                                                textDirection: pw.TextDirection.rtl,
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      pw.SizedBox(height: 10),
+                                      pw.Container(
+                                        decoration: pw.BoxDecoration(
+                                          border: pw.Border.all(
+                                            color: PdfColors.black,
+                                            width: 1,
+                                          ),
+                                          borderRadius: pw.BorderRadius.circular(10),
+                                        ),
+                                        child: pw.Center(
                                           child: pw.Column(
                                             mainAxisAlignment: pw.MainAxisAlignment.center,
                                             children: [
@@ -195,7 +203,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                           ),
                                         ),
                                       ),
-                                      pw.SizedBox(height: 20),
+                                      pw.SizedBox(height: 10),
                                       pw.Table(
                                           border: pw.TableBorder.all(
                                             color: PdfColors.black,
@@ -391,7 +399,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
 
                                         ],
                                       ),
-                                      pw.SizedBox(height: 20),
+                                      pw.SizedBox(height: 10),
                                       pw.Table(
                                         border: pw.TableBorder.all(
                                           color: PdfColors.black,
@@ -418,44 +426,43 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                               pw.Padding(
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 child: pw.Container(
-                                                  height: 200,
+                                                  // Remove fixed height to allow dynamic expansion
                                                   child: pw.Column(
                                                     children: [
-                                                      for (var index = 0; index < pointers1Temp.length; index++)
+                                                      for (var index = 0; index < advices.length; index++)
                                                         pw.Container(
                                                           margin: const pw.EdgeInsets.only(bottom: 5.0),
                                                           child: pw.Column(
                                                             crossAxisAlignment: pw.CrossAxisAlignment.start,
                                                             children: [
-                                                              pw.Column(
-                                                                mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                              pw.Table(
+                                                                // border: pw.TableBorder.all(color: PdfColors.black),
                                                                 children: [
-                                                                  pw.Table(
-                                                                    // border: pw.TableBorder.all(color: PdfColors.black),
+                                                                  pw.TableRow(
                                                                     children: [
-                                                                      for (var index = 0; index < advices.length; index++)
-                                                                        pw.TableRow(
-                                                                          children: [
-                                                                            pw.Padding(
-                                                                              padding: const pw.EdgeInsets.all(2.0),
-                                                                              child: pw.Text(
-                                                                                advices[index]["text"],
-                                                                                style: pw.TextStyle(
-                                                                                  font: ttf,
-                                                                                  fontSize: 8,
-                                                                                  color: PdfColors.black,
-                                                                                ),
-                                                                                textDirection: pw.TextDirection.rtl,
-                                                                              ),
-                                                                            ),
-                                                                          ],),],
-
+                                                                      pw.Padding(
+                                                                        padding: const pw.EdgeInsets.all(2.0),
+                                                                        child: pw.Text(
+                                                                          advices[index]["text"],
+                                                                          style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 8,
+                                                                            color: PdfColors.black,
+                                                                          ),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
-                                                            ],),
-                                                        ),],),),),
-
+                                                            ],
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
 
@@ -486,8 +493,7 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                         } catch (e) {
                           print('Error: $e');
                         }
-                      },
-                    ),
+                      },                    ),
                   ),
 
                 ],

@@ -1,8 +1,6 @@
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
-import 'package:experts_app/features/homeAdmin/addSession/page/add_session_view.dart';
-import 'package:experts_app/features/homeAdmin/home_admin_view.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -17,7 +15,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printing/printing.dart';
 
+import '../../../../core/Services/snack_bar_service.dart';
 import '../../../../domain/entities/AllPatientModel.dart';
+import '../../allQuestionView/manager/cubit.dart';
 import '../replace_advisor/page/replace_advisor_view.dart';
 
 class PatientDetailsAdminView extends StatefulWidget {
@@ -42,7 +42,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
 
   @override
   void dispose() {
-    _patientFormViewCubit.close(); // Close the cubit when done
+    _patientFormViewCubit.close();
     super.dispose();
   }
 
@@ -127,12 +127,12 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
           }
           else if (state is SuccessPatientNationalIdState) {
             var formData = state.result.data["pationt"]["form"];
-            var advicor = formData["advicor"] ;
-            var patient = formData["pationt"];
+            var patient = state.result.data["pationt"];
             var answers = formData["answers"];
             var comments = formData["comments"];
             var consultation = formData["consultationService"];
             var filteredAnswers = filterQuestionsWithAnswer(answers);
+
             return Directionality(
               textDirection: TextDirection.rtl,
               child: Scaffold(
@@ -418,7 +418,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                             .centerRight,
                                                                         child: pw
                                                                             .Text(
-                                                                          "${advicor["name"]}",
+                                                                          "${patient["advicor"]["name"]["name"]}",
                                                                           style: pw.TextStyle(
                                                                               font: ttf,
                                                                               fontSize: 12,
@@ -906,7 +906,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                         ),
                                       ),
                                       Text(
-                                        "الاستشارى : ${advicor["name"]}  ",
+                                        "الاستشارى : ${formData["advicor"]["name"]}  ",
                                         style: TextStyle(
                                           fontSize: isMobile ? 16 : 24,
                                           fontWeight: FontWeight.bold,
@@ -1083,7 +1083,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                     ])),
                                                             pw.Container(
                                                                 margin:
-                                                                    pw.EdgeInsets
+                                                                    const pw.EdgeInsets
                                                                         .all(5),
                                                                 decoration: pw.BoxDecoration(
                                                                     border: pw.Border.all(
@@ -1168,7 +1168,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                             .centerRight,
                                                                         child: pw
                                                                             .Text(
-                                                                          "${advicor["name"]}",
+                                                                          "${formData["advicor"]["name"]}",
                                                                           style: pw.TextStyle(
                                                                               font: ttf,
                                                                               fontSize: 15,
@@ -1613,7 +1613,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                         ),
                                       ),
                                       Text(
-                                        "الاستشارى : ${advicor["name"]}  ",
+                                        "الاستشارى : ${formData["advicor"]["name"]}  ",
                                         style: TextStyle(
                                           fontSize: isMobile ? 16 : 24,
                                           fontWeight: FontWeight.bold,
@@ -1715,229 +1715,121 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
-                                child: ListView.builder(
-                                  itemCount: answers.length + 1,
+                                child:
+                                ListView.builder(
+                                  itemCount: answers.length,
                                   itemBuilder: (context, index) {
-                                    if (index < answers.length) {
-                                      var answer = answers[index];
-                                      return Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Center(
-                                            child: Text(
-                                              answer["title"],
-                                              style: isMobile
-                                                  ? Constants.theme.textTheme
-                                                      .bodyMedium
-                                                      ?.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    )
-                                                  : Constants.theme.textTheme
-                                                      .titleLarge
-                                                      ?.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            // height: answer["question_options"].length * 40,
-                                            height: answer["question_options"].length > 3 ? Constants.mediaQuery.height * 0.35  : Constants.mediaQuery.height * 0.18, //todo change
-
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: isMobile ? 5 : 20,
-                                                vertical: 20),
-                                             alignment:Alignment.center,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
+                                    var answer = answers[index];
+                                    return Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  answer["title"],
+                                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
                                               ),
                                             ),
-                                            child: Column(
-                                              mainAxisAlignment:MainAxisAlignment.center,
-                                              children:
-                                                  answer["question_options"]
-                                                      .map<Widget>(
-                                                          (option) {
-                                                return Row(
-                                                  children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                _patientFormViewCubit.deleteQuestionFromForm(
+                                                  answer["id"],
+                                                  formData["id"],
+                                                  false,
+                                                ).then((_) {
+                                                  answers.removeAt(index);
+
+                                                  _patientFormViewCubit.setRefresh(widget.pationt_data.nationalId, 0);
+                                                });
+                                              },
+                                              icon: Icon(Icons.delete),
+                                            ),
+                                          ],
+                                        ),
+                                        Container(
+                                          width: double.infinity,
+                                          height: answer["question_options"].length > 3
+                                              ? Constants.mediaQuery.height * 0.35
+                                              : Constants.mediaQuery.height * 0.18,
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: isMobile ? 5 : 20,
+                                            vertical: 20,
+                                          ),
+                                          alignment: Alignment.center,
+                                          decoration: const BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: answer["question_options"].map<Widget>((option) {
+                                              return Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      option["title"].toString(),
+                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  if (option["type"] == 1)
+                                                    Expanded(
+                                                      child: Radio<bool>(
+                                                        value: option["answer"] == "1" ? true : false,
+                                                        groupValue: true,
+                                                        onChanged: (value) {},
+                                                      ),
+                                                    ),
+                                                  if (option["type"] == 2)
+                                                    Expanded(
+                                                      child: Checkbox(
+                                                        value: option["answer"] == "1" ? true : false,
+                                                        onChanged: (value) {},
+                                                      ),
+                                                    ),
+                                                  if (option["type"] == 3 && option["answer"] != null)
                                                     Expanded(
                                                       child: Text(
-                                                        option["title"]
-                                                            .toString(),
-                                                        style: Constants
-                                                            .theme
-                                                            .textTheme
-                                                            .bodyMedium
-                                                            ?.copyWith(
-                                                          color:
-                                                              Colors.black,
+                                                        option["answer"].toString(),
+                                                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                          color: Colors.black,
                                                         ),
                                                       ),
                                                     ),
-                                                    if (option["type"] == 1)
-                                                      Expanded(
-                                                        child: Radio<bool>(
-                                                          value:
-                                                              option["answer"] ==
-                                                                      "1"
-                                                                  ? true
-                                                                  : false,
-                                                          groupValue: true,
-                                                          onChanged:
-                                                              (value) {},
-                                                        ),
-                                                      ),
-                                                    if (option["type"] == 2)
-                                                      Expanded(
-                                                        child: Checkbox(
-                                                          value:
-                                                              option["answer"] ==
-                                                                      "1"
-                                                                  ? true
-                                                                  : false,
-                                                          onChanged:
-                                                              (value) {},
-                                                        ),
-                                                      ),
-                                                    if (option["type"] ==
-                                                            3 &&
-                                                        option["answer"] !=
-                                                            null)
-                                                      Expanded(
-                                                        child: Text(
-                                                          option["answer"]
-                                                              .toString(),
-                                                          style: Constants
-                                                              .theme
-                                                              .textTheme
-                                                              .bodyMedium
-                                                              ?.copyWith(
-                                                            color: Colors
-                                                                .black,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
-                                                );
-                                              }).toList(),
-                                            ).setHorizontalPadding(
-                                                context,
-                                                enableMediaQuery: false,
-                                                isMobile ? 5 : 20),
+                                                ],
+                                              );
+                                            }).toList(),
+                                          ).setHorizontalPadding(
+                                            context,
+                                            enableMediaQuery: false,
+                                            isMobile ? 5 : 20,
                                           ),
-                                          const Divider(
-                                            thickness: 2,
-                                            height: 3,
-                                            indent: 20,
-                                            endIndent: 20,
-                                            color: Colors.black45,
-                                          ),
-                                          const SizedBox(height: 10),
-                                        ],
-                                      );
-                                    } else {
-                                      return Column(
-                                        children: [
-                                          Text(
-                                            formData["need_other_session"] == 1
-                                                ? "الحالة بحاجه إلى جلسة أخرى"
-                                                : "الحالة ليست بحاجه إلى جلسة أخرى",
-                                            style: Constants
-                                                .theme.textTheme.bodyLarge,
-                                          ),
-                                          SizedBox(height: 10),
-                                          const Divider(
-                                            thickness: 2,
-                                            height: 3,
-                                            indent: 20,
-                                            endIndent: 20,
-                                            color: Colors.black54,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            consultation["name"],
-                                            style: Constants
-                                                .theme.textTheme.bodyLarge,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Container(
-                                            height:
-                                                Constants.mediaQuery.height *
-                                                    0.15,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            child: Text(
-                                              consultation["description"],
-                                              style: Constants
-                                                  .theme.textTheme.bodyMedium
-                                                  ?.copyWith(
-                                                color: Colors.black,
-                                              ),
-                                            ).setHorizontalPadding(
-                                                context,
-                                                enableMediaQuery: false,
-                                                20),
-                                          ),
-                                          SizedBox(height: 20),
-                                          Text(
-                                            "ملاحظات الاستشارى",
-                                            style: Constants
-                                                .theme.textTheme.bodyLarge,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Container(
-                                            height:
-                                                Constants.mediaQuery.height *
-                                                    0.2,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            child: SingleChildScrollView(
-                                              child: Text(
-                                                formData["comments"],
-                                                style: Constants
-                                                    .theme.textTheme.bodyMedium
-                                                    ?.copyWith(
-                                                  color: Colors.black,
-                                                ),
-                                              ).setHorizontalPadding(
-                                                  context,
-                                                  enableMediaQuery: false,
-                                                  20),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                          .setVerticalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              20)
-                                          .setHorizontalPadding(
-                                              context,
-                                              enableMediaQuery: false,
-                                              20);
-                                    }
+                                        ),
+                                        const Divider(
+                                          thickness: 2,
+                                          height: 3,
+                                          indent: 20,
+                                          endIndent: 20,
+                                          color: Colors.black45,
+                                        ),
+                                        const SizedBox(height: 10),
+                                      ],
+                                    );
                                   },
-                                ).setHorizontalPadding(
+                                )
+                                    .setHorizontalPadding(
                                     context, enableMediaQuery: false, 20),
                               ).setHorizontalPadding(
                                   context, enableMediaQuery: false, 20),
@@ -1947,7 +1839,8 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                 ),
               ),
             );
-          } else {
+          }
+          else {
             return Center(
               child: Text("Something went wrong"),
             );

@@ -264,40 +264,6 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                               ]
                                                           )
                                                       ),
-
-                                                      pw.Container(
-                                                          margin: pw.EdgeInsets.all(5),
-                                                          decoration: pw.BoxDecoration(
-                                                              color: PdfColors.white,
-                                                              border: pw.Border.all(
-                                                                  width: 1
-                                                              ),
-                                                              borderRadius: pw.BorderRadius.circular(10)
-                                                          ),
-                                                          child: pw.Row(
-                                                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                pw.SizedBox(width: 20,),
-                                                                pw.Container(
-                                                                  alignment: pw.Alignment.centerRight,
-                                                                  child: pw.Text(
-                                                                    "${advicor["name"]}" ,
-                                                                    style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
-                                                                    textDirection: pw.TextDirection.rtl,
-                                                                  ),
-                                                                ),
-                                                                pw.Container(
-                                                                  alignment: pw.Alignment.centerRight,
-                                                                  child: pw.Text(
-                                                                    "اسم الاستشارى" ,
-                                                                    style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
-                                                                    textDirection: pw.TextDirection.rtl,
-                                                                  ),
-                                                                ),
-                                                                pw.SizedBox(width: 20,),
-                                                              ]
-                                                          )
-                                                      ),
                                                       pw.Container(
                                                         width: 350,
                                                         alignment: pw.Alignment.center,
@@ -724,39 +690,6 @@ class _PatientDetailsAbozabyViewState extends State<PatientDetailsAbozabyView> {
                                                           )
                                                       ),
 
-                                                      pw.Container(
-                                                          margin: pw.EdgeInsets.all(5),
-                                                          decoration: pw.BoxDecoration(
-                                                              color: PdfColors.white,
-                                                              border: pw.Border.all(
-                                                                  width: 1
-                                                              ),
-                                                              borderRadius: pw.BorderRadius.circular(10)
-                                                          ),
-                                                          child: pw.Row(
-                                                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                pw.SizedBox(width: 20,),
-                                                                pw.Container(
-                                                                  alignment: pw.Alignment.centerRight,
-                                                                  child: pw.Text(
-                                                                    "${advicor["name"]}" ,
-                                                                    style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
-                                                                    textDirection: pw.TextDirection.rtl,
-                                                                  ),
-                                                                ),
-                                                                pw.Container(
-                                                                  alignment: pw.Alignment.centerRight,
-                                                                  child: pw.Text(
-                                                                    "اسم الاستشارى" ,
-                                                                    style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
-                                                                    textDirection: pw.TextDirection.rtl,
-                                                                  ),
-                                                                ),
-                                                                pw.SizedBox(width: 20,),
-                                                              ]
-                                                          )
-                                                      ),
                                                       pw.Container(
                                                         width: 350,
                                                         alignment: pw.Alignment.center,

@@ -211,29 +211,29 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          FadeInRight(
-                            duration: Duration(milliseconds: 1100),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "الحالة حضرت الجلسة",
-                                  style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.titleLarge
-                                      ?.copyWith(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Checkbox(
-                                  value: (isAttendSelected == 1),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      isAttendSelected = (value!) ? 1 : 0;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
+                          // SizedBox(height: 10),
+                          // FadeInRight(
+                          //   duration: Duration(milliseconds: 1100),
+                          //   child: Row(
+                          //     children: [
+                          //       Text(
+                          //         "الحالة حضرت الجلسة",
+                          //         style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.titleLarge
+                          //             ?.copyWith(
+                          //           color: Colors.black,
+                          //         ),
+                          //       ),
+                          //       Checkbox(
+                          //         value: (isAttendSelected == 1),
+                          //         onChanged: (value) {
+                          //           setState(() {
+                          //             isAttendSelected = (value!) ? 1 : 0;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           SizedBox(height: 10),
                           FadeInRight(
                             duration: Duration(milliseconds: 1300),

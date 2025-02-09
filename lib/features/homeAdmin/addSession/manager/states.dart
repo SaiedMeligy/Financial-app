@@ -22,6 +22,11 @@ class SuccessDeleteSession extends AddSessionStates{
   SuccessDeleteSession(this.result);
 
 }
+class SuccessDeleteQuestionFromForm extends AddSessionStates{
+  final Response result;
+  SuccessDeleteQuestionFromForm(this.result);
+
+}
 class SuccessShowSessionWithAdmin extends AddSessionStates{
   final Response result;
   SuccessShowSessionWithAdmin(this.result);
@@ -33,6 +38,8 @@ class ErrorAddSessionState extends AddSessionStates{
   ErrorAddSessionState(this.errorMessage);
 }
 class ErrorFormState extends AddSessionStates{
-
   ErrorFormState();
+}
+class NavigateBackState extends AddSessionStates{
+  NavigateBackState();
 }

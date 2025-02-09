@@ -101,11 +101,11 @@ class _AddSessionWithAdminViewState extends State<AddSessionWithAdminView> {
               patient_id = state.result.data['pationt']['id'] ?? 0;
               _phoneNumber.text = state.result.data['pationt']['phone_number'] ?? '';
               _nameAdvisorController.text = state.result.data['pationt']["form"]?['advicor']?['name'] ?? '';
-              sessionNum =state.result.data['pationt']["sessions"].length+1;
+              sessionNum =state.result.data['pationt']["sessions"].length+2;
               // print("----------->>"+state.result.data);
 
               if(sessionNum==0){
-                 sessionNum=state.result.data['pationt']["sessions"].length+1;
+                 sessionNum=state.result.data['pationt']["sessions"].length+2;
              }
               else{
                 sessionNum;

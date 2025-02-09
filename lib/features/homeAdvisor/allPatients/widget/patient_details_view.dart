@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html'as html;
+import 'package:experts_app/core/Services/snack_bar_service.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
               );
             } else if (state is SuccessAddSessionState) {
               var formData = state.result.data["pationt"]["form"];
-              var patient = formData["pationt"];
+              var patient = state.result.data["pationt"];
               var advicor = formData["advicor"];
               var answers = formData["answers"];
               var comments = formData["comments"];
@@ -293,7 +294,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                                   pw.Container(
                                                                     alignment: pw.Alignment.centerRight,
                                                                     child: pw.Text(
-                                                                      "${advicor["name"]}" ,
+                                                                      "${patient["advicor"]["name"]}" ,
                                                                       style: pw.TextStyle(font: ttfSans, fontSize: 12, color: PdfColors.black),
                                                                       textDirection: pw.TextDirection.rtl,
                                                                     ),
@@ -611,7 +612,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                     ),
                                   ),
                                   Text(
-                                    "الاستشارى : ${advicor["name"]}  ",
+                                    "الاستشارى : ${patient["advicor"]["name"]}  ",
                                     style:  TextStyle(
                                       fontSize: isMobile?16:24,
                                       fontWeight: FontWeight.bold,
@@ -768,7 +769,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                                     pw.Container(
                                                                       alignment: pw.Alignment.centerRight,
                                                                       child: pw.Text(
-                                                                        "${advicor["name"]}" ,
+                                                                        "${patient["advicor"]["name"]}" ,
                                                                         style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
                                                                         textDirection: pw.TextDirection.rtl,
                                                                       ),
@@ -1053,7 +1054,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                     ),
                                                               // if (_currentAnimation == 2)
                                     Text(
-                                      "الاستشاري : ${advicor["name"]}  ",
+                                      "الاستشاري : ${formData["advicor"]["name"]}  ",
                                       style:  TextStyle(
                                         fontSize: isMobile?18:24,
                                         fontWeight: FontWeight.bold,
@@ -1157,13 +1158,35 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                   return Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Center(
-                                        child: Text(
-                                          answer["title"],
-                                          style: Constants.theme.textTheme.titleLarge?.copyWith(
-                                            fontWeight: FontWeight.bold,
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Center(
+                                              child: Text(
+                                                answer["title"],
+                                                style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          IconButton(
+                                            onPressed: () {
+                                              _patientFormViewCubit.deleteQuestionFromForm(
+                                                answer["id"],
+                                                formData["id"],
+                                                true,
+                                              ).then((_) {
+                                                answers.removeAt(index);
+                                                SnackBarService.showSuccessMessage("تم حذف السؤال بنجاح");
+                                                _patientFormViewCubit.setRefreshAdvicor(widget.pationt_data.nationalId);
+                                              });
+                                            },
+                                            icon: Icon(Icons.delete),
+                                          ),
+                                        ],
                                       ),
                                       Container(
                                         width: double.infinity,

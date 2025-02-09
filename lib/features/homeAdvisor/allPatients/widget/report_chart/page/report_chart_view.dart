@@ -150,6 +150,35 @@ class _ReportChartViewState extends State<ReportChartView> {
                                             borderRadius: pw.BorderRadius.circular(10),
                                           ),
                                           child: pw.Center(
+                                            child: pw.Row(
+                                              mainAxisAlignment: pw.MainAxisAlignment.center,
+                                              children: [
+                                                pw.Text(
+                                                  "الحالة : " + patient["name"],
+                                                  style: pw.TextStyle(font: ttf, fontSize: 10, color: PdfColors.black),
+                                                  textDirection: pw.TextDirection.rtl,
+                                                ),
+                                                pw.SizedBox(width: 20,),
+                                                pw.Text(
+                                                  "الاستشارى : " + patient["form"]["advicor"]["name"],
+                                                  style: pw.TextStyle(font: ttf, fontSize: 10, color: PdfColors.black),
+                                                  textDirection: pw.TextDirection.rtl,
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        pw.SizedBox(height: 10),
+                                        pw.Container(
+                                          decoration: pw.BoxDecoration(
+                                            border: pw.Border.all(
+                                              color: PdfColors.black,
+                                              width: 1,
+                                            ),
+                                            borderRadius: pw.BorderRadius.circular(10),
+                                          ),
+                                          child: pw.Center(
                                             child: pw.Column(
                                               mainAxisAlignment: pw.MainAxisAlignment.center,
                                               children: [
@@ -159,12 +188,12 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
                                                 pw.Text(
-                                                  "السيناريوالثاني(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toString() + "%",
+                                                  "السيناريوالثاني(للحالات الغير متوازنة في الصرف) : " + double.parse(senario2).toStringAsFixed(2) + "%",
                                                   style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
                                                 pw.Text(
-                                                  "السيناريوالثالث(للحالات المتعثرة ماليا) : " + double.parse(senario3).toString() + "%",
+                                                  "السيناريوالثالث(للحالات المتعثرة ماليا) : " + double.parse(senario3).toStringAsFixed(2) + "%",
                                                   style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
                                                   textDirection: pw.TextDirection.rtl,
                                                 ),
@@ -172,7 +201,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                                             ),
                                           ),
                                         ),
-                                        pw.SizedBox(height: 20),
+                                        pw.SizedBox(height: 10),
                                         pw.Table(
                                             border: pw.TableBorder.all(
                                               color: PdfColors.black,
@@ -201,7 +230,6 @@ class _ReportChartViewState extends State<ReportChartView> {
                                             width: 1,
                                           ),
                                           children: [
-
                                             pw.TableRow(
                                               children: [
                                                 pw.Padding(
@@ -369,7 +397,7 @@ class _ReportChartViewState extends State<ReportChartView> {
 
                                           ],
                                         ),
-                                        pw.SizedBox(height: 20),
+                                        pw.SizedBox(height: 10),
                                         pw.Table(
                                           border: pw.TableBorder.all(
                                             color: PdfColors.black,
@@ -396,44 +424,43 @@ class _ReportChartViewState extends State<ReportChartView> {
                                                 pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
                                                   child: pw.Container(
-                                                    height: 200,
+                                                    // Remove fixed height to allow dynamic expansion
                                                     child: pw.Column(
                                                       children: [
-                                                        for (var index = 0; index < pointers1Temp.length; index++)
+                                                        for (var index = 0; index < advices.length; index++)
                                                           pw.Container(
                                                             margin: const pw.EdgeInsets.only(bottom: 5.0),
                                                             child: pw.Column(
                                                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                                                               children: [
-                                                                pw.Column(
-                                                                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                pw.Table(
+                                                                  // border: pw.TableBorder.all(color: PdfColors.black),
                                                                   children: [
-                                                                    pw.Table(
-                                                                      // border: pw.TableBorder.all(color: PdfColors.black),
+                                                                    pw.TableRow(
                                                                       children: [
-                                                                        for (var index = 0; index < advices.length; index++)
-                                                                          pw.TableRow(
-                                                                            children: [
-                                                                              pw.Padding(
-                                                                                padding: const pw.EdgeInsets.all(2.0),
-                                                                                child: pw.Text(
-                                                                                  advices[index]["text"],
-                                                                                  style: pw.TextStyle(
-                                                                                    font: ttf,
-                                                                                    fontSize: 8,
-                                                                                    color: PdfColors.black,
-                                                                                  ),
-                                                                                  textDirection: pw.TextDirection.rtl,
-                                                                                ),
-                                                                              ),
-                                                                            ],),],
-
+                                                                        pw.Padding(
+                                                                          padding: const pw.EdgeInsets.all(2.0),
+                                                                          child: pw.Text(
+                                                                            advices[index]["text"],
+                                                                            style: pw.TextStyle(
+                                                                              font: ttf,
+                                                                              fontSize: 8,
+                                                                              color: PdfColors.black,
+                                                                            ),
+                                                                            textDirection: pw.TextDirection.rtl,
+                                                                          ),
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ],
                                                                 ),
-                                                              ],),
-                                                          ),],),),),
-
+                                                              ],
+                                                            ),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
 
@@ -465,6 +492,7 @@ class _ReportChartViewState extends State<ReportChartView> {
                             print('Error: $e');
                           }
                         },
+
                       ),
                     ),
 

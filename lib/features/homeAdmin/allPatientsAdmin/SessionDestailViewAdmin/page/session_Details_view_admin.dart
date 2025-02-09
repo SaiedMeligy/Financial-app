@@ -271,31 +271,31 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                       ),
                                                     ),
                                                     SizedBox(height: 10),
-                                                    FadeInRight(
-                                                      duration: Duration(milliseconds: 1100),
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            "الحالة حضرت الجلسة",
-                                                            style: isMobile ? Constants.theme.textTheme
-                                                                .bodyMedium?.copyWith(
-                                                              color: Colors.black,) : Constants.theme
-                                                                .textTheme.titleLarge?.copyWith(
-                                                              color: Colors.black,
-                                                            ),
-                                                          ),
-                                                          Checkbox(
-                                                            value: (isAttendSelected == 1),
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                isAttendSelected = (value!) ? 1 : 0;
-                                                              });
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10),
+                                                    // FadeInRight(
+                                                    //   duration: Duration(milliseconds: 1100),
+                                                    //   child: Row(
+                                                    //     children: [
+                                                    //       Text(
+                                                    //         "الحالة حضرت الجلسة",
+                                                    //         style: isMobile ? Constants.theme.textTheme
+                                                    //             .bodyMedium?.copyWith(
+                                                    //           color: Colors.black,) : Constants.theme
+                                                    //             .textTheme.titleLarge?.copyWith(
+                                                    //           color: Colors.black,
+                                                    //         ),
+                                                    //       ),
+                                                    //       Checkbox(
+                                                    //         value: (isAttendSelected == 1),
+                                                    //         onChanged: (value) {
+                                                    //           setState(() {
+                                                    //             isAttendSelected = (value!) ? 1 : 0;
+                                                    //           });
+                                                    //         },
+                                                    //       ),
+                                                    //     ],
+                                                    //   ),
+                                                    // ),
+                                                    // SizedBox(height: 10),
                                                     FadeInRight(
                                                       duration: Duration(milliseconds: 1300),
                                                       child: Row(
@@ -428,10 +428,9 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                   } else if (state is SuccessShowSessionWithAdmin) {
                                                     var session = state.result.data["session"];
                                                     if (session == null) {
-                                                      return Center(
+                                                      return const Center(
                                                           child: Text("No session data available."));
                                                     }
-                                                    print("sesssion Id"+session['id'].toString());
                                                     var sessionId = session['id'];
                                                     var patientName = session["pationt"]["name"] ?? "";
                                                     var advisorName = session["advicor"]["name"] ?? "";
@@ -465,43 +464,37 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                     //     child: Text("No data available"),
                                                     //   );
                                                     // }
-
-                    if(phoneNumber.toString().contains('+')){
+                                                    if(phoneNumber.toString().contains('+')){
                       phoneNumber = phoneNumber.toString().replaceAll('+', '');
                       phoneNumber = '$phoneNumber+';
                     }
-                    if(otherPhoneNumber.toString().contains('+')){
-                      otherPhoneNumber = otherPhoneNumber.toString().replaceAll('+', '');
-                      otherPhoneNumber = '$otherPhoneNumber+';
-                    }
+                                                    if(otherPhoneNumber.toString().contains('+')){
+                                                      otherPhoneNumber = otherPhoneNumber.toString().replaceAll('+', '');
+                                                      otherPhoneNumber = '$otherPhoneNumber+';
+                                                    }
+                                                    var isAttended = session["is_attended"] == 1;
+                                                    var needOtherSession = session["need_other_session"] == 1;
+                                                    var isSuccessStory = session["is_success_story"] == 1;
+                                                    var serviceName = session["consultation_service"] !=
+                                                        null
+                                                        ? session["consultation_service"]["name"]
+                                                        : "";
+                                                    var serviceDescription = session["consultation_service"] !=
+                                                        null ? session["consultation_service"]["description"] : "";
+                                                    var advisorComments = session["advicor_comments"] ?? "";
+                                                    // bool needSession = needOtherSession ? true : false;
 
-                    var isAttended = session["is_attended"] == 1;
-                    var needOtherSession = session["need_other_session"] == 1;
-                    var isSuccessStory = session["is_success_story"] == 1;
-                    var serviceName = session["consultation_service"] !=
-                        null
-                        ? session["consultation_service"]["name"]
-                        : "";
-                    var serviceDescription = session["consultation_service"] !=
-                        null
-                        ? session["consultation_service"]["description"]
-                        : "";
-                    var advisorComments = session["advicor_comments"] ?? "";
-                   // bool needSession = needOtherSession ? true : false;
-
-
-                    var sessionDate = session["date"] ?? "";
-                    int needSession = needOtherSession ? 1 : 0;
-                    int successStory = isSuccessStory ? 1 : 0;
-                    int attendSession = isAttended ? 1 : 0;
-
-                    TextEditingController commentController = TextEditingController(text: advisorComments);
-                    TextEditingController phoneController = TextEditingController(text:phoneNumber );
-                    TextEditingController otherPhoneController = TextEditingController(text:otherPhoneNumber );
-                    TextEditingController caseManagerController = TextEditingController(text:caseManager );
+                                                    var sessionDate = session["date"] ?? "";
+                                                    int needSession = needOtherSession ? 1 : 0;
+                                                    int successStory = isSuccessStory ? 1 : 0;
+                                                    int attendSession = isAttended ? 1 : 0;
+                                                    TextEditingController commentController = TextEditingController(text: advisorComments);
+                                                    TextEditingController phoneController = TextEditingController(text:phoneNumber );
+                                                    TextEditingController otherPhoneController = TextEditingController(text:otherPhoneNumber );
+                                                    TextEditingController caseManagerController = TextEditingController(text:caseManager );
 
 
-                    return Directionality(
+                                                    return Directionality(
                             textDirection: TextDirection.rtl,
                             child:
                             Container(

@@ -67,7 +67,8 @@ class _DialogDeletePatientWithAdminState extends State<DialogDeletePatientWithAd
                           updatePatientCubit.
                           deletePatient(
                             widget.patient!.id!,
-                          ).then((_) {
+                          )
+                              .then((_) {
                             _deletePatientLocally(widget.patient!);
                             Navigator.of(context).pop();
                           });
