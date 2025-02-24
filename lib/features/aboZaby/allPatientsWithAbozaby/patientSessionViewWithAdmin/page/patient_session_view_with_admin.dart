@@ -143,9 +143,8 @@ bool isMobile = false;
                                   child: Container(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "الجلسة " +
-                                          session[index]["session_number"]
-                                              .toString(),
+                                      "الجلسة ${session[index]["session_number"]+1}",
+
                                       style: Theme
                                           .of(context)
                                           .textTheme

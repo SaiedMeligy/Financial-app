@@ -493,7 +493,6 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                     TextEditingController otherPhoneController = TextEditingController(text:otherPhoneNumber );
                                                     TextEditingController caseManagerController = TextEditingController(text:caseManager );
 
-
                                                     return Directionality(
                             textDirection: TextDirection.rtl,
                             child:

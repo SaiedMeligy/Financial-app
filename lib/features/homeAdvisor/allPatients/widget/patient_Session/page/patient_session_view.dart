@@ -171,10 +171,8 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                   child: Container(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "الجلسة " +
-                                          session[index]["session_number"]
-                                              .toString(),
-                                      style: isMobile?Constants.theme.textTheme.bodyMedium:Theme.of(context).textTheme.bodyLarge
+                                        "الجلسة ${session[index]["session_number"]+1}",
+                                        style: isMobile?Constants.theme.textTheme.bodyMedium:Theme.of(context).textTheme.bodyLarge
 
                                     ),
                                   ),

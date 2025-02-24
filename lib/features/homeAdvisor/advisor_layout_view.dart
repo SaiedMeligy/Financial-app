@@ -57,8 +57,8 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Constants.theme.primaryColor,
-            toolbarHeight: Constants.mediaQuery.height * 0.32.h,
-            leadingWidth: Constants.mediaQuery.width * 0.40,
+            toolbarHeight: Constants.mediaQuery.height * 0.20.h,
+            leadingWidth: Constants.mediaQuery.width * 0.30,
             leading: isMobile?null:Row(
               children: [
                 Expanded(
@@ -93,15 +93,15 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
             centerTitle: true,
             actions: [
               isMobile?Container():Container(
-                height: Constants.mediaQuery.height*0.8,
-                width: Constants.mediaQuery.width*0.35,
+                height: Constants.mediaQuery.height*0.5.h,
+                width: Constants.mediaQuery.width*0.25,
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   image: DecorationImage(
                     image: AssetImage("assets/images/لوجو الهيئة.png"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),

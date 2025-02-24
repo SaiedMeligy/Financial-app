@@ -15,9 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printing/printing.dart';
 
-import '../../../../core/Services/snack_bar_service.dart';
 import '../../../../domain/entities/AllPatientModel.dart';
-import '../../allQuestionView/manager/cubit.dart';
 import '../replace_advisor/page/replace_advisor_view.dart';
 
 class PatientDetailsAdminView extends StatefulWidget {
@@ -1706,134 +1704,178 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                       formData == null
                           ? Container()
                           : Expanded(
-                              child: Container(
-                                height: Constants.mediaQuery.height * 0.8,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Constants.theme.primaryColor
-                                      .withOpacity(0.5),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child:
-                                ListView.builder(
-                                  itemCount: answers.length,
-                                  itemBuilder: (context, index) {
-                                    var answer = answers[index];
-                                    return Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Container(
+                          height: Constants.mediaQuery.height * 0.8,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Constants.theme.primaryColor.withOpacity(0.6),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: ListView.builder(
+                            itemCount: answers.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index < answers.length) {
+                                var answer = answers[index];
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+                                    Row(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Center(
+                                        Expanded(
+                                          child: Center(
+                                            child: Text(
+                                              answer["title"],
+                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            _patientFormViewCubit.deleteQuestionFromForm(
+                                              answer["id"],
+                                              formData["id"],
+                                              false,
+                                            ).then((_) {
+                                              answers.removeAt(index);
+
+                                              _patientFormViewCubit.setRefresh(widget.pationt_data.nationalId, 0);
+                                            });
+                                          },
+                                          icon: Icon(Icons.delete),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      // height: answer["question_options"].length * 40,
+                                      height: answer["question_options"].length > 3 ? Constants.mediaQuery.height * 0.35  : Constants.mediaQuery.height * 0.18, //todo change
+                                      margin: EdgeInsets.symmetric(horizontal: isMobile?5:20, vertical: 20),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:MainAxisAlignment.center,
+                                        children: answer["question_options"].map<Widget>((option) {
+                                          return Row(
+                                            children: [
+
+                                              Expanded(
                                                 child: Text(
-                                                  answer["title"],
-                                                  style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                                    fontWeight: FontWeight.bold,
+                                                  option["title"].toString(),
+                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                    color: Colors.black,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
                                                 ),
                                               ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                _patientFormViewCubit.deleteQuestionFromForm(
-                                                  answer["id"],
-                                                  formData["id"],
-                                                  false,
-                                                ).then((_) {
-                                                  answers.removeAt(index);
-
-                                                  _patientFormViewCubit.setRefresh(widget.pationt_data.nationalId, 0);
-                                                });
-                                              },
-                                              icon: Icon(Icons.delete),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: double.infinity,
-                                          height: answer["question_options"].length > 3
-                                              ? Constants.mediaQuery.height * 0.35
-                                              : Constants.mediaQuery.height * 0.18,
-                                          margin: EdgeInsets.symmetric(
-                                            horizontal: isMobile ? 5 : 20,
-                                            vertical: 20,
-                                          ),
-                                          alignment: Alignment.center,
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: answer["question_options"].map<Widget>((option) {
-                                              return Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      option["title"].toString(),
-                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                        color: Colors.black,
-                                                      ),
+                                              if (option["type"] == 1 )
+                                                Expanded(
+                                                  child: Radio<bool>(
+                                                    value: option["answer"]=="1"?true:false,
+                                                    groupValue: true,
+                                                    onChanged: (value) {},
+                                                  ),
+                                                ),
+                                              if (option["type"] == 2 )
+                                                Expanded(
+                                                  child: Checkbox(
+                                                    value: option["answer"]=="1"?true:false,
+                                                    onChanged: (value) {},
+                                                  ),
+                                                ),
+                                              if (option["type"] == 3 && option["answer"] != null)
+                                                Expanded(
+                                                  child: Text(
+                                                    option["answer"].toString(),
+                                                    style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                      color: Colors.black,
                                                     ),
                                                   ),
-                                                  if (option["type"] == 1)
-                                                    Expanded(
-                                                      child: Radio<bool>(
-                                                        value: option["answer"] == "1" ? true : false,
-                                                        groupValue: true,
-                                                        onChanged: (value) {},
-                                                      ),
-                                                    ),
-                                                  if (option["type"] == 2)
-                                                    Expanded(
-                                                      child: Checkbox(
-                                                        value: option["answer"] == "1" ? true : false,
-                                                        onChanged: (value) {},
-                                                      ),
-                                                    ),
-                                                  if (option["type"] == 3 && option["answer"] != null)
-                                                    Expanded(
-                                                      child: Text(
-                                                        option["answer"].toString(),
-                                                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                ],
-                                              );
-                                            }).toList(),
-                                          ).setHorizontalPadding(
-                                            context,
-                                            enableMediaQuery: false,
-                                            isMobile ? 5 : 20,
+                                                ),
+                                            ],
+                                          );
+                                        }).toList(),
+                                      ).setHorizontalPadding(context, enableMediaQuery: false, isMobile?5:20),
+                                    ),
+                                    Divider(
+                                      thickness: 2,
+                                      height: 3,
+                                      indent: 20,
+                                      endIndent: 20,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(height: 10),
+                                  ],
+                                );
+                              } else {
+                                return Column(
+                                  children: [
+                                    Text(formData["need_other_session"]==1?"الحالة بحاجه إلى جلسة أخرى":"الحالة ليست بحاجه الي جلسة أخرى",style: Constants.theme.textTheme.bodyLarge,),
+                                    SizedBox(height: 10),
+                                    Divider(
+                                      thickness: 2,
+                                      height: 3,
+                                      indent: 20,
+                                      endIndent: 20,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(consultation["name"],style: Constants.theme.textTheme.bodyLarge,),
+                                    SizedBox(height: 10),
+                                    Container(
+                                      height: Constants.mediaQuery.height * 0.15,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        consultation["description"],
+                                        style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                          color: Colors.black,
+                                        ),
+                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                    ),
+                                    SizedBox(height: 20),
+                                    Text("ملاحظات الاستشاري",style: Constants.theme.textTheme.bodyLarge,),
+                                    SizedBox(height: 10),
+                                    Container(
+                                      height: Constants.mediaQuery.height * 0.2,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: SingleChildScrollView(
+                                        child: Text(
+                                          formData["comments"],
+                                          style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black,
                                           ),
-                                        ),
-                                        const Divider(
-                                          thickness: 2,
-                                          height: 3,
-                                          indent: 20,
-                                          endIndent: 20,
-                                          color: Colors.black45,
-                                        ),
-                                        const SizedBox(height: 10),
-                                      ],
-                                    );
-                                  },
-                                )
-                                    .setHorizontalPadding(
-                                    context, enableMediaQuery: false, 20),
-                              ).setHorizontalPadding(
-                                  context, enableMediaQuery: false, 20),
-                            )
+                                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                      ),
+                                    ),
+                                  ],
+                                ).setVerticalPadding(context, enableMediaQuery: false, 20).setHorizontalPadding(context,enableMediaQuery: false, 20);
+                              }
+                            },
+                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                        ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                      )
                     ],
                   ),
                 ),

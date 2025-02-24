@@ -154,7 +154,7 @@ class _PatientSessionViewWithAbouzabiState extends State<PatientSessionViewWithA
                                 child: Container(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "الجلسة " + filteredSessions[index]["session_number"].toString(),
+                                    "الجلسة ${filteredSessions[index]["session_number"]+1}",
                                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white,
                                       fontSize: isMobile ? 16 : 20,

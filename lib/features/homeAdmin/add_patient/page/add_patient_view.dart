@@ -9,6 +9,7 @@ import '../../../../core/config/constants.dart';
 import '../../../../core/widget/border_rounded_button.dart';
 import '../../../../core/widget/custom_text_field.dart';
 import '../../../../domain/entities/RegisterPatient.dart';
+import '../../../homeAdvisor/addSessionWithAdvisor/widget/all_advisor_drop_down.dart';
 import '../manager/cubit.dart';
 import '../manager/states.dart';
 
@@ -26,6 +27,8 @@ class _AddPatientViewState extends State<AddPatientView> {
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  String? selected_advisor;
+
 
   var registerPatientCubit = RegisterPatientWithAdminCubit();
   @override
@@ -71,6 +74,21 @@ class _AddPatientViewState extends State<AddPatientView> {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              DropdownButtonAdvisor(
+                                onAdvisorSelected: (advicor_id) {
+                                  setState(() {
+                                    selected_advisor = advicor_id;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+
                           SizedBox(
                             height: 10,
                           ),
@@ -231,7 +249,8 @@ class _AddPatientViewState extends State<AddPatientView> {
                                 onPressed: () {
                                   var data = RegisterPatientDataRequest(
                                       name: nameController.text,
-                                      email: emailController.text,
+                                     advicorId: int.parse(selected_advisor.toString()),
+                                    email: emailController.text,
                                       password: passwordController.text,
                                       phoneNumber: phoneController.text,
                                     nationalId: nationalController.text, );

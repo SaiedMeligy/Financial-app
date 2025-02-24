@@ -285,7 +285,7 @@ class _SessionDateState extends State<SessionDate> {
                                                   child: Container(
                                                     alignment: Alignment.center,
                                                     child: Text(
-                                                      "الجلسة ${sessionIndex.sessionNumber}",
+                                                      "الجلسة ${sessionIndex.sessionNumber!+1}",
                                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                                         color: Colors.white,
                                                         fontSize: isMobile?12:20,
