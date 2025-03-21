@@ -4,6 +4,7 @@ import 'core/config/cash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'core/config/app_theme_manager.dart';
+import 'features/homeAdmin/allPatientsAdmin/patientSessionViewWithAdmin/page/all_session_evaluation.dart';
 import 'features/initialPage/page/initial_page.dart';
 import 'package:experts_app/core/config/page_route_name.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
+
         return MaterialApp(
           title: 'معهد الخبراء العرب للتدريب و الإستشارات',
           theme: AppThemeManager.lightTheme,

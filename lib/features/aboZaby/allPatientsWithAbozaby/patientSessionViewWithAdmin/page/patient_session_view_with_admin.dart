@@ -129,6 +129,7 @@ bool isMobile = false;
                                         builder: (context) =>
                                             SessionDetailsViewAdmin(
                                               pationt_data: widget.pationt_data,
+                                              // sessionNumber: session[index]['session_number'],
                                               sessionId: session[index]["id"],
                                               isFinished: session[index]["is_finished"],
                                               sessionCaseManager: session[index]["case_manager"],

@@ -74,3 +74,69 @@ class Constants {
    static int page = 1;
    static int totalPages = 20;
 }
+
+/*
+{
+    "success": true,
+    "allSessionPointersEvaluation": [
+        {
+              "sessionPointersEvaluation": [
+                {
+                    "id": 1,
+                    "pointerId": 55,
+                    "evaluation": 1,
+                    "sessionId": 4,
+                    "sessionNumber": 5,
+                    "scenarioNumber": 6,
+                    "updated_at": "2025-02-23T00:00:00.000000Z",
+                    "created_at": "2025-02-23T00:00:00.000000Z",
+                    "pointerName": "ليس لديه أى التزامات أساسية (إيجار منزل)"
+                },
+                {
+                    "id": 2,
+                    "pointerId": 56,
+                    "evaluation": 2,
+                    "sessionId": 4,
+                    "sessionNumber": 5,
+                    "scenarioNumber": 6,
+                    "updated_at": "2025-02-23T00:00:00.000000Z",
+                    "created_at": "2025-02-23T00:00:00.000000Z",
+                    "pointerName": "الوضع المالى للمستفيد متوازن نسبيا"
+                },
+                {
+                    "id": 7,
+                    "pointerId": 59,
+                    "evaluation": 8,
+                    "sessionId": 4,
+                    "sessionNumber": 5,
+                    "scenarioNumber": 6,
+                    "updated_at": "2025-02-25T00:00:00.000000Z",
+                    "created_at": "2025-02-25T00:00:00.000000Z",
+                    "pointerName": "الوضع المالي للمستفيد متوازن مالياً ويغطى الاحتياجات الأساسية"
+                },
+                {
+                    "id": 8,
+                    "pointerId": 60,
+                    "evaluation": 9,
+                    "sessionId": 4,
+                    "sessionNumber": 5,
+                    "scenarioNumber": 6,
+                    "updated_at": "2025-02-25T00:00:00.000000Z",
+                    "created_at": "2025-02-25T00:00:00.000000Z",
+                    "pointerName": "لديه معرفة عامة عن تحديد الأهداف والأولويات"
+                }
+            ],
+            "totalEvalution ": 20,
+            "pointerNumber": 4,
+            "totalPublicEvalution": 5
+        },
+        {
+            "sessionPointersEvaluation": [],
+            "totalEvalution ": 0,
+            "pointerNumber": 0,
+            "totalPublicEvalution": 0
+        }
+    ]
+}
+
+*/

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:experts_app/core/config/cash_helper.dart';
 import 'package:experts_app/core/config/constants.dart';
+import 'package:experts_app/data/dataSource/sessions/updateSession/update_session_data_source.dart';
 import 'package:experts_app/domain/entities/SessionUpdateModel.dart';
-import 'update_session_data_source.dart';
 
 class UpdateSessionDataSourceImp implements UpdateSessionDataSource{
   final Dio dio;
@@ -21,6 +21,7 @@ class UpdateSessionDataSourceImp implements UpdateSessionDataSource{
       ),
       queryParameters: {
         "id":data.sessionId,
+        "pointersEvaluation":data.pointerEvaluation,
         "advicor_comments":data.comments,
         "consultation_service_id":data.consultationId,
         "is_attended":data.isAttend,

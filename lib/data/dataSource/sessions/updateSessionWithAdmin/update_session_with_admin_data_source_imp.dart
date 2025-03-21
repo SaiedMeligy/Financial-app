@@ -21,6 +21,7 @@ class UpdateSessionWithAdminDataSourceImp implements UpdateSessionWithAdminDataS
       ),
       queryParameters: {
         "id":data.sessionId,
+        "pointersEvaluation":data.pointerEvaluation,
         "advicor_comments":data.comments,
         "consultation_service_id":data.consultationId,
         "is_attended":data.isAttend,
@@ -37,5 +38,6 @@ class UpdateSessionWithAdminDataSourceImp implements UpdateSessionWithAdminDataS
     );
 
   }
+
 
 }

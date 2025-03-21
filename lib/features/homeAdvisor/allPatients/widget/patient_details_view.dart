@@ -124,6 +124,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
               var answers = formData["answers"];
               var comments = formData["comments"];
               var consultation = formData["consultationService"];
+              print("--->formID1"+formData['id'].toString());
 
                var filteredAnswers = filterQuestionsWithAnswer(answers);
 
@@ -589,9 +590,13 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                     child: IconButton(
                                       icon: Icon(Icons.thumb_up_alt_outlined, color: Colors.black),
                                       onPressed: () {
+                                        // print("--->formID2"+formData['id'].toString());
+
                                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           return ReportChartView(
                                             pationt_data: widget.pationt_data,
+                                            // formId: formData['id'],
+
                                           );
                                         }));
                                       },

@@ -7,6 +7,8 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 
 import '../../../../../../core/config/constants.dart';
+import '../../../../../../core/widget/border_rounded_button.dart';
+import '../../../../../homeAdmin/allPatientsAdmin/patientSessionViewWithAdmin/page/all_session_evaluation.dart';
 import '../../../../session dates/page/session_data_view_home.dart';
 
 class PatientSessionView extends StatefulWidget {
@@ -48,11 +50,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
           return Center(child: Text(state.errorMessage));
         } else if (state is SuccessAddSessionState) {
           var session = state.result.data["pationt"]["sessions"];
-          void _deletePatientLocally(int sessionId) {
-            setState(() {
-              session.removeWhere((s) => s['id'] == sessionId);
-            });
-          }
+          List<int> sessionIds = session.map<int>((s) => s["id"] as int).toList();
 
 
           return Container(
@@ -80,188 +78,211 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                   isMobile = constraints.maxWidth < 600;
                   return Directionality(
                     textDirection: TextDirection.rtl,
-                    child: Table(
-                      columnWidths: {
-                        0: FlexColumnWidth(4),
-                        1: FlexColumnWidth(1),
-                      },
-                      border: TableBorder.all(color: Colors.black),
+                    child: Column(
                       children: [
-                        TableRow(
-                          decoration: BoxDecoration(color: Colors.black),
+                        Table(
+                          columnWidths: {
+                            0: FlexColumnWidth(4),
+                            1: FlexColumnWidth(1),
+                          },
+                          border: TableBorder.all(color: Colors.black),
                           children: [
-                            TableCell(
-                              child: Container(
-                                height: 50,
-                                child: Center(
-                                  child: Text(
-                                      "اسم الجلسة",
-                                      textAlign: TextAlign.center,
-                                      style: isMobile ? Constants.theme.textTheme.bodyMedium : Theme
-                                          .of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                  ),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Container(
-                                height: 50,
-                                child: Center(
-                                  child: Text(
-                                    "تاريخ الجلسة",
-                                    textAlign: TextAlign.center,
-                                    style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Container(
-                                height: 50,
-                                child: Center(
-                                  child: Text(
-                                    "حذف الجلسة",
-                                    textAlign: TextAlign.center,
-                                    style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        for (int index = 0; index <
-                            session.length; index++) ...[
-                          TableRow(
-                            decoration: BoxDecoration(color: Colors.black38),
-                            children: [
-                              TableCell(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            SessionDetailsViewHome(
-                                              pationt_data: widget.pationt_data,
-                                              sessionId: session[index]["id"],
-                                              isFinished: session[index]["is_finished"],
-                                              sessionCaseManager: session[index]["case_manager"],
-                                              sessionComment: session[index]["comments"],
-                                              sessionDate: session[index]["date"],
-                                              consultationService: session[index]["consultation_service"],
-                                              isAttend: session[index]["is_attended"],
-                                            ),
-                                      ),
-                                    );
-                                  },
+                            TableRow(
+                              decoration: BoxDecoration(color: Colors.black),
+                              children: [
+                                TableCell(
                                   child: Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                        "الجلسة ${session[index]["session_number"]+1}",
-                                        style: isMobile?Constants.theme.textTheme.bodyMedium:Theme.of(context).textTheme.bodyLarge
-
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                          "اسم الجلسة",
+                                          textAlign: TextAlign.center,
+                                          style: isMobile ? Constants.theme.textTheme.bodyMedium : Theme
+                                              .of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              TableCell(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    session[index]["date"],
-                                    style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodyLarge
-
+                                TableCell(
+                                  child: Container(
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                        "تاريخ الجلسة",
+                                        textAlign: TextAlign.center,
+                                        style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
+                                            .of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              TableCell(
-                                child: IconButton(
-                                  icon: Icon(Icons.delete, color: Colors.white),
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Directionality(
-                                          textDirection: TextDirection.rtl,
-                                          child: AlertDialog(
-                                            title: Text("حذف الجلسة", style: Constants.theme.textTheme.titleLarge?.copyWith(
-                                                color: Colors.black
-                                            )),
-                                            content: Text("هل أنت متأكد أنك تريد حذف هذه الجلسة", style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                                                color: Colors.black
-                                            )),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  _patientSessionCubit.deleteSession(session[index]['id']).then((_) {
-
-                                                    Navigator.of(context).pop();
-                                                    // _deletePatientLocally(widget.pationt_data); // Remove patient from local list
-
-                                                    _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId,0);
-                                                  });
-                                                },
-                                                child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                    color: Constants.theme.primaryColor,
-                                                    width: 2.5,
-                                                  ),
+                                TableCell(
+                                  child: Container(
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                        "حذف الجلسة",
+                                        textAlign: TextAlign.center,
+                                        style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
+                                            .of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            for (int index = 0; index <
+                                session.length; index++) ...[
+                              TableRow(
+                                decoration: BoxDecoration(color: Colors.black38),
+                                children: [
+                                  TableCell(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SessionDetailsViewHome(
+                                                  pationt_data: widget.pationt_data,
+                                                  sessionId: session[index]["id"],
+                                                  isFinished: session[index]["is_finished"],
+                                                  sessionCaseManager: session[index]["case_manager"],
+                                                  sessionComment: session[index]["comments"],
+                                                  sessionDate: session[index]["date"],
+                                                  consultationService: session[index]["consultation_service"],
+                                                  isAttend: session[index]["is_attended"],
                                                 ),
-                                                child: Text(
-                                                  'نعم',
-                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                                                ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                                              ),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                }, child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                    color: Constants.theme.primaryColor,
-                                                    width: 2.5,
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  'لا',
-                                                  style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
-                                                ).setHorizontalPadding(context, enableMediaQuery: false, 20),
-                                              ),
-                                              ),
-                                            ],
                                           ),
                                         );
                                       },
-                                    );
-                                  },
-                                ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "الجلسة ${session[index]["session_number"]+1}",
+                                            style: isMobile?Constants.theme.textTheme.bodyMedium:Theme.of(context).textTheme.bodyLarge
+
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        session[index]["date"],
+                                        style: isMobile?Constants.theme.textTheme.bodyMedium:Theme
+                                            .of(context)
+                                            .textTheme
+                                            .bodyLarge
+
+                                      ),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    child: IconButton(
+                                      icon: Icon(Icons.delete, color: Colors.white),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: AlertDialog(
+                                                title: Text("حذف الجلسة", style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                                    color: Colors.black
+                                                )),
+                                                content: Text("هل أنت متأكد أنك تريد حذف هذه الجلسة", style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                    color: Colors.black
+                                                )),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      _patientSessionCubit.deleteSession(session[index]['id']).then((_) {
+
+                                                        Navigator.of(context).pop();
+                                                        // _deletePatientLocally(widget.pationt_data); // Remove patient from local list
+
+                                                        _patientSessionCubit.getSessionDetails(widget.pationt_data.nationalId,0);
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(
+                                                        color: Constants.theme.primaryColor,
+                                                        width: 2.5,
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      'نعم',
+                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                  ),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    }, child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(
+                                                        color: Constants.theme.primaryColor,
+                                                        width: 2.5,
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      'لا',
+                                                      style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                                                    ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                  ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
+                          ],
+                        ),
+                        SizedBox(height: 50),
+                        Flexible(
+                          child: SizedBox(
+                            width:300 ,
+                            child: BorderRoundedButton(
+                              title: 'تقييم الجلسات',
+                              color: Colors.black,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AllSessionEvaluation(sessionIds: sessionIds),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ],
+                        ),
                       ],
                     ),
+
                   );
                 }),
             ),
