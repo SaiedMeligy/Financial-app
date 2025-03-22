@@ -28,7 +28,6 @@ import '../../../../domain/entities/AdviceMode.dart';
 import '../../../../domain/entities/QuestionModel.dart';
 import '../../../homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/evaluation_session.dart';
 import '../../../homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/reporst_session.dart';
-import '../../allPatients/widget/patient_details_view.dart';
 import '../../sessions/manager/states.dart';
 import '../../viewQuestion/widget/drop_down.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -549,7 +548,6 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                             }
                           }
                           List<int> selectedAdviceIds = [];
-                          List<int> selectedPointersIds = [];
 
 
                           TextEditingController phoneController = TextEditingController(text:phoneNumber );
@@ -1126,7 +1124,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                               firstWidget: Container(
                                                 color: Constants.theme.primaryColor.withOpacity(0.4),
                                                 child: pointers1Temp.isEmpty
-                                                    ? Center(child: Text('لا يوجد مؤشرات متاحة للسيناريو الأول'))
+                                                    ? const Center(child: Text('لا يوجد مؤشرات متاحة للسيناريو الأول'))
                                                     : ListView.builder(
                                                   itemCount: pointers1Temp.length,
                                                   itemBuilder: (context, index) {
@@ -1168,7 +1166,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                               secondWidget: Container(
                                                 color: Constants.theme.primaryColor.withOpacity(0.4),
                                                 child: pointers2Temp.isEmpty
-                                                    ? Center(child: Text('لا يوجد مؤشرات متاحة للسيناريو الثاني'))
+                                                    ? const Center(child: Text('لا يوجد مؤشرات متاحة للسيناريو الثاني'))
                                                     : ListView.builder(
                                                   itemCount: pointers2Temp.length,
                                                   itemBuilder: (context, index) {
@@ -1205,7 +1203,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                               thirdWidget: Container(
                                                 color: Constants.theme.primaryColor.withOpacity(0.4),
                                                 child: pointers3Temp.isEmpty
-                                                    ? Center(child: Text('لا يوجد مؤشرات متاحة للسيناريو الثالث'))
+                                                    ? const Center(child: Text('لا يوجد مؤشرات متاحة للسيناريو الثالث'))
                                                     : ListView.builder(
                                                   itemCount: pointers3Temp.length,
                                                   itemBuilder: (context, index) {

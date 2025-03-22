@@ -60,9 +60,9 @@ class AllSessionPointersEvaluation {
 
   List<SessionPointersEvaluation>? sessionPointersEvaluation;
   int? sessionNumber;
-  int? totalEvalution;
+  double? totalEvalution;
   int? pointerNumber;
-  double? totalPublicEvalution; // Updated to double?
+  double? totalPublicEvalution;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

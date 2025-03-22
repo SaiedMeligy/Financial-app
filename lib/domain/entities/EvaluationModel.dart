@@ -17,7 +17,7 @@ class EvaluationModel {
   }
   bool? success;
   List<SessionPointersEvaluation>? sessionPointersEvaluation;
-  int? totalEvaluation;
+  double? totalEvaluation;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

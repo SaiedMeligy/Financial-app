@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/config/cash_helper.dart';
 import '../../core/config/constants.dart';
+import '../../core/excel_exportation/RecordsTableWidget.dart';
 import 'logout/page/logout_view.dart';
 class HomeAdminView extends StatefulWidget {
   const HomeAdminView({super.key,this.targetIndex = 0});
@@ -80,7 +81,58 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                   ),
                 ),
               ).setVerticalPadding(context, enableMediaQuery: false, 10).setHorizontalPadding(context, enableMediaQuery: false, 10),
-              LogoutView()
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  LogoutView(),
+                  Row(
+                    children: [
+                      Text("نسخ احتياطي",style: Constants.theme.textTheme.bodyMedium,),
+                      IconButton(onPressed: () {
+                        showDialog(context: context, builder: (context) {
+                          return Container(
+                            child: AlertDialog(
+                              backgroundColor: Colors.black,
+                              content:SizedBox(
+                                  width: Constants.mediaQuery.width*0.4,
+                                  height: Constants.mediaQuery.width*0.10,
+
+                                  child: RecordsTableWidget()),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius
+                                            .circular(10),
+                                        border: Border.all(
+                                          color: Constants.theme
+                                              .primaryColor,
+                                          width: 2.5,
+                                        ),
+                                      ),
+                                      child: Text("اغلاق",
+                                        style: Constants.theme
+                                            .textTheme.bodyMedium
+                                            ?.copyWith(
+                                            color: Colors.white
+                                        ),).setHorizontalPadding(
+                                          context,
+                                          enableMediaQuery: false, 20)
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },);
+                      }, icon: Icon(Icons.download_rounded)),
+                    ],
+                  ),
+                ],
+              )
             ],
           ),
           drawer: isMobile ? Drawer(

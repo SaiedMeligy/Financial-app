@@ -50,6 +50,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
           return Center(child: Text(state.errorMessage));
         } else if (state is SuccessAddSessionState) {
           var session = state.result.data["pationt"]["sessions"];
+          var patientId = state.result.data["pationt"]["id"];
           List<int> sessionIds = session.map<int>((s) => s["id"] as int).toList();
 
 
@@ -273,7 +274,7 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AllSessionEvaluation(sessionIds: sessionIds),
+                                    builder: (context) => AllSessionEvaluation(sessionIds: sessionIds, patientId: patientId,),
                                   ),
                                 );
                               },

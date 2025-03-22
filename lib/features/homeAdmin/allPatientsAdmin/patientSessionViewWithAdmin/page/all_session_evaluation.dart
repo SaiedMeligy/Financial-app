@@ -13,8 +13,9 @@ import '../../../../../core/config/constants.dart';
 
 class AllSessionEvaluation extends StatefulWidget {
   final List<int> sessionIds;
+  final int patientId;
 
-  AllSessionEvaluation({super.key, required this.sessionIds});
+  AllSessionEvaluation({super.key, required this.sessionIds,required this.patientId});
 
   @override
   _AllSessionEvaluationState createState() => _AllSessionEvaluationState();
@@ -40,7 +41,7 @@ class _AllSessionEvaluationState extends State<AllSessionEvaluation> {
           "api-password": Constants.apiPassword,
           "token": CacheHelper.getData(key: "token")
         }),
-        data: {'sessionIds': widget.sessionIds},
+        data: {'sessionIds': widget.sessionIds,'patientId': widget.patientId},
       );
 
       if (response.statusCode == 200) {
@@ -100,7 +101,7 @@ class _AllSessionEvaluationState extends State<AllSessionEvaluation> {
                     textDirection: pw.TextDirection.rtl,
                   ),
                   pw.Text(
-                    'التقييم الإجمالي: ${session.totalEvalution}',
+                    'التقييم الإجمالي: ${session.totalEvalution?.toStringAsFixed(2)}/10',
                     style: pw.TextStyle(font: ttf, fontSize: 16),
                     textDirection: pw.TextDirection.rtl,
                   ),
@@ -249,7 +250,7 @@ class _AllSessionEvaluationState extends State<AllSessionEvaluation> {
                     ],
                   ),
                   subtitle: Text(
-                    "التقييم الإجمالي: ${session.totalEvalution}",
+                    "التقييم الإجمالي: ${session.totalEvalution?.toStringAsFixed(2)}/10",
                     style: Constants.theme.textTheme.bodyLarge?.copyWith(color: Colors.black),
                   ),
                   children: [
