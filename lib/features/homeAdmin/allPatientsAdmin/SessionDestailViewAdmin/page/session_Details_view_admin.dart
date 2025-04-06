@@ -36,6 +36,8 @@ import 'dart:html' as html;
 
 import '../widget/evaluation_session.dart';
 import '../widget/getPointers.dart';
+import 'package:intl/intl.dart'as date;
+
 
 
 class SessionDetailsViewAdmin extends StatefulWidget {
@@ -103,6 +105,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
   Map<String, TextEditingController> controllers1 = {};
   Map<String, TextEditingController> controllers2 = {};
   Map<String, TextEditingController> controllers3 = {};
+  var formatDate = date.DateFormat('yyy-MM-dd').format(DateTime.now());
+
 
 
 
@@ -708,6 +712,16 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                         textDirection: pw.TextDirection.rtl,
                                                       ),
                                                       pw.Text(
+                                                        "تاريخ الجلسة: ${sessionDate}",
+                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                        textDirection: pw.TextDirection.rtl,
+                                                      ),
+                                                      pw.Text(
+                                                        "تاريخ الطباعة: ${formatDate}",
+                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                        textDirection: pw.TextDirection.rtl,
+                                                      ),
+                                                      pw.Text(
                                                         "رقم الهوية: ${nationalId}",
                                                         style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                         textDirection: pw.TextDirection.rtl,
@@ -1005,7 +1019,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                           sessionId: widget.sessionId,
                                               pointer1: pointers1,
                                               pointer2: pointers2,
-                                              pointer3: pointers3,
+                                              pointer3: pointers3, sessionDate: sessionDate,
 
                                         ),)); },
                                             icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,))
@@ -1027,6 +1041,11 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                       color: Colors.black,) : Constants.theme
                                         .textTheme.bodyLarge?.copyWith(
                                         color: Colors.black),
+                                  ),
+                                  Text(
+                                    "تاريخ الجلسة : $sessionDate",
+                                    style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
+                                        ?.copyWith(color: Colors.black),
                                   ),
                                   Text(
                                     "رقم الهوية : $nationalId",

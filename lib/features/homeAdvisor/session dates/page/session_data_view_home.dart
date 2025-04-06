@@ -32,6 +32,8 @@ import '../../sessions/manager/states.dart';
 import '../../viewQuestion/widget/drop_down.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
+import 'package:intl/intl.dart'as date;
+
 
 
 // ignore: must_be_immutable
@@ -532,7 +534,8 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                           int attendSession = isAttended ? 1 : 0;
                           var pointers = session["Pointers"] ?? [];
                           var advices = session["Advices"] ?? [];
-                          print("session advice"+session['Advices'].toString());
+                          var formatDate = date.DateFormat('yyy-MM-dd').format(DateTime.now());
+
 
                           List<dynamic> pointers1Temp = [];
                           List<dynamic> pointers2Temp = [];
@@ -598,6 +601,16 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                         ),
                                                         pw.Text(
                                                           "اسم الاستشاري: ${advisorName}",
+                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                          textDirection: pw.TextDirection.rtl,
+                                                        ),
+                                                        pw.Text(
+                                                          "تاريخ الجلسة: ${sessionDate}",
+                                                          style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                                                          textDirection: pw.TextDirection.rtl,
+                                                        ),
+                                                        pw.Text(
+                                                          "تاريخ الطباعة: ${formatDate}",
                                                           style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
                                                           textDirection: pw.TextDirection.rtl,
                                                         ),
@@ -894,12 +907,15 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                             },
                                           ),
                                           SizedBox(width:20.w ,),
-                                          IconButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                          IconButton(onPressed: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) =>
                                               EvaluationSession(
                                                 sessionId: widget.sessionId,
                                                 pointer1: pointers1,
                                                 pointer2: pointers2,
                                                 pointer3: pointers3,
+                                                sessionDate:sessionDate,
 
                                               ),
                                           )); },
@@ -915,6 +931,11 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                     ),
                                     Text(
                                       "اسم الاستشاري : $advisorName",
+                                      style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
+                                          ?.copyWith(color: Colors.black),
+                                    ),
+                                    Text(
+                                      "تاريخ الجلسة : $sessionDate",
                                       style:isMobile?Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,) : Constants.theme.textTheme.bodyLarge
                                           ?.copyWith(color: Colors.black),
                                     ),

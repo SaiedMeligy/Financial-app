@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:intl/intl.dart'as date;
+
 import 'package:printing/printing.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:experts_app/core/config/constants.dart';
@@ -120,13 +122,12 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
             } else if (state is SuccessAddSessionState) {
               var formData = state.result.data["pationt"]["form"];
               var patient = state.result.data["pationt"];
-              var advicor = formData["advicor"];
               var answers = formData["answers"];
               var comments = formData["comments"];
               var consultation = formData["consultationService"];
-              print("--->formID1"+formData['id'].toString());
 
                var filteredAnswers = filterQuestionsWithAnswer(answers);
+              var formatDate = date.DateFormat('yyy-MM-dd').format(DateTime.now());
 
               return Directionality(
                 textDirection: TextDirection.rtl,
@@ -669,14 +670,27 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                           borderRadius: BorderRadius.circular(20),
                                         ),
                                         child: IconButton(
-                                          icon: Icon(Icons.print, color: Colors.black),
+                                          icon: Icon(Icons.print,
+                                              color: Colors.black),
                                           onPressed: () async {
+                                            print(
+                                                'sssssssssssssssssssssssss');
                                             final pdf = pw.Document();
                                             // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
                                             // final ttf = pw.Font.ttf(notoSans);
-                                            final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
+                                            final fontData =
+                                            await rootBundle.load(
+                                                'assets/fonts/Amiri-Bold.ttf');
                                             final ttf = pw.Font.ttf(fontData);
-                                            await Future.delayed(Duration(seconds: 1));
+
+                                            final image = pw.MemoryImage(
+                                              (await rootBundle.load(
+                                                  'assets/images/back.jpg'))
+                                                  .buffer
+                                                  .asUint8List(),
+                                            );
+                                            await Future.delayed(
+                                                Duration(seconds: 1));
                                             pdf.addPage(
                                               pw.Page(
                                                 build: (pw.Context context) {
@@ -687,157 +701,365 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                     //   ),
 
                                                     //),
-                                                    child:pw.Center(
+                                                    child: pw.Center(
                                                       child: pw.Column(
-                                                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                        mainAxisAlignment: pw
+                                                            .MainAxisAlignment
+                                                            .start,
                                                         children: [
                                                           pw.Container(
                                                               decoration: pw.BoxDecoration(
                                                                   border: pw.Border.all(
-                                                                      color: PdfColors.black,
-                                                                      width: 1
-                                                                  ),
-                                                                  borderRadius: pw.BorderRadius.circular(10)
-                                                              ),
+                                                                      color: PdfColors
+                                                                          .black,
+                                                                      width:
+                                                                      1),
+                                                                  borderRadius: pw
+                                                                      .BorderRadius
+                                                                      .circular(
+                                                                      10)),
                                                               child: pw.Row(
-                                                                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                                  mainAxisAlignment: pw
+                                                                      .MainAxisAlignment
+                                                                      .spaceBetween,
                                                                   children: [
-                                                                    pw.SizedBox(width: 20,),
+                                                                    pw.SizedBox(
+                                                                      width:
+                                                                      20,
+                                                                    ),
                                                                     pw.Container(
-                                                                      alignment: pw.Alignment.centerRight,
-                                                                      child: pw.Text(
-                                                                        "${patient["name"]}" ,
-                                                                        style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black ),
-                                                                        textDirection: pw.TextDirection.rtl,
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
+                                                                        "${patient["name"]}",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 15,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw
+                                                                            .TextDirection
+                                                                            .rtl,
                                                                       ),
                                                                     ),
                                                                     pw.Container(
-                                                                      alignment: pw.Alignment.centerRight,
-                                                                      child: pw.Text(
-                                                                        "اسم الحالة" ,
-                                                                        style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black ),
-                                                                        textDirection: pw.TextDirection.rtl,
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
+                                                                        "اسم الحالة",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 15,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw
+                                                                            .TextDirection
+                                                                            .rtl,
                                                                       ),
                                                                     ),
-                                                                    pw.SizedBox(width: 20,),
-                                                                  ]
-                                                              )
-                                                          ),
-
+                                                                    pw.SizedBox(
+                                                                      width:
+                                                                      20,
+                                                                    ),
+                                                                  ])),
                                                           pw.Container(
-                                                              margin: pw.EdgeInsets.all(5),
+                                                              margin:
+                                                              const pw.EdgeInsets
+                                                                  .all(5),
                                                               decoration: pw.BoxDecoration(
                                                                   border: pw.Border.all(
-                                                                      color: PdfColors.black,
-                                                                      width: 1
-                                                                  ),
-                                                                  borderRadius: pw.BorderRadius.circular(10)
-                                                              ),
+                                                                      color: PdfColors
+                                                                          .black,
+                                                                      width:
+                                                                      1),
+                                                                  borderRadius:
+                                                                  pw.BorderRadius.circular(
+                                                                      10)),
                                                               child: pw.Row(
-                                                                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                                  mainAxisAlignment: pw
+                                                                      .MainAxisAlignment
+                                                                      .spaceBetween,
                                                                   children: [
-                                                                    pw.SizedBox(width: 20,),
+                                                                    pw.SizedBox(
+                                                                      width:
+                                                                      20,
+                                                                    ),
                                                                     pw.Container(
-                                                                      alignment: pw.Alignment.centerRight,
-                                                                      child: pw.Text(
-                                                                        "${patient["national_id"]}" ,
-                                                                        style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black ),
-                                                                        textDirection: pw.TextDirection.rtl,
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
+                                                                        "${patient["national_id"]}",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 15,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw
+                                                                            .TextDirection
+                                                                            .rtl,
                                                                       ),
                                                                     ),
                                                                     pw.Container(
-                                                                      alignment: pw.Alignment.centerRight,
-                                                                      child: pw.Text(
-                                                                        "رقم الهوية الأماراتية" ,
-                                                                        style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
-                                                                        textDirection: pw.TextDirection.rtl,
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
+                                                                        "رقم الهوية الأماراتية",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 15,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw
+                                                                            .TextDirection
+                                                                            .rtl,
                                                                       ),
                                                                     ),
-                                                                    pw.SizedBox(width: 20,),
-                                                                  ]
-                                                              )
-                                                          ),
-
+                                                                    pw.SizedBox(
+                                                                      width:
+                                                                      20,
+                                                                    ),
+                                                                  ])),
+                                                          pw.Container(
+                                                              margin:
+                                                              pw.EdgeInsets
+                                                                  .all(5),
+                                                              decoration: pw.BoxDecoration(
+                                                                  color: PdfColors
+                                                                      .white,
+                                                                  border: pw.Border.all(
+                                                                      width:
+                                                                      1),
+                                                                  borderRadius:
+                                                                  pw.BorderRadius.circular(
+                                                                      10)),
+                                                              child: pw.Row(
+                                                                  mainAxisAlignment: pw
+                                                                      .MainAxisAlignment
+                                                                      .spaceBetween,
+                                                                  children: [
+                                                                    pw.SizedBox(
+                                                                      width:
+                                                                      20,
+                                                                    ),
+                                                                    pw.Container(
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
+                                                                        "${formData["advicor"]["name"]}",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 15,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw
+                                                                            .TextDirection
+                                                                            .rtl,
+                                                                      ),
+                                                                    ),
+                                                                    pw.Container(
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
+                                                                        "اسم الاستشارى",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 15,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw
+                                                                            .TextDirection
+                                                                            .rtl,
+                                                                      ),
+                                                                    ),
+                                                                    pw.SizedBox(
+                                                                      width: 20,),
+                                                                  ])),
                                                           pw.Container(
                                                               margin: pw.EdgeInsets.all(5),
                                                               decoration: pw.BoxDecoration(
                                                                   color: PdfColors.white,
                                                                   border: pw.Border.all(
-                                                                      width: 1
-                                                                  ),
-                                                                  borderRadius: pw.BorderRadius.circular(10)
-                                                              ),
+                                                                      width: 1),
+                                                                  borderRadius:
+                                                                  pw.BorderRadius.circular(10)),
                                                               child: pw.Row(
                                                                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                                                                   children: [
-                                                                    pw.SizedBox(width: 20,),
+                                                                    pw.SizedBox(
+                                                                      width: 20,
+                                                                    ),
                                                                     pw.Container(
                                                                       alignment: pw.Alignment.centerRight,
                                                                       child: pw.Text(
-                                                                        "${patient["advicor"]["name"]}" ,
-                                                                        style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
+                                                                        "${formData["date"]}",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 12,
+                                                                            color: PdfColors.black),
                                                                         textDirection: pw.TextDirection.rtl,
                                                                       ),
                                                                     ),
                                                                     pw.Container(
                                                                       alignment: pw.Alignment.centerRight,
                                                                       child: pw.Text(
-                                                                        "اسم الاستشارى" ,
-                                                                        style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
+                                                                        "تاريخ الجلسة",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 12,
+                                                                            color: PdfColors.black),
                                                                         textDirection: pw.TextDirection.rtl,
                                                                       ),
                                                                     ),
-                                                                    pw.SizedBox(width: 20,),
-                                                                  ]
-                                                              )
+                                                                    pw.SizedBox(
+                                                                      width:
+                                                                      20,
+                                                                    ),
+                                                                  ])),
+                                                          pw.Container(
+                                                              margin: pw.EdgeInsets.all(5),
+                                                              decoration: pw.BoxDecoration(
+                                                                  color: PdfColors.white,
+                                                                  border: pw.Border.all(
+                                                                      width: 1),
+                                                                  borderRadius:
+                                                                  pw.BorderRadius.circular(10)),
+                                                              child: pw.Row(
+                                                                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    pw.SizedBox(
+                                                                      width: 20,
+                                                                    ),
+                                                                    pw.Container(
+                                                                      alignment: pw.Alignment.centerRight,
+                                                                      child: pw.Text(
+                                                                        formatDate,
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 12,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw.TextDirection.rtl,
+                                                                      ),
+                                                                    ),
+                                                                    pw.Container(
+                                                                      alignment: pw.Alignment.centerRight,
+                                                                      child: pw.Text(
+                                                                        "تاريخ الطباعة",
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 12,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw.TextDirection.rtl,
+                                                                      ),
+                                                                    ),
+                                                                    pw.SizedBox(
+                                                                      width:
+                                                                      20,
+                                                                    ),
+                                                                  ])),
+                                                          pw.Container(
+                                                            width: 350,
+                                                            alignment: pw
+                                                                .Alignment
+                                                                .center,
+                                                            child: pw.Text(
+                                                              formData["need_other_session"] ==
+                                                                  1
+                                                                  ? " الحالة بحاجه إلى جلسة أخرى "
+                                                                  : " الحالة ليست بحاجه إلى جلسة أخرى  ",
+                                                              style: pw
+                                                                  .TextStyle(
+                                                                font: ttf,
+                                                                fontSize: 15,
+                                                                color:
+                                                                PdfColors
+                                                                    .black,
+                                                              ),
+                                                              textDirection: pw
+                                                                  .TextDirection
+                                                                  .rtl,
+                                                            ),
+                                                          ),
+                                                          pw.SizedBox(
+                                                            height: 5,
                                                           ),
                                                           pw.Container(
                                                             width: 350,
-                                                            alignment: pw.Alignment.center,
-                                                            child: pw.Text(formData["need_other_session"]==1?" الحالة بحاجه إلى جلسة أخرى ":" الحالة ليست بحاجه إلى جلسة أخرى  ",
-                                                              style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black,),
-                                                              textDirection: pw.TextDirection.rtl,
+                                                            alignment: pw
+                                                                .Alignment
+                                                                .center,
+                                                            child: pw.Text(
+                                                              " ملاحظات الاستشارى ",
+                                                              style: pw
+                                                                  .TextStyle(
+                                                                font: ttf,
+                                                                fontSize: 15,
+                                                                color:
+                                                                PdfColors
+                                                                    .black,
+                                                              ),
+                                                              textDirection: pw
+                                                                  .TextDirection
+                                                                  .rtl,
                                                             ),
-
                                                           ),
-                                                          pw.SizedBox(height: 5,),
-                                                          pw.Container(
-                                                            width: 350,
-                                                            alignment: pw.Alignment.center,
-
-                                                            child: pw.Text(" ملاحظات الاستشارى ",
-                                                              style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black,),
-                                                              textDirection: pw.TextDirection.rtl,
-                                                            ),
-
-                                                          ),
-                                                          pw.SizedBox(width:40),
+                                                          pw.SizedBox(
+                                                              width: 40),
                                                           pw.Column(
-                                                              mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                              mainAxisAlignment:
+                                                              pw.MainAxisAlignment
+                                                                  .start,
                                                               children: [
                                                                 pw.Container(
-                                                                  alignment: pw.Alignment.center,
-                                                                  child: pw.Text(
-                                                                    DividCommentsText("${comments}"),
-                                                                    style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
-                                                                    textDirection: pw.TextDirection.rtl,
-                                                                  ),),
-                                                              ]
-                                                          ),
-
+                                                                  alignment: pw
+                                                                      .Alignment
+                                                                      .center,
+                                                                  child:
+                                                                  pw.Text(
+                                                                    DividCommentsText(
+                                                                        "${comments}"),
+                                                                    style: pw.TextStyle(
+                                                                        font:
+                                                                        ttf,
+                                                                        fontSize:
+                                                                        15,
+                                                                        color:
+                                                                        PdfColors.black),
+                                                                    textDirection: pw
+                                                                        .TextDirection
+                                                                        .rtl,
+                                                                  ),
+                                                                ),
+                                                              ]),
                                                           pw.Divider(
                                                             thickness: 1,
-                                                            color: PdfColors.grey,
+                                                            color: PdfColors
+                                                                .grey,
                                                           ),
                                                           pw.Container(
-                                                              height: Constants.mediaQuery.height * 0.10,
-                                                              margin: pw.EdgeInsets.all(5),
+                                                              height: Constants
+                                                                  .mediaQuery
+                                                                  .height *
+                                                                  0.10,
+                                                              margin:
+                                                              pw.EdgeInsets
+                                                                  .all(5),
                                                               child: pw.Row(
-                                                                  mainAxisAlignment: pw.MainAxisAlignment.center,
+                                                                  mainAxisAlignment: pw
+                                                                      .MainAxisAlignment
+                                                                      .center,
                                                                   children: [
                                                                     pw.Container(
-                                                                      alignment: pw.Alignment.centerRight,
-                                                                      child: pw.Text(
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
                                                                         DividCommentsText(
                                                                             "${consultation["name"]}"),
                                                                         style: pw.TextStyle(
@@ -850,8 +1072,11 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                                       ),
                                                                     ),
                                                                     pw.Container(
-                                                                      alignment: pw.Alignment.centerRight,
-                                                                      child: pw.Text(
+                                                                      alignment: pw
+                                                                          .Alignment
+                                                                          .centerRight,
+                                                                      child: pw
+                                                                          .Text(
                                                                         "الخدمة الاستشارية: ",
                                                                         style: pw.TextStyle(
                                                                             font: ttf,
@@ -862,44 +1087,63 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                                             .rtl,
                                                                       ),
                                                                     ),
-                                                                  ]
-                                                              )
-                                                          ),
-                                                          pw.Row(
-                                                              children: [
-                                                                pw.SizedBox(width: 10,),
-                                                                pw.Container(
-                                                                  alignment: pw.Alignment.center,
-                                                                  child: pw.Text(
-                                                                    DividCommentsText(" وصف الخدمة الاستشارية :${consultation["description"]}"),
-                                                                    style: pw.TextStyle(font: ttf, fontSize: 15, color: PdfColors.black),
-                                                                    textDirection: pw.TextDirection.rtl,
-                                                                  ),
-                                                                ),
-                                                                pw.SizedBox(width: 10,),
-                                                              ]
-                                                          )
-
-
+                                                                  ])),
+                                                          pw.Row(children: [
+                                                            pw.SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            pw.Container(
+                                                              alignment: pw
+                                                                  .Alignment
+                                                                  .center,
+                                                              child: pw.Text(
+                                                                DividCommentsText(
+                                                                    " وصف الخدمة الاستشارية :${consultation["description"]}"),
+                                                                style: pw.TextStyle(
+                                                                    font: ttf,
+                                                                    fontSize:
+                                                                    15,
+                                                                    color: PdfColors
+                                                                        .black),
+                                                                textDirection:
+                                                                pw.TextDirection
+                                                                    .rtl,
+                                                              ),
+                                                            ),
+                                                            pw.SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                          ])
                                                         ],
                                                       ),
                                                     ),
                                                   );
-
                                                 },
                                               ),
                                             );
-                                            List<List<dynamic>> answe = [] ;
-                                            print("pppppppppppp"+filteredAnswers.length.toString());
-                                            print("fffffffffffff"+(widget.pationt_data as Pationts).toString());
+                                            List<List<dynamic>> answe = [];
+                                            print("pppppppppppp" +
+                                                filteredAnswers.length
+                                                    .toString());
+                                            print("fffffffffffff" +
+                                                (widget.pationt_data
+                                                as Pationts)
+                                                    .toString());
 
-                                            for (int count = 0; count < (filteredAnswers.length / 8).ceil(); count++) {
+                                            for (int count = 0;
+                                            count <
+                                                (filteredAnswers.length /
+                                                    8)
+                                                    .ceil();
+                                            count++) {
                                               List currentList = [];
 
                                               for (int i = 0; i < 8; i++) {
                                                 int index = count * 8 + i;
-                                                if (index < filteredAnswers.length) {
-                                                  currentList.add(filteredAnswers[index]);
+                                                if (index <
+                                                    filteredAnswers.length) {
+                                                  currentList.add(
+                                                      filteredAnswers[index]);
                                                 } else {
                                                   break;
                                                 }
@@ -910,87 +1154,153 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                               }
                                             }
 
-                                            for (int y = 0; y < answe.length; y++) {
+                                            for (int y = 0;
+                                            y < answe.length;
+                                            y++) {
                                               pdf.addPage(
                                                 pw.Page(
-                                                  build: (pw.Context context) {
+                                                  build:
+                                                      (pw.Context context) {
                                                     return pw.Column(
-                                                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                      mainAxisAlignment: pw
+                                                          .MainAxisAlignment
+                                                          .start,
                                                       children: [
-                                                        for (int i = 0; i < answe[y].length; i++) ...[
+                                                        for (int i = 0;
+                                                        i <
+                                                            answe[y]
+                                                                .length;
+                                                        i++) ...[
                                                           pw.Container(
-                                                            height: answe[y][i]["question_options"]
+                                                            height: answe[y][
+                                                            i]
+                                                            [
+                                                            "question_options"]
                                                                 .where((option) =>
-                                                            (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
-                                                                (option['type'] == 3 && option['answer'] != null))
+                                                            (option['type'] == 1 || option['type'] == 2) &&
+                                                                option['answer'] ==
+                                                                    "1" ||
+                                                                (option['type'] == 3 &&
+                                                                    option['answer'] !=
+                                                                        null))
                                                                 .length *
-                                                                ((answe[y][i]["question_options"].where((option) =>
-                                                                (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
-                                                                    (option['type'] == 3 && option['answer'] != null))
-                                                                    .length > 3)
+                                                                ((answe[y][i]["question_options"]
+                                                                    .where((option) => (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" || (option['type'] == 3 && option['answer'] != null))
+                                                                    .length >
+                                                                    3)
                                                                     ? 22 // Height when length > 3
-                                                                    : (answe[y][i]["question_options"]
-                                                                    .where((option) =>
-                                                                (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" ||
-                                                                    (option['type'] == 3 && option['answer'] != null))
-                                                                    .length > 2)
+                                                                    : (answe[y][i]["question_options"].where((option) => (option['type'] == 1 || option['type'] == 2) && option['answer'] == "1" || (option['type'] == 3 && option['answer'] != null)).length > 2)
                                                                     ? 25 // Height when length is 3
-                                                                    : 55  // Height when length is 2 or less
+                                                                    : 55 // Height when length is 2 or less
                                                                 ),
                                                             child: pw.Column(
-                                                              mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                              mainAxisAlignment:
+                                                              pw.MainAxisAlignment
+                                                                  .start,
                                                               children: [
                                                                 pw.Container(
-                                                                  height: answe[y][i]["title"].toString().split(" ").length > 15 ? 30 : 15,
-                                                                  margin: pw.EdgeInsets.only(left: 10),
-                                                                  child: pw.Row(
-                                                                    mainAxisAlignment: pw.MainAxisAlignment.end,
+                                                                  height:
+                                                                  answe[y][i]["title"].toString().split(" ").length >
+                                                                      15
+                                                                      ? 30
+                                                                      : 15,
+                                                                  margin: pw
+                                                                      .EdgeInsets
+                                                                      .only(
+                                                                      left:
+                                                                      10),
+                                                                  child:
+                                                                  pw.Row(
+                                                                    mainAxisAlignment: pw
+                                                                        .MainAxisAlignment
+                                                                        .end,
                                                                     children: [
-                                                                      pw.SizedBox(width: 5),
+                                                                      pw.SizedBox(
+                                                                          width:
+                                                                          5),
                                                                       pw.Text(
-                                                                        DividText("${answe[y][i]['title']}"),
-                                                                        style: pw.TextStyle(font: ttf, fontSize: 12, color: PdfColors.black),
-                                                                        textDirection: pw.TextDirection.rtl,
-                                                                        maxLines: 5,
+                                                                        DividText(
+                                                                            "${answe[y][i]['title']}"),
+                                                                        style: pw.TextStyle(
+                                                                            font: ttf,
+                                                                            fontSize: 12,
+                                                                            color: PdfColors.black),
+                                                                        textDirection: pw
+                                                                            .TextDirection
+                                                                            .rtl,
+                                                                        maxLines:
+                                                                        5,
                                                                       ),
-                                                                      pw.SizedBox(width: 5),
+                                                                      pw.SizedBox(
+                                                                          width:
+                                                                          5),
                                                                     ],
                                                                   ),
-
                                                                 ),
-                                                                pw.SizedBox(height:5),
-                                                                for (int x = 0; x < answe[y][i]["question_options"].length; x++) ...[
-                                                                  if (answe[y][i]["question_options"][x]['type'] == 1 && answe[y][i]["question_options"][x]['answer'] == "1") ...[
+                                                                pw.SizedBox(
+                                                                    height:
+                                                                    5),
+                                                                for (int x =
+                                                                0;
+                                                                x <
+                                                                    answe[y][i]["question_options"]
+                                                                        .length;
+                                                                x++) ...[
+                                                                  if (answe[y][i]["question_options"][x]['type'] ==
+                                                                      1 &&
+                                                                      answe[y][i]["question_options"][x]['answer'] ==
+                                                                          "1") ...[
                                                                     pw.Row(
-                                                                      mainAxisAlignment: pw.MainAxisAlignment.end,
+                                                                      mainAxisAlignment: pw
+                                                                          .MainAxisAlignment
+                                                                          .end,
                                                                       children: [
                                                                         pw.Text(
                                                                           "${answe[y][i]["question_options"][x]['title']}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 10),
-                                                                          textDirection: pw.TextDirection.rtl,
+                                                                          style:
+                                                                          pw.TextStyle(font: ttf, fontSize: 10),
+                                                                          textDirection:
+                                                                          pw.TextDirection.rtl,
                                                                         ),
-                                                                        pw.SizedBox(width: 10),
+                                                                        pw.SizedBox(
+                                                                            width: 10),
                                                                       ],
                                                                     ),
                                                                   ],
-                                                                  if (answe[y][i]["question_options"][x]['type'] == 2 && answe[y][i]["question_options"][x]['answer'] == "1") ...[
+                                                                  if (answe[y][i]["question_options"][x]['type'] ==
+                                                                      2 &&
+                                                                      answe[y][i]["question_options"][x]['answer'] ==
+                                                                          "1") ...[
                                                                     pw.Row(
-                                                                      mainAxisAlignment: pw.MainAxisAlignment.end,
+                                                                      mainAxisAlignment: pw
+                                                                          .MainAxisAlignment
+                                                                          .end,
                                                                       children: [
                                                                         pw.Text(
                                                                           "${answe[y][i]["question_options"][x]['title']}",
-                                                                          style: pw.TextStyle(font: ttf, fontSize: 10),
-                                                                          textDirection: pw.TextDirection.rtl,
+                                                                          style:
+                                                                          pw.TextStyle(font: ttf, fontSize: 10),
+                                                                          textDirection:
+                                                                          pw.TextDirection.rtl,
                                                                         ),
-                                                                        pw.SizedBox(width: 10),
+                                                                        pw.SizedBox(
+                                                                            width: 10),
                                                                       ],
                                                                     ),
                                                                   ],
-                                                                  if (answe[y][i]["question_options"][x]['type'] == 3 && answe[y][i]["question_options"][x]['answer'] != null) ...[
+                                                                  if (answe[y][i]["question_options"][x]['type'] ==
+                                                                      3 &&
+                                                                      answe[y][i]["question_options"][x]['answer'] !=
+                                                                          null) ...[
                                                                     pw.Directionality(
-                                                                      textDirection: pw.TextDirection.rtl,
-                                                                      child: pw.Row(
-                                                                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                      textDirection: pw
+                                                                          .TextDirection
+                                                                          .rtl,
+                                                                      child: pw
+                                                                          .Row(
+                                                                        mainAxisAlignment: pw
+                                                                            .MainAxisAlignment
+                                                                            .start,
                                                                         children: [
                                                                           pw.Text(
                                                                             "${answe[y][i]["question_options"][x]['title']} : ",
@@ -1005,7 +1315,9 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                                         ],
                                                                       ),
                                                                     ),
-                                                                    pw.SizedBox(width: 10),
+                                                                    pw.SizedBox(
+                                                                        width:
+                                                                        10),
                                                                   ],
                                                                 ],
                                                               ],
@@ -1013,7 +1325,8 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                           ),
                                                           pw.Divider(
                                                             thickness: 1,
-                                                            color: PdfColors.grey,
+                                                            color: PdfColors
+                                                                .grey,
                                                           ),
                                                         ],
                                                       ],
@@ -1025,19 +1338,25 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
 
                                             try {
                                               // Save the PDF as bytes
-                                              final pdfBytes = await pdf.save();
+                                              final pdfBytes =
+                                              await pdf.save();
 
                                               // Create a blob and open in a new tab
-                                              final blob = html.Blob([pdfBytes], 'application/pdf');
-                                              final url = html.Url.createObjectUrlFromBlob(blob);
+                                              final blob = html.Blob(
+                                                  [pdfBytes],
+                                                  'application/pdf');
+                                              final url = html.Url
+                                                  .createObjectUrlFromBlob(
+                                                  blob);
                                               html.window.open(url, '_blank');
                                               html.Url.revokeObjectUrl(url);
 
                                               // Use the printing package to handle printing
                                               await Printing.layoutPdf(
-                                                onLayout: (PdfPageFormat format) async => pdf.save(),
+                                                onLayout: (PdfPageFormat
+                                                format) async =>
+                                                    pdf.save(),
                                               );
-
                                             } catch (e) {
                                               print('Error: $e');
                                             }

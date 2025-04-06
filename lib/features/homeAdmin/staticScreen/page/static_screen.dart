@@ -225,56 +225,55 @@ class _StaticScreenState extends State<StaticScreen> {
                           //TODO: handle backend process
                           // SenarioWadget(),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               
-                              Container(
-                                width: Constants.mediaQuery.width * 0.3,
-                                height: Constants.mediaQuery.height * 0.57,
-                                decoration: BoxDecoration(
-                                  color: Constants.theme.primaryColor.withOpacity(0.5),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.black26),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "اكثر استشاريين لديهم أسر",
-                                        style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                          color:  Colors.black
-                                        ),
-                                      ),
-                                      Divider(
-                                        color: Constants.theme.primaryColor,
-                                        thickness: 1,
-                                        indent: 10,
-                                        endIndent: 10,
-                                      ),
-                                      SizedBox(height: 20,),
-                                      ...topAdvisors.take(3).map((advisor) {
-                                        return Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "الاسم: ${advisor.advicor?.name ?? ""}",
-                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
-                                            ),
-                                            Text(
-                                              "العدد: ${advisor.pationtCount}",
-                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
-                                            ),
-                                          ],
-                                        );
-                                      }).toList(),
-                                    ],
-                                  ),
-                                ),
-                              ).setHorizontalPadding(context,enableMediaQuery: false, 5),
-                              Expanded(
-                                child: CircleCharts(advisorData: advisorData),
-                              ),
+                              // Container(
+                              //   width: Constants.mediaQuery.width * 0.3,
+                              //   height: Constants.mediaQuery.height * 0.57,
+                              //   decoration: BoxDecoration(
+                              //     color: Constants.theme.primaryColor.withOpacity(0.5),
+                              //     borderRadius: BorderRadius.circular(10),
+                              //     border: Border.all(color: Colors.black26),
+                              //   ),
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(8.0),
+                              //     child: Column(
+                              //       crossAxisAlignment: CrossAxisAlignment.start,
+                              //       children: [
+                              //         Text(
+                              //           "اكثر استشاريين لديهم أسر",
+                              //           style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                              //             color:  Colors.black
+                              //           ),
+                              //         ),
+                              //         Divider(
+                              //           color: Constants.theme.primaryColor,
+                              //           thickness: 1,
+                              //           indent: 10,
+                              //           endIndent: 10,
+                              //         ),
+                              //         SizedBox(height: 20,),
+                              //         ...topAdvisors.take(3).map((advisor) {
+                              //           return Row(
+                              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //             children: [
+                              //               Text(
+                              //                 "الاسم: ${advisor.advicor?.name ?? ""}",
+                              //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
+                              //               ),
+                              //               Text(
+                              //                 "العدد: ${advisor.pationtCount}",
+                              //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
+                              //               ),
+                              //             ],
+                              //           );
+                              //         }).toList(),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ).setHorizontalPadding(context,enableMediaQuery: false, 5),
+                              CircleCharts(advisorData: advisorData),
                             ],
                           ),
                         ],

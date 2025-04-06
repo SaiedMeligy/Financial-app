@@ -274,7 +274,8 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AllSessionEvaluation(sessionIds: sessionIds, patientId: patientId,),
+                                    builder: (context) => AllSessionEvaluation(sessionIds: sessionIds,
+                                      patientId: patientId,),
                                   ),
                                 );
                               },

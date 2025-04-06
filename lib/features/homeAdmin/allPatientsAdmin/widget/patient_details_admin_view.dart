@@ -2,6 +2,7 @@ import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart'as date;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
@@ -46,53 +47,9 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
 
   List<dynamic> filterQuestionsWithAnswer(List<dynamic> answers) {
     return answers;
-    // where((answer) {
-    //   return answer['question_options'].any((option) {
-    //     if (option['answer'] is String) {
-    //       return option['answer'] == "1";
-    //     } else if (option['answer'] is int) {
-    //       return option['answer'] == 1;
-    //     }
-    //     return false;
-    //   });
-    // }).toList();
+
   }
 
-  Future<void> _printPDF() async {
-    try {
-      final font = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-      final ttf = pw.Font.ttf(font);
-      final pdf = pw.Document();
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Text(
-                "Example PDF Content",
-                style: pw.TextStyle(
-                  fontSize: 30,
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.red,
-                  font: ttf,
-                ),
-              ),
-            );
-          },
-        ),
-      );
-
-      // Save the PDF as bytes
-      final pdfBytes = await pdf.save();
-
-      // Create a blob and open in a new tab
-      final blob = html.Blob([pdfBytes], 'application/pdf');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      html.window.open(url, '_blank');
-      html.Url.revokeObjectUrl(url);
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +87,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
             var comments = formData["comments"];
             var consultation = formData["consultationService"];
             var filteredAnswers = filterQuestionsWithAnswer(answers);
+            var formatDate = date.DateFormat('yyy-MM-dd').format(DateTime.now());
 
             return Directionality(
               textDirection: TextDirection.rtl,
@@ -241,31 +199,18 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                               print(
                                                   'sssssssssssssssssssssssss');
                                               final pdf = pw.Document();
-                                              // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-                                              // final ttf = pw.Font.ttf(notoSans);
                                               final fontData =
                                                   await rootBundle.load(
                                                       'assets/fonts/Amiri-Regular.ttf');
                                               final ttf = pw.Font.ttf(fontData);
 
-                                              final image = pw.MemoryImage(
-                                                (await rootBundle.load(
-                                                        'assets/images/back.jpg'))
-                                                    .buffer
-                                                    .asUint8List(),
-                                              );
                                               await Future.delayed(
-                                                  Duration(seconds: 1));
+                                                  const Duration(seconds: 1));
                                               pdf.addPage(
                                                 pw.Page(
                                                   build: (pw.Context context) {
                                                     return pw.Container(
-                                                      // decoration: pw.BoxDecoration(
-                                                      //
-                                                      //   image: pw.DecorationImage(image: image,fit: pw.BoxFit.cover,
-                                                      //   ),
 
-                                                      //),
                                                       child: pw.Center(
                                                         child: pw.Column(
                                                           mainAxisAlignment: pw
@@ -389,33 +334,22 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                       ),
                                                                     ])),
                                                             pw.Container(
-                                                                margin:
-                                                                    pw.EdgeInsets
-                                                                        .all(5),
+                                                                margin: pw.EdgeInsets.all(5),
                                                                 decoration: pw.BoxDecoration(
-                                                                    color: PdfColors
-                                                                        .white,
+                                                                    color: PdfColors.white,
                                                                     border: pw.Border.all(
-                                                                        width:
-                                                                            1),
+                                                                        width: 1),
                                                                     borderRadius:
-                                                                        pw.BorderRadius.circular(
-                                                                            10)),
+                                                                        pw.BorderRadius.circular(10)),
                                                                 child: pw.Row(
-                                                                    mainAxisAlignment: pw
-                                                                        .MainAxisAlignment
-                                                                        .spaceBetween,
+                                                                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                                                                     children: [
                                                                       pw.SizedBox(
-                                                                        width:
-                                                                            20,
+                                                                        width: 20,
                                                                       ),
                                                                       pw.Container(
-                                                                        alignment: pw
-                                                                            .Alignment
-                                                                            .centerRight,
-                                                                        child: pw
-                                                                            .Text(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
                                                                           "${patient["advicor"]["name"]["name"]}",
                                                                           style: pw.TextStyle(
                                                                               font: ttf,
@@ -447,6 +381,49 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                             20,
                                                                       ),
                                                                     ])),
+                                                            pw.SizedBox(width: 20,),
+                                                            pw.Container(
+                                                                margin: pw.EdgeInsets.all(5),
+                                                                decoration: pw.BoxDecoration(
+                                                                    color: PdfColors.white,
+                                                                    border: pw.Border.all(
+                                                                        width: 1),
+                                                                    borderRadius:
+                                                                    pw.BorderRadius.circular(10)),
+                                                                child: pw.Row(
+                                                                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                                    children: [
+                                                                      pw.SizedBox(
+                                                                        width: 20,
+                                                                      ),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          "${formData["date"]}",
+                                                                          style: pw.TextStyle(
+                                                                              font: ttf,
+                                                                              fontSize: 12,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          "تاريخ الجلسة",
+                                                                          style: pw.TextStyle(
+                                                                              font: ttf,
+                                                                              fontSize: 12,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.SizedBox(
+                                                                        width:
+                                                                        20,
+                                                                      ),
+                                                                    ])),
+
                                                             pw.Container(
                                                               width: 350,
                                                               alignment: pw
@@ -1193,8 +1170,88 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                                         ),
                                                                       ),
                                                                       pw.SizedBox(
+                                                                        width: 20,),
+                                                                    ])),
+                                                            pw.Container(
+                                                                margin: pw.EdgeInsets.all(5),
+                                                                decoration: pw.BoxDecoration(
+                                                                    color: PdfColors.white,
+                                                                    border: pw.Border.all(
+                                                                        width: 1),
+                                                                    borderRadius:
+                                                                    pw.BorderRadius.circular(10)),
+                                                                child: pw.Row(
+                                                                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                                    children: [
+                                                                      pw.SizedBox(
+                                                                        width: 20,
+                                                                      ),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          "${formData["date"]}",
+                                                                          style: pw.TextStyle(
+                                                                              font: ttf,
+                                                                              fontSize: 12,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          "تاريخ الجلسة",
+                                                                          style: pw.TextStyle(
+                                                                              font: ttf,
+                                                                              fontSize: 12,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.SizedBox(
                                                                         width:
-                                                                            20,
+                                                                        20,
+                                                                      ),
+                                                                    ])),
+                                                            pw.Container(
+                                                                margin: pw.EdgeInsets.all(5),
+                                                                decoration: pw.BoxDecoration(
+                                                                    color: PdfColors.white,
+                                                                    border: pw.Border.all(
+                                                                        width: 1),
+                                                                    borderRadius:
+                                                                    pw.BorderRadius.circular(10)),
+                                                                child: pw.Row(
+                                                                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                                    children: [
+                                                                      pw.SizedBox(
+                                                                        width: 20,
+                                                                      ),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          formatDate,
+                                                                          style: pw.TextStyle(
+                                                                              font: ttf,
+                                                                              fontSize: 12,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.Container(
+                                                                        alignment: pw.Alignment.centerRight,
+                                                                        child: pw.Text(
+                                                                          "تاريخ الطباعة",
+                                                                          style: pw.TextStyle(
+                                                                              font: ttf,
+                                                                              fontSize: 12,
+                                                                              color: PdfColors.black),
+                                                                          textDirection: pw.TextDirection.rtl,
+                                                                        ),
+                                                                      ),
+                                                                      pw.SizedBox(
+                                                                        width:
+                                                                        20,
                                                                       ),
                                                                     ])),
                                                             pw.Container(
@@ -1892,42 +1949,6 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
     });
   }
 
-  Future<void> _PDF() async {
-    try {
-      final font = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
-      final ttf = pw.Font.ttf(font);
-      final pdf = pw.Document();
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Text(
-                "sameh",
-                style: pw.TextStyle(
-                  fontSize: 30,
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.red,
-                  font: ttf,
-                ),
-              ),
-            );
-          },
-        ),
-      );
-      // Save the PDF as bytes
-      final pdfBytes = await pdf.save();
-      final blob = html.Blob([pdfBytes], 'application/pdf');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-
-      // Open the PDF in a new tab
-      html.window.open(url, '_blank');
-
-      // Release the blob URL
-      html.Url.revokeObjectUrl(url);
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
 
   String DividText(String text) {
     String temp = "";

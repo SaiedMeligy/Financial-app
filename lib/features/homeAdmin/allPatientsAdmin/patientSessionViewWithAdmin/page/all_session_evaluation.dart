@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dio/dio.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart'; // For printing the PDF
-import 'dart:html' as html; // For web-specific PDF handling
+import 'package:printing/printing.dart';
+import 'dart:html' as html;
 
 import '../../../../../core/config/cash_helper.dart';
 import '../../../../../domain/entities/AllEvaluationModel.dart';
 import '../../../../../core/config/constants.dart';
+import 'package:intl/intl.dart'as date;
+
 
 class AllSessionEvaluation extends StatefulWidget {
   final List<int> sessionIds;
@@ -25,6 +27,9 @@ class _AllSessionEvaluationState extends State<AllSessionEvaluation> {
   AllEvaluationModel? evaluationData;
   bool isLoading = true;
   String errorMessage = '';
+  var formatDate = date.DateFormat('yyy-MM-dd').format(DateTime.now());
+
+
 
   @override
   void initState() {
@@ -85,16 +90,37 @@ class _AllSessionEvaluationState extends State<AllSessionEvaluation> {
     final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
     final ttf = pw.Font.ttf(fontData);
 
-    // Use MultiPage to handle dynamic pagination
     pdf.addPage(
       pw.MultiPage(
         build: (pw.Context context) {
           return [
-            // Add all sessions to the PDF
+            pw.Container(
+              width: double.infinity,
+              padding: const pw.EdgeInsets.all(5),
+              // alignment: pw.Alignment.center,
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(
+                    width: 2
+                ),
+                borderRadius: pw.BorderRadius.circular(20),
+              ),
+              child: pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.center,
+                  children: [
+                    pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text('تاريخ الطباعة: ${formatDate}',
+                        style: pw.TextStyle(font: ttf, fontSize: 16),
+                        textDirection: pw.TextDirection.rtl,
+                      ),),
+
+                  ] ),
+            ),
             for (final session in evaluationData!.allSessionPointersEvaluation!)
               pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [
+
                   pw.Text(
                     'الجلسة ${session.sessionNumber}',
                     style: pw.TextStyle(font: ttf, fontSize: 18, fontWeight: pw.FontWeight.bold),
