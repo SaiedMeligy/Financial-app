@@ -180,6 +180,8 @@ class _EvaluationSessionState extends State<EvaluationSession> {
 
   @override
   Widget build(BuildContext context) {
+    print("--->sessionId"+widget.sessionId.toString());
+    print("--->formId"+widget.formId.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text("تقييم مؤشرات الجلسة"),

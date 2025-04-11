@@ -60,7 +60,7 @@ class _DialogDeletePatientState extends State<DialogDeletePatient> {
                     title: Text("حذف الحالة", style: Constants.theme.textTheme.titleLarge?.copyWith(
                         color: Colors.black
                     )),
-                    content: Text("هل أنت متأكد أنك تريد حذف هذه الحالة", style: Constants.theme.textTheme.bodyMedium?.copyWith(
+                    content: Text("هل أنت متأكد أنك تريد حذف هذه الحالة",style: Constants.theme.textTheme.bodyMedium?.copyWith(
                         color: Colors.black
                     )),
                     actions: [
@@ -77,7 +77,8 @@ class _DialogDeletePatientState extends State<DialogDeletePatient> {
                       TextButton(
                         onPressed: () {
                           // Permanently delete patient
-                          updatePatientCubit.deletePatientFromSystem(widget.patient!.id!).then((_) {
+                          updatePatientCubit.deletePatientFromSystem(widget.patient!.id!)
+                              .then((_) {
                             _deletePatientLocally(widget.patient!); // Remove patient from local list
                             Navigator.of(context).pop();
                           });

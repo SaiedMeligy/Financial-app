@@ -1019,7 +1019,8 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                           sessionId: widget.sessionId,
                                               pointer1: pointers1,
                                               pointer2: pointers2,
-                                              pointer3: pointers3, sessionDate: sessionDate,
+                                              pointer3: pointers3,
+                                              sessionDate: sessionDate,
 
                                         ),)); },
                                             icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,))
