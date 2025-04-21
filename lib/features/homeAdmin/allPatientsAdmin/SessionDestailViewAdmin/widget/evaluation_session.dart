@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/config/constants.dart';
 import '../../../../../core/widget/TextFieldPointers.dart';
 import '../../../../../core/widget/tab_item_widget.dart';
+import '../../../../../domain/entities/AllSessionModel.dart';
 import '../../../../../domain/entities/QuestionModel.dart';
 import '../manager/cubit.dart';
 import '../manager/states.dart';
@@ -26,6 +27,9 @@ class EvaluationSession extends StatefulWidget {
   List<Pointers> pointer1;
   List<Pointers> pointer2;
   List<Pointers> pointer3;
+  // Map<String,dynamic> patient;
+  String patientName;
+  String advisorName;
   final sessionDate;
 
   EvaluationSession({
@@ -34,6 +38,8 @@ class EvaluationSession extends StatefulWidget {
     this.sessionId,
     required this.pointer1,
     required this.pointer2,
+     required this.patientName,
+     required this.advisorName,
     required this.pointer3, required this.sessionDate,
   });
 
@@ -58,11 +64,46 @@ class _EvaluationSessionState extends State<EvaluationSession> {
     final pdf = pw.Document();
     final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
     final ttf = pw.Font.ttf(fontData);
+    final logo = pw.MemoryImage(
+      (await rootBundle.load('assets/images/AEI Logo.png')).buffer.asUint8List(),
+    );
+    final secondLogo = pw.MemoryImage(
+      (await rootBundle.load('assets/images/لوجو الهيئة.png')).buffer.asUint8List(),
+    );
 
     pdf.addPage(
       pw.MultiPage(
         build: (pw.Context context) {
           return [
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Container(
+                    height: Constants.mediaQuery.height*0.16,
+                    width: Constants.mediaQuery.width*0.14,
+                    alignment: pw.Alignment.center,
+                    decoration: pw.BoxDecoration(
+                      image: pw.DecorationImage(
+                        image: logo,
+                        fit: pw.BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  pw.Container(
+                    height: Constants.mediaQuery.height*0.16,
+                    width: Constants.mediaQuery.width*0.14,
+                    alignment: pw.Alignment.center,
+                    decoration: pw.BoxDecoration(
+                      image: pw.DecorationImage(
+                        image: secondLogo,
+                        fit: pw.BoxFit.contain,
+                      ),
+                    ),
+                  ),
+
+
+                ]
+            ),
             pw.Align(
               alignment: pw.Alignment.center,
               child: pw.Container(
@@ -71,14 +112,14 @@ class _EvaluationSessionState extends State<EvaluationSession> {
                 alignment: pw.Alignment.center,
                 decoration: pw.BoxDecoration(
                   border: pw.Border.all(
-                    width: 2
+                      width: 2
                   ),
                   borderRadius: pw.BorderRadius.circular(20),
                 ),
                 child:pw.Text('تقييم مؤشرات الجلسة',
-              style: pw.TextStyle(font: ttf, fontSize: 18, fontWeight: pw.FontWeight.bold),
-              textDirection: pw.TextDirection.rtl,
-            ),
+                  style: pw.TextStyle(font: ttf, fontSize: 18, fontWeight: pw.FontWeight.bold),
+                  textDirection: pw.TextDirection.rtl,
+                ),
               ),
             ),
             pw.SizedBox(height: 10),
@@ -94,32 +135,64 @@ class _EvaluationSessionState extends State<EvaluationSession> {
               ),
                 child: pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.center,
-                    children: [
-                      pw.Align(
-                        alignment: pw.Alignment.centerRight,
-                        child: pw.Text('تاريخ الطباعة: ${formatDate}',
-                          style: pw.TextStyle(font: ttf, fontSize: 16),
-                          textDirection: pw.TextDirection.rtl,
-                        ),),
-                      pw.SizedBox(width: 20),
-                      pw.Align(
-                        alignment: pw.Alignment.centerRight,
-                        child: pw.Text('تاريخ الجلسة: ${widget.sessionDate}',
-                          style: pw.TextStyle(font: ttf, fontSize: 16),
-                          textDirection: pw.TextDirection.rtl,
-                        ),),
-               ] ),
+                  children: [
+
+                    pw.Text(
+                      "الاستشارى : " + widget.advisorName,
+                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                      textDirection: pw.TextDirection.rtl,
+                    ),
+                    pw.SizedBox(width: 20,),
+
+                    pw.Text(
+                      "الحالة : " + widget.patientName,
+                      style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                      textDirection: pw.TextDirection.rtl,
+                    ),
+
+                  ],
+                ),
+
             ),
-          pw.SizedBox(height: 20),
+            pw.SizedBox(height: 10),
 
+            pw.Container(
+              width: double.infinity,
+              padding: const pw.EdgeInsets.all(5),
+              // alignment: pw.Alignment.center,
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(
+                    width: 2
+                ),
+                borderRadius: pw.BorderRadius.circular(20),
+              ),
+              child: pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.center,
+                  children: [
+                    pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text('تاريخ الطباعة: ${formatDate}',
+                        style: pw.TextStyle(font: ttf, fontSize: 16),
+                        textDirection: pw.TextDirection.rtl,
+                      ),),
+                    pw.SizedBox(width: 20),
+                    pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text('تاريخ الجلسة: ${widget.sessionDate}',
+                        style: pw.TextStyle(font: ttf, fontSize: 16),
+                        textDirection: pw.TextDirection.rtl,
+                      ),),
+                  ] ),
+            ),
+            pw.SizedBox(height: 20),
 
-
-          pw.Align(
+            if(sessionCubitBloc.evaluation.sessionPointersEvaluation!.isNotEmpty)//todo change
+            pw.Align(
               alignment: pw.Alignment.centerRight,
               child: pw.Text("التقييم الإجمالي: ${sessionCubitBloc.evaluation.totalEvaluation?.toStringAsFixed(2)}/10",
-              style: pw.TextStyle(font: ttf, fontSize: 16),
-              textDirection: pw.TextDirection.rtl,
-            ),),
+                style: pw.TextStyle(font: ttf, fontSize: 16),
+                textDirection: pw.TextDirection.rtl,
+              ),),
             pw.SizedBox(height: 10),
             for (final pointer in sessionCubitBloc.evaluation.sessionPointersEvaluation!)
               pw.Padding(
@@ -180,8 +253,8 @@ class _EvaluationSessionState extends State<EvaluationSession> {
 
   @override
   Widget build(BuildContext context) {
-    print("--->sessionId"+widget.sessionId.toString());
-    print("--->formId"+widget.formId.toString());
+    // print("--->sessionId"+widget.sessionId.toString());
+    // print("--->formId"+widget.formId.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text("تقييم مؤشرات الجلسة"),
@@ -218,12 +291,11 @@ class _EvaluationSessionState extends State<EvaluationSession> {
 
                 double estimatedItemHeight = 50.0.h;
                 double calculatedHeight = (evaluationSession.length * estimatedItemHeight) + 50.h;
-
+                // print('-=====) ${calculatedHeight.clamp(400.h, (Constants.mediaQuery.height * 0.6.h).ceil() * 1.0)}');
                 return Center(
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: Container(
-                      height: calculatedHeight.clamp(400.h, Constants.mediaQuery.height * 0.6.h),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.8),
                         border: Border.all(width: 2, color: Colors.black),
@@ -339,248 +411,247 @@ class _EvaluationSessionState extends State<EvaluationSession> {
                             ],
                           ).setVerticalPadding(context, enableMediaQuery: false, 3),
                           Divider(thickness: 2, color: Colors.black),
-                          Expanded(
-                            child: Container(
-                              color: Constants.theme.primaryColor.withOpacity(0.4),
-                              child: ListView.builder(
-                                itemCount: evaluationSession.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 4,
-                                          child: Text(
-                                            evaluationSession[index].pointerName ?? 'لا يوجد',
-                                            style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                            ),
+                          Container(
+                            height: MediaQuery.sizeOf(context).height * 0.74 ,
+                            color: Constants.theme.primaryColor.withOpacity(0.4),
+                            child: ListView.builder(
+                              itemCount: evaluationSession.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          evaluationSession[index].pointerName ?? 'لا يوجد',
+                                          style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: 20,
                                           ),
                                         ),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Container(
-                                            width: 25.w,
-                                            padding: EdgeInsets.symmetric(vertical: 5.h),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(5.sp),
-                                              border: Border.all(color: Colors.black, width: 2),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "${evaluationSession[index].evaluation}",
-                                                style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Container(
+                                          width: 25.w,
+                                          padding: EdgeInsets.symmetric(vertical: 5.h),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5.sp),
+                                            border: Border.all(color: Colors.black, width: 2),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "${evaluationSession[index].evaluation}",
+                                              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                                color: Colors.black,
+                                                fontSize: 20,
                                               ),
                                             ),
                                           ),
                                         ),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: IconButton(
-                                            icon: Icon(Icons.edit, color: Colors.black),
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  TextEditingController evaluationController = TextEditingController(text: evaluationSession[index].evaluation.toString());
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: IconButton(
+                                          icon: Icon(Icons.edit, color: Colors.black),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                TextEditingController evaluationController = TextEditingController(text: evaluationSession[index].evaluation.toString());
 
-                                                  return Directionality(
-                                                    textDirection: TextDirection.rtl,
-                                                    child: AlertDialog(
-                                                      title: Container(
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          border: Border.all(
-                                                            color: Constants.theme.primaryColor,
-                                                            width: 2.5,
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Center(child: Text("تعديل التقييم", style: Constants.theme.textTheme.bodyLarge)),
+                                                return Directionality(
+                                                  textDirection: TextDirection.rtl,
+                                                  child: AlertDialog(
+                                                    title: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        border: Border.all(
+                                                          color: Constants.theme.primaryColor,
+                                                          width: 2.5,
                                                         ),
                                                       ),
-                                                      backgroundColor: Colors.black,
-                                                      content: SizedBox(
-                                                        height: Constants.mediaQuery.height * 0.06,
-                                                        width: Constants.mediaQuery.width * 0.45,
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                evaluationSession[index].pointerName,
-                                                                style: Constants.theme.textTheme.bodyLarge,
-                                                              ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Center(child: Text("تعديل التقييم", style: Constants.theme.textTheme.bodyLarge)),
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.black,
+                                                    content: SizedBox(
+                                                      height: Constants.mediaQuery.height * 0.06,
+                                                      width: Constants.mediaQuery.width * 0.45,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              evaluationSession[index].pointerName,
+                                                              style: Constants.theme.textTheme.bodyLarge,
                                                             ),
-                                                            SizedBox(width: 10.w),
-                                                            SizedBox(
-                                                              width: 20.w,
-                                                              height: 35.h,
-                                                              child: TextField(
-                                                                controller: evaluationController,
-                                                                decoration: InputDecoration(
-                                                                  focusedBorder: OutlineInputBorder(
-                                                                    borderRadius: BorderRadius.circular(10),
-                                                                    borderSide: const BorderSide(
-                                                                      color: Colors.white70,
-                                                                      width: 2.5,
-                                                                    ),
-                                                                  ),
-                                                                  border: OutlineInputBorder(
-                                                                    borderRadius: BorderRadius.circular(10),
-                                                                    borderSide: const BorderSide(
-                                                                      color: Colors.white70,
-                                                                      width: 2.5,
-                                                                    ),
-                                                                  ),
-                                                                  enabledBorder: OutlineInputBorder(
-                                                                    borderRadius: BorderRadius.circular(10),
-                                                                    borderSide: const BorderSide(
-                                                                      color: Colors.white70,
-                                                                      width: 2.5,
-                                                                    ),
+                                                          ),
+                                                          SizedBox(width: 10.w),
+                                                          SizedBox(
+                                                            width: 20.w,
+                                                            height: 35.h,
+                                                            child: TextField(
+                                                              controller: evaluationController,
+                                                              decoration: InputDecoration(
+                                                                focusedBorder: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                  borderSide: const BorderSide(
+                                                                    color: Colors.white70,
+                                                                    width: 2.5,
                                                                   ),
                                                                 ),
-                                                                style: Constants.theme.textTheme.bodyLarge,
-                                                                textAlign: TextAlign.center,
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                  borderSide: const BorderSide(
+                                                                    color: Colors.white70,
+                                                                    width: 2.5,
+                                                                  ),
+                                                                ),
+                                                                enabledBorder: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                  borderSide: const BorderSide(
+                                                                    color: Colors.white70,
+                                                                    width: 2.5,
+                                                                  ),
+                                                                ),
                                                               ),
+                                                              style: Constants.theme.textTheme.bodyLarge,
+                                                              textAlign: TextAlign.center,
                                                             ),
-                                                          ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          sessionCubitBloc.evaluateUpdateSession(
+                                                            id: evaluationSession[index].id,
+                                                            evaluation: int.parse(evaluationController.text),
+                                                          ).then((value) {
+                                                            print("Success");
+                                                            sessionCubitBloc.evaluateSession(widget.sessionId, widget.formId);
+                                                            Navigator.pop(context);
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            border: Border.all(
+                                                              color: Constants.theme.primaryColor,
+                                                              width: 2.5,
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Text(
+                                                              "موافق",
+                                                              style: Constants.theme.textTheme.bodyMedium,
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            sessionCubitBloc.evaluateUpdateSession(
-                                                              id: evaluationSession[index].id,
-                                                              evaluation: int.parse(evaluationController.text),
-                                                            ).then((value) {
-                                                              print("Success");
-                                                              sessionCubitBloc.evaluateSession(widget.sessionId, widget.formId);
-                                                              Navigator.pop(context);
-                                                            });
-                                                          },
-                                                          child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(10),
-                                                              border: Border.all(
-                                                                color: Constants.theme.primaryColor,
-                                                                width: 2.5,
-                                                              ),
-                                                            ),
-                                                            child: Padding(
-                                                              padding: const EdgeInsets.all(8.0),
-                                                              child: Text(
-                                                                "موافق",
-                                                                style: Constants.theme.textTheme.bodyMedium,
-                                                              ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            border: Border.all(
+                                                              color: Constants.theme.primaryColor,
+                                                              width: 2.5,
                                                             ),
                                                           ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(context);
-                                                          },
-                                                          child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(10),
-                                                              border: Border.all(
-                                                                color: Constants.theme.primaryColor,
-                                                                width: 2.5,
-                                                              ),
-                                                            ),
-                                                            child: Padding(
-                                                              padding: const EdgeInsets.all(8.0),
-                                                              child: Text(
-                                                                "إغلاق",
-                                                                style: Constants.theme.textTheme.bodyMedium,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: IconButton(
-                                            icon: Icon(Icons.delete, color: Colors.black),
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return Directionality(
-                                                    textDirection: TextDirection.rtl,
-                                                    child: AlertDialog(
-                                                      backgroundColor: Colors.black,
-                                                      title: Text("حذف المؤشر", style: Constants.theme.textTheme.titleLarge),
-                                                      content: Text("هل أنت متأكد أنك تريد حذف هذا المؤشر", style: Constants.theme.textTheme.bodyMedium),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            sessionCubitBloc.evaluateDeleteSession(evaluationSession[index].id).then((value) {
-                                                              Navigator.of(context).pop();
-                                                              sessionCubitBloc.evaluateSession(widget.sessionId, widget.formId);
-                                                            });
-                                                          },
-                                                          child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(10),
-                                                              border: Border.all(
-                                                                color: Constants.theme.primaryColor,
-                                                                width: 2.5,
-                                                              ),
-                                                            ),
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
                                                             child: Text(
-                                                              'نعم',
+                                                              "إغلاق",
                                                               style: Constants.theme.textTheme.bodyMedium,
-                                                            ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                            ),
                                                           ),
                                                         ),
-                                                        TextButton(
-                                                          onPressed: () {
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: IconButton(
+                                          icon: Icon(Icons.delete, color: Colors.black),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Directionality(
+                                                  textDirection: TextDirection.rtl,
+                                                  child: AlertDialog(
+                                                    backgroundColor: Colors.black,
+                                                    title: Text("حذف المؤشر", style: Constants.theme.textTheme.titleLarge),
+                                                    content: Text("هل أنت متأكد أنك تريد حذف هذا المؤشر", style: Constants.theme.textTheme.bodyMedium),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          sessionCubitBloc.evaluateDeleteSession(evaluationSession[index].id).then((value) {
                                                             Navigator.of(context).pop();
-                                                          },
-                                                          child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(10),
-                                                              border: Border.all(
-                                                                color: Constants.theme.primaryColor,
-                                                                width: 2.5,
-                                                              ),
+                                                            sessionCubitBloc.evaluateSession(widget.sessionId, widget.formId);
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            border: Border.all(
+                                                              color: Constants.theme.primaryColor,
+                                                              width: 2.5,
                                                             ),
-                                                            child: Text(
-                                                              'لا',
-                                                              style: Constants.theme.textTheme.bodyMedium,
-                                                            ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                                           ),
+                                                          child: Text(
+                                                            'نعم',
+                                                            style: Constants.theme.textTheme.bodyMedium,
+                                                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            border: Border.all(
+                                                              color: Constants.theme.primaryColor,
+                                                              width: 2.5,
+                                                            ),
+                                                          ),
+                                                          child: Text(
+                                                            'لا',
+                                                            style: Constants.theme.textTheme.bodyMedium,
+                                                          ).setHorizontalPadding(context, enableMediaQuery: false, 20),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ).setVerticalPadding(context, enableMediaQuery: false, 20)

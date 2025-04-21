@@ -50,9 +50,10 @@ class _PatientSessionViewState extends State<PatientSessionView> {
           return Center(child: Text(state.errorMessage));
         } else if (state is SuccessAddSessionState) {
           var session = state.result.data["pationt"]["sessions"];
+          String patientName = state.result.data["pationt"]['name'];
+          String advisorName = state.result.data["pationt"]['form']['advicor']['name'];
           var patientId = state.result.data["pationt"]["id"];
           List<int> sessionIds = session.map<int>((s) => s["id"] as int).toList();
-
 
           return Container(
             decoration: BoxDecoration(
@@ -274,8 +275,12 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AllSessionEvaluation(sessionIds: sessionIds,
-                                      patientId: patientId,),
+                                    builder: (context) => AllSessionEvaluation(
+                                      sessionIds: sessionIds,
+                                      patientId: patientId,
+                                      patientName: patientName,
+                                      advisorName: advisorName,
+                                    ),
                                   ),
                                 );
                               },

@@ -584,6 +584,13 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                               final pdf = pw.Document();
                                               final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
                                               final ttf = pw.Font.ttf(fontData);
+                                              final logo = pw.MemoryImage(
+                                                (await rootBundle.load('assets/images/AEI Logo.png')).buffer.asUint8List(),
+                                              );
+                                              final secondLogo = pw.MemoryImage(
+                                                (await rootBundle.load('assets/images/لوجو الهيئة.png')).buffer.asUint8List(),
+                                              );
+
 
                                               await Future.delayed(Duration(seconds: 1));
 
@@ -594,6 +601,35 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                     return pw.Column(
                                                       crossAxisAlignment: pw.CrossAxisAlignment.end,
                                                       children: [
+                                                        pw.Row(
+                                                            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              pw.Container(
+                                                                height: Constants.mediaQuery.height*0.16,
+                                                                width: Constants.mediaQuery.width*0.14,
+                                                                alignment: pw.Alignment.center,
+                                                                decoration: pw.BoxDecoration(
+                                                                  image: pw.DecorationImage(
+                                                                    image: logo,
+                                                                    fit: pw.BoxFit.contain,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              pw.Container(
+                                                                height: Constants.mediaQuery.height*0.16,
+                                                                width: Constants.mediaQuery.width*0.14,
+                                                                alignment: pw.Alignment.center,
+                                                                decoration: pw.BoxDecoration(
+                                                                  image: pw.DecorationImage(
+                                                                    image: secondLogo,
+                                                                    fit: pw.BoxFit.contain,
+                                                                  ),
+                                                                ),
+                                                              ),
+
+
+                                                            ]
+                                                        ),
                                                         pw.Text(
                                                           "اسم الحالة: ${patientName}",
                                                           style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
@@ -911,6 +947,8 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) =>
                                               EvaluationSession(
+                                                patientName: patientName,
+                                                advisorName: advisorName,
                                                 sessionId: widget.sessionId,
                                                 pointer1: pointers1,
                                                 pointer2: pointers2,

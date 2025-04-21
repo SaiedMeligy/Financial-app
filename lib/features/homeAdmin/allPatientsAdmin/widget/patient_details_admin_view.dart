@@ -60,23 +60,13 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
         bloc: _patientFormViewCubit,
         builder: (context, state) {
           if (state is LoadingAddSessionState) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
           else if (state is ErrorFormState) {
-            // WidgetsBinding.instance.addPostFrameCallback((_) {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => HomeAdminView(
-            //           targetIndex: Constants.bodies
-            //               .indexWhere((element) => element is AddSessionView)),
-            //     ),
-            //   );
-            // });
             Navigator.pop(context);
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -196,13 +186,17 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                             icon: Icon(Icons.print,
                                                 color: Colors.black),
                                             onPressed: () async {
-                                              print(
-                                                  'sssssssssssssssssssssssss');
+
                                               final pdf = pw.Document();
-                                              final fontData =
-                                                  await rootBundle.load(
-                                                      'assets/fonts/Amiri-Regular.ttf');
+                                              final fontData = await rootBundle.load('assets/fonts/Amiri-Regular.ttf');
                                               final ttf = pw.Font.ttf(fontData);
+                                              final logo = pw.MemoryImage(
+                                                (await rootBundle.load('assets/images/AEI Logo.png')).buffer.asUint8List(),
+                                              );
+                                              final secondLogo = pw.MemoryImage(
+                                                (await rootBundle.load('assets/images/لوجو الهيئة.png')).buffer.asUint8List(),
+                                              );
+
 
                                               await Future.delayed(
                                                   const Duration(seconds: 1));
@@ -217,6 +211,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                               .MainAxisAlignment
                                                               .start,
                                                           children: [
+
                                                             pw.Container(
                                                                 decoration: pw.BoxDecoration(
                                                                     border: pw.Border.all(
@@ -584,19 +579,8 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                 ),
                                               );
                                               List<List<dynamic>> answe = [];
-                                              print("pppppppppppp" +
-                                                  filteredAnswers.length
-                                                      .toString());
-                                              print("fffffffffffff" +
-                                                  (widget.pationt_data
-                                                          as Pationts)
-                                                      .toString());
 
-                                              for (int count = 0;
-                                                  count <
-                                                      (filteredAnswers.length /
-                                                              9)
-                                                          .ceil();
+                                              for (int count = 0; count < (filteredAnswers.length / 9).ceil();
                                                   count++) {
                                                 List currentList = [];
 
@@ -965,8 +949,6 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                             icon: Icon(Icons.print,
                                                 color: Colors.black),
                                             onPressed: () async {
-                                              print(
-                                                  'sssssssssssssssssssssssss');
                                               final pdf = pw.Document();
                                               // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
                                               // final ttf = pw.Font.ttf(notoSans);
@@ -975,30 +957,54 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                       'assets/fonts/Amiri-Bold.ttf');
                                               final ttf = pw.Font.ttf(fontData);
 
-                                              final image = pw.MemoryImage(
-                                                (await rootBundle.load(
-                                                        'assets/images/back.jpg'))
-                                                    .buffer
-                                                    .asUint8List(),
+                                                final logo = pw.MemoryImage(
+                                                (await rootBundle.load('assets/images/AEI Logo.png')).buffer.asUint8List(),
                                               );
+                                              final secondLogo = pw.MemoryImage(
+                                                (await rootBundle.load('assets/images/لوجو الهيئة.png')).buffer.asUint8List(),
+                                              );
+
                                               await Future.delayed(
                                                   Duration(seconds: 1));
                                               pdf.addPage(
                                                 pw.Page(
                                                   build: (pw.Context context) {
                                                     return pw.Container(
-                                                      // decoration: pw.BoxDecoration(
-                                                      //
-                                                      //   image: pw.DecorationImage(image: image,fit: pw.BoxFit.cover,
-                                                      //   ),
-
-                                                      //),
                                                       child: pw.Center(
                                                         child: pw.Column(
                                                           mainAxisAlignment: pw
                                                               .MainAxisAlignment
                                                               .start,
                                                           children: [
+                                                            pw.Row(
+                                                                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  pw.Container(
+                                                                    height: Constants.mediaQuery.height*0.16,
+                                                                    width: Constants.mediaQuery.width*0.14,
+                                                                    alignment: pw.Alignment.center,
+                                                                    decoration: pw.BoxDecoration(
+                                                                      image: pw.DecorationImage(
+                                                                        image: logo,
+                                                                        fit: pw.BoxFit.contain,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  pw.Container(
+                                                                    height: Constants.mediaQuery.height*0.16,
+                                                                    width: Constants.mediaQuery.width*0.14,
+                                                                    alignment: pw.Alignment.center,
+                                                                    decoration: pw.BoxDecoration(
+                                                                      image: pw.DecorationImage(
+                                                                        image: secondLogo,
+                                                                        fit: pw.BoxFit.contain,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+
+
+                                                                ]
+                                                            ),
                                                             pw.Container(
                                                                 decoration: pw.BoxDecoration(
                                                                     border: pw.Border.all(

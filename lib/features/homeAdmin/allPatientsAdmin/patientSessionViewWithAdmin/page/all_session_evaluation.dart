@@ -16,8 +16,10 @@ import 'package:intl/intl.dart'as date;
 class AllSessionEvaluation extends StatefulWidget {
   final List<int> sessionIds;
   final int patientId;
+  final String patientName;
+  final String advisorName;
 
-  AllSessionEvaluation({super.key, required this.sessionIds,required this.patientId});
+  AllSessionEvaluation({super.key, required this.sessionIds,required this.patientId, required this.patientName, required this.advisorName});
 
   @override
   _AllSessionEvaluationState createState() => _AllSessionEvaluationState();
@@ -89,11 +91,78 @@ class _AllSessionEvaluationState extends State<AllSessionEvaluation> {
     final pdf = pw.Document();
     final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
     final ttf = pw.Font.ttf(fontData);
+    final logo = pw.MemoryImage(
+      (await rootBundle.load('assets/images/AEI Logo.png')).buffer.asUint8List(),
+    );
+    final secondLogo = pw.MemoryImage(
+      (await rootBundle.load('assets/images/لوجو الهيئة.png')).buffer.asUint8List(),
+    );
+
 
     pdf.addPage(
       pw.MultiPage(
         build: (pw.Context context) {
           return [
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Container(
+                    height: Constants.mediaQuery.height*0.16,
+                    width: Constants.mediaQuery.width*0.14,
+                    alignment: pw.Alignment.center,
+                    decoration: pw.BoxDecoration(
+                      image: pw.DecorationImage(
+                        image: logo,
+                        fit: pw.BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  pw.Container(
+                    height: Constants.mediaQuery.height*0.16,
+                    width: Constants.mediaQuery.width*0.14,
+                    alignment: pw.Alignment.center,
+                    decoration: pw.BoxDecoration(
+                      image: pw.DecorationImage(
+                        image: secondLogo,
+                        fit: pw.BoxFit.contain,
+                      ),
+                    ),
+                  ),
+
+
+                ]
+            ),
+            pw.Container(
+              width: double.infinity,
+              padding: const pw.EdgeInsets.all(5),
+              // alignment: pw.Alignment.center,
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(
+                    width: 2
+                ),
+                borderRadius: pw.BorderRadius.circular(20),
+              ),
+              child: pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+
+                  pw.Text(
+                    "الاستشارى : " + widget.advisorName,
+                    style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                    textDirection: pw.TextDirection.rtl,
+                  ),
+                  pw.SizedBox(width: 20,),
+
+                  pw.Text(
+                    "الحالة : " + widget.patientName,
+                    style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
+                    textDirection: pw.TextDirection.rtl,
+                  ),
+
+                ],
+              ),
+            ),
+            pw.SizedBox(height: 10),
             pw.Container(
               width: double.infinity,
               padding: const pw.EdgeInsets.all(5),
@@ -117,12 +186,14 @@ class _AllSessionEvaluationState extends State<AllSessionEvaluation> {
                   ] ),
             ),
             for (final session in evaluationData!.allSessionPointersEvaluation!)
+              if(session.sessionPointersEvaluation!.isNotEmpty)//todo change
               pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [
 
+
                   pw.Text(
-                    'الجلسة ${session.sessionNumber}',
+                    'الجلسة ${session.sessionNumber??''}',
                     style: pw.TextStyle(font: ttf, fontSize: 18, fontWeight: pw.FontWeight.bold),
                     textDirection: pw.TextDirection.rtl,
                   ),

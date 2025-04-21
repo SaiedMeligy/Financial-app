@@ -8,6 +8,7 @@ import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multi_circular_slider/multi_circular_slider.dart';
 import 'package:pdf/pdf.dart';
@@ -15,6 +16,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'dart:html' as html;
 import 'package:intl/intl.dart'as date;
+import 'dart:io';
+import 'dart:typed_data';
 
 
 
@@ -136,19 +139,54 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                         final pdf = pw.Document();
                         final fontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
                         final ttf = pw.Font.ttf(fontData);
+                        // final File logoFile = File('assets/images/logo2.png');
+                        // final Uint8List logoBytes =  await logoFile.readAsBytes();
 
-                        // final image = pw.MemoryImage(
-                        //   (await rootBundle.load('assets/images/back.jpg')).buffer.asUint8List(),
-                        // );
+
+                        final logo = pw.MemoryImage(
+                          (await rootBundle.load('assets/images/AEI Logo.png')).buffer.asUint8List(),
+                        );
+                        final secondLogo = pw.MemoryImage(
+                          (await rootBundle.load('assets/images/لوجو الهيئة.png')).buffer.asUint8List(),
+                        );
                         await Future.delayed(Duration(seconds: 1));
                         pdf.addPage(
                           pw.Page(
                             build: (pw.Context context) {
+
                               return pw.Directionality(
                                 textDirection: pw.TextDirection.rtl,
                                 child:pw.Column(
                                     mainAxisAlignment: pw.MainAxisAlignment.start,
                                     children: [
+                                      pw.Row(
+                                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          pw.Container(
+                                             height: Constants.mediaQuery.height*0.16,
+                                             width: Constants.mediaQuery.width*0.14,
+                                            alignment: pw.Alignment.center,
+                                            decoration: pw.BoxDecoration(
+                                              image: pw.DecorationImage(
+                                                image: secondLogo,
+                                                fit: pw.BoxFit.contain,
+                                              ),
+                                            ),
+                                          ),
+                                          pw.Container(
+                                             height: Constants.mediaQuery.height*0.16,
+                                             width: Constants.mediaQuery.width*0.14,
+                                            alignment: pw.Alignment.center,
+                                            decoration: pw.BoxDecoration(
+                                              image: pw.DecorationImage(
+                                                image: logo,
+                                                fit: pw.BoxFit.contain,
+                                              ),
+                                            ),
+                                          ),
+
+                                        ]
+                                      ),
                                       pw.Container(
                                         decoration: pw.BoxDecoration(
                                           border: pw.Border.all(
@@ -530,7 +568,8 @@ pw.Table(
                         } catch (e) {
                           print('Error: $e');
                         }
-                      },                    ),
+                      },
+                    ),
                   ),
 
                 ],
@@ -998,11 +1037,13 @@ pw.Table(
                               IconButton(
                                   onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) =>
                                       EvaluationSession(
-                                        // sessionId: widget.sessionId,
+                                         patientName: patient['name'],
+                                        advisorName: patient['form']['advicor']['name'],
                                         formId: patient["form"]["id"],
                                         pointer1: pointers1,
                                         pointer2: pointers2,
-                                        pointer3: pointers3, sessionDate: patient["form"]["date"],
+                                        pointer3: pointers3,
+                                        sessionDate: patient["form"]["date"],
 
                                       ),)); },
                                   icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,)),

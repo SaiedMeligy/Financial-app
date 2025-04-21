@@ -47,6 +47,9 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
         } else if (state is SuccessPatientNationalIdState) {
           var session = state.result.data["pationt"]["sessions"];
           var patientId = state.result.data["pationt"]["id"];
+          String patientName = state.result.data["pationt"]['name'];
+          String advisorName = state.result.data["pationt"]['form']['advicor']['name'];
+
 
 
           // Extract session IDs
@@ -272,7 +275,7 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AllSessionEvaluation(sessionIds: sessionIds,patientId:patientId),
+                                    builder: (context) => AllSessionEvaluation(patientName:patientName,advisorName:advisorName,sessionIds: sessionIds,patientId:patientId),
                                   ),
                                 );
                               },

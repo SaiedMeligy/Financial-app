@@ -673,8 +673,7 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                           icon: Icon(Icons.print,
                                               color: Colors.black),
                                           onPressed: () async {
-                                            print(
-                                                'sssssssssssssssssssssssss');
+
                                             final pdf = pw.Document();
                                             // final notoSans = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
                                             // final ttf = pw.Font.ttf(notoSans);
@@ -683,30 +682,55 @@ import '../../../homeAdmin/addSession/manager/cubit.dart';
                                                 'assets/fonts/Amiri-Bold.ttf');
                                             final ttf = pw.Font.ttf(fontData);
 
-                                            final image = pw.MemoryImage(
-                                              (await rootBundle.load(
-                                                  'assets/images/back.jpg'))
-                                                  .buffer
-                                                  .asUint8List(),
+                                            final logo = pw.MemoryImage(
+                                              (await rootBundle.load('assets/images/AEI Logo.png')).buffer.asUint8List(),
                                             );
+                                            final secondLogo = pw.MemoryImage(
+                                              (await rootBundle.load('assets/images/لوجو الهيئة.png')).buffer.asUint8List(),
+                                            );
+
                                             await Future.delayed(
                                                 Duration(seconds: 1));
                                             pdf.addPage(
                                               pw.Page(
                                                 build: (pw.Context context) {
                                                   return pw.Container(
-                                                    // decoration: pw.BoxDecoration(
-                                                    //
-                                                    //   image: pw.DecorationImage(image: image,fit: pw.BoxFit.cover,
-                                                    //   ),
 
-                                                    //),
                                                     child: pw.Center(
                                                       child: pw.Column(
                                                         mainAxisAlignment: pw
                                                             .MainAxisAlignment
                                                             .start,
                                                         children: [
+                                                          pw.Row(
+                                                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                pw.Container(
+                                                                  height: Constants.mediaQuery.height*0.16,
+                                                                  width: Constants.mediaQuery.width*0.14,
+                                                                  alignment: pw.Alignment.center,
+                                                                  decoration: pw.BoxDecoration(
+                                                                    image: pw.DecorationImage(
+                                                                      image: logo,
+                                                                      fit: pw.BoxFit.contain,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                pw.Container(
+                                                                  height: Constants.mediaQuery.height*0.16,
+                                                                  width: Constants.mediaQuery.width*0.14,
+                                                                  alignment: pw.Alignment.center,
+                                                                  decoration: pw.BoxDecoration(
+                                                                    image: pw.DecorationImage(
+                                                                      image: secondLogo,
+                                                                      fit: pw.BoxFit.contain,
+                                                                    ),
+                                                                  ),
+                                                                ),
+
+
+                                                              ]
+                                                          ),
                                                           pw.Container(
                                                               decoration: pw.BoxDecoration(
                                                                   border: pw.Border.all(
