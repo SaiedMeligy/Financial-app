@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../core/config/constants.dart';
 
-class CircleCharts extends StatelessWidget {
+  class CircleCharts extends StatelessWidget {
   final List<SalesData> advisorData;
 
   const CircleCharts({Key? key, required this.advisorData}) : super(key: key);

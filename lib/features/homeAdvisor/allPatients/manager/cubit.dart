@@ -8,43 +8,6 @@ import '../../../../data/repository_imp/all_patient_repository_imp.dart';
 import '../../../../domain/repository/AllPatient/all_patient_repository.dart';
 import '../../../../domain/useCase/allpatient/all_patient_use_case.dart';
 
-// class AllPatientCubit extends Cubit<AllPatientStates> {
-//   int currentPage = 1;
-//   bool isLastPage = false;
-//   List<Pationts> patients = [];
-//
-//   AllPatientCubit() : super(LoadingAllPatient());
-//
-//   late AllPatientUseCase allPatientUseCase;
-//   late AllPatientRepository allPatientRepository;
-//   late AllPatientsDataSource allPatientDataSource;
-//
-//   Future<void> getAllPatient({bool loadMore = false}) async {
-//     if (isLastPage && loadMore) return;
-//     WebServices service = WebServices();
-//     allPatientDataSource = AllPatientDataSourceImp(service.freeDio);
-//     allPatientRepository = AllPatientRepositoryImp(allPatientDataSource);
-//     allPatientUseCase = AllPatientUseCase(allPatientRepository);
-//     emit(LoadingAllPatient());
-//     try {
-//       var result = await allPatientUseCase.execute(AllPatientModel(),page: currentPage);
-//       print('API Response: ${result.data}');
-//
-//       final data = AllPatientModel.fromJson(result.data);
-//       if(data.pationts!.isEmpty){
-//         isLastPage = true;
-//       }
-//       else {
-//         currentPage++;
-//         patients.addAll(data.pationts??[]);
-//       }
-//       emit(SuccessAllPatient(data.pationts ?? []));
-//     } catch (error) {
-//       emit(ErrorAllPatient(error.toString()));
-//     }
-//   }
-//
-// }
 
 class AllPatientCubit extends Cubit<AllPatientStates> {
   int currentPage = 1;

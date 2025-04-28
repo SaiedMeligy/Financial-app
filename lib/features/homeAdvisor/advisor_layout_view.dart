@@ -11,6 +11,7 @@ import '../../core/config/cash_helper.dart';
 import '../../core/config/constants.dart';
 import '../../domain/entities/side_bar_model.dart';
 import '../homeAdmin/logout/page/logout_view.dart';
+import 'Profile advisor/page/profile_advisor.dart';
 import 'allPatients/page/all_patient_view.dart';
 
 class AdvisorLayoutView extends StatefulWidget {
@@ -21,7 +22,7 @@ class AdvisorLayoutView extends StatefulWidget {
 }
 
 class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
-  int currentIndex = 0;
+  int currentIndex = 7;
   bool isMobile = false;
   late String advisor_name;
 
@@ -40,6 +41,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
       SideBarModel(title: "مواعيد الجلسات", icon: Icon(Icons.access_time_rounded,color: Colors.black87)),
        SideBarModel(title: "المحذوفات", icon: Icon(Icons.delete,color: Colors.black87)),
       SideBarModel(title: "اضافة حالة", icon: Icon(Icons.add,color: Colors.black87)),
+      SideBarModel(title: "الملف الشخصي", icon: Icon(Icons.person,color: Colors.black87)),
     ];
     List<Widget> bodies = [
       HomeAdvisorView(),
@@ -49,6 +51,7 @@ class _AdvisorLayoutViewState extends State<AdvisorLayoutView> {
       SessionDate(),
       AllPatientRecycleView(),
       AddUserView(),
+      ProfileAdvisorScreen()
     ];
 
     return LayoutBuilder(
