@@ -9,11 +9,11 @@ import '../../dataSource/homeAdmin/home_admin_data_Source.dart';
 class HomeAdminRepositoryImp implements HomeAdminRepository{
   final HomeAdminDataSource dataSource;
   HomeAdminRepositoryImp(this.dataSource);
+
   @override
   Future<Response> getHomeAdmin(HomeAdminModel homeAdminModel) async {
     try {
-      final response = await dataSource.getHomeAdmin(
-          homeAdminModel);
+      final response = await dataSource.getHomeAdmin(homeAdminModel);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
           return response;
