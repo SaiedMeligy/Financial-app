@@ -544,6 +544,7 @@ class _StaticScreenState extends State<StaticScreen> {
     return text ;
 
   }
+
   printData(dynamic data) async {
     print("=======) " + (await data as HomeAdmin).advisorsStatistics![0].toString());
   }

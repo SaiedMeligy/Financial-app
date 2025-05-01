@@ -74,7 +74,6 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
     emit(SuccessPatientNationalIdState(data));
   }
 
-
   void emitErrorState(String errorMessage) {
     emit(ErrorAddSessionState(errorMessage));
   }
@@ -118,6 +117,26 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
         emitErrorState("لم يسجل في الفورم");
       } else {
         emitSuccessState(patientDetails);
+      }
+    } catch (e) {
+      emitErrorState(e.toString());
+    }
+  }
+
+  Future<void> updateIsOutState(int formId) async {
+    WebServices service = WebServices();
+    getPatientDetailsDataSource = GetPatientDetailsDataSourceImp(service.freeDio);
+    getPatientDetailsRepository = GetPatientDetailsRepositoryImp(getPatientDetailsDataSource);
+    getPatientDetailsUseCase = GetPatientDetailsUseCase(getPatientDetailsRepository);
+
+    try {
+      final data = await getPatientDetailsUseCase.editExistance(formId);
+      if (data.data['success'] == false) {
+        SnackBarService.showErrorMessage("لم يتم تغير وضع الحاله");
+        Navigator.of(navigatorKey.currentState!.context).pop();
+        emitErrorState("لم يتم تغير وضع الحاله");
+      } else {
+        emitSuccessState(data);
       }
     } catch (e) {
       emitErrorState(e.toString());

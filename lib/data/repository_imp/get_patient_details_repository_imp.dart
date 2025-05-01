@@ -8,23 +8,19 @@ import '../dataSource/getPatientDetails/get_patient_details_data_source.dart';
 class GetPatientDetailsRepositoryImp implements GetPatientDetailsRepository{
   final GetPatientDetailsDataSource dataSource;
   GetPatientDetailsRepositoryImp(this.dataSource);
+
   @override
   Future<Response> getPatientDetails(String nationalId,int? with_all_questions) async {
     try {
-      final response = await dataSource.getPatientDetails(
-          nationalId,with_all_questions);
+      final response = await dataSource.getPatientDetails(nationalId,with_all_questions);
       if (response.statusCode == 200) {
         if (response.data["status"] == true) {
-          // SnackBarService.showSuccessMessage(response.data["message"]);
-          //
-          // print("--------->"+response.toString());
-
           return response;
         }
         else {
            SnackBarService.showErrorMessage(response.data["message"]);
           throw ServerFailure(statusCode: response.statusCode.toString(),
-              message: response.data["message"] ?? "unKnown error"
+            message: response.data["message"] ?? "unKnown error"
           );
         }
       }
@@ -35,6 +31,32 @@ class GetPatientDetailsRepositoryImp implements GetPatientDetailsRepository{
             message: response.data["message"] ?? "unKnown error"
         );
 
+      }
+    }on DioException catch (dioException){
+      throw ServerFailure(statusCode: dioException.response?.statusCode.toString()??"",
+      message: dioException.response?.data["message"]?? "unKnown error");
+    }
+  }
+
+  @override
+  Future<Response> editExistance(int formId) async {
+    try {
+      final response = await dataSource.editExistance(formId);
+      if (response.statusCode == 200) {
+        if (response.data["status"] == true) {
+          return response;
+        }
+        else {
+           SnackBarService.showErrorMessage(response.data["message"]);
+          throw ServerFailure(statusCode: response.statusCode.toString(),
+            message: response.data["message"] ?? "unKnown error"
+          );
+        }
+      }
+      else{
+        throw ServerFailure(statusCode: response.statusCode.toString(),
+            message: response.data["message"] ?? "unKnown error"
+        );
       }
     }on DioException catch (dioException){
       throw ServerFailure(statusCode: dioException.response?.statusCode.toString()??"",
