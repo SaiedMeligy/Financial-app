@@ -1674,7 +1674,12 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                               onPressed: () {
                                                 // sameh
                                                 print('======) ${formData["id"]}');
-                                                _patientFormViewCubit.updateIsOutState(formData["id"]);
+                                                _patientFormViewCubit.updateIsOutState(formData["id"]).then((_) {
+
+                                                    _patientFormViewCubit.getPatientDetails(widget.pationt_data.nationalId,0);
+
+
+                                                },);
                                               },
                                             )
                                           ),
