@@ -262,6 +262,7 @@ class _ProfileAdvisorScreenState extends State<ProfileAdvisorScreen> {
 
                             ],
                           ):const SizedBox(),
+
                           const Divider(),
                           _buildActionButton(
                             icon: Icons.logout,
