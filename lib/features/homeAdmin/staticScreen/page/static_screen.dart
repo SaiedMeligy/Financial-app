@@ -1,5 +1,6 @@
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/core/widget/TableWidget.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_need_other_session_view.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_no_need_other_session_view.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_success_story_view.dart';
@@ -33,6 +34,7 @@ class _StaticScreenState extends State<StaticScreen> {
     super.initState();
     homeAdminCubit = HomeAdminCubit();
     homeAdminCubit.getHomeAdmin();
+
   }
 
   double calculatePercentage(int pationtPointersCount, int pointersCount) {
@@ -71,14 +73,12 @@ class _StaticScreenState extends State<StaticScreen> {
                 if (state is SuccessHomeAdmin) {
                   var homeAdmin = state.home;
                   var topAdvisors = homeAdmin?.topAdvicors ?? [];
-
-                  print("ssssssssssssssss>" + homeAdmin.toString());
+                  List<AdvisorsStatistics> advisorsStatistics = homeAdmin?.advisorsStatistics ?? [];
+                  printData(homeAdmin);
                   // var senarioReport = homeAdmin?.senariosReport ?? [];
-
                   // var senario1 = calculatePercentage(senarioReport[0].pationtsPointersCount ?? 0, senarioReport[0]?.pointersCount ?? 0).toString();
                   // var senario2 = calculatePercentage(senarioReport[1].pationtsPointersCount ?? 0, senarioReport[1]?.pointersCount ?? 0).toString();
                   // var senario3 = calculatePercentage(senarioReport[2].pationtsPointersCount ?? 0, senarioReport[2]?.pointersCount ?? 0).toString();
-
                   List<SalesData> advisorData = topAdvisors.map((advisor) {
                     return SalesData(advisor.advicor?.name ?? '', advisor.pationtCount!.toDouble());
                   }).toList();
@@ -94,7 +94,6 @@ class _StaticScreenState extends State<StaticScreen> {
 
                         ),
                       ),
-
                       child: Column(
                         children: [
                           Row(
@@ -151,7 +150,8 @@ class _StaticScreenState extends State<StaticScreen> {
                           Row(
                             children: [
                               _buildTopAdvisors(topAdvisors),
-                              Expanded(child: CircleCharts(advisorData: advisorData)),
+                              // Expanded(child: CircleCharts(advisorData: advisorData)),
+                              _buildTableAdvisorStatistics(advisorsStatistics)
                             ],
                           ),
                         ],
@@ -162,11 +162,11 @@ class _StaticScreenState extends State<StaticScreen> {
                     scrollDirection: Axis.vertical,
                     child: Container(
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/back.jpg"),
-                            fit: BoxFit.cover,
-                            opacity: 0.4
-                          )
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/back.jpg"),
+                          fit: BoxFit.cover,
+                          opacity: 0.4
+                        )
                       ),
                       child: Column(
                         children: [
@@ -213,69 +213,76 @@ class _StaticScreenState extends State<StaticScreen> {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView(),));
                                 },
                                 child: _buildInfoCardPatient(
-                                    title: "عدد الأسر التى لا تتطلب جلسة إضافية",
-                                    count: homeAdmin?.noNeedOtherSession.toString() ?? "",
-                                    icon:  Icons.back_hand_rounded
+                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
+                                  count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                  icon:  Icons.back_hand_rounded
                                 ),
                               ),
-
+                              GestureDetector(
+                                onTap: null ,
+                                child: _buildInfoCardPatient(
+                                  title: "عدد الاسر التي خرجت من الدعم",
+                                  count: homeAdmin?.numberOfOutnes.toString() ?? "",
+                                  icon:  Icons.back_hand_rounded
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 10),
                           //TODO: handle backend process
                           // SenarioWadget(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              
-                              // Container(
-                              //   width: Constants.mediaQuery.width * 0.3,
-                              //   height: Constants.mediaQuery.height * 0.57,
-                              //   decoration: BoxDecoration(
-                              //     color: Constants.theme.primaryColor.withOpacity(0.5),
-                              //     borderRadius: BorderRadius.circular(10),
-                              //     border: Border.all(color: Colors.black26),
-                              //   ),
-                              //   child: Padding(
-                              //     padding: const EdgeInsets.all(8.0),
-                              //     child: Column(
-                              //       crossAxisAlignment: CrossAxisAlignment.start,
-                              //       children: [
-                              //         Text(
-                              //           "اكثر استشاريين لديهم أسر",
-                              //           style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                              //             color:  Colors.black
-                              //           ),
-                              //         ),
-                              //         Divider(
-                              //           color: Constants.theme.primaryColor,
-                              //           thickness: 1,
-                              //           indent: 10,
-                              //           endIndent: 10,
-                              //         ),
-                              //         SizedBox(height: 20,),
-                              //         ...topAdvisors.take(3).map((advisor) {
-                              //           return Row(
-                              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //             children: [
-                              //               Text(
-                              //                 "الاسم: ${advisor.advicor?.name ?? ""}",
-                              //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
-                              //               ),
-                              //               Text(
-                              //                 "العدد: ${advisor.pationtCount}",
-                              //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
-                              //               ),
-                              //             ],
-                              //           );
-                              //         }).toList(),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ).setHorizontalPadding(context,enableMediaQuery: false, 5),
-                              CircleCharts(advisorData: advisorData),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     // Container(
+                          //     //   width: Constants.mediaQuery.width * 0.3,
+                          //     //   height: Constants.mediaQuery.height * 0.57,
+                          //     //   decoration: BoxDecoration(
+                          //     //     color: Constants.theme.primaryColor.withOpacity(0.5),
+                          //     //     borderRadius: BorderRadius.circular(10),
+                          //     //     border: Border.all(color: Colors.black26),
+                          //     //   ),
+                          //     //   child: Padding(
+                          //     //     padding: const EdgeInsets.all(8.0),
+                          //     //     child: Column(
+                          //     //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //     //       children: [
+                          //     //         Text(
+                          //     //           "اكثر استشاريين لديهم أسر",
+                          //     //           style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                          //     //             color:  Colors.black
+                          //     //           ),
+                          //     //         ),
+                          //     //         Divider(
+                          //     //           color: Constants.theme.primaryColor,
+                          //     //           thickness: 1,
+                          //     //           indent: 10,
+                          //     //           endIndent: 10,
+                          //     //         ),
+                          //     //         SizedBox(height: 20,),
+                          //     //         ...topAdvisors.take(3).map((advisor) {
+                          //     //           return Row(
+                          //     //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     //             children: [
+                          //     //               Text(
+                          //     //                 "الاسم: ${advisor.advicor?.name ?? ""}",
+                          //     //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
+                          //     //               ),
+                          //     //               Text(
+                          //     //                 "العدد: ${advisor.pationtCount}",
+                          //     //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
+                          //     //               ),
+                          //     //             ],
+                          //     //           );
+                          //     //         }).toList(),
+                          //     //       ],
+                          //     //     ),
+                          //     //   ),
+                          //     // ).setHorizontalPadding(context,enableMediaQuery: false, 5),
+                          //     CircleCharts(advisorData: advisorData),
+                          //   ],
+                          // ),
+                          _buildTableAdvisorStatistics(advisorsStatistics)
                         ],
                       ).setHorizontalPadding(context,enableMediaQuery: false,15),
                     ),
@@ -349,6 +356,7 @@ class _StaticScreenState extends State<StaticScreen> {
       ),
     );
   }
+
   Widget _buildInfoCardPatient({required String title, required String count, required IconData icon}) {
     return Container(
       width: isMobile ? Constants.mediaQuery.width * 0.3 : Constants.mediaQuery.width * 0.2,
@@ -365,7 +373,6 @@ class _StaticScreenState extends State<StaticScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Icon(icon,size: isMobile?20:30,),
           Expanded(
             child: Center(
@@ -500,6 +507,25 @@ class _StaticScreenState extends State<StaticScreen> {
       ),
     ).setHorizontalPadding(context,enableMediaQuery: false, 5);
   }
+
+  Widget _buildTableAdvisorStatistics(List<AdvisorsStatistics> advisorsStatistics) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.68,
+      height: advisorsStatistics.length * 55.2,
+      decoration: BoxDecoration(
+        color: Constants.theme.primaryColor.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: TableWidget(
+          advisorsStatistics: advisorsStatistics,
+          headerData: ["الاسم" , "اساسية" , "منقوله"] ,
+        ),
+      ),
+    ).setHorizontalPadding(context,enableMediaQuery: false, 5);
+  }
+
   String DividText (String text){
     String temp = "" ;
     List<String> Words = text.split(" ") ;
@@ -519,4 +545,7 @@ class _StaticScreenState extends State<StaticScreen> {
 
   }
 
+  printData(dynamic data) async {
+    print("=======) " + (await data as HomeAdmin).advisorsStatistics![0].toString());
+  }
 }

@@ -9,6 +9,7 @@ import 'home_admin_data_Source.dart';
 class HomeAdminDataSourceImp implements HomeAdminDataSource{
   final Dio dio;
   HomeAdminDataSourceImp(this.dio);
+
   @override
   Future<Response> getHomeAdmin(HomeAdminModel homeAdmin) {
     return dio.get(
@@ -20,7 +21,6 @@ class HomeAdminDataSourceImp implements HomeAdminDataSource{
         },
       )
     );
-
   }
 
 }

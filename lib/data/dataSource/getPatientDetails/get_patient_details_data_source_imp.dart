@@ -28,4 +28,22 @@ class GetPatientDetailsDataSourceImp implements GetPatientDetailsDataSource{
 
   }
 
+  @override
+  Future<Response> editExistance(int formId) async{
+    return await dio.post(
+      "/api/form/changeExistence",
+      data: FormData.fromMap({
+        "id": formId
+      }),
+      options: Options(
+        headers: {
+          "api-password":Constants.apiPassword,
+          "token":CacheHelper.getData(key: "token")
+        }
+      )
+
+    );
+
+  }
+
 }
