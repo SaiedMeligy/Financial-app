@@ -76,8 +76,7 @@ class ReportSessionWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Constants.theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold),
+            style: Constants.theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             range,

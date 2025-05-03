@@ -103,6 +103,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
   }
 
   Future<void> getPatientDetails(String nationalId, int? with_all_questions) async {
+    emitLoadingState();
     WebServices service = WebServices();
     getPatientDetailsDataSource = GetPatientDetailsDataSourceImp(service.freeDio);
     getPatientDetailsRepository = GetPatientDetailsRepositoryImp(getPatientDetailsDataSource);
@@ -124,6 +125,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
   }
 
   Future<void> updateIsOutState(int formId) async {
+    emitLoadingState();
     WebServices service = WebServices();
     getPatientDetailsDataSource = GetPatientDetailsDataSourceImp(service.freeDio);
     getPatientDetailsRepository = GetPatientDetailsRepositoryImp(getPatientDetailsDataSource);
@@ -133,7 +135,7 @@ class AddSessionCubit extends Cubit<AddSessionStates> {
       final data = await getPatientDetailsUseCase.editExistance(formId);
       if (data.data['success'] == false) {
         SnackBarService.showErrorMessage("لم يتم تغير وضع الحاله");
-        Navigator.of(navigatorKey.currentState!.context).pop();
+        // Navigator.of(navigatorKey.currentState!.context).pop();
         emitErrorState("لم يتم تغير وضع الحاله");
       } else {
         emitSuccessState(data);

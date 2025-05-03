@@ -21,9 +21,7 @@ class SuccessAllPointers extends AllPointersStates {
 
 class ErrorAllPointers extends AllPointersStates {
   final String errorMessage;
-
   ErrorAllPointers(this.errorMessage);
-
   @override
   List<Object> get props => [errorMessage];
 }

@@ -45,6 +45,7 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   fl_chart: ^0.55.1
   excel: ^4.0.6
+  giffy_dialog: ^2.3.0
 #  syncfusion_flutter_xlsio: ^28.2.11
 
 dev_dependencies:
@@ -84,6 +85,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Amiri-Regular.ttf
         - asset: assets/fonts/Amiri-Bold.ttf
+
+    - family: ElMessiri
+      fonts:
+        - asset: assets/fonts/ElMessiri/ElMessiri-Regular.ttf
+        - asset: assets/fonts/ElMessiri/ElMessiri-Bold.ttf
 
 
 

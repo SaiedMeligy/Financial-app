@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus_windows
   firebase_core
   printing
+  rive_common
   url_launcher_windows
 )
 

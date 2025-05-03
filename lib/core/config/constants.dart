@@ -4,6 +4,7 @@ import 'package:experts_app/features/homeAdmin/Advices/page/addAdvice/add_advice
 import 'package:experts_app/features/homeAdmin/Backup_data/page/backup_data_page.dart';
 import 'package:experts_app/features/homeAdmin/Consulting%20service/All%20Consultation/page/consulting_view.dart';
 import 'package:experts_app/features/homeAdmin/Consulting%20service/Consultation%20Store/page/add_consulting.dart';
+import 'package:experts_app/features/homeAdmin/PointerTypes/presentation/pages/PointerTypesView.dart';
 import 'package:experts_app/features/homeAdmin/addSession/page/add_session_view.dart';
 import 'package:experts_app/features/homeAdmin/add_patient/page/add_patient_view.dart';
 import 'package:experts_app/features/homeAdmin/adviceReport/page/advice_report_view.dart';
@@ -39,6 +40,7 @@ class Constants {
       SideBarModel(title: "عرض الأسئلة", icon: const Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة المؤشرات", icon: const Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: "المؤشرات", icon: const Icon(Icons.list,color: Colors.black87)),
+      SideBarModel(title: "اضافة مؤشر تقييم", icon: const Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة التوصيات", icon: const Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: " التوصيات", icon: const Icon(Icons.list,color: Colors.black87)),
       // SideBarModel(title: "اضافة الحالات من مصدر خارجي", icon: const Icon(Icons.add,color: Colors.black87)),
@@ -61,6 +63,7 @@ class Constants {
       AllQuestionView(),
       const AddIndicator(),
       const EditIndicator(),
+      PointerTypesView(),
       const AddRecommend(),
       const EditAdviceView(),
       // const // Center(child: Text("اضافة الحالات من مصدر خارجي",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
