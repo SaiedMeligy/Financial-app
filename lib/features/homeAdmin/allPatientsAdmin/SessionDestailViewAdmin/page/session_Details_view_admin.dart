@@ -9,6 +9,7 @@ import 'package:experts_app/domain/entities/AllSessionModel.dart';
 import 'package:experts_app/domain/entities/SessionUpdateModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
+import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/TextPrinterWidget.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/drop_down_with_admin.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/reporst_session.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/manager/cubit.dart';
@@ -34,11 +35,10 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'dart:html' as html;
 
+import '../../../AddPointerTypeEvalution/presentation/pages/PointerTypeEvalutionView.dart';
 import '../widget/evaluation_session.dart';
 import '../widget/getPointers.dart';
 import 'package:intl/intl.dart'as date;
-
-
 
 class SessionDetailsViewAdmin extends StatefulWidget {
   final dynamic pationt_data;
@@ -149,8 +149,6 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                 );
               }
               if (state is SuccessPatientNationalIdState) {
-
-
                 return Scaffold(
                   appBar: AppBar(
                     title: Text(
@@ -175,461 +173,461 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                       child: ListView(
                         children: [
                           Container(
-                                      child: BlocBuilder<UpdateSessionCubit, UpdateSessionStates>(
-                                          bloc: updateSessionCubit,
-                                          builder: (context, state) {
-                                           return (widget.isFinished == 0&&finished==false)?
-                                               Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                  children: [
-                                                    FadeInUp(
-                                                      duration: Duration(milliseconds: 300),
-                                                      child: Text(
-                                                        "ملاحظات الاستشاري",
-                                                        style: isMobile
-                                                            ? Constants.theme.textTheme.bodyMedium
-                                                            ?.copyWith(color: Colors.black,)
-                                                            : Constants.theme.textTheme.titleLarge
-                                                            ?.copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
+                              child: BlocBuilder<UpdateSessionCubit, UpdateSessionStates>(
+                                  bloc: updateSessionCubit,
+                                  builder: (context, state) {
+                                   return (widget.isFinished == 0&&finished==false)?
+                                       Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            FadeInUp(
+                                              duration: Duration(milliseconds: 300),
+                                              child: Text(
+                                                "ملاحظات الاستشاري",
+                                                style: isMobile
+                                                    ? Constants.theme.textTheme.bodyMedium
+                                                    ?.copyWith(color: Colors.black,)
+                                                    : Constants.theme.textTheme.titleLarge
+                                                    ?.copyWith(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 20),
+                                            FadeInRight(
+                                              duration: Duration(milliseconds: 500),
+                                              child: CustomTextField(
+                                                maxLines: 4,
+                                                hint: "ملاحظات الاستشاري",
+                                                controller: advisorComment,
+                                              ),
+                                            ),
+                                            widget.sessionComment != null ?
+                                            FadeInRight(
+                                              duration: Duration(milliseconds: 300),
+                                              child: Text(
+                                                " ملاحظات اثناء حجز الجلسة :" +
+                                                    widget.sessionComment.toString(),
+                                                style: isMobile
+                                                    ? Constants.theme.textTheme.bodyMedium
+                                                    ?.copyWith(color: Colors.black,)
+                                                    : Constants.theme.textTheme.titleLarge
+                                                    ?.copyWith(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ) : Container(),
+                                            SizedBox(height: 10),
+                                            FadeInRight(
+                                              duration: Duration(milliseconds: 700),
+                                              child: isMobile
+                                              ?Column(
+                                                children: [
+                                                  Text(
+                                                    "الخدمة الاستشارية",
+                                                    style: isMobile ? Constants.theme.textTheme
+                                                        .bodyMedium?.copyWith(
+                                                      color: Colors.black,) : Constants.theme
+                                                        .textTheme.titleLarge?.copyWith(
+                                                      color: Colors.black,
                                                     ),
-                                                    SizedBox(height: 20),
-                                                    FadeInRight(
-                                                      duration: Duration(milliseconds: 500),
-                                                      child: CustomTextField(
-                                                        maxLines: 4,
-                                                        hint: "ملاحظات الاستشاري",
-                                                        controller: advisorComment,
-                                                      ),
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  DropDownWithAdmin(
+                                                    onChange: (value) {
+                                                      setState(() {
+                                                        selected_consultation_service = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ):Row(
+                                                children: [
+                                                  Text(
+                                                    "الخدمة الاستشارية",
+                                                    style: isMobile ? Constants.theme.textTheme
+                                                        .bodyMedium?.copyWith(
+                                                      color: Colors.black,) : Constants.theme
+                                                        .textTheme.titleLarge?.copyWith(
+                                                      color: Colors.black,
                                                     ),
-                                                    widget.sessionComment != null ?
-                                                    FadeInRight(
-                                                      duration: Duration(milliseconds: 300),
-                                                      child: Text(
-                                                        " ملاحظات اثناء حجز الجلسة :" +
-                                                            widget.sessionComment.toString(),
-                                                        style: isMobile
-                                                            ? Constants.theme.textTheme.bodyMedium
-                                                            ?.copyWith(color: Colors.black,)
-                                                            : Constants.theme.textTheme.titleLarge
-                                                            ?.copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ) : Container(),
-                                                    SizedBox(height: 10),
-                                                    FadeInRight(
-                                                      duration: Duration(milliseconds: 700),
-                                                      child: isMobile
-                                                      ?Column(
-                                                        children: [
-                                                          Text(
-                                                            "الخدمة الاستشارية",
-                                                            style: isMobile ? Constants.theme.textTheme
-                                                                .bodyMedium?.copyWith(
-                                                              color: Colors.black,) : Constants.theme
-                                                                .textTheme.titleLarge?.copyWith(
-                                                              color: Colors.black,
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  DropDownWithAdmin(
+                                                    onChange: (value) {
+                                                      setState(() {
+                                                        selected_consultation_service = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            FadeInRight(
+                                              duration: Duration(milliseconds: 900),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    " هل يحتاج إلى جلسة اخرى",
+                                                    style: isMobile ? Constants.theme.textTheme
+                                                        .bodyMedium?.copyWith(
+                                                      color: Colors.black,) : Constants.theme
+                                                        .textTheme.titleLarge?.copyWith(
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  Checkbox(
+                                                    value: (needOtherSession == 1),
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        needOtherSession = (value!) ? 1 : 0;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            // FadeInRight(
+                                            //   duration: Duration(milliseconds: 1100),
+                                            //   child: Row(
+                                            //     children: [
+                                            //       Text(
+                                            //         "الحالة حضرت الجلسة",
+                                            //         style: isMobile ? Constants.theme.textTheme
+                                            //             .bodyMedium?.copyWith(
+                                            //           color: Colors.black,) : Constants.theme
+                                            //             .textTheme.titleLarge?.copyWith(
+                                            //           color: Colors.black,
+                                            //         ),
+                                            //       ),
+                                            //       Checkbox(
+                                            //         value: (isAttendSelected == 1),
+                                            //         onChanged: (value) {
+                                            //           setState(() {
+                                            //             isAttendSelected = (value!) ? 1 : 0;
+                                            //           });
+                                            //         },
+                                            //       ),
+                                            //     ],
+                                            //   ),
+                                            // ),
+                                            // SizedBox(height: 10),
+                                            FadeInRight(
+                                              duration: Duration(milliseconds: 1300),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    " هل الحالة قصة نجاح",
+                                                    style: isMobile ? Constants.theme.textTheme
+                                                        .bodyMedium?.copyWith(
+                                                      color: Colors.black,) : Constants.theme
+                                                        .textTheme.titleLarge?.copyWith(
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  Checkbox(
+                                                    value: (isSuccessStorySelected == 1),
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        isSuccessStorySelected = (value!) ? 1 : 0;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text("تقييم المؤشرات",style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                                  color: Colors.black
+                                                ),),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return AlertDialog(
+                                                          title: ReportSessionWidget(),
+                                                          backgroundColor: Colors.black,
+                                                          content: SizedBox(
+                                                            height: Constants.mediaQuery.height * 0.6,
+                                                            width: Constants.mediaQuery.width * 0.45,
+                                                            child: TabItemWidget(
+                                                              item1: "السيناريو الاول",
+                                                              item2: "السيناريو التاني",
+                                                              item3: "السيناريو التالت",
+                                                              firstWidget: TextFieldQuestionRow(
+                                                                items: pointers1,
+                                                                controllers: controllers1, // Pass controllers
+                                                                onChanged: (values) {
+                                                                  evaluationPointers1 = values
+                                                                      .where((pointer) => pointer["evaluation"]!.isNotEmpty)
+                                                                      .toList();
+                                                                  print("Scenario 1: $evaluationPointers1");
+                                                                },
+                                                                scenarioId: '1',
+                                                              ),
+                                                              secondWidget: TextFieldQuestionRow(
+                                                                items: pointers2,
+                                                                controllers: controllers2, // Pass controllers
+                                                                onChanged: (values) {
+                                                                  evaluationPointers2 = values
+                                                                      .where((pointer) => pointer["evaluation"]!.isNotEmpty)
+                                                                      .toList();
+                                                                  print("Scenario 2: $evaluationPointers2");
+                                                                },
+                                                                scenarioId: '2',
+                                                              ),
+                                                              thirdWidget: TextFieldQuestionRow(
+                                                                items: pointers3,
+                                                                controllers: controllers3, // Pass controllers
+                                                                onChanged: (values) {
+                                                                  evaluationPointers3 = values
+                                                                      .where((pointer) => pointer["evaluation"]!.isNotEmpty)
+                                                                      .toList();
+                                                                  print("Scenario 3: $evaluationPointers3");
+                                                                },
+                                                                scenarioId: '3',
+                                                              ),
                                                             ),
                                                           ),
-                                                          const SizedBox(width: 10),
-                                                          DropDownWithAdmin(
-                                                            onChange: (value) {
-                                                              setState(() {
-                                                                selected_consultation_service = value;
-                                                              });
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ):Row(
-                                                        children: [
-                                                          Text(
-                                                            "الخدمة الاستشارية",
-                                                            style: isMobile ? Constants.theme.textTheme
-                                                                .bodyMedium?.copyWith(
-                                                              color: Colors.black,) : Constants.theme
-                                                                .textTheme.titleLarge?.copyWith(
-                                                              color: Colors.black,
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                allSelectedPointers = [
+                                                                  ...evaluationPointers1,
+                                                                  ...evaluationPointers2,
+                                                                  ...evaluationPointers3
+                                                                ];
+                                                                print("Final Data to Send: $allSelectedPointers");
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                  border: Border.all(
+                                                                    color: Constants.theme.primaryColor,
+                                                                    width: 2.5,
+                                                                  ),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.all(8.0),
+                                                                  child: Text(
+                                                                    "موافق",
+                                                                    style: Constants.theme.textTheme.bodyMedium,
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          const SizedBox(width: 10),
-                                                          DropDownWithAdmin(
-                                                            onChange: (value) {
-                                                              setState(() {
-                                                                selected_consultation_service = value;
-                                                              });
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10),
-                                                    FadeInRight(
-                                                      duration: Duration(milliseconds: 900),
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            " هل يحتاج إلى جلسة اخرى",
-                                                            style: isMobile ? Constants.theme.textTheme
-                                                                .bodyMedium?.copyWith(
-                                                              color: Colors.black,) : Constants.theme
-                                                                .textTheme.titleLarge?.copyWith(
-                                                              color: Colors.black,
-                                                            ),
-                                                          ),
-                                                          Checkbox(
-                                                            value: (needOtherSession == 1),
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                needOtherSession = (value!) ? 1 : 0;
-                                                              });
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10),
-                                                    // FadeInRight(
-                                                    //   duration: Duration(milliseconds: 1100),
-                                                    //   child: Row(
-                                                    //     children: [
-                                                    //       Text(
-                                                    //         "الحالة حضرت الجلسة",
-                                                    //         style: isMobile ? Constants.theme.textTheme
-                                                    //             .bodyMedium?.copyWith(
-                                                    //           color: Colors.black,) : Constants.theme
-                                                    //             .textTheme.titleLarge?.copyWith(
-                                                    //           color: Colors.black,
-                                                    //         ),
-                                                    //       ),
-                                                    //       Checkbox(
-                                                    //         value: (isAttendSelected == 1),
-                                                    //         onChanged: (value) {
-                                                    //           setState(() {
-                                                    //             isAttendSelected = (value!) ? 1 : 0;
-                                                    //           });
-                                                    //         },
-                                                    //       ),
-                                                    //     ],
-                                                    //   ),
-                                                    // ),
-                                                    // SizedBox(height: 10),
-                                                    FadeInRight(
-                                                      duration: Duration(milliseconds: 1300),
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            " هل الحالة قصة نجاح",
-                                                            style: isMobile ? Constants.theme.textTheme
-                                                                .bodyMedium?.copyWith(
-                                                              color: Colors.black,) : Constants.theme
-                                                                .textTheme.titleLarge?.copyWith(
-                                                              color: Colors.black,
-                                                            ),
-                                                          ),
-                                                          Checkbox(
-                                                            value: (isSuccessStorySelected == 1),
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                isSuccessStorySelected = (value!) ? 1 : 0;
-                                                              });
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Text("تقييم المؤشرات",style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                                                          color: Colors.black
-                                                        ),),
-                                                        IconButton(
-                                                          onPressed: () {
-                                                            showDialog(
-                                                              context: context,
-                                                              builder: (context) {
-                                                                return AlertDialog(
-                                                                  title: ReportSessionWidget(),
-                                                                  backgroundColor: Colors.black,
-                                                                  content: SizedBox(
-                                                                    height: Constants.mediaQuery.height * 0.6,
-                                                                    width: Constants.mediaQuery.width * 0.45,
-                                                                    child: TabItemWidget(
-                                                                      item1: "السيناريو الاول",
-                                                                      item2: "السيناريو التاني",
-                                                                      item3: "السيناريو التالت",
-                                                                      firstWidget: TextFieldQuestionRow(
-                                                                        items: pointers1,
-                                                                        controllers: controllers1, // Pass controllers
-                                                                        onChanged: (values) {
-                                                                          evaluationPointers1 = values
-                                                                              .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                                              .toList();
-                                                                          print("Scenario 1: $evaluationPointers1");
-                                                                        },
-                                                                        scenarioId: '1',
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  icon: Icon(Icons.add_circle_rounded),
+                                                ),
+
+                                              ],
+                                            ),
+
+                                            SizedBox(height: 20),
+                                            FadeInRight(
+                                              duration: Duration(milliseconds: 1500),
+                                              child: BorderRoundedButton(
+                                                title: "انهاء",
+                                                onPressed: () {
+
+
+
+                                                  var data = SessionsUpdateModel(
+                                                    sessionId: widget.sessionId,
+                                                    comments: advisorComment.text,
+                                                    consultationId: selected_consultation_service,
+                                                    needOtherSession: needOtherSession,
+                                                    isAttend: isAttendSelected,
+                                                    pointerEvaluation: allSelectedPointers,
+
+                                                    // advices: selectedAdviceIds,
+                                                    // pointers: selectedPointersIds,
+                                                    isSuccessStory: isSuccessStorySelected,
+                                                    isFinished: 1,
+                                                  );
+                                                  if(advisorComment.text==''){
+                                                    SnackBarService.showErrorMessage("من فضلك ادخل الملاحظة");
+                                                  }
+                                                  else {
+                                                    updateSessionCubit
+                                                        .updateSessionWithAdmin(
+                                                        data)
+                                                        .then((
+                                                        response) {
+                                                      if (response
+                                                          .data["status"] ==
+                                                          true) {
+                                                        setState(() {
+                                                          // advisorComment.clear();
+                                                          needOtherSession =
+                                                          0;
+                                                          isAttendSelected =
+                                                          0;
+                                                          isSuccessStorySelected =
+                                                          0;
+                                                          selected_consultation_service =
+                                                          0;
+                                                        });
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (
+                                                              context) {
+                                                            return Directionality(
+                                                              textDirection: TextDirection
+                                                                  .rtl,
+                                                              child: AlertDialog(
+                                                                title: Text(
+                                                                  "تم انهاء الجلسة",
+                                                                  style: isMobile
+                                                                      ? Constants
+                                                                      .theme
+                                                                      .textTheme
+                                                                      .bodyMedium
+                                                                      ?.copyWith(
+                                                                    color: Colors
+                                                                        .black,)
+                                                                      : Constants
+                                                                      .theme
+                                                                      .textTheme
+                                                                      .bodyMedium
+                                                                      ?.copyWith(
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () {
+                                                                      Navigator
+                                                                          .of(
+                                                                          context)
+                                                                          .pop();
+                                                                      addSessionCubit
+                                                                          .setRefresh(
+                                                                          widget
+                                                                              .pationt_data
+                                                                              .nationalId,
+                                                                          0);
+                                                                      finished =
+                                                                      true;
+
+                                                                      setState(() {});
+                                                                    },
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
+                                                                        borderRadius: BorderRadius
+                                                                            .circular(
+                                                                            10),
+                                                                        border: Border
+                                                                            .all(
+                                                                          color: Constants
+                                                                              .theme
+                                                                              .primaryColor,
+                                                                          width: 2.5,
+                                                                        ),
                                                                       ),
-                                                                      secondWidget: TextFieldQuestionRow(
-                                                                        items: pointers2,
-                                                                        controllers: controllers2, // Pass controllers
-                                                                        onChanged: (values) {
-                                                                          evaluationPointers2 = values
-                                                                              .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                                              .toList();
-                                                                          print("Scenario 2: $evaluationPointers2");
-                                                                        },
-                                                                        scenarioId: '2',
-                                                                      ),
-                                                                      thirdWidget: TextFieldQuestionRow(
-                                                                        items: pointers3,
-                                                                        controllers: controllers3, // Pass controllers
-                                                                        onChanged: (values) {
-                                                                          evaluationPointers3 = values
-                                                                              .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                                              .toList();
-                                                                          print("Scenario 3: $evaluationPointers3");
-                                                                        },
-                                                                        scenarioId: '3',
-                                                                      ),
+                                                                      child: Text(
+                                                                        "اغلاق",
+                                                                        style: isMobile
+                                                                            ? Constants
+                                                                            .theme
+                                                                            .textTheme
+                                                                            .bodyMedium
+                                                                            ?.copyWith(
+                                                                          color: Colors
+                                                                              .black,)
+                                                                            : Constants
+                                                                            .theme
+                                                                            .textTheme
+                                                                            .bodyMedium
+                                                                            ?.copyWith(
+                                                                          color: Colors
+                                                                              .black,
+                                                                        ),
+                                                                      )
+                                                                          .setHorizontalPadding(
+                                                                          context,
+                                                                          enableMediaQuery: false,
+                                                                          20),
                                                                     ),
                                                                   ),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed: () {
-                                                                        allSelectedPointers = [
-                                                                          ...evaluationPointers1,
-                                                                          ...evaluationPointers2,
-                                                                          ...evaluationPointers3
-                                                                        ];
-                                                                        print("Final Data to Send: $allSelectedPointers");
-                                                                        Navigator.of(context).pop();
-                                                                      },
-                                                                      child: Container(
-                                                                        decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(10),
-                                                                          border: Border.all(
-                                                                            color: Constants.theme.primaryColor,
-                                                                            width: 2.5,
-                                                                          ),
-                                                                        ),
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.all(8.0),
-                                                                          child: Text(
-                                                                            "موافق",
-                                                                            style: Constants.theme.textTheme.bodyMedium,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
+                                                                ],
+                                                              ),
                                                             );
                                                           },
-                                                          icon: Icon(Icons.add_circle_rounded),
-                                                        ),
-
-                                                      ],
-                                                    ),
-
-                                                    SizedBox(height: 20),
-                                                    FadeInRight(
-                                                      duration: Duration(milliseconds: 1500),
-                                                      child: BorderRoundedButton(
-                                                        title: "انهاء",
-                                                        onPressed: () {
-
-
-
-                                                          var data = SessionsUpdateModel(
-                                                            sessionId: widget.sessionId,
-                                                            comments: advisorComment.text,
-                                                            consultationId: selected_consultation_service,
-                                                            needOtherSession: needOtherSession,
-                                                            isAttend: isAttendSelected,
-                                                            pointerEvaluation: allSelectedPointers,
-
-                                                            // advices: selectedAdviceIds,
-                                                            // pointers: selectedPointersIds,
-                                                            isSuccessStory: isSuccessStorySelected,
-                                                            isFinished: 1,
-                                                          );
-                                                          if(advisorComment.text==''){
-                                                            SnackBarService.showErrorMessage("من فضلك ادخل الملاحظة");
-                                                          }
-                                                          else {
-                                                            updateSessionCubit
-                                                                .updateSessionWithAdmin(
-                                                                data)
-                                                                .then((
-                                                                response) {
-                                                              if (response
-                                                                  .data["status"] ==
-                                                                  true) {
-                                                                setState(() {
-                                                                  // advisorComment.clear();
-                                                                  needOtherSession =
-                                                                  0;
-                                                                  isAttendSelected =
-                                                                  0;
-                                                                  isSuccessStorySelected =
-                                                                  0;
-                                                                  selected_consultation_service =
-                                                                  0;
-                                                                });
-                                                                showDialog(
-                                                                  context: context,
-                                                                  builder: (
-                                                                      context) {
-                                                                    return Directionality(
-                                                                      textDirection: TextDirection
-                                                                          .rtl,
-                                                                      child: AlertDialog(
-                                                                        title: Text(
-                                                                          "تم انهاء الجلسة",
-                                                                          style: isMobile
-                                                                              ? Constants
-                                                                              .theme
-                                                                              .textTheme
-                                                                              .bodyMedium
-                                                                              ?.copyWith(
-                                                                            color: Colors
-                                                                                .black,)
-                                                                              : Constants
-                                                                              .theme
-                                                                              .textTheme
-                                                                              .bodyMedium
-                                                                              ?.copyWith(
-                                                                            color: Colors
-                                                                                .black,
-                                                                          ),
-                                                                        ),
-                                                                        actions: [
-                                                                          TextButton(
-                                                                            onPressed: () {
-                                                                              Navigator
-                                                                                  .of(
-                                                                                  context)
-                                                                                  .pop();
-                                                                              addSessionCubit
-                                                                                  .setRefresh(
-                                                                                  widget
-                                                                                      .pationt_data
-                                                                                      .nationalId,
-                                                                                  0);
-                                                                              finished =
-                                                                              true;
-
-                                                                              setState(() {});
-                                                                            },
-                                                                            child: Container(
-                                                                              decoration: BoxDecoration(
-                                                                                borderRadius: BorderRadius
-                                                                                    .circular(
-                                                                                    10),
-                                                                                border: Border
-                                                                                    .all(
-                                                                                  color: Constants
-                                                                                      .theme
-                                                                                      .primaryColor,
-                                                                                  width: 2.5,
-                                                                                ),
-                                                                              ),
-                                                                              child: Text(
-                                                                                "اغلاق",
-                                                                                style: isMobile
-                                                                                    ? Constants
-                                                                                    .theme
-                                                                                    .textTheme
-                                                                                    .bodyMedium
-                                                                                    ?.copyWith(
-                                                                                  color: Colors
-                                                                                      .black,)
-                                                                                    : Constants
-                                                                                    .theme
-                                                                                    .textTheme
-                                                                                    .bodyMedium
-                                                                                    ?.copyWith(
-                                                                                  color: Colors
-                                                                                      .black,
-                                                                                ),
-                                                                              )
-                                                                                  .setHorizontalPadding(
-                                                                                  context,
-                                                                                  enableMediaQuery: false,
-                                                                                  20),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                );
-                                                              }
-                                                            });
-                                                          }
-                                                        },
-                                                      ).setHorizontalPadding(
-                                                          context, enableMediaQuery: false, 10),
-                                                    ),
-                                                  ],
-                                                ).setVerticalPadding(context,enableMediaQuery: false, 20),
-                                              )
-                                            :
-                                            BlocBuilder<AddSessionCubit, AddSessionStates>(
-                                                bloc: _patientSessionCubit,
-                                                builder: (context, state) {
-                                                  if (state is LoadingAddSessionState) {
-                                                    return Center(child: CircularProgressIndicator());
-                                                  } else if (state is ErrorAddSessionState) {
-                                                    return Center(child: Text(state.errorMessage));
-                                                  } else if (state is SuccessShowSessionWithAdmin) {
-                                                    var session = state.result.data["session"];
-                                                    if (session == null) {
-                                                      return const Center(
-                                                          child: Text("No session data available."));
-                                                    }
-                                                    var sessionId = session['id'];
-                                                    var patientName = session["pationt"]["name"] ?? "";
-                                                    var advisorName = session["advicor"]["name"] ?? "";
-                                                    var nationalId = session["pationt"]["national_id"] ?? "";
-                                                    var caseManager = session["case_manager"] ?? "";
-                                                    var phoneNumber = session["phone_number"] ?? "";
-                                                    var otherPhoneNumber = session["other_phone_number"] ?? "";
-                                                    var pointers = session["Pointers"] ?? [];
-                                                    var advices = session["Advices"] ?? [];
-
-                                                    List<dynamic> pointers1Temp = [];
-                                                    List<dynamic> pointers2Temp = [];
-                                                    List<dynamic> pointers3Temp = [];
-
-                                                    for (var pointer in pointers) {
-                                                      if (pointer["senario_id"] == 1) {
-                                                        pointers1Temp.add(pointer);
-                                                      } else if (pointer["senario_id"] == 2) {
-                                                        pointers2Temp.add(pointer);
-                                                      } else if (pointer["senario_id"] == 3) {
-                                                        pointers3Temp.add(pointer);
+                                                        );
                                                       }
-                                                    }
-                                                    List<int> selectedAdviceIds = [];
-                                                    List<int> selectedPointersIds = [];
+                                                    });
+                                                  }
+                                                },
+                                              ).setHorizontalPadding(
+                                                  context, enableMediaQuery: false, 10),
+                                            ),
+                                          ],
+                                        ).setVerticalPadding(context,enableMediaQuery: false, 20),
+                                      )
+                                    :
+                                    BlocBuilder<AddSessionCubit, AddSessionStates>(
+                                        bloc: _patientSessionCubit,
+                                        builder: (context, state) {
+                                          if (state is LoadingAddSessionState) {
+                                            return Center(child: CircularProgressIndicator());
+                                          } else if (state is ErrorAddSessionState) {
+                                            return Center(child: Text(state.errorMessage));
+                                          } else if (state is SuccessShowSessionWithAdmin) {
+                                            var session = state.result.data["session"];
+                                            if (session == null) {
+                                              return const Center(
+                                                  child: Text("No session data available."));
+                                            }
+                                            var sessionId = session['id'];
+                                            var patientName = session["pationt"]["name"] ?? "";
+                                            var advisorName = session["advicor"]["name"] ?? "";
+                                            var nationalId = session["pationt"]["national_id"] ?? "";
+                                            var caseManager = session["case_manager"] ?? "";
+                                            var phoneNumber = session["phone_number"] ?? "";
+                                            var otherPhoneNumber = session["other_phone_number"] ?? "";
+                                            var pointers = session["Pointers"] ?? [];
+                                            var advices = session["Advices"] ?? [];
+
+                                            List<dynamic> pointers1Temp = [];
+                                            List<dynamic> pointers2Temp = [];
+                                            List<dynamic> pointers3Temp = [];
+
+                                            for (var pointer in pointers) {
+                                              if (pointer["senario_id"] == 1) {
+                                                pointers1Temp.add(pointer);
+                                              } else if (pointer["senario_id"] == 2) {
+                                                pointers2Temp.add(pointer);
+                                              } else if (pointer["senario_id"] == 3) {
+                                                pointers3Temp.add(pointer);
+                                              }
+                                            }
+                                            List<int> selectedAdviceIds = [];
+                                            List<int> selectedPointersIds = [];
 
 
 
-                                                    // if (pointers.isEmpty && advices.isEmpty) {
-                                                    //   return Center(
-                                                    //     child: Text("No data available"),
-                                                    //   );
-                                                    // }
-                                                    if(phoneNumber.toString().contains('+')){
+                                            // if (pointers.isEmpty && advices.isEmpty) {
+                                            //   return Center(
+                                            //     child: Text("No data available"),
+                                            //   );
+                                            // }
+                                            if(phoneNumber.toString().contains('+')){
                       phoneNumber = phoneNumber.toString().replaceAll('+', '');
                       phoneNumber = '$phoneNumber+';
                     }
@@ -709,94 +707,92 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                     crossAxisAlignment: pw.CrossAxisAlignment.end,
                                                     children: [
                                                       pw.Row(
-                                                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            pw.Container(
-                                                              height: Constants.mediaQuery.height*0.16,
-                                                              width: Constants.mediaQuery.width*0.14,
-                                                              alignment: pw.Alignment.center,
-                                                              decoration: pw.BoxDecoration(
-                                                                image: pw.DecorationImage(
-                                                                  image: logo,
-                                                                  fit: pw.BoxFit.contain,
-                                                                ),
+                                                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          pw.Container(
+                                                            height: Constants.mediaQuery.height*0.16,
+                                                            width: Constants.mediaQuery.width*0.14,
+                                                            alignment: pw.Alignment.center,
+                                                            decoration: pw.BoxDecoration(
+                                                              image: pw.DecorationImage(
+                                                                image: logo,
+                                                                fit: pw.BoxFit.contain,
                                                               ),
                                                             ),
-                                                            pw.Container(
-                                                              height: Constants.mediaQuery.height*0.16,
-                                                              width: Constants.mediaQuery.width*0.14,
-                                                              alignment: pw.Alignment.center,
-                                                              decoration: pw.BoxDecoration(
-                                                                image: pw.DecorationImage(
-                                                                  image: secondLogo,
-                                                                  fit: pw.BoxFit.contain,
-                                                                ),
+                                                          ),
+                                                          pw.Container(
+                                                            height: Constants.mediaQuery.height*0.16,
+                                                            width: Constants.mediaQuery.width*0.14,
+                                                            alignment: pw.Alignment.center,
+                                                            decoration: pw.BoxDecoration(
+                                                              image: pw.DecorationImage(
+                                                                image: secondLogo,
+                                                                fit: pw.BoxFit.contain,
                                                               ),
                                                             ),
-
-
-                                                          ]
+                                                          ),
+                                                        ]
                                                       ),
 
-                                                      pw.Text(
-                                                        "اسم الحالة: ${patientName}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+                                                      TextPrinterWidget(
+                                                        text: "اسم الحالة: ${patientName}" ,
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "اسم الاستشاري: ${advisorName}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: "اسم الاستشاري: ${advisorName}",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "تاريخ الجلسة: ${sessionDate}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: "تاريخ الجلسة: ${sessionDate}",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "تاريخ الطباعة: ${formatDate}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: "تاريخ الطباعة: ${formatDate}",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "رقم الهوية: ${nationalId}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: "رقم الهوية: ${nationalId}",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "رقم الهاتف: ${phoneNumber}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: "رقم الهاتف: ${phoneNumber}",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "رقم بديل للهاتف: ${otherPhoneNumber}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      if(otherPhoneNumber != "")...[
+                                                        TextPrinterWidget(
+                                                          text: "رقم بديل للهاتف: ${otherPhoneNumber}",
+                                                          ttf: ttf
+                                                        ),
+                                                      ],
+                                                      TextPrinterWidget(
+                                                        text: "مدير الحالة: ${caseManager}",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "مدير الحالة: ${caseManager}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: needOtherSession ? "الحالة بحاجة إلى جلسة أخرى" : "الحالة ليست بحاجة إلى جلسة أخرى",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        needOtherSession ? "الحالة بحاجة إلى جلسة أخرى" : "الحالة ليست بحاجة إلى جلسة أخرى",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: isSuccessStory ? "الحالة قصة نجاح" : "الحالة ليست قصة نجاح",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        isSuccessStory ? "الحالة قصة نجاح" : "الحالة ليست قصة نجاح",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: "الخدمة الاستشارية: ${serviceName}",
+                                                        ttf: ttf
                                                       ),
-                                                      pw.Text(
-                                                        "الخدمة الاستشارية: ${serviceName}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
-                                                      ),
-                                                      pw.Text(
-                                                        "وصف الخدمة الاستشارية: ${serviceDescription}",
-                                                        style: pw.TextStyle(font: ttf, fontSize: 16, color: PdfColors.black),
-                                                        textDirection: pw.TextDirection.rtl,
+
+                                                      TextPrinterWidget(
+                                                        text: "وصف الخدمة الاستشارية: ${serviceDescription}",
+                                                        ttf: ttf
                                                       ),
                                                       pw.SizedBox(height: 20),
                                                       pw.Directionality(
@@ -1051,17 +1047,39 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                           },
                                         ),
                                         SizedBox(width:20.w ,),
-                                        IconButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                            EvaluationSession(
-                                          sessionId: widget.sessionId,
-                                              pointer1: pointers1,
-                                              pointer2: pointers2,
-                                              pointer3: pointers3,
-                                              sessionDate: sessionDate, patientName: patientName,
-                                              advisorName: advisorName,
-
-                                        ),)); },
-                                            icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,))
+                                        IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => PointerTypeEvalutionView(
+                                                  data: {
+                                                    "sessionId": widget.sessionId
+                                                  } ,
+                                                  patientName: patientName,
+                                                  advisorName: advisorName,
+                                                  sessionDate: sessionDate,
+                                                )
+                                              )
+                                            );
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(builder: (context) =>
+                                            //     EvaluationSession(
+                                            //       sessionId: widget.sessionId,
+                                            //       pointer1: pointers1,
+                                            //       pointer2: pointers2,
+                                            //       pointer3: pointers3,
+                                            //       sessionDate: sessionDate, patientName: patientName,
+                                            //       advisorName: advisorName,
+                                            //     ),
+                                            //   ));
+                                          },
+                                          icon: Icon(
+                                            FontAwesomeIcons.thumbsUp,
+                                            color: Colors.black,size: 35,
+                                          )
+                                        )
                                       ],
                                     ),
                                   ),
@@ -1105,14 +1123,15 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                           color: Colors.black),
                                     ),
                                   ),
-                                  Text(
-                                    "رقم بديل للهاتف : $otherPhoneNumber",
-                                    style: isMobile ? Constants.theme
-                                        .textTheme.bodyMedium?.copyWith(
-                                      color: Colors.black,) : Constants.theme
-                                        .textTheme.bodyLarge?.copyWith(
-                                        color: Colors.black),
-                                  ),
+                                  if(otherPhoneNumber != "")
+                                    Text(
+                                      "رقم بديل للهاتف : $otherPhoneNumber",
+                                      style: isMobile ? Constants.theme
+                                          .textTheme.bodyMedium?.copyWith(
+                                        color: Colors.black,) : Constants.theme
+                                          .textTheme.bodyLarge?.copyWith(
+                                          color: Colors.black),
+                                    ),
                                   Text(
                                     "مدير الحالة : $caseManager",
                                     style: isMobile ? Constants.theme
@@ -1918,7 +1937,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
               );
 
                                           }
-                                      ),
+                                ),
                               ),
                           //   ),
                           // ),

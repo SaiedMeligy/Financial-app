@@ -930,18 +930,9 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                                 BorderRadius.circular(20),
                                           ),
                                           child: IconButton(
-                                            icon: Icon(
-                                                CupertinoIcons
-                                                    .arrow_up_arrow_down_circle,
-                                                color: Colors.black),
+                                            icon: Icon(CupertinoIcons.arrow_up_arrow_down_circle, color: Colors.black),
                                             onPressed: () {
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) {
-                                                return ReplaceAdvisorView(
-                                                    pationt_data:
-                                                        widget.pationt_data);
-                                              }));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) {return ReplaceAdvisorView(pationt_data: widget.pationt_data);}));
                                             },
                                           ),
                                         ),
@@ -1734,13 +1725,13 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                   children: [
                                     Expanded(
                                       child: Container(
-                                        margin: const EdgeInsets.all(5),
+                                        margin: EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(20)),
                                         child: IconButton(
-                                            icon: const Icon(
+                                            icon: Icon(
                                                 Icons.arrow_forward,
                                                 color: Colors.black),
                                             onPressed: () {
@@ -1750,7 +1741,7 @@ class _PatientDetailsAdminViewState extends State<PatientDetailsAdminView> {
                                     ),
                                     Expanded(
                                       child: Container(
-                                        margin: const EdgeInsets.all(5),
+                                        margin: EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:

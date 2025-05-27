@@ -1,3 +1,4 @@
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/data/models/SessionPointersEvaluations.dart';
 import 'package:experts_app/features/homeAdmin/PointerTypes/data/models/PointerTypeModel.dart';
 import 'package:experts_app/features/homeAdmin/PointerTypes/presentation/widgets/ButtonWidget.dart';
 import 'package:experts_app/features/homeAdmin/PointerTypes/presentation/widgets/TextFaildWidget.dart';
@@ -5,41 +6,41 @@ import 'package:experts_app/features/homeAdmin/PointerTypes/presentation/widgets
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
-class AssetsDialogInput extends StatefulWidget {
+import '../../data/models/AllSessionPointersTypeEvaluation.dart';
+
+class AssetsDialogInputOneInput extends StatefulWidget {
   String headerText ;
   String? okButtoneText ;
   String? cancelButtoneText ;
   String imagePath ;
   bool isInput ;
-  late PointerTypeModel? pointerType ;
-  Function(PointerTypeModel pointerType) onOkPressed ;
+  late SessionPointersEvaluations? sessionPointersEvaluations = SessionPointersEvaluations() ;
+  Function(SessionPointersEvaluations sessionPointersEvaluations) onOkPressed ;
   Function() onCancelPressed ;
 
-  AssetsDialogInput({
+  AssetsDialogInputOneInput({
     super.key ,
     required this.headerText,
     required this.imagePath ,
     required this.onCancelPressed ,
     required this.onOkPressed ,
     required this.isInput ,
+    this.sessionPointersEvaluations ,
     this.okButtoneText ,
     this.cancelButtoneText ,
-    this.pointerType ,
   });
 
   @override
-  State<AssetsDialogInput> createState() => _AssetsDialogInputState();
+  State<AssetsDialogInputOneInput> createState() => _AssetsDialogInputOneInputState();
 }
 
-class _AssetsDialogInputState extends State<AssetsDialogInput> {
-  TextEditingController name = TextEditingController();
-  TextEditingController desc = TextEditingController();
+class _AssetsDialogInputOneInputState extends State<AssetsDialogInputOneInput> {
+  TextEditingController evalutionController = TextEditingController();
 
   @override
   void initState() {
-    if(widget.pointerType != null){
-      name = TextEditingController(text: widget.pointerType!.name);
-      desc = TextEditingController(text: widget.pointerType!.desc);
+    if(widget.sessionPointersEvaluations != null){
+      evalutionController = TextEditingController(text: widget.sessionPointersEvaluations!.evaluation.toString());
     }
     super.initState();
   }
@@ -61,14 +62,9 @@ class _AssetsDialogInputState extends State<AssetsDialogInput> {
           mainAxisSize: MainAxisSize.min,
           children: widget.isInput ? [
             TextFieldWidget(
-              controller: desc,
-              hintText: 'الوصف',
+              controller: evalutionController,
+              hintText: "التقييم",
             ),
-            SizedBox(height: 5,),
-            TextFieldWidget(
-              controller: name,
-              hintText: 'المؤشر',
-            )
           ] : [],
         ),
         actions: [
@@ -77,7 +73,7 @@ class _AssetsDialogInputState extends State<AssetsDialogInput> {
             onPressed: _onButtonOkPressed
           ),
           ButtonWidget(
-            text: widget.cancelButtoneText??"الغاء",
+            text: widget.cancelButtoneText ?? "الغاء",
             onPressed: widget.onCancelPressed
           )
         ],
@@ -88,6 +84,11 @@ class _AssetsDialogInputState extends State<AssetsDialogInput> {
   }
 
   _onButtonOkPressed() {
-    widget.onOkPressed(PointerTypeModel(name: name.value.text, desc: desc.value.text, id: 0)) ;
+    widget.onOkPressed(
+      SessionPointersEvaluations(
+        id: widget.sessionPointersEvaluations!.id ,
+        evaluation: double.parse(evalutionController.value.text) ,
+      )
+    );
   }
 }

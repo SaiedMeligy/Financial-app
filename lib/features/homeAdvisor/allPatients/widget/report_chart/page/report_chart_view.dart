@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/tab_item_widget.dart';
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/presentation/pages/PointerTypeEvalutionView.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/material.dart';
@@ -1062,17 +1063,31 @@ pw.Table(
                                   color: Colors.black
                                 ),),
                                 IconButton(
-                                    onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                    EvaluationSession(
-                                      patientName: patient['name'],
-                                      advisorName: patient['form']['advicor']['name'],
-                                      formId: patient["form"]["id"],
-                                      pointer1: pointers1,
-                                      pointer2: pointers2,
-                                      pointer3: pointers3, sessionDate:patient["form"]["date"] ,
-
-                                    ),)); },
-                                    icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,)),
+                                  onPressed: () {
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => EvaluationSession(
+                                    //   patientName: patient['name'],
+                                    //   advisorName: patient['form']['advicor']['name'],
+                                    //   formId: patient["form"]["id"],
+                                    //   pointer1: pointers1,
+                                    //   pointer2: pointers2,
+                                    //   pointer3: pointers3,
+                                    //   sessionDate:patient["form"]["date"] ,
+                                    //
+                                    // ),));
+                                    Navigator.push(
+                                      context, MaterialPageRoute(
+                                        builder: (context) => PointerTypeEvalutionView(
+                                          data: {
+                                            "formID" : patient["form"]["id"]
+                                          },
+                                          patientName: patient['name'],
+                                          advisorName: patient['form']['advicor']['name'],
+                                          sessionDate:patient["form"]["date"] ,
+                                        )
+                                      )
+                                    );
+                                  },
+                                  icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,)),
                               ],
                             ),
 

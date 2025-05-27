@@ -28,6 +28,7 @@ class AllPatientWithAdminCubit extends Cubit<AllPatientWithAdminStates> {
     allPatientDataSource = AllPatientWithAdminDataSourceImp(service.freeDio);
     allPatientRepository = AllPatientWithAdminRepositoryImp(allPatientDataSource);
     allPatientUseCase = AllPatientWithAdminUseCase(allPatientRepository);
+
     if(!loadMore)
     emit(LoadingAllPatientWithAdmin());
     try {

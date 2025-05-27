@@ -4,6 +4,7 @@ import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/custom_text_field.dart';
 import 'package:experts_app/domain/entities/SessionUpdateModel.dart';
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/presentation/widgets/PointerTypeTableView.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:experts_app/features/homeAdvisor/sessions/manager/cubit.dart';
@@ -26,6 +27,7 @@ import '../../../../core/widget/check_box_question.dart';
 import '../../../../core/widget/tab_item_widget.dart';
 import '../../../../domain/entities/AdviceMode.dart';
 import '../../../../domain/entities/QuestionModel.dart';
+import '../../../homeAdmin/AddPointerTypeEvalution/presentation/pages/PointerTypeEvalutionView.dart';
 import '../../../homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/evaluation_session.dart';
 import '../../../homeAdmin/allPatientsAdmin/SessionDestailViewAdmin/widget/reporst_session.dart';
 import '../../sessions/manager/states.dart';
@@ -284,81 +286,124 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return AlertDialog(
-                                        title: ReportSessionWidget(),
-                                        backgroundColor: Colors.black,
-                                        content: SizedBox(
-                                          height: Constants.mediaQuery.height * 0.6,
-                                          width: Constants.mediaQuery.width * 0.45,
-                                          child: TabItemWidget(
-                                            item1: "السيناريو الاول",
-                                            item2: "السيناريو التاني",
-                                            item3: "السيناريو التالت",
-                                            firstWidget: TextFieldQuestionRow(
-                                              items: pointers1,
-                                              controllers: controllers1, // Pass controllers
-                                              onChanged: (values) {
-                                                evaluationPointers1 = values
-                                                    .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                    .toList();
-                                                print("Scenario 1: $evaluationPointers1");
-                                              },
-                                              scenarioId: '1',
-                                            ),
-                                            secondWidget: TextFieldQuestionRow(
-                                              items: pointers2,
-                                              controllers: controllers2, // Pass controllers
-                                              onChanged: (values) {
-                                                evaluationPointers2 = values
-                                                    .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                    .toList();
-                                                print("Scenario 2: $evaluationPointers2");
-                                              },
-                                              scenarioId: '2',
-                                            ),
-                                            thirdWidget: TextFieldQuestionRow(
-                                              items: pointers3,
-                                              controllers: controllers3, // Pass controllers
-                                              onChanged: (values) {
-                                                evaluationPointers3 = values
-                                                    .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                    .toList();
-                                                print("Scenario 3: $evaluationPointers3");
-                                              },
-                                              scenarioId: '3',
-                                            ),
-                                          ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              allSelectedPointers = [
-                                                ...evaluationPointers1,
-                                                ...evaluationPointers2,
-                                                ...evaluationPointers3
-                                              ];
-                                              print("Final Data to Send: $allSelectedPointers");
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                border: Border.all(
-                                                  color: Constants.theme.primaryColor,
-                                                  width: 2.5,
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "موافق",
-                                                  style: Constants.theme.textTheme.bodyMedium,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      return
+                                        PointerTypesTableViewWidget(
+                                        save: (evalutions) {
+                                          List<Map<String,String>> allEvalutions = [] ;
+                                          evalutions.forEach((key, value) {
+                                            allEvalutions.add(
+                                              {
+                                                "pointerId" : key.toString() ,
+                                                "evaluation" : value.toString() ,
+                                              }
+                                            );
+                                          });
+                                          allSelectedPointers = allEvalutions ;
+                                          // [
+                                          //   {
+                                          //     pointerId: 55,
+                                          //     evaluation: 8,
+                                          //     scenarioNumber: 1
+                                          //   },
+                                          //   {
+                                          //     pointerId: 56,
+                                          //     evaluation: 9,
+                                          //     scenarioNumber: 1
+                                          //   },
+                                          //   {
+                                          //     pointerId: 69,
+                                          //     evaluation: 5,
+                                          //     scenarioNumber: 2
+                                          //   },
+                                          //   {
+                                          //     pointerId: 70,
+                                          //     evaluation: 2,
+                                          //     scenarioNumber: 2
+                                          //   },
+                                          //   {
+                                          //     pointerId: 90,
+                                          //     evaluation: 2,
+                                          //     scenarioNumber: 3
+                                          //   },
+                                          //   {
+                                          //     pointerId: 95,
+                                          //     evaluation: 1,
+                                          //     scenarioNumber: 3
+                                          //   }
+                                          // ];
+                                        },
                                       );
+                                      //   AlertDialog(
+                                      //   title: ReportSessionWidget(),
+                                      //   backgroundColor: Colors.black,
+                                      //   content: SizedBox(
+                                      //     height: Constants.mediaQuery.height * 0.6,
+                                      //     width: Constants.mediaQuery.width * 0.45,
+                                      //     child: TabItemWidget(
+                                      //       item1: "السيناريو الاول",
+                                      //       item2: "السيناريو التاني",
+                                      //       item3: "السيناريو التالت",
+                                      //       firstWidget: TextFieldQuestionRow(
+                                      //         items: pointers1,
+                                      //         controllers: controllers1, // Pass controllers
+                                      //         onChanged: (values) {
+                                      //           evaluationPointers1 = values.where((pointer) => pointer["evaluation"]!.isNotEmpty).toList();
+                                      //           print("Scenario 1: $evaluationPointers1");
+                                      //         },
+                                      //         scenarioId: '1',
+                                      //       ),
+                                      //       secondWidget: TextFieldQuestionRow(
+                                      //         items: pointers2,
+                                      //         controllers: controllers2, // Pass controllers
+                                      //         onChanged: (values) {
+                                      //           evaluationPointers2 = values.where((pointer) => pointer["evaluation"]!.isNotEmpty).toList();
+                                      //           print("Scenario 2: $evaluationPointers2");
+                                      //         },
+                                      //         scenarioId: '2',
+                                      //       ),
+                                      //       thirdWidget: TextFieldQuestionRow(
+                                      //         items: pointers3,
+                                      //         controllers: controllers3, // Pass controllers
+                                      //         onChanged: (values) {
+                                      //           evaluationPointers3 = values
+                                      //               .where((pointer) => pointer["evaluation"]!.isNotEmpty)
+                                      //               .toList();
+                                      //           print("Scenario 3: $evaluationPointers3");
+                                      //         },
+                                      //         scenarioId: '3',
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      //   actions: [
+                                      //     TextButton(
+                                      //       onPressed: () {
+                                      //         allSelectedPointers = [
+                                      //           ...evaluationPointers1,
+                                      //           ...evaluationPointers2,
+                                      //           ...evaluationPointers3
+                                      //         ];
+                                      //         print("Final Data to Send: $allSelectedPointers");
+                                      //         Navigator.of(context).pop();
+                                      //       },
+                                      //       child: Container(
+                                      //         decoration: BoxDecoration(
+                                      //           borderRadius: BorderRadius.circular(10),
+                                      //           border: Border.all(
+                                      //             color: Constants.theme.primaryColor,
+                                      //             width: 2.5,
+                                      //           ),
+                                      //         ),
+                                      //         child: Padding(
+                                      //           padding: const EdgeInsets.all(8.0),
+                                      //           child: Text(
+                                      //             "موافق",
+                                      //             style: Constants.theme.textTheme.bodyMedium,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // );
                                     },
                                   );
                                 },
@@ -384,7 +429,8 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                     isSuccessStory: isSuccessStorySelected,
                                     isFinished: 1,
                                   );
-                                  // print("---------->" + data.toString());
+                                  print("----------> " + allSelectedPointers.runtimeType.toString());
+                                  print("----------> " + allSelectedPointers.toString());
                                   if(advisorComment.text==''){
                                     SnackBarService.showErrorMessage("من فضلك ادخل الملاحظة");
                                   }
@@ -407,22 +453,15 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                               child: AlertDialog(
                                                 title: Text(
                                                   "تم إنهاء الجلسة",
-                                                  style: isMobile
-                                                      ? Constants.theme
-                                                      .textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    color: Colors.black,)
-                                                      : Constants.theme
-                                                      .textTheme
-                                                      .bodyMedium?.copyWith(
-                                                    color: Colors.black,
-                                                  ),
+                                                  style: isMobile ? Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black,)
+                                                      : Constants.theme.textTheme.bodyMedium?.copyWith(
+                                                          color: Colors.black,
+                                                          ),
                                                 ),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
+                                                      Navigator.of(context).pop();
                                                       // Navigator.pushAndRemoveUntil(context,
                                                       //     MaterialPageRoute(
                                                       //     builder: (context) =>PatientDetailsView(pationt_data: widget.pationt_data,)
@@ -430,19 +469,15 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                       //      ),
                                                       //   (route) => false,
                                                       // );
-                                                      _patientSessionCubit
-                                                          .setRefreshSession(
-                                                          widget.sessionId);
+                                                      _patientSessionCubit.setRefreshSession(widget.sessionId);
                                                       finish = true;
                                                       setState(() {});
                                                     },
                                                     child: Container(
                                                       decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius
-                                                            .circular(10),
+                                                        borderRadius: BorderRadius.circular(10),
                                                         border: Border.all(
-                                                          color: Constants.theme
-                                                              .primaryColor,
+                                                          color: Constants.theme.primaryColor,
                                                           width: 2.5,
                                                         ),
                                                       ),
@@ -460,10 +495,7 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                                             ?.copyWith(
                                                           color: Colors.black,
                                                         ),
-                                                      ).setHorizontalPadding(
-                                                          context,
-                                                          enableMediaQuery: false,
-                                                          20),
+                                                      ).setHorizontalPadding(context, enableMediaQuery: false, 20),
                                                     ),
                                                   ),
                                                 ],
@@ -944,20 +976,35 @@ class _SessionDetailsViewHomeState extends State<SessionDetailsViewHome> {
                                           ),
                                           SizedBox(width:20.w ,),
                                           IconButton(onPressed: () {
+                                            // Navigator.push(context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) =>
+                                            //       EvaluationSession(
+                                            //         patientName: patientName,
+                                            //         advisorName: advisorName,
+                                            //         sessionId: widget.sessionId,
+                                            //         pointer1: pointers1,
+                                            //         pointer2: pointers2,
+                                            //         pointer3: pointers3,
+                                            //         sessionDate:sessionDate,
+                                            //       ),
+                                            //   )
+                                            // );
                                             Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) =>
-                                              EvaluationSession(
-                                                patientName: patientName,
-                                                advisorName: advisorName,
-                                                sessionId: widget.sessionId,
-                                                pointer1: pointers1,
-                                                pointer2: pointers2,
-                                                pointer3: pointers3,
-                                                sessionDate:sessionDate,
-
-                                              ),
-                                          )); },
-                                              icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,))
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                PointerTypeEvalutionView(
+                                                  data: {
+                                                    "sessionId" : widget.sessionId
+                                                  },
+                                                  patientName: patientName ,
+                                                  advisorName: advisorName ,
+                                                  sessionDate:sessionDate
+                                                ),
+                                              )
+                                            );
+                                          },
+                                          icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,))
                                         ],
                                       ),
                                     ),

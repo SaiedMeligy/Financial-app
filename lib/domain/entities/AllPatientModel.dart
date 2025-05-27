@@ -66,17 +66,21 @@ class Pationts {
       this.sessionCount,});
 
   Pationts.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    phoneNumber = json['phone_number'];
-    nationalId = json['national_id'];
-    password = json['password'];
-    advicorId = json['advicor_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    isDeleted = json['is_deleted'];
-    sessionCount = json['session_count'];
+    try{
+      id = int.parse(json['id'].toString());
+      name = json['name'];
+      email = json['email'];
+      phoneNumber = json['phone_number'];
+      nationalId = json['national_id'];
+      password = json['password'];
+      advicorId = json['advicor_id'];
+      createdAt = json['created_at'];
+      updatedAt = json['updated_at'];
+      isDeleted = int.parse(json['is_deleted'].toString());
+      sessionCount = int.parse(json['session_count'].toString());
+    }catch(e){
+      print('==========) $e');
+    }
   }
   int? id;
   String? name;

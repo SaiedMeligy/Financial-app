@@ -21,6 +21,7 @@ class DeletePointerType {
   DeletePointerType(this.repository);
 
   Future<void> call(int id) async {
+    print('===========) $id');
     await repository.deletePointerType(id);
   }
 }

@@ -1,5 +1,8 @@
 
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/presentation/pages/AllSessionEvalutionView.dart';
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/presentation/pages/PointerTypeEvalutionView.dart';
+import 'package:experts_app/features/homeAdmin/PointerTypes/presentation/pages/PointerTypesView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/config/cash_helper.dart';
@@ -42,7 +45,7 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
-                          Radius.circular(10)
+                        Radius.circular(10)
                       ),
                       image: DecorationImage(
                         image: AssetImage("assets/images/AEI Logo.png"),
@@ -90,6 +93,13 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                     children: [
                       Text("نسخ احتياطي",style: Constants.theme.textTheme.bodyMedium,),
                       IconButton(onPressed: () {
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => PointerTypeEvalutionView(data: {"sessionId":1}),));
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => AllSessionEvalutionView(patientId: 19),
+                        //   )
+                        // );
                         showDialog(context: context, builder: (context) {
                           return Container(
                             child: AlertDialog(
@@ -105,29 +115,27 @@ class _HomeAdminViewState extends State<HomeAdminView> {
                                     Navigator.of(context).pop();
                                   },
                                   child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius
-                                            .circular(10),
-                                        border: Border.all(
-                                          color: Constants.theme
-                                              .primaryColor,
-                                          width: 2.5,
-                                        ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Constants.theme.primaryColor,
+                                        width: 2.5,
                                       ),
-                                      child: Text("اغلاق",
-                                        style: Constants.theme
-                                            .textTheme.bodyMedium
-                                            ?.copyWith(
+                                    ),
+                                    child: Text("اغلاق",
+                                      style: Constants.theme.textTheme.bodyMedium
+                                          ?.copyWith(
                                             color: Colors.white
-                                        ),).setHorizontalPadding(
-                                          context,
-                                          enableMediaQuery: false, 20)
+                                          ),
+                                    ).setHorizontalPadding(
+                                        context,
+                                        enableMediaQuery: false, 20)
                                   ),
                                 ),
                               ],
                             ),
                           );
-                        },);
+                        });
                       }, icon: Icon(Icons.download_rounded)),
                     ],
                   ),

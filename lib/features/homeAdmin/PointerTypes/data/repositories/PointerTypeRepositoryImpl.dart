@@ -13,18 +13,18 @@ class PointerTypeRepositoryImpl implements PointerTypeRepository {
   @override
   Future<void> add(PointerTypeModel pointerType) =>
       remote.addPointerTypes(PointerTypeModel(
-        id: pointerType.id,
-        name: pointerType.name,
-        desc: pointerType.desc,
+        id: pointerType.id!,
+        name: pointerType.name!,
+        desc: pointerType.desc!,
       ));
 
   @override
   Future<void> updatePointerType(PointerTypeModel pointerType) =>
       remote.updatePointerTypes(
         PointerTypeModel(
-          id: pointerType.id,
-          name: pointerType.name,
-          desc: pointerType.desc,
+          id: pointerType.id!,
+          name: pointerType.name!,
+          desc: pointerType.desc!,
         )
       );
 

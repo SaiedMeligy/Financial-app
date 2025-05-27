@@ -460,7 +460,6 @@ class _EvaluationSessionState extends State<EvaluationSession> {
                                               context: context,
                                               builder: (context) {
                                                 TextEditingController evaluationController = TextEditingController(text: evaluationSession[index].evaluation.toString());
-
                                                 return Directionality(
                                                   textDirection: TextDirection.rtl,
                                                   child: AlertDialog(

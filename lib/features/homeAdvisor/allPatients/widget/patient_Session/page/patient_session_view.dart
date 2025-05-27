@@ -1,5 +1,6 @@
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/domain/entities/AddSessionModel.dart';
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/presentation/pages/AllSessionEvalutionView.dart';
 import 'package:experts_app/features/homeAdvisor/session%20dates/manager/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -272,14 +273,22 @@ class _PatientSessionViewState extends State<PatientSessionView> {
                               title: 'تقييم الجلسات',
                               color: Colors.black,
                               onPressed: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => AllSessionEvaluation(
+                                //       sessionIds: sessionIds,
+                                //       patientId: patientId,
+                                //       patientName: patientName,
+                                //       advisorName: advisorName,
+                                //     ),
+                                //   ),
+                                // );
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AllSessionEvaluation(
-                                      sessionIds: sessionIds,
+                                    builder: (context) => AllSessionEvalutionView(
                                       patientId: patientId,
-                                      patientName: patientName,
-                                      advisorName: advisorName,
                                     ),
                                   ),
                                 );

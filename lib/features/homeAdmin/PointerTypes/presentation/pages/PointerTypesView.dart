@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PointerTypesView extends StatefulWidget {
-  const PointerTypesView({super.key});
+  PointerTypesView({super.key});
 
   @override
   State<PointerTypesView> createState() => _PointerTypesViewState();
@@ -30,7 +30,6 @@ class _PointerTypesViewState extends State<PointerTypesView> {
     return BlocBuilder<PointerTypeCubit, PointerTypesState>(
       bloc: pointersTypesCubit,
       builder: (context, state) {
-        print('==================> ${state.runtimeType}');
         if (state is PointerTypesLoading) {
           return Center(child: CircularProgressIndicator());
         }
@@ -75,8 +74,12 @@ class _PointerTypesViewState extends State<PointerTypesView> {
                   ),
                   Expanded(
                     child: PointerTypesTableWidget(
-                      edit: (pointerType) => _editDialog(pointerType) ,
-                      delete: (pointerType) => _deleteDialog(pointerType) ,
+                      edit: (pointerType) {
+                        _editDialog(pointerType);
+                      } ,
+                      delete: (pointerType) {
+                        _deleteDialog(pointerType);
+                      } ,
                       allPointerType: state.pointerTypelist
                     ),
                   ),
@@ -92,12 +95,7 @@ class _PointerTypesViewState extends State<PointerTypesView> {
             )
           );
         }
-        return Container(
-          color: Colors.red ,
-          width: 100,
-          height: 100,
-        );
-        //const SizedBox.shrink()
+        return const SizedBox.shrink();
       },
     );
   }
@@ -119,7 +117,7 @@ class _PointerTypesViewState extends State<PointerTypesView> {
     );
   }
 
-  _editDialog(PointerTypeModel pointerType){
+  _editDialog(PointerTypeModel mainpointerType){
     showDialog(
       context: context,
       builder: (dialogContext) {
@@ -128,11 +126,14 @@ class _PointerTypesViewState extends State<PointerTypesView> {
           headerText: "تعديل مؤشر تقييم",
           imagePath: 'assets/images/clinic logo.jpg',
           okButtoneText: "تعديل",
-          pointerType: pointerType,
+          pointerType: mainpointerType,
           onCancelPressed: () {
             Navigator.of(dialogContext).pop();
           },
-          onOkPressed: (pointerType) => _editPointerType(pointerType , dialogContext),
+          onOkPressed: (pointerType) {
+            pointerType.id = mainpointerType.id ;
+            _editPointerType(pointerType, dialogContext);
+          },
         );
       },
     );
@@ -151,7 +152,10 @@ class _PointerTypesViewState extends State<PointerTypesView> {
           onCancelPressed: () {
             Navigator.of(dialogContext).pop();
           },
-          onOkPressed: (pointerType) => _deletePointerType(pointerType , dialogContext),
+          onOkPressed: (pointerTypee) {
+            print('-----------) ${pointerType.id}');
+            _deletePointerType(pointerType, dialogContext);
+          },
         );
       },
     );
@@ -161,6 +165,7 @@ class _PointerTypesViewState extends State<PointerTypesView> {
     if(pointerType.desc.toString().replaceAll(" ", "") == "" || pointerType.name.toString().replaceAll(" ", "") == ""){
       SnackBarService.showErrorMessage("لا يجب ان يكون احدى المدخلات فارغ");
     }else{
+      print('${pointerType.desc} || ${pointerType.name}');
       Navigator.of(dialogContext).pop();
       pointersTypesCubit.addPointerType(pointerType);
       SnackBarService.showSuccessMessage("تم الاضافه بنجاح");
@@ -171,6 +176,7 @@ class _PointerTypesViewState extends State<PointerTypesView> {
     if(pointerType.desc.toString().replaceAll(" ", "") == "" && pointerType.name.toString().replaceAll(" ", "") == ""){
       SnackBarService.showErrorMessage("لا يجب ان يكون احدى المدخلات فارغ");
     }else{
+      print('${pointerType.id} || ${pointerType.desc} || ${pointerType.name}');
       Navigator.of(dialogContext).pop();
       pointersTypesCubit.updatePointerType(pointerType);
       SnackBarService.showSuccessMessage("تم التعديل بنجاح");
@@ -179,6 +185,7 @@ class _PointerTypesViewState extends State<PointerTypesView> {
 
   _deletePointerType(PointerTypeModel pointerType , BuildContext dialogContext){
     Navigator.of(dialogContext).pop();
+    print('===========) ${int.parse(pointerType.id.toString())}');
     pointersTypesCubit.deletePointerType(int.parse(pointerType.id.toString()));
     SnackBarService.showSuccessMessage("تم الحذف بنجاح");
   }

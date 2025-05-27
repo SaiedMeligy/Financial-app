@@ -3,6 +3,7 @@ import 'package:experts_app/core/Services/snack_bar_service.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/tab_item_widget.dart';
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/presentation/pages/PointerTypeEvalutionView.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/states.dart';
 import 'package:flutter/material.dart';
@@ -279,200 +280,200 @@ class _ReportChartViewWithAdminState extends State<ReportChartViewWithAdmin> {
                                       ),
                                       pw.SizedBox(height: 10),
                                       pw.Table(
-    border: pw.TableBorder.all(
-      color: PdfColors.black,
-      width: 1,
-    ),
-    children: [
-      pw.TableRow(
-        children: [
-          pw.Center(child:
-          pw.Padding(
-            padding: const pw.EdgeInsets.all(5.0),
-            child: pw.Text(
-              "المؤشرات",
-              style: pw.TextStyle(font: ttf, fontSize: 12),
-              textDirection: pw.TextDirection.rtl,
-            ),
-          ),
-          ),
-        ],
-      ),
-    ]
-),
-pw.Table(
-  border: pw.TableBorder.all(
-    color: PdfColors.black,
-    width: 1,
-  ),
-  children: [
-    pw.TableRow(
-      children: [
-        pw.Padding(
-          padding: const pw.EdgeInsets.all(8.0),
-          child: pw.Text(
-            "السيناريو الثالث",
-            style: pw.TextStyle(font: ttf, fontSize: 12),
-            textDirection: pw.TextDirection.rtl,
-          ),
-        ),
-        pw.Padding(
-          padding: const pw.EdgeInsets.all(8.0),
-          child: pw.Text(
-            "السيناريو الثانى",
-            style: pw.TextStyle(font: ttf, fontSize: 12),
-            textDirection: pw.TextDirection.rtl,
-          ),
-        ),
-        pw.Padding(
-          padding: const pw.EdgeInsets.all(8.0),
-          child: pw.Text(
-            "السيناريو الاول",
-            style: pw.TextStyle(font: ttf, fontSize: 12),
-            textDirection: pw.TextDirection.rtl,
-          ),
-        ),
-
-
-      ],
-    ),
-    // Add more rows as needed
-    pw.TableRow(
-      children: [
-        pw.Padding(
-          padding: const pw.EdgeInsets.all(5.0),
-          child: pw.Container(
-            height: 260,
-            child: pw.Column(
-              children: [
-                for (var index3 = 0; index3 < pointers3Temp.length; index3++)
-                  pw.Container(
-                    margin: const pw.EdgeInsets.only(bottom: 5.0),
-                    child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        pw.Column(
-                          mainAxisAlignment: pw.MainAxisAlignment.start,
-                          children: [
-                            pw.Table(
-                              // border: pw.TableBorder.all(color: PdfColors.black),
-                              children: [
-                                for (var index3 = 0; index3 < pointers3Temp.length; index3++)
-                                  ...[
-                                    for (var pointer in pointers3Temp[index3]["pationt_pointers"] ?? [])
-                                      pw.TableRow(
+                                        border: pw.TableBorder.all(
+                                          color: PdfColors.black,
+                                          width: 1,
+                                        ),
                                         children: [
-                                          pw.Padding(
-                                            padding: const pw.EdgeInsets.all(2.0),
-                                            child: pw.Text(
-                                              pointer["text"],
-                                              style: pw.TextStyle(
-                                                font: ttf,
-                                                fontSize: 8,
-                                                color: PdfColors.black,
+                                          pw.TableRow(
+                                            children: [
+                                              pw.Center(child:
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(5.0),
+                                                child: pw.Text(
+                                                  "المؤشرات",
+                                                  style: pw.TextStyle(font: ttf, fontSize: 12),
+                                                  textDirection: pw.TextDirection.rtl,
+                                                ),
                                               ),
-                                              textDirection: pw.TextDirection.rtl,
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ],),],
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],),
-                  ),],),),),
-        pw.Padding(
-          padding: const pw.EdgeInsets.all(5.0),
-          child: pw.Container(
-            height: 260,
-            child: pw.Column(
-              children: [
-                for (var index2 = 0; index2 < pointers2Temp.length; index2++)
-                  pw.Container(
-                    margin: const pw.EdgeInsets.only(bottom: 5.0),
-                    child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        pw.Column(
-                          mainAxisAlignment: pw.MainAxisAlignment.start,
-                          children: [
-                            pw.Table(
-                              // border: pw.TableBorder.all(color: PdfColors.black),
-                              children: [
-                                for (var index2 = 0; index2 < pointers2Temp.length; index2++)
-                                  ...[
-                                    for (var pointer in pointers2Temp[index2]["pationt_pointers"] ?? [])
-                                      pw.TableRow(
+                                        ]
+                                      ),
+                                      pw.Table(
+                                        border: pw.TableBorder.all(
+                                          color: PdfColors.black,
+                                          width: 1,
+                                        ),
                                         children: [
-                                          pw.Padding(
-                                            padding: const pw.EdgeInsets.all(2.0),
-                                            child: pw.Text(
-                                              pointer["text"],
-                                              style: pw.TextStyle(
-                                                font: ttf,
-                                                fontSize: 8,
-                                                color: PdfColors.black,
+                                          pw.TableRow(
+                                            children: [
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(8.0),
+                                                child: pw.Text(
+                                                  "السيناريو الثالث",
+                                                  style: pw.TextStyle(font: ttf, fontSize: 12),
+                                                  textDirection: pw.TextDirection.rtl,
+                                                ),
                                               ),
-                                              textDirection: pw.TextDirection.rtl,
-                                            ),
-                                          ),
-                                        ],),],
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],),
-                  ),],),),),
-        pw.Padding(
-          padding: const pw.EdgeInsets.all(5.0),
-          child: pw.Container(
-            height: 260,
-            child: pw.Column(
-              children: [
-                for (var index1 = 0; index1 < pointers1Temp.length; index1++)
-                  pw.Container(
-                    margin: const pw.EdgeInsets.only(bottom: 5.0),
-                    child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        pw.Column(
-                          mainAxisAlignment: pw.MainAxisAlignment.start,
-                          children: [
-                            pw.Table(
-                              // border: pw.TableBorder.all(color: PdfColors.black),
-                              children: [
-                                for (var index1 = 0; index1 < pointers1Temp.length; index1++)
-                                  ...[
-                                    for (var pointer in pointers1Temp[index1]["pationt_pointers"] ?? [])
-                                      pw.TableRow(
-                                        children: [
-                                          pw.Padding(
-                                            padding: const pw.EdgeInsets.all(2.0),
-                                            child: pw.Text(
-                                              pointer["text"],
-                                              style: pw.TextStyle(
-                                                font: ttf,
-                                                fontSize: 8,
-                                                color: PdfColors.black,
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(8.0),
+                                                child: pw.Text(
+                                                  "السيناريو الثانى",
+                                                  style: pw.TextStyle(font: ttf, fontSize: 12),
+                                                  textDirection: pw.TextDirection.rtl,
+                                                ),
                                               ),
-                                              textDirection: pw.TextDirection.rtl,
-                                            ),
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(8.0),
+                                                child: pw.Text(
+                                                  "السيناريو الاول",
+                                                  style: pw.TextStyle(font: ttf, fontSize: 12),
+                                                  textDirection: pw.TextDirection.rtl,
+                                                ),
+                                              ),
+
+
+                                            ],
                                           ),
-                                        ],),],
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],),
-                  ),],),),),
+                                          // Add more rows as needed
+                                          pw.TableRow(
+                                            children: [
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(5.0),
+                                                child: pw.Container(
+                                                  height: 260,
+                                                  child: pw.Column(
+                                                    children: [
+                                                      for (var index3 = 0; index3 < pointers3Temp.length; index3++)
+                                                        pw.Container(
+                                                          margin: const pw.EdgeInsets.only(bottom: 5.0),
+                                                          child: pw.Column(
+                                                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                                            children: [
+                                                              pw.Column(
+                                                                mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                children: [
+                                                                  pw.Table(
+                                                                    // border: pw.TableBorder.all(color: PdfColors.black),
+                                                                    children: [
+                                                                      for (var index3 = 0; index3 < pointers3Temp.length; index3++)
+                                                                        ...[
+                                                                          for (var pointer in pointers3Temp[index3]["pationt_pointers"] ?? [])
+                                                                            pw.TableRow(
+                                                                              children: [
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(2.0),
+                                                                                  child: pw.Text(
+                                                                                    pointer["text"],
+                                                                                    style: pw.TextStyle(
+                                                                                      font: ttf,
+                                                                                      fontSize: 8,
+                                                                                      color: PdfColors.black,
+                                                                                    ),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+                                                                              ],),],
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],),
+                                                        ),],),),),
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(5.0),
+                                                child: pw.Container(
+                                                  height: 260,
+                                                  child: pw.Column(
+                                                    children: [
+                                                      for (var index2 = 0; index2 < pointers2Temp.length; index2++)
+                                                        pw.Container(
+                                                          margin: const pw.EdgeInsets.only(bottom: 5.0),
+                                                          child: pw.Column(
+                                                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                                            children: [
+                                                              pw.Column(
+                                                                mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                children: [
+                                                                  pw.Table(
+                                                                    // border: pw.TableBorder.all(color: PdfColors.black),
+                                                                    children: [
+                                                                      for (var index2 = 0; index2 < pointers2Temp.length; index2++)
+                                                                        ...[
+                                                                          for (var pointer in pointers2Temp[index2]["pationt_pointers"] ?? [])
+                                                                            pw.TableRow(
+                                                                              children: [
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(2.0),
+                                                                                  child: pw.Text(
+                                                                                    pointer["text"],
+                                                                                    style: pw.TextStyle(
+                                                                                      font: ttf,
+                                                                                      fontSize: 8,
+                                                                                      color: PdfColors.black,
+                                                                                    ),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+                                                                              ],),],
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],),
+                                                        ),],),),),
+                                              pw.Padding(
+                                                padding: const pw.EdgeInsets.all(5.0),
+                                                child: pw.Container(
+                                                  height: 260,
+                                                  child: pw.Column(
+                                                    children: [
+                                                      for (var index1 = 0; index1 < pointers1Temp.length; index1++)
+                                                        pw.Container(
+                                                          margin: const pw.EdgeInsets.only(bottom: 5.0),
+                                                          child: pw.Column(
+                                                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                                            children: [
+                                                              pw.Column(
+                                                                mainAxisAlignment: pw.MainAxisAlignment.start,
+                                                                children: [
+                                                                  pw.Table(
+                                                                    // border: pw.TableBorder.all(color: PdfColors.black),
+                                                                    children: [
+                                                                      for (var index1 = 0; index1 < pointers1Temp.length; index1++)
+                                                                        ...[
+                                                                          for (var pointer in pointers1Temp[index1]["pationt_pointers"] ?? [])
+                                                                            pw.TableRow(
+                                                                              children: [
+                                                                                pw.Padding(
+                                                                                  padding: const pw.EdgeInsets.all(2.0),
+                                                                                  child: pw.Text(
+                                                                                    pointer["text"],
+                                                                                    style: pw.TextStyle(
+                                                                                      font: ttf,
+                                                                                      fontSize: 8,
+                                                                                      color: PdfColors.black,
+                                                                                    ),
+                                                                                    textDirection: pw.TextDirection.rtl,
+                                                                                  ),
+                                                                                ),
+                                                                              ],),],
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],),
+                                                        ),],),),),
 
 
 
-      ],
-    ),
+                                            ],
+                                          ),
 
-  ],
-),
+                                        ],
+                                      ),
 
                                       pw.SizedBox(height: 10),
                                       pw.Table(
@@ -1035,18 +1036,35 @@ pw.Table(
                                   color: Colors.black
                               ),),
                               IconButton(
-                                  onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                      EvaluationSession(
-                                         patientName: patient['name'],
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PointerTypeEvalutionView(
+                                        data: {"formID" : patient["form"]["id"]} ,
+                                        patientName: patient['name'],
                                         advisorName: patient['form']['advicor']['name'],
-                                        formId: patient["form"]["id"],
-                                        pointer1: pointers1,
-                                        pointer2: pointers2,
-                                        pointer3: pointers3,
                                         sessionDate: patient["form"]["date"],
-
-                                      ),)); },
-                                  icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,)),
+                                      ),
+                                    )
+                                  );
+                                  // Navigator.push(
+                                  //   context, 
+                                  //   MaterialPageRoute(builder: (context) =>
+                                  //     EvaluationSession(
+                                  //       patientName: patient['name'],
+                                  //       advisorName: patient['form']['advicor']['name'],
+                                  //       formId: patient["form"]["id"],
+                                  //       pointer1: pointers1,
+                                  //       pointer2: pointers2,
+                                  //       pointer3: pointers3,
+                                  //       sessionDate: patient["form"]["date"],
+                                  //     ),
+                                  //   )
+                                  // );
+                                },
+                                icon: Icon(FontAwesomeIcons.thumbsUp,color: Colors.black,size: 35,)
+                              ),
                             ],
                           ),
 
@@ -1386,9 +1404,4 @@ pw.Table(
       SnackBarService.showErrorMessage(e.toString());
     }
   }
-
-
-
-
-
 }

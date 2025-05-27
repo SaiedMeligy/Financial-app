@@ -24,87 +24,100 @@ class PointerTypesTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Table(
-        children: [
-          TableRow(
-            decoration: decoration ,
-            children: [
-              TableCellWidget(
-                padding: EdgeInsets.all(8),
-                child: TextWidget(
-                  text: "التصنيف" ,
-                  color: ceilFontColor,
-                )
-              ),
-              TableCellWidget(
-                padding: EdgeInsets.all(8),
-                child: TextWidget(
-                  text: "المؤشر" ,
-                  color: ceilFontColor,
-                )
-              ),
-              TableCellWidget(
-                padding: EdgeInsets.all(8),
-                child: TextWidget(
-                  text: "تعديل" ,
-                  color: ceilFontColor,
-                )
-              ),
-              TableCellWidget(
-                padding: EdgeInsets.all(8),
-                child: TextWidget(
-                  text: "حذف" ,
-                  color: ceilFontColor,
-                )
-              ),
-            ]
-          ),
-          ...allPointerType.map((pointerType) {
-            return TableRow(
-              decoration: decoration.copyWith(
-                color: Colors.black45 ,
-              ),
+    return Column(
+      children: [
+        Table(
+          children: [
+            TableRow(
+              decoration: decoration,
               children: [
                 TableCellWidget(
-                  padding: EdgeInsets.all(ceilsPadding),
+                  padding: EdgeInsets.all(8),
                   child: TextWidget(
-                    text: pointerType.desc ?? 'غير محدد' ,
+                    text: "التصنيف",
                     color: ceilFontColor,
-                  )
+                  ),
                 ),
                 TableCellWidget(
-                  padding: EdgeInsets.all(ceilsPadding),
+                  padding: EdgeInsets.all(8),
                   child: TextWidget(
-                    text: pointerType.name ?? 'غير محدد' ,
+                    text: "المؤشر",
                     color: ceilFontColor,
-                  )
+                  ),
                 ),
                 TableCellWidget(
-                  padding: EdgeInsets.all(ceilsPadding),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.edit ,
-                      color: ceilFontColor,
-                    ),
-                    onPressed: () => edit(pointerType),
-                  )
+                  padding: EdgeInsets.all(8),
+                  child: TextWidget(
+                    text: "تعديل",
+                    color: ceilFontColor,
+                  ),
                 ),
                 TableCellWidget(
-                  padding: EdgeInsets.all(ceilsPadding),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.delete ,
-                      color: ceilFontColor,
-                    ),
-                    onPressed: () => delete(pointerType),
-                  )
+                  padding: EdgeInsets.all(8),
+                  child: TextWidget(
+                    text: "حذف",
+                    color: ceilFontColor,
+                  ),
                 ),
               ],
-            );
-          }).toList(),
-        ],
-      ),
+            ),
+          ],
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Table(
+              children: [
+                ...allPointerType.map((pointerType) {
+                  return TableRow(
+                    decoration: decoration.copyWith(
+                      color: Colors.black45,
+                    ),
+                    children: [
+                      TableCellWidget(
+                        padding: EdgeInsets.all(ceilsPadding),
+                        child: TextWidget(
+                          text: pointerType.desc ?? 'غير محدد',
+                          color: ceilFontColor,
+                        ),
+                      ),
+                      TableCellWidget(
+                        padding: EdgeInsets.all(ceilsPadding),
+                        child: TextWidget(
+                          text: pointerType.name ?? 'غير محدد',
+                          color: ceilFontColor,
+                        ),
+                      ),
+                      TableCellWidget(
+                        padding: EdgeInsets.all(ceilsPadding),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            color: ceilFontColor,
+                          ),
+                          onPressed: () => edit(pointerType),
+                        ),
+                      ),
+                      TableCellWidget(
+                        padding: EdgeInsets.all(ceilsPadding),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: ceilFontColor,
+                          ),
+                          onPressed: () {
+                            print('===========) ${pointerType.id}');
+                            delete(pointerType);
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

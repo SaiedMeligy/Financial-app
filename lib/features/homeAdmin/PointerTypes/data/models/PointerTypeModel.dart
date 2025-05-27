@@ -1,9 +1,9 @@
-class PointerTypeModel {
-  int? id;
-  String? name;
-  String? desc;
+import '../../domain/entities/PointerTypeEntities.dart';
 
-  PointerTypeModel({this.id, this.name, this.desc});
+class PointerTypeModel extends PointerTypeEntities{
+
+  PointerTypeModel({required int id, required String name, required String desc})
+      : super(id: id, name: name, desc: desc);
 
   PointerTypeModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

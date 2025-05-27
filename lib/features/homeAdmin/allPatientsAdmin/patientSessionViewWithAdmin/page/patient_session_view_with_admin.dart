@@ -1,4 +1,5 @@
 import 'package:experts_app/core/extensions/padding_ext.dart';
+import 'package:experts_app/features/homeAdmin/AddPointerTypeEvalution/presentation/pages/AllSessionEvalutionView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
@@ -275,9 +276,15 @@ class _PatientSessionViewWithAdminState extends State<PatientSessionViewWithAdmi
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AllSessionEvaluation(patientName:patientName,advisorName:advisorName,sessionIds: sessionIds,patientId:patientId),
-                                  ),
+                                    builder: (context) => AllSessionEvalutionView(patientId: patientId),
+                                  )
                                 );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => AllSessionEvaluation(patientName:patientName,advisorName:advisorName,sessionIds: sessionIds,patientId:patientId),
+                                //   ),
+                                // );
                               },
                             ),
                           ),
