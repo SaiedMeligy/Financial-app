@@ -17,7 +17,7 @@ class EhancePercentageChart extends StatelessWidget {
           alignment: BarChartAlignment.spaceAround,
           maxY: maxY,
           barGroups: [
-            ...List.generate(data.length, (index) {
+            ...List.generate(data.length-1, (index) {
               final item = data[index];
               return BarChartGroupData(
                 x: index,

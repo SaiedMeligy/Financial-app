@@ -9,20 +9,21 @@ class LoginDataSourceImp implements LoginDataSource {
   @override
   Future<Response> login(String email, String password) async{
     try {
-      return await dio.post(
+      final response = await dio.post(
         '/api/auth/login',
-        data: {
+        data: FormData.fromMap({
           'email': email,
           'password': password,
-        },
+        }),
         options: Options(
-            headers: {
-              "api-password": Constants.apiPassword,
-            }
+          headers: {
+            "api-password": Constants.apiPassword,
+          }
         ),
       );
+      return response ;
     } on DioException catch (e) {
-      print('Error: ${e.response?.data ?? e.message}');
+      print('====> Error: ${e.response?.data ?? e.message}');
       rethrow;
     }
 

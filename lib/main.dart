@@ -1,3 +1,4 @@
+import 'package:experts_app/features/homeAdmin/allPatientsAdmin/QuestionStatisticsPage/presentation/pages/QuestionStatisticsScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'core/config/routes.dart';
 import 'core/config/cash_helper.dart';
@@ -38,7 +39,6 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-
         return MaterialApp(
           title: 'معهد الخبراء العرب للتدريب و الإستشارات',
           theme: AppThemeManager.lightTheme,
@@ -56,6 +56,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-

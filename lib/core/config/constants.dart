@@ -8,6 +8,7 @@ import 'package:experts_app/features/homeAdmin/PointerTypes/presentation/pages/P
 import 'package:experts_app/features/homeAdmin/addSession/page/add_session_view.dart';
 import 'package:experts_app/features/homeAdmin/add_patient/page/add_patient_view.dart';
 import 'package:experts_app/features/homeAdmin/adviceReport/page/advice_report_view.dart';
+import 'package:experts_app/features/homeAdmin/allPatientsAdmin/QuestionStatisticsPage/presentation/pages/QuestionStatisticsScreen.dart';
 import 'package:experts_app/features/homeAdmin/allPatientsAdmin/page/all_patient_admin_view.dart';
 import 'package:experts_app/features/homeAdmin/allQuestionView/page/all_question_view.dart';
 import 'package:experts_app/features/homeAdmin/bookingSession/page/booking_session_view.dart';
@@ -25,8 +26,8 @@ import '../../main.dart';
 class Constants {
   static var theme = Theme.of(navigatorKey.currentState!.context);
   static var mediaQuery = MediaQuery.of(navigatorKey.currentState!.context).size;
-  static var baseUrl = "https://financialclinic.site/financial_clinic_apis/public" ;
-  // static var baseUrl = "http://127.0.0.1:8000";
+  // static var baseUrl = "https://financialclinic.site/financial_clinic_apis/public" ;
+  static var baseUrl = "http://127.0.0.1:8000";
   static var apiPassword = "FWe4ayY2gaGX8TSM";
 
   static List<SideBarModel> titles = [
@@ -43,13 +44,12 @@ class Constants {
       SideBarModel(title: "اضافة مؤشر تقييم", icon: const Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة التوصيات", icon: const Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: " التوصيات", icon: const Icon(Icons.list,color: Colors.black87)),
-      // SideBarModel(title: "اضافة الحالات من مصدر خارجي", icon: const Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: "حجز جلسات", icon: const Icon(Icons.border_color_outlined,color: Colors.black87)),
       SideBarModel(title: "الجلسات المحجوزة", icon: const Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة خدمة استشارية", icon: const Icon(Icons.add,color: Colors.black87)),
       SideBarModel(title: "الخدمات الاستشارية", icon: const Icon(Icons.list,color: Colors.black87)),
       SideBarModel(title: "اضافة استشاري", icon: const Icon(Icons.add,color: Colors.black87)),
-      // SideBarModel(title: "النسخ الأحتياطي للبيانات", icon: const Icon(Icons.save_alt_outlined,color: Colors.black87)),
+      SideBarModel(title: "احصائيات الاسئلة", icon: const Icon(Icons.save_alt_outlined,color: Colors.black87)),
     ];
 
   static  List<Widget> bodies = [
@@ -66,80 +66,13 @@ class Constants {
       PointerTypesView(),
       const AddRecommend(),
       const EditAdviceView(),
-      // const // Center(child: Text("اضافة الحالات من مصدر خارجي",style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black))),
       AddSessionView(),
       const BookingSessionView(),
       const AddConsulting(),
       const ConsultingView(),
       const RegisterView(),
-      // const BackupDataPage(),
+      Questionstatisticsscreen(),
     ];
    static int page = 1;
    static int totalPages = 20;
 }
-
-/*
-{
-    "success": true,
-    "allSessionPointersEvaluation": [
-        {
-              "sessionPointersEvaluation": [
-                {
-                    "id": 1,
-                    "pointerId": 55,
-                    "evaluation": 1,
-                    "sessionId": 4,
-                    "sessionNumber": 5,
-                    "scenarioNumber": 6,
-                    "updated_at": "2025-02-23T00:00:00.000000Z",
-                    "created_at": "2025-02-23T00:00:00.000000Z",
-                    "pointerName": "ليس لديه أى التزامات أساسية (إيجار منزل)"
-                },
-                {
-                    "id": 2,
-                    "pointerId": 56,
-                    "evaluation": 2,
-                    "sessionId": 4,
-                    "sessionNumber": 5,
-                    "scenarioNumber": 6,
-                    "updated_at": "2025-02-23T00:00:00.000000Z",
-                    "created_at": "2025-02-23T00:00:00.000000Z",
-                    "pointerName": "الوضع المالى للمستفيد متوازن نسبيا"
-                },
-                {
-                    "id": 7,
-                    "pointerId": 59,
-                    "evaluation": 8,
-                    "sessionId": 4,
-                    "sessionNumber": 5,
-                    "scenarioNumber": 6,
-                    "updated_at": "2025-02-25T00:00:00.000000Z",
-                    "created_at": "2025-02-25T00:00:00.000000Z",
-                    "pointerName": "الوضع المالي للمستفيد متوازن مالياً ويغطى الاحتياجات الأساسية"
-                },
-                {
-                    "id": 8,
-                    "pointerId": 60,
-                    "evaluation": 9,
-                    "sessionId": 4,
-                    "sessionNumber": 5,
-                    "scenarioNumber": 6,
-                    "updated_at": "2025-02-25T00:00:00.000000Z",
-                    "created_at": "2025-02-25T00:00:00.000000Z",
-                    "pointerName": "لديه معرفة عامة عن تحديد الأهداف والأولويات"
-                }
-            ],
-            "totalEvalution ": 20,
-            "pointerNumber": 4,
-            "totalPublicEvalution": 5
-        },
-        {
-            "sessionPointersEvaluation": [],
-            "totalEvalution ": 0,
-            "pointerNumber": 0,
-            "totalPublicEvalution": 0
-        }
-    ]
-}
-
-*/

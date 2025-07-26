@@ -34,9 +34,8 @@ class BorderRoundedButton extends StatelessWidget {
         width: Constants.mediaQuery.width*0.09,
         height: height ?? MediaQuery.of(context).size.height * 0.06,
         decoration: BoxDecoration(
-          // border: Border.all(color: color ?? Colors.black, width: 1),
-          borderRadius: BorderRadius.circular(15),
-          color: Constants.theme.primaryColor,
+          borderRadius: BorderRadius.circular(7),
+          color: color,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -4,6 +4,7 @@ import 'dart:html' as html;
 import 'dart:convert' as convert ;
 import 'package:excel/excel.dart';
 import 'package:dio/dio.dart';
+import 'package:experts_app/core/config/app_theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -44,19 +45,13 @@ class _RecordsTableWidgetState extends State<RecordsTableWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // TextWidget(
-            //   text: "عدد الحالات $totalCount" ,
-            //   fontFamily: "ElMessiri",
-            //   fontSize: 20 ,
-            //   color: Colors.black,
-            //   textType: Typewriter(),
-            // ) ,
             SizedBox(height: 30,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 BorderRoundedButton(
                   title: "excel",
+                  color: AppThemeManager.secondryColor ,
                   onPressed: () async {
                     header.clear();
                     header2.clear();
@@ -66,56 +61,27 @@ class _RecordsTableWidgetState extends State<RecordsTableWidget> {
                     for (int i = 0 ; i < (totalCount/50).ceil() ; i++) {
                       print('page number ${i+1} is started');
                       var value = await getAllData(patiCount, i);
-                      header.add(value["header"]);
-                      header2.add(value["header2"]);
-                      List<dynamic> d = value["data"] ;
+                      if(value["header2"] != null)
+                        header2.add(value["header2"]);
+                      if(value["header"] != null)
+                        header.add(value["header"]);
+                      List<dynamic> d = value["data"] == null ? [] : value["data"];
                       data.add(d);
                       print('page number ${i+1} is finished');
                     }
-                    saveListToExcel(header[0],header2[0] , data , patiCount);
+                    saveListToExcel(header[0] , header2[0] , data , patiCount);
                     EasyLoading.dismiss();
                     EasyLoading.showSuccess('Done');
                   },
                 ),
-
-                // ButtonWidget(
-                //   onPressed: () async {
-                //     header.clear();
-                //     header2.clear();
-                //     data.clear();
-                //     int patiCount = 50 ;
-                //     EasyLoading.show();
-                //     for (int i = 0 ; i < (totalCount/50).ceil() ; i++) {
-                //       print('page number ${i+1} is started');
-                //       var value = await getAllData(patiCount, i);
-                //       header.add(value["header"]);
-                //       header2.add(value["header2"]);
-                //       List<dynamic> d = value["data"] ;
-                //       data.add(d);
-                //       print('page number ${i+1} is finished');
-                //     }
-                //     saveListToExcel(header[0],header2[0] , data , patiCount);
-                //     EasyLoading.dismiss();
-                //     EasyLoading.showSuccess('Done');
-                //   },
-                //   fontColor: Colors.white ,
-                //   text: "excel",
-                //   fontSize: 20,
-                //   fontFamily: "ElMessiri",
-                //   buttonColor: Colors.black,
-                //   height: 30,
-                //   width: 100 ,
-                //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                // ),
                 SizedBox(width: 10,),
                 SizedBox(
                   width: 150,
                   child: BorderRoundedButton(
+                    color: AppThemeManager.secondryColor ,
                     title: "full backup",
                     onPressed: () {
                       getDatabaseBackup();
-
-
                     },
                   ),
                 ),

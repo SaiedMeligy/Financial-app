@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:experts_app/core/config/constants.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/custom_text_field.dart';
+import 'package:experts_app/domain/entities/AllPatientModel.dart';
 import 'package:experts_app/domain/entities/AllSessionModel.dart';
 import 'package:experts_app/domain/entities/SessionUpdateModel.dart';
 import 'package:experts_app/features/homeAdmin/addSession/manager/cubit.dart';
@@ -350,90 +351,23 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                 ),),
                                                 IconButton(
                                                   onPressed: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return AlertDialog(
-                                                          title: ReportSessionWidget(),
-                                                          backgroundColor: Colors.black,
-                                                          content: SizedBox(
-                                                            height: Constants.mediaQuery.height * 0.6,
-                                                            width: Constants.mediaQuery.width * 0.45,
-                                                            child: TabItemWidget(
-                                                              item1: "السيناريو الاول",
-                                                              item2: "السيناريو التاني",
-                                                              item3: "السيناريو التالت",
-                                                              firstWidget: TextFieldQuestionRow(
-                                                                items: pointers1,
-                                                                controllers: controllers1, // Pass controllers
-                                                                onChanged: (values) {
-                                                                  evaluationPointers1 = values
-                                                                      .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                                      .toList();
-                                                                  print("Scenario 1: $evaluationPointers1");
-                                                                },
-                                                                scenarioId: '1',
-                                                              ),
-                                                              secondWidget: TextFieldQuestionRow(
-                                                                items: pointers2,
-                                                                controllers: controllers2, // Pass controllers
-                                                                onChanged: (values) {
-                                                                  evaluationPointers2 = values
-                                                                      .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                                      .toList();
-                                                                  print("Scenario 2: $evaluationPointers2");
-                                                                },
-                                                                scenarioId: '2',
-                                                              ),
-                                                              thirdWidget: TextFieldQuestionRow(
-                                                                items: pointers3,
-                                                                controllers: controllers3, // Pass controllers
-                                                                onChanged: (values) {
-                                                                  evaluationPointers3 = values
-                                                                      .where((pointer) => pointer["evaluation"]!.isNotEmpty)
-                                                                      .toList();
-                                                                  print("Scenario 3: $evaluationPointers3");
-                                                                },
-                                                                scenarioId: '3',
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () {
-                                                                allSelectedPointers = [
-                                                                  ...evaluationPointers1,
-                                                                  ...evaluationPointers2,
-                                                                  ...evaluationPointers3
-                                                                ];
-                                                                print("Final Data to Send: $allSelectedPointers");
-                                                                Navigator.of(context).pop();
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(10),
-                                                                  border: Border.all(
-                                                                    color: Constants.theme.primaryColor,
-                                                                    width: 2.5,
-                                                                  ),
-                                                                ),
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
-                                                                  child: Text(
-                                                                    "موافق",
-                                                                    style: Constants.theme.textTheme.bodyMedium,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
+                                                    print('00000000000000000000000000000000 ${widget.pationt_data as Pationts}');
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => PointerTypeEvalutionView(
+                                                          data: {
+                                                            "sessionId": widget.sessionId
+                                                          } ,
+                                                          patientName: (widget.pationt_data! as Pationts).name.toString(),
+                                                          advisorName: "" ,
+                                                          sessionDate: widget.sessionDate ,
+                                                        )
+                                                      )
                                                     );
                                                   },
                                                   icon: Icon(Icons.add_circle_rounded),
                                                 ),
-
                                               ],
                                             ),
 
@@ -452,10 +386,7 @@ class _SessionDetailsViewState extends State<SessionDetailsViewAdmin> {
                                                     consultationId: selected_consultation_service,
                                                     needOtherSession: needOtherSession,
                                                     isAttend: isAttendSelected,
-                                                    pointerEvaluation: allSelectedPointers,
-
-                                                    // advices: selectedAdviceIds,
-                                                    // pointers: selectedPointersIds,
+                                                    pointerEvaluation: [] ,
                                                     isSuccessStory: isSuccessStorySelected,
                                                     isFinished: 1,
                                                   );

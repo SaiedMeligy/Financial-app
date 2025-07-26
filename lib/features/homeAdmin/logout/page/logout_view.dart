@@ -21,54 +21,47 @@ class _LogoutViewState extends State<LogoutView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-        bloc: logoutCubit,
-        builder: (context, state) {
-          return GestureDetector(
-            onTap: () {
-              logoutCubit.logout().then((value) {
-                if (value) {
-                  print("Logout successful: $value");
-                  CacheHelper.clearAllData();
-                  Navigator.pushNamedAndRemoveUntil(context, PageRouteName.login,(route) => false,);
-                  // Navigator.pushAndRemoveUntil(
-                  //     context, MaterialPageRoute(builder: (context) => LogView()),
-                  //     (route) => false,
-                  // );
-                } else {
-                  print("Logout failed: $value");
-                }
-              });
-            },
-            child: Row(
-              children: [
-                Text(
-                  "الخروج",
-                  style: (Constants.mediaQuery.width>600)?Constants.theme.textTheme.bodySmall:Constants.theme.textTheme.bodyMedium,
-                ),
-                const SizedBox(
-                  width: 2,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.logout_rounded),
-                  onPressed: () {
-                    logoutCubit.logout().then((value) {
-                      if (value) {
-                        print("Logout successful: $value");
-                        CacheHelper.clearAllData();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LogView())
-                        );
-                      } else {
-                        print("Logout failed: $value");
-                      }
-                    });
-                  },
-                ),
-              ],
+      bloc: logoutCubit,
+      builder: (context, state) {
+        return Row(
+          children: [
+            InkWell(
+              onTap: () {
+                logoutCubit.logout().then((value) {
+                  if (value) {
+                    print("Logout successful: $value");
+                    CacheHelper.clearAllData();
+                    Navigator.pushNamedAndRemoveUntil(context, PageRouteName.login,(route) => false,);
+                  } else {
+                    print("Logout failed: $value");
+                  }
+                });
+              } ,
+              child: Text(
+                "الخروج",
+                style: Constants.theme.textTheme.bodySmall!.copyWith(color: Colors.black),
+              ),
             ),
-          );
-        }
+            const SizedBox(
+              width: 7,
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              alignment: Alignment.bottomCenter,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadiusDirectional.circular(50),
+                color: Color.fromRGBO(234, 235, 239, 1)
+              ),
+              child: Icon(
+                Icons.person ,
+                color: Color.fromRGBO(50, 73, 113, 1),
+                size: 35,
+              )
+            ),
+          ],
+        );
+      }
     );
   }
 }

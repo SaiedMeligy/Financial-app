@@ -63,12 +63,12 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                             width: isMobile?Constants.mediaQuery.width*0.4:Constants.mediaQuery.width*0.16,
                             height: Constants.mediaQuery.height*0.20,
                             decoration: BoxDecoration(
-                                color: Colors.grey,
-                                border: Border.all(
-                                  color: Colors.black54,
-                                  width: 2.5,
-                                ),
-                                borderRadius: BorderRadius.circular(10)
+                              color: Colors.grey,
+                              border: Border.all(
+                                color: Colors.black54,
+                                width: 2.5,
+                              ),
+                              borderRadius: BorderRadius.circular(10)
                             ),
                             child:
                             Column(
@@ -110,15 +110,23 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                                 Icon(Icons.bookmark_added_rounded),
                                 SizedBox(height: 10,),
                                 Center(
-                                  child: Text("عدد الجلسات",textAlign:TextAlign.center ,style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                  child: Text(
+                                    "عدد الجلسات",
+                                    textAlign: TextAlign.center ,
+                                    style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                       color: Colors.black
-                                  ),),
+                                    ),
+                                  ),
                                 ),
                                 Expanded(
                                   child: Center(
-                                    child: Text(home.sessionsCount.toString(),textAlign:TextAlign.center ,style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                    child: Text(
+                                      home.sessionsCount.toString(),
+                                      textAlign:TextAlign.center ,
+                                      style: Constants.theme.textTheme.bodyLarge?.copyWith(
                                         color: Colors.black
-                                    ),),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -141,7 +149,13 @@ class _HomeAdvisorViewState extends State<HomeAdvisorView> {
                             ),
                             child: Column(
                               children: [
-                                Text("الجلسات الفرعية القادمة",style: Constants.theme.textTheme.titleLarge?.copyWith(color: Colors.black,fontSize: isMobile?20:24),),
+                                Text(
+                                  "الجلسات الفرعية القادمة",
+                                  style: Constants.theme.textTheme.titleLarge?.copyWith(
+                                    color: Colors.black,
+                                    fontSize: isMobile?20:24
+                                  ),
+                                ),
                                 Table(
                                   columnWidths: {
                                     0 : FlexColumnWidth(4) ,

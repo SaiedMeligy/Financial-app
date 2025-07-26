@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AppThemeManager{
-  static const primaryColor = Color(0xffCCA86A);
+  // static const primaryColor = Color(0xffCCA86A);
+  static const primaryColor = Color.fromRGBO(252, 252, 253, 1);
+  static const secondryColor = Color.fromRGBO(50, 73, 113, 1);
+  static const drawerColor = Color.fromRGBO(243, 244, 247, 1);
+  static const borderColor = Color.fromRGBO(228, 232, 238, 1);
   static ThemeData lightTheme = ThemeData(
     primaryColor: primaryColor,
     appBarTheme: const AppBarTheme(
-        color: Colors.transparent,
-        iconTheme: IconThemeData(
-            color: Colors.white
-        )
+      color: Colors.transparent,
+      iconTheme: IconThemeData(
+        color: Colors.white
+      )
     ),
     bottomAppBarTheme: const BottomAppBarTheme(
         color: primaryColor,

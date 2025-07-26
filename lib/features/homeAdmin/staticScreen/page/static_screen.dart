@@ -1,9 +1,12 @@
 
+import 'package:experts_app/core/config/app_theme_manager.dart';
+import 'package:experts_app/core/excel_exportation/RecordsTableWidget.dart';
 import 'package:experts_app/core/extensions/padding_ext.dart';
 import 'package:experts_app/core/widget/TableWidget.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_need_other_session_view.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_no_need_other_session_view.dart';
 import 'package:experts_app/features/aboZaby/home/page/patient_success_story_view.dart';
+import 'package:experts_app/features/homeAdmin/staticScreen/Widegets/BuildInfoCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -74,215 +77,158 @@ class _StaticScreenState extends State<StaticScreen> {
                   var homeAdmin = state.home;
                   var topAdvisors = homeAdmin?.topAdvicors ?? [];
                   List<AdvisorsStatistics> advisorsStatistics = homeAdmin?.advisorsStatistics ?? [];
-                  printData(homeAdmin);
-                  // var senarioReport = homeAdmin?.senariosReport ?? [];
-                  // var senario1 = calculatePercentage(senarioReport[0].pationtsPointersCount ?? 0, senarioReport[0]?.pointersCount ?? 0).toString();
-                  // var senario2 = calculatePercentage(senarioReport[1].pationtsPointersCount ?? 0, senarioReport[1]?.pointersCount ?? 0).toString();
-                  // var senario3 = calculatePercentage(senarioReport[2].pationtsPointersCount ?? 0, senarioReport[2]?.pointersCount ?? 0).toString();
+
                   List<SalesData> advisorData = topAdvisors.map((advisor) {
                     return SalesData(advisor.advicor?.name ?? '', advisor.pationtCount!.toDouble());
                   }).toList();
 
-                  return isMobile
-                      ? SingleChildScrollView(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/back.jpg"),
-                          fit: BoxFit.cover,
-                          opacity: 0.2
-
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              _buildInfoCard(
-                                title: "عدد الأسر",
-                                count: homeAdmin?.pationtsCount.toString() ?? "",
-                                icon: Icons.back_hand_rounded,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
-                                },
-                                child: _buildInfoCard(
-                                  title: "عدد قصص النجاح",
-                                  count: homeAdmin?.successStoryCount.toString() ?? "",
-                                  icon: Icons.emoji_events,
-                                ),
-                              ),
-                              _buildInfoCard(
-                                title: "عدد الجلسات",
-                                count: homeAdmin?.sessionsCount.toString() ?? "",
-                                icon: Icons.bookmark_added_rounded,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView(),));
-                                },
-                                child: _buildInfoCardPatient(
-                                  title: "عدد الأسر التى تتطلب جلسة إضافية",
-                                  count: homeAdmin?.needOtherSession.toString() ?? "",
-                                  icon: Icons.back_hand_rounded,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView(),));
-                                },
-                                child: _buildInfoCardPatient(
-                                    title: "عدد الأسر التى لا تتطلب جلسة إضافية",
-                                    count: homeAdmin?.noNeedOtherSession.toString() ?? "",
-                                    icon:  Icons.back_hand_rounded
-                                ),
-                              ),
-
-                            ],
-                          ),
-                          // _buildScenarioReport(senario1, senario2, senario3, senarioReport),
-                          Row(
-                            children: [
-                              _buildTopAdvisors(topAdvisors),
-                              // Expanded(child: CircleCharts(advisorData: advisorData)),
-                              _buildTableAdvisorStatistics(advisorsStatistics)
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                      : SingleChildScrollView(
+                  return SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/back.jpg"),
-                          fit: BoxFit.cover,
-                          opacity: 0.4
-                        )
-                      ),
+                      color: AppThemeManager.primaryColor,
                       child: Column(
                         children: [
+                          SizedBox(height: 5,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center ,
+                            children: [
+                              Text(
+                                "العيادة المالية" ,
+                                textAlign: TextAlign.start,
+                                style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                                  color: AppThemeManager.secondryColor,
+                                  fontSize: 20
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context, builder: (context) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          color: AppThemeManager.primaryColor,
+                                          border: Border.all(
+                                            width: 2.5 ,
+                                            color: AppThemeManager.borderColor
+                                          )
+                                        ),
+                                        child: AlertDialog(
+                                        backgroundColor: AppThemeManager.primaryColor,
+                                        content: SizedBox(
+                                          width: Constants.mediaQuery.width * 0.4,
+                                          height: Constants.mediaQuery.width * 0.10,
+                                          child: RecordsTableWidget()
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Container(
+                                              width: 120,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(7),
+                                                border: Border.all(
+                                                  color: AppThemeManager.borderColor,
+                                                  width: 2.5,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                "اغلاق" ,
+                                                style: Constants.theme.textTheme.bodyMedium?.copyWith(color: Colors.black , fontSize: 15),
+                                              )
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      );
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.download_rounded ,
+                                  color: AppThemeManager.secondryColor ,
+                                )
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 5,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              _buildInfoCard(
+                              BuildInfoCard(
                                 title: "عدد الأسر",
                                 count: homeAdmin?.pationtsCount.toString() ?? "",
-                                icon: Icons.back_hand_rounded,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientSuccessStoryView(),));
-                                },
-                                child: _buildInfoCard(
-                                    title: "عدد قصص النجاح",
-                                    count: homeAdmin?.successStoryCount.toString() ?? "",
-                                    icon: Icons.emoji_events
+                                icon: Icon(
+                                  Icons.family_restroom ,
+                                  color: AppThemeManager.secondryColor,
+                                  size: 30,
                                 ),
                               ),
-                              _buildInfoCard(
-                                  title: "عدد الجلسات",
-                                  count: homeAdmin?.sessionsCount.toString() ?? "",
-                                  icon: Icons.bookmark_added_rounded
+                              BuildInfoCard(
+                                title: "عدد قصص النجاح",
+                                count: homeAdmin?.successStoryCount.toString() ?? "",
+                                icon: Icon(
+                                  Icons.emoji_events_sharp ,
+                                  color: Colors.yellow,
+                                  size: 30,
+                                ) ,
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PatientSuccessStoryView()));
+                                },
+                              ),
+                              BuildInfoCard(
+                                title: "عدد الجلسات",
+                                count: homeAdmin?.sessionsCount.toString() ?? "",
+                                icon: Icon(
+                                  Icons.calendar_month ,
+                                  color: AppThemeManager.secondryColor,
+                                  size: 30,
+                                )
                               ),
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              GestureDetector(
+                              BuildInfoCard(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNeedOtherSessionView(),));
                                 },
-                                child: _buildInfoCardPatient(
-                                  title: "عدد الأسر التى تتطلب جلسة إضافية",
-                                  count: homeAdmin?.needOtherSession.toString() ?? "",
-                                  icon: Icons.back_hand_rounded,
-                                ),
+                                title: "عدد الأسر التى\nتتطلب جلسة إضافية",
+                                count: homeAdmin?.needOtherSession.toString() ?? "",
+                                icon: Icon(
+                                  CupertinoIcons.check_mark_circled_solid ,
+                                  color: Colors.green,
+                                  size: 30,
+                                )
                               ),
-                              GestureDetector(
+                              BuildInfoCard(
+                                title: "عدد الأسر التى\nلا تتطلب جلسة إضافية",
+                                count: homeAdmin?.noNeedOtherSession.toString() ?? "",
+                                icon:  Icon(
+                                  Icons.warning ,
+                                  color: Colors.yellow,
+                                  size: 30,
+                                ) ,
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => PatientNoNeedOtherSessionView(),));
                                 },
-                                child: _buildInfoCardPatient(
-                                  title: "عدد الأسر التى لا تتطلب جلسة إضافية",
-                                  count: homeAdmin?.noNeedOtherSession.toString() ?? "",
-                                  icon:  Icons.back_hand_rounded
-                                ),
                               ),
-                              GestureDetector(
-                                onTap: null ,
-                                child: _buildInfoCardPatient(
-                                  title: "عدد الاسر التي خرجت من الدعم",
-                                  count: homeAdmin?.numberOfOutnes.toString() ?? "",
-                                  icon:  Icons.back_hand_rounded
-                                ),
+                              BuildInfoCard(
+                                title: "عدد الاسر التي\nخرجت من الدعم",
+                                count: homeAdmin?.numberOfOutnes.toString() ?? "",
+                                icon:  Icon(
+                                  Icons.logout ,
+                                  color: Colors.red,
+                                  size: 30,
+                                )
                               ),
                             ],
                           ),
                           SizedBox(height: 10),
-                          //TODO: handle backend process
-                          // SenarioWadget(),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     // Container(
-                          //     //   width: Constants.mediaQuery.width * 0.3,
-                          //     //   height: Constants.mediaQuery.height * 0.57,
-                          //     //   decoration: BoxDecoration(
-                          //     //     color: Constants.theme.primaryColor.withOpacity(0.5),
-                          //     //     borderRadius: BorderRadius.circular(10),
-                          //     //     border: Border.all(color: Colors.black26),
-                          //     //   ),
-                          //     //   child: Padding(
-                          //     //     padding: const EdgeInsets.all(8.0),
-                          //     //     child: Column(
-                          //     //       crossAxisAlignment: CrossAxisAlignment.start,
-                          //     //       children: [
-                          //     //         Text(
-                          //     //           "اكثر استشاريين لديهم أسر",
-                          //     //           style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                          //     //             color:  Colors.black
-                          //     //           ),
-                          //     //         ),
-                          //     //         Divider(
-                          //     //           color: Constants.theme.primaryColor,
-                          //     //           thickness: 1,
-                          //     //           indent: 10,
-                          //     //           endIndent: 10,
-                          //     //         ),
-                          //     //         SizedBox(height: 20,),
-                          //     //         ...topAdvisors.take(3).map((advisor) {
-                          //     //           return Row(
-                          //     //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     //             children: [
-                          //     //               Text(
-                          //     //                 "الاسم: ${advisor.advicor?.name ?? ""}",
-                          //     //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
-                          //     //               ),
-                          //     //               Text(
-                          //     //                 "العدد: ${advisor.pationtCount}",
-                          //     //                 style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 18,color: Colors.black87),
-                          //     //               ),
-                          //     //             ],
-                          //     //           );
-                          //     //         }).toList(),
-                          //     //       ],
-                          //     //     ),
-                          //     //   ),
-                          //     // ).setHorizontalPadding(context,enableMediaQuery: false, 5),
-                          //     CircleCharts(advisorData: advisorData),
-                          //   ],
-                          // ),
-                          _buildTableAdvisorStatistics(advisorsStatistics)
+                          _buildTableAdvisorStatistics(advisorsStatistics),
+                          SizedBox(height: 50),
                         ],
                       ).setHorizontalPadding(context,enableMediaQuery: false,15),
                     ),
@@ -308,210 +254,56 @@ class _StaticScreenState extends State<StaticScreen> {
     );
   }
 
-  Widget _buildInfoCard({required String title, required String count, required IconData icon}) {
+  Widget _buildInfoCard({required String title, required String count, required Icon icon}) {
     return Container(
-      width: isMobile ? Constants.mediaQuery.width * 0.28 : Constants.mediaQuery.width * 0.16,
-      height:isMobile? Constants.mediaQuery.height * 0.18:Constants.mediaQuery.height * 0.20.h,
+      width: 220,
+      height: 120,
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: AppThemeManager.primaryColor ,
         border: Border.all(
-          color: Colors.black54,
-          width: 2.5,
+          color: AppThemeManager.borderColor ,
+          width: 2.5 ,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          
-          Icon(icon,size: isMobile?20:30,),
-          Expanded(
-            child: Center(
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-
-                style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                  fontSize:isMobile? 16:22
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                count,
-                textAlign: TextAlign.center,
-                style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                  fontSize:isMobile? 16:22,
-            
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoCardPatient({required String title, required String count, required IconData icon}) {
-    return Container(
-      width: isMobile ? Constants.mediaQuery.width * 0.3 : Constants.mediaQuery.width * 0.2,
-      height:isMobile? Constants.mediaQuery.height * 0.25:Constants.mediaQuery.height * 0.27,
-      margin: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        border: Border.all(
-          color: Colors.black54,
-          width: 2.5,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon,size: isMobile?20:30,),
-          Expanded(
-            child: Center(
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                  fontSize:isMobile? 16:22
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                count,
-                textAlign: TextAlign.center,
-                style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                  fontSize:isMobile? 16:22,
-
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildScenarioReport(String senario1, String senario2, String senario3, List<SenariosReport> senarioReport) {
-    return Container(
-      width: double.infinity,
-      height: isMobile?Constants.mediaQuery.height * 0.29:Constants.mediaQuery.height * 0.36,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.black87,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              icon ,
+              SizedBox(width: 10,),
               Text(
-                "السيناريو الاول : " + double.parse(senario1).toStringAsFixed(2) + "%",
-                style:isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 20
-                ):Constants.theme.textTheme.titleLarge
-              ),
-              Text(
-                "السيناريو الثاني : " + double.parse(senario2).toStringAsFixed(2) + "%",
-                style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 20
-                ):Constants.theme.textTheme.titleLarge,
-              ),
-              Text(
-                "السيناريو الثالث : " + double.parse(senario3).toStringAsFixed(2) + "%",
-                style: isMobile? Constants.theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 20
-                ):Constants.theme.textTheme.titleLarge,
+                title ,
+                textAlign: TextAlign.start,
+                style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                  color: Colors.black,
+                  fontSize: 16
+                ),
               ),
             ],
           ),
-          MultiCircularSlider(
-            size: isMobile ? 130 : 200,
-            progressBarType: MultiCircularSliderType.circular,
-            values: [
-              senario1.isNotEmpty ? calculatePercentage(senarioReport[0].pationtsPointersCount ?? 0, senarioReport[0]?.pointersCount ?? 0) / 100 : 0,
-              senario2.isNotEmpty ? calculatePercentage(senarioReport[1].pationtsPointersCount ?? 0, senarioReport[1]?.pointersCount ?? 0) / 100 : 0,
-              senario3.isNotEmpty ? calculatePercentage(senarioReport[2].pationtsPointersCount ?? 0, senarioReport[2]?.pointersCount ?? 0) / 100 : 0,
-            ],
-            colors: [Colors.red, Colors.orange, Colors.green],
-            showTotalPercentage: true,
-            animationDuration: const Duration(milliseconds: 500),
-            animationCurve: Curves.easeIn,
-            trackColor: Colors.white,
-            progressBarWidth: isMobile ? 26.0 : 52.0,
-            trackWidth: isMobile ? 25 : 40,
-            percentageTextStyle: TextStyle(color: Colors.black),
+          Center(
+            child: Text(
+              count,
+              textAlign: TextAlign.center,
+              style: Constants.theme.textTheme.bodyLarge?.copyWith(
+                color: Colors.black,
+                fontSize: 25,
+              ),
+            ),
           ),
         ],
       ),
     );
-  }
-
-  Widget _buildTopAdvisors(List<TopAdvicors> topAdvisors) {
-    return Container(
-      width: MediaQuery.of(context).size.width*0.35,
-      height: isMobile?Constants.mediaQuery.height * 0.67:Constants.mediaQuery.height * 0.57,
-      decoration: BoxDecoration(
-        color: Constants.theme.primaryColor.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "اكثر استشارين لديهم حالات",
-              style: Constants.theme.textTheme.bodyLarge?.copyWith(
-                fontSize: 16
-              ),
-            ),
-            Divider(
-              color: Constants.theme.primaryColor,
-              thickness: 1,
-              indent: 10,
-              endIndent: 10,
-            ),
-            SizedBox(height: 20,),
-            ...topAdvisors.take(3).map((advisor) {
-              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "الاسم: ${advisor.advicor?.name ?? ""}",
-                                      style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 16),
-                                    ),
-                                    Text(
-                                      "العدد: ${advisor.pationtCount}",
-                                      style: Constants.theme.textTheme.bodyLarge?.copyWith(fontSize: 16),
-                                    ),
-                                  ],
-                                );
-            }).toList(),
-          ],
-        ),
-      ),
-    ).setHorizontalPadding(context,enableMediaQuery: false, 5);
   }
 
   Widget _buildTableAdvisorStatistics(List<AdvisorsStatistics> advisorsStatistics) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.68,
-      height: advisorsStatistics.length * 55.2,
+      height: advisorsStatistics.length * 57,
       decoration: BoxDecoration(
         color: Constants.theme.primaryColor.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),

@@ -23,6 +23,7 @@ class TextWidget extends StatelessWidget {
       text ,
       textAlign: textAlign ?? TextAlign.center,
       overflow: TextOverflow.ellipsis ,
+      maxLines: 2,
       style: TextStyle(
         fontFamily: fontFamily ?? "ElMessiri",
         fontSize: fontSize ?? 15,

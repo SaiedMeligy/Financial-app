@@ -69,10 +69,12 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
 
           return Container(
             decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/back.jpg"),
-                    fit: BoxFit.cover,
-                    opacity: 0.2)),
+              image: DecorationImage(
+                image: AssetImage("assets/images/back.jpg"),
+                fit: BoxFit.cover,
+                opacity: 0.2
+              )
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -81,10 +83,11 @@ class _AllPatientAdminViewState extends State<AllPatientAdminView> {
                     controller: searchController,
                     hint: "البحث",
                     prefixIcon: IconButton(
-                        onPressed: () {
-                          search();
-                        },
-                        icon: Icon(Icons.search)),
+                      onPressed: () {
+                        search();
+                      },
+                      icon: Icon(Icons.search)
+                    ),
                   ),
                   const SizedBox(height: 10),
                   PatientWidgetViewWithAdmin<Pationts>(

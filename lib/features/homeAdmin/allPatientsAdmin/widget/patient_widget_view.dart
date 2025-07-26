@@ -240,7 +240,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
                             ),
                             children: [
                               _buildDataCell(context, item, widget.itemNameBuilder, isMobile,),
-                              _buildSessionCell(context, item, widget.itemSessionCountBuilder, isMobile,),
+                              _buildSessionCell(context, item, widget.itemSessionCountBuilder , isMobile,),
                               _buildEditCell(item),
                               _buildDeleteCell(item),
                             ],
@@ -307,7 +307,7 @@ class _PatientWidgetViewWithAdminState<T> extends State<PatientWidgetViewWithAdm
         child: Container(
           alignment: Alignment.center,
           child: Text(
-            nameBuilder(item),
+            nameBuilder(item).toString() == "null" ? "2" : nameBuilder(item).toString() ,
             style: isMobile ? Constants.theme.textTheme.bodyMedium : Constants
                 .theme.textTheme.bodyLarge,
           ),
